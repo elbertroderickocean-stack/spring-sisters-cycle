@@ -362,9 +362,9 @@ const Today = () => {
           </CardContent>
         </Card>
 
-        {/* Module 3: Your Precision Toolkit - NEW MODULE */}
+        {/* Module 3: Your Precision Toolkit */}
         {precisionProducts.length > 0 && (
-          <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.1s' }}>
+          <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.1s', backgroundColor: '#EAEFF2' }}>
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Zap className="h-5 w-5 text-primary" />
@@ -373,24 +373,24 @@ const Today = () => {
               <CardDescription>Targeted care for specific needs</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+              <div className="space-y-4">
                 {precisionProducts.map((product) => {
                   const IconComponent = product.icon;
                   return (
                     <div 
                       key={product.id} 
-                      className="min-w-[280px] flex-shrink-0 p-4 rounded-xl border border-border bg-gradient-to-br from-card to-muted/30 snap-start"
+                      className="flex gap-4 items-start"
                     >
-                      <div className="flex flex-col gap-3">
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                          <IconComponent className="h-6 w-6 text-primary" />
+                      <div className="flex-shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          <IconComponent className="h-5 w-5 text-primary" />
                         </div>
-                        <div className="space-y-2">
-                          <h4 className="font-semibold text-foreground">{product.name}</h4>
-                          <p className="text-sm text-foreground/80 leading-relaxed">
-                            {product.usage}
-                          </p>
-                        </div>
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <h4 className="font-semibold text-foreground">{product.name}</h4>
+                        <p className="text-sm text-foreground/80 leading-relaxed">
+                          {product.usage}
+                        </p>
                       </div>
                     </div>
                   );
@@ -400,8 +400,8 @@ const Today = () => {
           </Card>
         )}
 
-        {/* Module 4: Insight of the Day - REDESIGNED as Horizontal Carousel */}
-        <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.2s' }}>
+        {/* Module 4: Today's Focus */}
+        <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.2s', backgroundColor: '#F5F1E9' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
               <Lightbulb className="h-5 w-5 text-primary" />
@@ -409,15 +409,15 @@ const Today = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+            <div className="space-y-4">
               {phaseInsights[phase].map((insight, index) => {
                 const IconComponent = insight.icon;
                 return (
                   <div 
                     key={index} 
-                    className="min-w-[280px] flex-shrink-0 p-4 rounded-xl border border-border bg-gradient-to-br from-card to-muted/30 snap-start"
+                    className="flex gap-4 items-start"
                   >
-                    <div className="flex flex-col gap-3">
+                    <div className="flex-shrink-0">
                       <div 
                         className="w-12 h-12 rounded-full flex items-center justify-center"
                         style={{ backgroundColor: `${insight.color}20` }}
@@ -427,12 +427,12 @@ const Today = () => {
                           style={{ color: insight.color }}
                         />
                       </div>
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-foreground">{insight.title}</h4>
-                        <p className="text-sm text-foreground/80 leading-relaxed">
-                          {insight.text}
-                        </p>
-                      </div>
+                    </div>
+                    <div className="flex-1 space-y-1">
+                      <h4 className="font-semibold text-foreground">{insight.title}</h4>
+                      <p className="text-sm text-foreground/80 leading-relaxed">
+                        {insight.text}
+                      </p>
                     </div>
                   </div>
                 );
@@ -442,7 +442,7 @@ const Today = () => {
         </Card>
 
         {/* Module 5: Smart Suggestion */}
-        <Card className="animate-slide-up shadow-lg bg-gradient-to-br from-primary/5 to-primary/10" style={{ animationDelay: '0.2s' }}>
+        <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.3s', backgroundColor: '#EAEAF2' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
               {suggestion.icon ? <suggestion.icon className="h-5 w-5 text-primary" /> : <Star className="h-5 w-5 text-primary" />}
