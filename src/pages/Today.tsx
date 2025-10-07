@@ -326,7 +326,11 @@ const Today = () => {
                 <div className="text-5xl font-heading font-bold mb-1 text-white drop-shadow-sm">
                   Day {day}
                 </div>
-                <div className="text-sm text-white/90 italic">
+                <div className="text-sm font-medium" style={{ 
+                  color: phase === 'calm' ? 'hsl(200 50% 25%)' : 
+                         phase === 'glow' ? 'hsl(30 80% 30%)' : 
+                         'hsl(120 30% 25%)'
+                }}>
                   {dailyWhisper}
                 </div>
               </div>
