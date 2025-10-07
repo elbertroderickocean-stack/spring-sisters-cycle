@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseTag } from '@/components/PhaseTag';
+import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Lightbulb, Star } from 'lucide-react';
+import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 
 const phaseInsights = {
-  calm: "Your skin is in its renewal phase. Focus on gentle, nourishing care.",
-  glow: "Your skin's collagen production is at its peak this week. Our Vitamin C Concentrate can help enhance this process.",
-  balance: "Your skin may be producing more oil. Focus on balancing and clarifying products."
+  calm: [
+    { icon: Sparkle, title: "For Your Skin", text: "Your barrier is vulnerable. Focus on gentle, nourishing care and avoid harsh exfoliants." },
+    { icon: Droplet, title: "For Your Body", text: "Hydration is key. Try adding a slice of lemon or cucumber to your water to make it more appealing." },
+    { icon: Moon, title: "For Your Mind", text: "Your energy may be low. Prioritize rest and consider a calming activity like reading or a warm bath tonight." }
+  ],
+  glow: [
+    { icon: Sparkle, title: "For Your Skin", text: "Your skin's collagen production is at its peak. Our Vitamin C Concentrate can help enhance this process." },
+    { icon: Heart, title: "For Your Body", text: "You have high energy. Focus on nutrient-dense meals with plenty of colorful vegetables and lean proteins." },
+    { icon: Dumbbell, title: "For Your Mind", text: "You may feel more social and creative. This is a great time for important meetings or trying something new." }
+  ],
+  balance: [
+    { icon: Sparkle, title: "For Your Skin", text: "Your skin may be producing more oil. Focus on balancing and clarifying products to prevent breakouts." },
+    { icon: Heart, title: "For Your Body", text: "Support hormonal balance with leafy greens, whole grains, and magnesium-rich foods like dark chocolate and nuts." },
+    { icon: Brain, title: "For Your Mind", text: "You may feel more introspective. Practice mindfulness, journaling, or meditation to maintain balance." }
+  ]
 };
 
 const Today = () => {
@@ -18,6 +31,9 @@ const Today = () => {
   const navigate = useNavigate();
   const phase = getCurrentPhase();
   const day = getCurrentDay();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
 
   const getRitualSteps = () => {
     const hasSerumTrio = userData.ownedProducts.includes('serum-trio');
@@ -157,17 +173,37 @@ const Today = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
-        <div className="space-y-2 animate-fade-in">
+        {/* Module 1: Your Current Phase - REDESIGNED */}
+        <div className="space-y-3 animate-fade-in">
           <h1 className="text-3xl font-heading font-semibold">
             Hello, {userData.name || 'Beautiful'}!
           </h1>
-          <div className="flex items-center gap-3 flex-wrap">
-            <p className="text-muted-foreground">
-              Today is Day {day}, your
-            </p>
-            <PhaseTag phase={phase} />
-          </div>
+          
+          {/* Large Clickable Phase Banner */}
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className={`w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg phase-${phase} border border-${phase}-foreground/20`}
+          >
+            <div className="flex items-center justify-between">
+              <div className="text-left">
+                <div className="text-5xl font-heading font-bold mb-2">
+                  Day {day}
+                </div>
+                <div className="text-sm opacity-80">
+                  Click to learn what's happening in your body and skin today
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-heading font-semibold">
+                  {phaseName}
+                </span>
+                <ChevronRight className="h-6 w-6" />
+              </div>
+            </div>
+          </button>
         </div>
+
+        {/* Module 2: Today's Ritual */}
 
         <Card className="animate-slide-up shadow-lg">
           <CardHeader>
@@ -227,20 +263,59 @@ const Today = () => {
           </CardContent>
         </Card>
 
+        {/* Module 3: Insight of the Day - REDESIGNED */}
         <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.2s' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
               <Lightbulb className="h-5 w-5 text-primary" />
-              <CardTitle className="font-heading">Insight of the Day</CardTitle>
+              <CardTitle className="font-heading">💡 Today's Focus</CardTitle>
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
+            {phaseInsights[phase].map((insight, index) => {
+              const IconComponent = insight.icon;
+              return (
+                <div key={index} className="flex gap-4 items-start">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <IconComponent className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-foreground mb-1">{insight.title}</h4>
+                    <p className="text-sm text-foreground/80 leading-relaxed">
+                      {insight.text}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </CardContent>
+        </Card>
+
+        {/* Module 4: Smart Suggestion */}
+        <Card className="animate-slide-up shadow-lg bg-gradient-to-br from-primary/5 to-primary/10" style={{ animationDelay: '0.1s' }}>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Star className="h-5 w-5 text-primary" />
+              <CardTitle className="font-heading">{suggestion.title}</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <p className="text-foreground/80 leading-relaxed">
-              💡 {phaseInsights[phase]}
+              {suggestion.message}
             </p>
+            <Button onClick={suggestion.action} className="w-full">
+              {suggestion.buttonText}
+            </Button>
           </CardContent>
         </Card>
       </div>
+
+      {/* Phase Deep Dive Modal */}
+      <PhaseDeepDiveModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        phase={phase} 
+      />
 
       <BottomNav />
     </div>
