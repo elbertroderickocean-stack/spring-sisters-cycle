@@ -4,7 +4,7 @@ import { useUser } from '@/contexts/UserContext';
 import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun, Zap, FlaskConical, Plane } from 'lucide-react';
+import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun, Zap, FlaskConical, Plane, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 
 const phaseInsights = {
@@ -250,6 +250,14 @@ const Today = () => {
   const { daysUntilNextPhase, nextPhase } = getNextPhaseInfo();
   const { progressPercentage } = getPhaseProgress();
   const nextPhaseColor = getNextPhaseColor();
+  
+  const getPhaseIconColor = () => {
+    if (phase === 'calm') return 'hsl(200 50% 60%)';
+    if (phase === 'glow') return 'hsl(30 90% 60%)';
+    return 'hsl(120 40% 50%)';
+  };
+  
+  const phaseIconColor = getPhaseIconColor();
 
   const getPrecisionProducts = () => {
     const precisionProducts = [
@@ -324,7 +332,7 @@ const Today = () => {
         <Card className="animate-slide-up shadow-lg">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
+              <Sparkles className="h-5 w-5" style={{ color: phaseIconColor }} />
               <CardTitle className="font-heading">Today's Ritual</CardTitle>
             </div>
             <CardDescription>Morning Routine</CardDescription>
@@ -339,7 +347,7 @@ const Today = () => {
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="font-semibold text-primary">{step.number}</span>
+                        <span className="font-semibold" style={{ color: phaseIconColor }}>{step.number}</span>
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -367,7 +375,7 @@ const Today = () => {
           <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.1s', backgroundColor: '#EAEFF2' }}>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-primary" />
+                <Zap className="h-5 w-5" style={{ color: phaseIconColor }} />
                 <CardTitle className="font-heading">⚡ Your Precision Toolkit</CardTitle>
               </div>
               <CardDescription>Targeted care for specific needs</CardDescription>
@@ -383,7 +391,7 @@ const Today = () => {
                     >
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <IconComponent className="h-5 w-5 text-primary" />
+                          <IconComponent className="h-5 w-5" style={{ color: phaseIconColor }} />
                         </div>
                       </div>
                       <div className="flex-1 space-y-1">
@@ -404,7 +412,7 @@ const Today = () => {
         <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.2s', backgroundColor: '#F5F1E9' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Lightbulb className="h-5 w-5 text-primary" />
+              <Lightbulb className="h-5 w-5" style={{ color: phaseIconColor }} />
               <CardTitle className="font-heading">💡 Today's Focus</CardTitle>
             </div>
           </CardHeader>
@@ -445,7 +453,7 @@ const Today = () => {
         <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.3s', backgroundColor: '#EAEAF2' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
-              {suggestion.icon ? <suggestion.icon className="h-5 w-5 text-primary" /> : <Star className="h-5 w-5 text-primary" />}
+              {suggestion.icon ? <suggestion.icon className="h-5 w-5" style={{ color: phaseIconColor }} /> : <Star className="h-5 w-5" style={{ color: phaseIconColor }} />}
               <CardTitle className="font-heading">{suggestion.title}</CardTitle>
             </div>
           </CardHeader>

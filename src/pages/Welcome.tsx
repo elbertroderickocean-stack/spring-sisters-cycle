@@ -39,16 +39,18 @@ const Welcome = () => {
                style={{ animationDelay: '2s' }} />
         </div>
 
-        {/* Sequential Text */}
+        {/* Sequential Text - New Design */}
         <div className="space-y-6 animate-fade-in" style={{ animationDelay: '2.5s' }}>
-          <h1 className="text-5xl md:text-6xl font-heading font-bold text-primary leading-tight">
-            Stop fighting your skin.
+          <h1 className="text-4xl md:text-5xl font-heading font-normal leading-tight lowercase">
+            your skin has a{' '}
+            <span style={{ color: 'hsl(200 50% 60%)' }}>rhythm</span>.
           </h1>
-          <h2 className="text-3xl md:text-4xl font-heading text-foreground/80">
-            Start working in harmony with it.
+          <h2 className="text-4xl md:text-5xl font-heading font-normal leading-tight lowercase">
+            let's find it{' '}
+            <span style={{ color: 'hsl(30 90% 60%)' }}>together</span>.
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto">
-            Welcome to Spring Sisters. We are the first skincare system that adapts to your unique biological rhythm. Let's find yours.
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mt-8">
+            Welcome to Spring Sisters. We are the first skincare system that adapts to your unique biological rhythm.
           </p>
           <Button 
             size="lg" 

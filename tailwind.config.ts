@@ -49,6 +49,7 @@ export default {
       fontFamily: {
         heading: ['Lora', 'serif'],
         body: ['Nunito', 'sans-serif'],
+        sans: ['Nunito', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
