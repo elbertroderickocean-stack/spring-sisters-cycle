@@ -319,7 +319,7 @@ const Today = () => {
           {/* Large Clickable Phase Banner with Gradient & Transition Bar */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className={`relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg phase-gradient-${phase} border border-white/20 overflow-hidden`}
+            className={`relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg border-none overflow-hidden phase-gradient-${phase}`}
           >
             <div className="flex items-center justify-between mb-6">
               <div className="text-left flex-1">
