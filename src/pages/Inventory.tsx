@@ -31,7 +31,7 @@ const Inventory = () => {
 
   const handleNext = () => {
     updateUserData({ ownedProducts: selectedProducts });
-    navigate('/today');
+    navigate('/integrations');
   };
 
   return (

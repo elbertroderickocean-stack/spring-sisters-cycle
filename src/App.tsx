@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import Details from "./pages/Details";
 import SkinConcerns from "./pages/SkinConcerns";
 import Inventory from "./pages/Inventory";
+import Integrations from "./pages/Integrations";
 import Today from "./pages/Today";
 import Guide from "./pages/Guide";
 import Article from "./pages/Article";
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/details" element={<Details />} />
             <Route path="/skin-concerns" element={<SkinConcerns />} />
             <Route path="/inventory" element={<Inventory />} />
+            <Route path="/integrations" element={<Integrations />} />
             <Route path="/today" element={<Today />} />
             <Route path="/guide" element={<Guide />} />
             <Route path="/article/:id" element={<Article />} />

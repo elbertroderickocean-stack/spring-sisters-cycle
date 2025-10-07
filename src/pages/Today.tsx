@@ -4,7 +4,7 @@ import { useUser } from '@/contexts/UserContext';
 import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun } from 'lucide-react';
+import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun, Zap, FlaskConical, Plane } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 
 const phaseInsights = {
@@ -85,6 +85,18 @@ const Today = () => {
     const hasEyeCream = userData.ownedProducts.includes('eye-cream');
     const hasMaskTrio = userData.ownedProducts.includes('mask-trio');
     const skinConcerns = userData.skinConcerns || [];
+    
+    // PRIORITY 0: Calendar-based suggestions (placeholder for future integration)
+    const hasUpcomingFlight = false; // Placeholder: would check Google Calendar API
+    if (hasUpcomingFlight) {
+      return {
+        title: "✈️ Travel Alert!",
+        message: "We see you have a flight tomorrow. The recycled air in airplanes is incredibly dehydrating. We highly recommend packing your Ceramide Concentrate to apply mid-flight or immediately after landing to protect your skin barrier.",
+        buttonText: "Got it, thanks!",
+        action: () => {},
+        icon: Plane
+      };
+    }
     
     // PRIORITY 1: If user doesn't have Serum Trio
     if (!hasSerumTrio) {
@@ -207,6 +219,29 @@ const Today = () => {
   const suggestion = getSmartSuggestion();
   const { daysUntilNextPhase, nextPhase } = getNextPhaseInfo();
 
+  const getPrecisionProducts = () => {
+    const precisionProducts = [
+      {
+        id: 'vitamin-c',
+        name: 'Vitamin C Concentrate',
+        usage: 'Use 2-3 mornings per week instead of your cycle serum for an extra boost of radiance.',
+        icon: FlaskConical
+      },
+      {
+        id: 'ceramide',
+        name: 'Ceramide Concentrate',
+        usage: 'Use on evenings when your skin feels stressed or irritated. Can be layered before your moisturizer.',
+        icon: FlaskConical
+      }
+    ];
+    
+    return precisionProducts.filter(product => 
+      userData.ownedProducts.includes(product.id)
+    );
+  };
+
+  const precisionProducts = getPrecisionProducts();
+
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
@@ -283,24 +318,45 @@ const Today = () => {
           </CardContent>
         </Card>
 
-        <Card className="animate-slide-up shadow-lg bg-gradient-to-br from-primary/5 to-primary/10" style={{ animationDelay: '0.1s' }}>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Star className="h-5 w-5 text-primary" />
-              <CardTitle className="font-heading">{suggestion.title}</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-foreground/80 leading-relaxed">
-              {suggestion.message}
-            </p>
-            <Button onClick={suggestion.action} className="w-full">
-              {suggestion.buttonText}
-            </Button>
-          </CardContent>
-        </Card>
+        {/* Module 3: Your Precision Toolkit - NEW MODULE */}
+        {precisionProducts.length > 0 && (
+          <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.1s' }}>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Zap className="h-5 w-5 text-primary" />
+                <CardTitle className="font-heading">⚡ Your Precision Toolkit</CardTitle>
+              </div>
+              <CardDescription>Targeted care for specific needs</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+                {precisionProducts.map((product) => {
+                  const IconComponent = product.icon;
+                  return (
+                    <div 
+                      key={product.id} 
+                      className="min-w-[280px] flex-shrink-0 p-4 rounded-xl border border-border bg-gradient-to-br from-card to-muted/30 snap-start"
+                    >
+                      <div className="flex flex-col gap-3">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                          <IconComponent className="h-6 w-6 text-primary" />
+                        </div>
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-foreground">{product.name}</h4>
+                          <p className="text-sm text-foreground/80 leading-relaxed">
+                            {product.usage}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
-        {/* Module 3: Insight of the Day - REDESIGNED as Horizontal Carousel */}
+        {/* Module 4: Insight of the Day - REDESIGNED as Horizontal Carousel */}
         <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.2s' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -341,11 +397,11 @@ const Today = () => {
           </CardContent>
         </Card>
 
-        {/* Module 4: Smart Suggestion */}
-        <Card className="animate-slide-up shadow-lg bg-gradient-to-br from-primary/5 to-primary/10" style={{ animationDelay: '0.1s' }}>
+        {/* Module 5: Smart Suggestion */}
+        <Card className="animate-slide-up shadow-lg bg-gradient-to-br from-primary/5 to-primary/10" style={{ animationDelay: '0.2s' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Star className="h-5 w-5 text-primary" />
+              {suggestion.icon ? <suggestion.icon className="h-5 w-5 text-primary" /> : <Star className="h-5 w-5 text-primary" />}
               <CardTitle className="font-heading">{suggestion.title}</CardTitle>
             </div>
           </CardHeader>
@@ -353,9 +409,11 @@ const Today = () => {
             <p className="text-foreground/80 leading-relaxed">
               {suggestion.message}
             </p>
-            <Button onClick={suggestion.action} className="w-full">
-              {suggestion.buttonText}
-            </Button>
+            {suggestion.action && (
+              <Button onClick={suggestion.action} className="w-full">
+                {suggestion.buttonText}
+              </Button>
+            )}
           </CardContent>
         </Card>
       </div>
