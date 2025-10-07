@@ -34,7 +34,30 @@ const Today = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
-  const phaseTagline = phase === 'calm' ? 'A day for calm reflection' : phase === 'glow' ? 'Your day to shine' : 'A day to find your balance';
+  
+  const getDailyWhisper = () => {
+    const { progressPercentage } = getPhaseProgress();
+    const isEarlyPhase = progressPercentage < 33;
+    const isMidPhase = progressPercentage >= 33 && progressPercentage < 66;
+    const isLatePhase = progressPercentage >= 66;
+    
+    if (phase === 'calm') {
+      if (isEarlyPhase) return "Listen to your body's need for rest today.";
+      if (isMidPhase) return "A day for gentle nourishment and care.";
+      return "Your barrier is strengthening—keep nurturing it.";
+    }
+    
+    if (phase === 'glow') {
+      if (isEarlyPhase) return "Your day to shine—embrace your energy.";
+      if (isMidPhase) return "Radiance is peaking—show the world your glow.";
+      return "Capture this energy while it lasts.";
+    }
+    
+    // balance
+    if (isEarlyPhase) return "A day to focus on clarifying foods and gentle care.";
+    if (isMidPhase) return "Balance is the name of the game today.";
+    return "Your cycle is completing—prepare for renewal.";
+  };
   
   const getNextPhaseInfo = () => {
     const cycleLength = userData.cycleLength;
@@ -282,6 +305,7 @@ const Today = () => {
   };
 
   const precisionProducts = getPrecisionProducts();
+  const dailyWhisper = getDailyWhisper();
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -303,7 +327,7 @@ const Today = () => {
                   Day {day}
                 </div>
                 <div className="text-sm text-foreground/70 italic">
-                  {phaseTagline}
+                  {dailyWhisper}
                 </div>
               </div>
               <div className="flex items-center gap-3 text-foreground">
