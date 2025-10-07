@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/contexts/UserContext';
-import { PhaseTag } from '@/components/PhaseTag';
 import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight } from 'lucide-react';
+import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 
 const phaseInsights = {
   calm: [
-    { icon: Sparkle, title: "For Your Skin", text: "Your barrier is vulnerable. Focus on gentle, nourishing care and avoid harsh exfoliants." },
-    { icon: Droplet, title: "For Your Body", text: "Hydration is key. Try adding a slice of lemon or cucumber to your water to make it more appealing." },
-    { icon: Moon, title: "For Your Mind", text: "Your energy may be low. Prioritize rest and consider a calming activity like reading or a warm bath tonight." }
+    { icon: Sparkle, title: "For Your Skin", text: "Your estrogen and progesterone are at their lowest. Your skin barrier is vulnerable. Focus on gentle, nourishing care and avoid harsh exfoliants.", color: "hsl(200 50% 60%)" },
+    { icon: Droplet, title: "For Your Body", text: "Hydration is key during this phase. Try adding a slice of lemon or cucumber to your water to make it more appealing.", color: "hsl(200 50% 50%)" },
+    { icon: Moon, title: "For Your Mind", text: "Your energy may be low. Prioritize rest and consider a calming activity like reading or a warm bath tonight.", color: "hsl(200 50% 70%)" }
   ],
   glow: [
-    { icon: Sparkle, title: "For Your Skin", text: "Your skin's collagen production is at its peak. Our Vitamin C Concentrate can help enhance this process." },
-    { icon: Heart, title: "For Your Body", text: "You have high energy. Focus on nutrient-dense meals with plenty of colorful vegetables and lean proteins." },
-    { icon: Dumbbell, title: "For Your Mind", text: "You may feel more social and creative. This is a great time for important meetings or trying something new." }
+    { icon: Sun, title: "For Your Skin", text: "Your estrogen levels are rising, putting your skin in its 'golden week.' Collagen production is at its peak. Our job is to enhance this natural radiance.", color: "hsl(30 90% 60%)" },
+    { icon: Activity, title: "For Your Body", text: "Your physical energy is at its highest this week. This is the perfect time for high-intensity workouts or trying something new.", color: "hsl(30 90% 50%)" },
+    { icon: Sun, title: "For Your Mind", text: "You may feel more social and creative. Plan that brainstorm or coffee date you've been putting off.", color: "hsl(30 90% 70%)" }
   ],
   balance: [
-    { icon: Sparkle, title: "For Your Skin", text: "Your skin may be producing more oil. Focus on balancing and clarifying products to prevent breakouts." },
-    { icon: Heart, title: "For Your Body", text: "Support hormonal balance with leafy greens, whole grains, and magnesium-rich foods like dark chocolate and nuts." },
-    { icon: Brain, title: "For Your Mind", text: "You may feel more introspective. Practice mindfulness, journaling, or meditation to maintain balance." }
+    { icon: Sparkle, title: "For Your Skin", text: "Your skin may be producing more oil as progesterone rises. Focus on balancing and clarifying products to prevent breakouts.", color: "hsl(120 40% 50%)" },
+    { icon: Heart, title: "For Your Body", text: "Support hormonal balance with leafy greens, whole grains, and magnesium-rich foods like dark chocolate and nuts.", color: "hsl(120 40% 60%)" },
+    { icon: Brain, title: "For Your Mind", text: "You may feel more introspective. Practice mindfulness, journaling, or meditation to maintain balance.", color: "hsl(120 40% 70%)" }
   ]
 };
 
@@ -34,6 +33,13 @@ const Today = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
+  
+  const getNextPhaseInfo = () => {
+    const cycleLength = userData.cycleLength;
+    const daysUntilNextPhase = phase === 'calm' ? (8 - day) : phase === 'glow' ? (Math.floor(cycleLength / 2) + 1 - day) : (cycleLength - day + 1);
+    const nextPhase = phase === 'calm' ? 'Glow & Energize' : phase === 'glow' ? 'Balance & Clarify' : 'Calm & Renew';
+    return { daysUntilNextPhase, nextPhase };
+  };
 
   const getRitualSteps = () => {
     const hasSerumTrio = userData.ownedProducts.includes('serum-trio');
@@ -78,6 +84,7 @@ const Today = () => {
     const hasMoisturizer = userData.ownedProducts.includes('moisturizer');
     const hasEyeCream = userData.ownedProducts.includes('eye-cream');
     const hasMaskTrio = userData.ownedProducts.includes('mask-trio');
+    const skinConcerns = userData.skinConcerns || [];
     
     // PRIORITY 1: If user doesn't have Serum Trio
     if (!hasSerumTrio) {
@@ -140,6 +147,35 @@ const Today = () => {
         };
       }
       
+      // Personalized suggestions based on skin concerns
+      if (skinConcerns.includes('breakouts') && phase === 'balance') {
+        return {
+          title: "Targeted Support",
+          message: "Since breakouts are a key concern for you, consider amplifying your routine with our SOS Spot Treatment. It's the perfect 'sniper' to work alongside your daily 'defense system'.",
+          buttonText: "Explore Precision Care",
+          action: () => navigate('/catalog')
+        };
+      }
+      
+      if (skinConcerns.includes('dryness') && phase === 'calm') {
+        return {
+          title: "Extra Barrier Support",
+          message: "Feeling extra dry this phase? A shot of our Ceramide Concentrate before your moisturizer can provide emergency relief and repair.",
+          buttonText: "Explore Ceramide Concentrate",
+          action: () => navigate('/product/ceramide')
+        };
+      }
+      
+      if (skinConcerns.includes('darkSpots') && phase === 'glow') {
+        return {
+          title: "Boost Your Radiance",
+          message: "Maximize your glow phase! Our Vitamin C Concentrate delivers an extra dose of radiance exactly when your skin is primed to shine.",
+          buttonText: "Explore Vitamin C",
+          action: () => navigate('/product/vitamin-c')
+        };
+      }
+      
+      // Default suggestions for phases
       if (phase === 'calm') {
         return {
           title: "Extra Barrier Support",
@@ -169,6 +205,7 @@ const Today = () => {
   };
 
   const suggestion = getSmartSuggestion();
+  const { daysUntilNextPhase, nextPhase } = getNextPhaseInfo();
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -179,21 +216,21 @@ const Today = () => {
             Hello, {userData.name || 'Beautiful'}!
           </h1>
           
-          {/* Large Clickable Phase Banner */}
+          {/* Large Clickable Phase Banner with Gradient */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className={`w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg phase-${phase} border border-${phase}-foreground/20`}
+            className={`w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg phase-gradient-${phase} border border-white/20`}
           >
             <div className="flex items-center justify-between">
-              <div className="text-left">
-                <div className="text-5xl font-heading font-bold mb-2">
+              <div className="text-left flex-1">
+                <div className="text-5xl font-heading font-bold mb-2 text-foreground">
                   Day {day}
                 </div>
-                <div className="text-sm opacity-80">
-                  Click to learn what's happening in your body and skin today
+                <div className="text-sm text-foreground/70">
+                  Transitioning in {daysUntilNextPhase} {daysUntilNextPhase === 1 ? 'day' : 'days'}: Get ready for your '{nextPhase}' phase.
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-foreground">
                 <span className="text-xl font-heading font-semibold">
                   {phaseName}
                 </span>
@@ -263,7 +300,7 @@ const Today = () => {
           </CardContent>
         </Card>
 
-        {/* Module 3: Insight of the Day - REDESIGNED */}
+        {/* Module 3: Insight of the Day - REDESIGNED as Horizontal Carousel */}
         <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.2s' }}>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -271,23 +308,36 @@ const Today = () => {
               <CardTitle className="font-heading">💡 Today's Focus</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {phaseInsights[phase].map((insight, index) => {
-              const IconComponent = insight.icon;
-              return (
-                <div key={index} className="flex gap-4 items-start">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <IconComponent className="h-5 w-5 text-primary" />
+          <CardContent>
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+              {phaseInsights[phase].map((insight, index) => {
+                const IconComponent = insight.icon;
+                return (
+                  <div 
+                    key={index} 
+                    className="min-w-[280px] flex-shrink-0 p-4 rounded-xl border border-border bg-gradient-to-br from-card to-muted/30 snap-start"
+                  >
+                    <div className="flex flex-col gap-3">
+                      <div 
+                        className="w-12 h-12 rounded-full flex items-center justify-center"
+                        style={{ backgroundColor: `${insight.color}20` }}
+                      >
+                        <IconComponent 
+                          className="h-6 w-6" 
+                          style={{ color: insight.color }}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-foreground">{insight.title}</h4>
+                        <p className="text-sm text-foreground/80 leading-relaxed">
+                          {insight.text}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">{insight.title}</h4>
-                    <p className="text-sm text-foreground/80 leading-relaxed">
-                      {insight.text}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </CardContent>
         </Card>
 

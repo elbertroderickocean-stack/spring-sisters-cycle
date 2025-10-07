@@ -9,6 +9,7 @@ export interface UserData {
   cycleLength: number;
   ageRange: string;
   skinType: string;
+  skinConcerns: string[];
   ownedProducts: string[];
 }
 
@@ -28,6 +29,7 @@ const defaultUserData: UserData = {
   cycleLength: 28,
   ageRange: '',
   skinType: '',
+  skinConcerns: [],
   ownedProducts: [],
 };
 

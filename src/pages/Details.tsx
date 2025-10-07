@@ -14,7 +14,7 @@ const Details = () => {
   const handleNext = () => {
     if (ageRange && skinType) {
       updateUserData({ ageRange, skinType });
-      navigate('/inventory');
+      navigate('/skin-concerns');
     }
   };
 

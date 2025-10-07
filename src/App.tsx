@@ -11,6 +11,7 @@ import Solution from "./pages/Solution";
 import Personalize from "./pages/Personalize";
 import Register from "./pages/Register";
 import Details from "./pages/Details";
+import SkinConcerns from "./pages/SkinConcerns";
 import Inventory from "./pages/Inventory";
 import Today from "./pages/Today";
 import Guide from "./pages/Guide";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/personalize" element={<Personalize />} />
             <Route path="/register" element={<Register />} />
             <Route path="/details" element={<Details />} />
+            <Route path="/skin-concerns" element={<SkinConcerns />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/today" element={<Today />} />
             <Route path="/guide" element={<Guide />} />
