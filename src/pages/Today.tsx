@@ -358,7 +358,7 @@ const Today = () => {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Sparkles className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading">Today's Ritual</CardTitle>
+              <CardTitle className="font-heading">✨ Today's Ritual</CardTitle>
             </div>
             <CardDescription>Morning Routine</CardDescription>
           </CardHeader>
@@ -367,25 +367,57 @@ const Today = () => {
               {getRitualSteps().map((step) => (
                 <Card
                   key={step.number}
-                  className={`p-4 ${!step.owned ? 'opacity-50 border-dashed' : 'border-solid'}`}
+                  className={`p-4 ${
+                    step.owned 
+                      ? 'bg-background border-solid' 
+                      : 'bg-muted/30 border-dashed opacity-70'
+                  }`}
                 >
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="font-semibold" style={{ color: phaseIconColor }}>{step.number}</span>
+                      <div 
+                        className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                          step.owned 
+                            ? '' 
+                            : 'border-2 border-muted-foreground/30'
+                        }`}
+                        style={step.owned ? { backgroundColor: phaseIconColor } : {}}
+                      >
+                        <span 
+                          className={`font-semibold ${
+                            step.owned ? 'text-white' : 'text-muted-foreground'
+                          }`}
+                        >
+                          {step.number}
+                        </span>
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className={`font-heading font-medium text-base mb-1 ${step.isPhaseProduct ? 'text-primary' : ''}`}>
+                      <h4 className={`font-heading font-medium text-base mb-1 ${
+                        step.owned 
+                          ? (step.isPhaseProduct ? 'text-foreground' : 'text-foreground') 
+                          : 'text-muted-foreground'
+                      }`}>
                         {step.name}
                       </h4>
-                      <p className="text-sm text-muted-foreground">
-                        Why: {step.purpose}
-                      </p>
-                      {!step.owned && (
-                        <button className="text-xs text-primary mt-2 hover:underline">
-                          Learn More →
-                        </button>
+                      {step.owned ? (
+                        <p className="text-sm text-muted-foreground">
+                          Why: {step.purpose}
+                        </p>
+                      ) : (
+                        <>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Complete your ritual to see the full benefits.
+                          </p>
+                          <Button 
+                            size="sm"
+                            style={{ backgroundColor: phaseIconColor }}
+                            className="text-white hover:opacity-90"
+                            onClick={() => navigate('/catalog')}
+                          >
+                            Discover Product
+                          </Button>
+                        </>
                       )}
                     </div>
                   </div>
