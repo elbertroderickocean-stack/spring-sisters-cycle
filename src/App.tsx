@@ -14,6 +14,7 @@ import Details from "./pages/Details";
 import Inventory from "./pages/Inventory";
 import Today from "./pages/Today";
 import Guide from "./pages/Guide";
+import Article from "./pages/Article";
 import Products from "./pages/Products";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/today" element={<Today />} />
             <Route path="/guide" element={<Guide />} />
+            <Route path="/article/:id" element={<Article />} />
             <Route path="/products" element={<Products />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
