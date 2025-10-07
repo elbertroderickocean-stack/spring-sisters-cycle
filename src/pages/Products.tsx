@@ -18,16 +18,16 @@ const Products = () => {
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-8">
         <h1 className="text-4xl font-heading font-semibold text-primary animate-fade-in">
-          Мои Продукты
+          My Products
         </h1>
 
         {/* User's Arsenal Section */}
         <section className="space-y-4 animate-slide-up">
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            Ваш Арсенал
+            Your Arsenal
           </h2>
           <p className="text-foreground/70">
-            Продукты, которые у вас уже есть:
+            Products you already own:
           </p>
 
           {ownedProducts.length > 0 ? (
@@ -40,13 +40,13 @@ const Products = () => {
                   <div className="aspect-square rounded-lg overflow-hidden bg-accent">
                     <img
                       src={product.image}
-                      alt={product.nameRu}
+                      alt={product.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
                     <h3 className="font-heading font-medium text-sm">
-                      {product.nameRu}
+                      {product.name}
                     </h3>
                     <p className="text-xs text-muted-foreground mt-1">
                       {product.price}
@@ -58,7 +58,7 @@ const Products = () => {
           ) : (
             <Card className="p-8 text-center">
               <p className="text-muted-foreground">
-                У вас пока нет продуктов Spring Sisters
+                You don't have any Spring Sisters products yet
               </p>
             </Card>
           )}
@@ -67,10 +67,10 @@ const Products = () => {
         {/* Discover Section */}
         <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            Откройте для Себя
+            Discover More
           </h2>
           <p className="text-foreground/70">
-            Исследуйте полную коллекцию Spring Sisters
+            Explore the complete Spring Sisters collection
           </p>
 
           <Button
@@ -78,7 +78,7 @@ const Products = () => {
             onClick={() => navigate('/catalog')}
             className="w-full h-14 text-base rounded-full mt-4"
           >
-            Перейти в Каталог
+            Go to Catalog
           </Button>
         </section>
       </div>

@@ -17,6 +17,7 @@ import Guide from "./pages/Guide";
 import Article from "./pages/Article";
 import Products from "./pages/Products";
 import ProductCatalog from "./pages/ProductCatalog";
+import ProductDetail from "./pages/ProductDetail";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/article/:id" element={<Article />} />
             <Route path="/products" element={<Products />} />
             <Route path="/catalog" element={<ProductCatalog />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -16,28 +16,41 @@ const Today = () => {
   const phase = getCurrentPhase();
   const day = getCurrentDay();
 
-  const getRitual = () => {
+  const getRitualSteps = () => {
     const hasSerumTrio = userData.ownedProducts.includes('serum-trio');
     const hasCleanser = userData.ownedProducts.includes('cleanser');
     const hasEyeCream = userData.ownedProducts.includes('eye-cream');
     const hasMoisturizer = userData.ownedProducts.includes('moisturizer');
 
-    const steps = [];
-    if (hasCleanser) steps.push('Gentle Cleanser');
-    
-    if (hasSerumTrio) {
-      const phaseSerum = {
-        calm: '💙 Calm & Renew Serum',
-        glow: '✨ Glow & Energize Serum',
-        balance: '🌿 Balance & Clarify Serum'
-      };
-      steps.push(phaseSerum[phase]);
-    }
-    
-    if (hasEyeCream) steps.push('Eye Cream');
-    if (hasMoisturizer) steps.push('Daily Moisturizer');
+    const allSteps = [
+      {
+        number: 1,
+        name: 'Spring Harmony Gentle Cleanser',
+        purpose: 'Creates a clean, balanced canvas for your treatment products.',
+        owned: hasCleanser,
+      },
+      {
+        number: 2,
+        name: phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum',
+        purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
+        owned: hasSerumTrio,
+        isPhaseProduct: true,
+      },
+      {
+        number: 3,
+        name: 'Spring Harmony Eye Cream',
+        purpose: 'Reduces puffiness and fine lines around your eyes.',
+        owned: hasEyeCream,
+      },
+      {
+        number: 4,
+        name: 'Spring Harmony Daily Moisturizer',
+        purpose: 'Seals in hydration and protects your skin barrier all day long.',
+        owned: hasMoisturizer,
+      },
+    ];
 
-    return steps.length > 0 ? steps : ['Start building your collection to see personalized rituals!'];
+    return allSteps;
   };
 
   return (
@@ -64,16 +77,35 @@ const Today = () => {
             <CardDescription>Morning Routine</CardDescription>
           </CardHeader>
           <CardContent>
-            <ol className="space-y-3">
-              {getRitual().map((step, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className="font-semibold text-primary min-w-[24px]">
-                    {index + 1}.
-                  </span>
-                  <span className="text-foreground/90">{step}</span>
-                </li>
+            <div className="space-y-3">
+              {getRitualSteps().map((step) => (
+                <Card
+                  key={step.number}
+                  className={`p-4 ${!step.owned ? 'opacity-50 border-dashed' : 'border-solid'}`}
+                >
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span className="font-semibold text-primary">{step.number}</span>
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className={`font-heading font-medium text-base mb-1 ${step.isPhaseProduct ? 'text-primary' : ''}`}>
+                        {step.name}
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        Why: {step.purpose}
+                      </p>
+                      {!step.owned && (
+                        <button className="text-xs text-primary mt-2 hover:underline">
+                          Learn More →
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </Card>
               ))}
-            </ol>
+            </div>
           </CardContent>
         </Card>
 
