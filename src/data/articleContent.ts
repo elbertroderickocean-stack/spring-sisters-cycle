@@ -10,13 +10,13 @@ export const articles: Record<string, Article> = {
     id: 'mission',
     title: 'Our Mission: From Chaos to Harmony',
     heroImage: '/images/mission-hero.jpg',
-    bodyText: "The modern woman's bathroom shelf is often a 'graveyard of bottles'—products bought on impulse that promised miracles but failed to deliver. She often blames herself, not realizing the problem isn't her skin, but an outdated, one-size-fits-all approach. Spring Sisters was born to replace this chaos with clarity. We provide an intuitive, effective system that works in harmony with your body's natural rhythm, giving you back control and confidence."
+    bodyText: "The modern woman's bathroom shelf is often a 'graveyard of bottles.' We believe beauty is not a fight against your cycles, but a dance in harmony with them. When you understand your rhythm, you stop blaming yourself and start understanding yourself. Our mission is to restore that harmony through knowledge, ritual, and a system that finally makes sense."
   },
   'lines': {
     id: 'lines',
-    title: 'Our Three Lines: A Complete Ecosystem',
+    title: 'Our Ecosystem: The Sun, The Planets, and The Meteorites',
     heroImage: '/images/lines-hero.jpg',
-    bodyText: "Our philosophy is built on three pillars. The Bloom Cycle™ Line is our intelligent core, the 'variables' that adapt to your cycle. The Spring Harmony™ Line is our reliable foundation, the 'constants' that support your skin every day. The Precision Care™ Line is our 'emergency toolkit,' the surgical instruments for solving specific, acute problems. Together, they form a complete, synergistic system for your skin's health."
+    bodyText: "Our system works like an orbit.\n\n☀️ The Spring Harmony™ Line is The Sun. It is the stable, gravitational center of your routine. These are the constants—your cleanser, moisturizer, and eye cream—that provide balance and protection every single day, regardless of your cycle. Cycle changes. Harmony stays.\n\n🌙 The Bloom Cycle™ Line is The Planets. These are the variables, moving in predictable orbits. This is the intelligent heart of our system—our serums, masks, and peels that adapt to your hormonal phases, working ahead of the curve to prevent problems before they start. Your skin has phases. Now your care does too.\n\n⚡ The Precision Care™ Line is The Meteorites. These are the surgical tools, the instant problem-solvers. They appear exactly when needed to handle an acute issue, like a sudden breakout or irritation. They are not for every day; they are for targeted, powerful intervention. When your skin calls for help—precision answers."
   },
   'phase-calm': {
     id: 'phase-calm',
