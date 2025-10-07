@@ -10,76 +10,131 @@ const Products = () => {
   const navigate = useNavigate();
   const { userData } = useUser();
 
-  const ownedProducts = products.filter((product) =>
-    userData.ownedProducts.includes(product.id)
+  // Group products by line
+  const harmonyProducts = products.filter((p) => p.line === 'harmony');
+  const bloomProducts = products.filter((p) => p.line === 'bloom');
+  const precisionProducts = products.filter((p) => p.line === 'precision');
+
+  // Get owned products for each line
+  const ownedHarmony = harmonyProducts.filter((p) =>
+    userData.ownedProducts.includes(p.id)
+  );
+  const ownedBloom = bloomProducts.filter((p) =>
+    userData.ownedProducts.includes(p.id)
+  );
+  const ownedPrecision = precisionProducts.filter((p) =>
+    userData.ownedProducts.includes(p.id)
+  );
+
+  const renderProductCard = (product: typeof products[0]) => (
+    <Card
+      key={product.id}
+      className="p-4 space-y-3 hover:shadow-lg transition-shadow cursor-pointer"
+      onClick={() => navigate(`/product/${product.id}`)}
+    >
+      <div className="aspect-square rounded-lg overflow-hidden bg-accent">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div>
+        <h3 className="font-heading font-medium text-sm">
+          {product.name}
+        </h3>
+        <p className="text-xs text-muted-foreground mt-1">
+          {product.price}
+        </p>
+      </div>
+    </Card>
+  );
+
+  const renderEmptyState = (
+    title: string,
+    message: string,
+    buttonText: string,
+    lineFilter: string
+  ) => (
+    <Card className="p-8 text-center space-y-4 bg-accent/30">
+      <p className="text-foreground/70 leading-relaxed">
+        {message}
+      </p>
+      <Button
+        size="lg"
+        onClick={() => navigate('/catalog')}
+        className="rounded-full"
+      >
+        {buttonText}
+      </Button>
+    </Card>
   );
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <div className="max-w-3xl mx-auto px-6 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-6 py-8 space-y-10">
         <h1 className="text-4xl font-heading font-semibold text-primary animate-fade-in">
           My Products
         </h1>
 
-        {/* User's Arsenal Section */}
+        {/* The Spring Harmony™ Collection */}
         <section className="space-y-4 animate-slide-up">
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            Your Arsenal
+            The Spring Harmony™ Collection
           </h2>
-          <p className="text-foreground/70">
-            Products you already own:
-          </p>
-
-          {ownedProducts.length > 0 ? (
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-              {ownedProducts.map((product) => (
-                <Card
-                  key={product.id}
-                  className="min-w-[200px] p-4 space-y-3 hover:shadow-lg transition-shadow"
-                >
-                  <div className="aspect-square rounded-lg overflow-hidden bg-accent">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-heading font-medium text-sm">
-                      {product.name}
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {product.price}
-                    </p>
-                  </div>
-                </Card>
-              ))}
+          
+          {ownedHarmony.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4">
+              {ownedHarmony.map(renderProductCard)}
             </div>
           ) : (
-            <Card className="p-8 text-center">
-              <p className="text-muted-foreground">
-                You don't have any Spring Sisters products yet
-              </p>
-            </Card>
+            renderEmptyState(
+              'The Spring Harmony™ Collection',
+              'Your Harmony collection is waiting. Discover the foundational products that provide balance and stability every day.',
+              'Discover Harmony',
+              'harmony'
+            )
           )}
         </section>
 
-        {/* Discover Section */}
+        {/* The Bloom Cycle™ Collection */}
         <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            Discover More
+            The Bloom Cycle™ Collection
           </h2>
-          <p className="text-foreground/70">
-            Explore the complete Spring Sisters collection
-          </p>
+          
+          {ownedBloom.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4">
+              {ownedBloom.map(renderProductCard)}
+            </div>
+          ) : (
+            renderEmptyState(
+              'The Bloom Cycle™ Collection',
+              'Your Bloom Cycle collection awaits. Explore products designed to sync with your natural rhythm and honor every phase.',
+              'Discover Bloom Cycle',
+              'bloom'
+            )
+          )}
+        </section>
 
-          <Button
-            size="lg"
-            onClick={() => navigate('/catalog')}
-            className="w-full h-14 text-base rounded-full mt-4"
-          >
-            Go to Catalog
-          </Button>
+        {/* The Precision Care™ Collection */}
+        <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <h2 className="text-2xl font-heading font-medium text-foreground">
+            The Precision Care™ Collection
+          </h2>
+          
+          {ownedPrecision.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4">
+              {ownedPrecision.map(renderProductCard)}
+            </div>
+          ) : (
+            renderEmptyState(
+              'The Precision Care™ Collection',
+              'Your Precision Care collection is ready. Discover targeted solutions with powerful actives for your specific skin concerns.',
+              'Discover Precision Care',
+              'precision'
+            )
+          )}
         </section>
       </div>
 
