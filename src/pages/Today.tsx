@@ -33,12 +33,42 @@ const Today = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
+  const phaseTagline = phase === 'calm' ? 'A day for calm reflection' : phase === 'glow' ? 'Your day to shine' : 'A day to find your balance';
   
   const getNextPhaseInfo = () => {
     const cycleLength = userData.cycleLength;
     const daysUntilNextPhase = phase === 'calm' ? (8 - day) : phase === 'glow' ? (Math.floor(cycleLength / 2) + 1 - day) : (cycleLength - day + 1);
     const nextPhase = phase === 'calm' ? 'Glow & Energize' : phase === 'glow' ? 'Balance & Clarify' : 'Calm & Renew';
     return { daysUntilNextPhase, nextPhase };
+  };
+
+  const getPhaseProgress = () => {
+    const cycleLength = userData.cycleLength;
+    let phaseStartDay, phaseEndDay;
+    
+    if (phase === 'calm') {
+      phaseStartDay = 1;
+      phaseEndDay = 7;
+    } else if (phase === 'glow') {
+      phaseStartDay = 8;
+      phaseEndDay = Math.floor(cycleLength / 2);
+    } else {
+      phaseStartDay = Math.floor(cycleLength / 2) + 1;
+      phaseEndDay = cycleLength;
+    }
+    
+    const daysInPhase = phaseEndDay - phaseStartDay + 1;
+    const dayInPhase = day - phaseStartDay + 1;
+    const progressPercentage = (dayInPhase / daysInPhase) * 100;
+    
+    return { progressPercentage, daysInPhase, dayInPhase };
+  };
+
+  const getNextPhaseColor = () => {
+    const nextPhase = phase === 'calm' ? 'glow' : phase === 'glow' ? 'balance' : 'calm';
+    if (nextPhase === 'calm') return 'hsl(200 50% 60%)';
+    if (nextPhase === 'glow') return 'hsl(30 90% 60%)';
+    return 'hsl(120 40% 50%)';
   };
 
   const getRitualSteps = () => {
@@ -218,6 +248,8 @@ const Today = () => {
 
   const suggestion = getSmartSuggestion();
   const { daysUntilNextPhase, nextPhase } = getNextPhaseInfo();
+  const { progressPercentage } = getPhaseProgress();
+  const nextPhaseColor = getNextPhaseColor();
 
   const getPrecisionProducts = () => {
     const precisionProducts = [
@@ -245,32 +277,44 @@ const Today = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
-        {/* Module 1: Your Current Phase - REDESIGNED */}
+        {/* Module 1: The Living Banner */}
         <div className="space-y-3 animate-fade-in">
           <h1 className="text-3xl font-heading font-semibold">
             Hello, {userData.name || 'Beautiful'}!
           </h1>
           
-          {/* Large Clickable Phase Banner with Gradient */}
+          {/* Large Clickable Phase Banner with Gradient & Transition Bar */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className={`w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg phase-gradient-${phase} border border-white/20`}
+            className={`relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg phase-gradient-${phase} border border-white/20 overflow-hidden`}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-6">
               <div className="text-left flex-1">
-                <div className="text-5xl font-heading font-bold mb-2 text-foreground">
+                <div className="text-5xl font-heading font-bold mb-1 text-foreground">
                   Day {day}
                 </div>
-                <div className="text-sm text-foreground/70">
-                  Transitioning in {daysUntilNextPhase} {daysUntilNextPhase === 1 ? 'day' : 'days'}: Get ready for your '{nextPhase}' phase.
+                <div className="text-sm text-foreground/70 italic">
+                  {phaseTagline}
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-foreground">
+              <div className="flex items-center gap-3 text-foreground">
                 <span className="text-xl font-heading font-semibold">
                   {phaseName}
                 </span>
                 <ChevronRight className="h-6 w-6" />
               </div>
+            </div>
+            
+            {/* Transition Progress Bar */}
+            <div className="absolute bottom-0 left-0 right-0 h-2 bg-white/20">
+              <div 
+                className="h-full transition-all duration-500 ease-out"
+                style={{
+                  width: `${progressPercentage}%`,
+                  background: `linear-gradient(to right, currentColor ${Math.max(0, progressPercentage - 10)}%, ${nextPhaseColor} 100%)`,
+                  color: phase === 'calm' ? 'hsl(200 50% 60%)' : phase === 'glow' ? 'hsl(30 90% 60%)' : 'hsl(120 40% 50%)'
+                }}
+              />
             </div>
           </button>
         </div>
