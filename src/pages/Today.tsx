@@ -323,14 +323,14 @@ const Today = () => {
           >
             <div className="flex items-center justify-between mb-6">
               <div className="text-left flex-1">
-                <div className="text-5xl font-heading font-bold mb-1 text-foreground">
+                <div className="text-5xl font-heading font-bold mb-1 text-white drop-shadow-sm">
                   Day {day}
                 </div>
-                <div className="text-sm text-foreground/70 italic">
+                <div className="text-sm text-white/90 italic">
                   {dailyWhisper}
                 </div>
               </div>
-              <div className="flex items-center gap-3 text-foreground">
+              <div className="flex items-center gap-3 text-white">
                 <span className="text-xl font-heading font-semibold">
                   {phaseName}
                 </span>
