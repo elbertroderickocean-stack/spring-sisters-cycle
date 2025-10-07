@@ -20,6 +20,7 @@ import Article from "./pages/Article";
 import Products from "./pages/Products";
 import ProductCatalog from "./pages/ProductCatalog";
 import ProductDetail from "./pages/ProductDetail";
+import Sisterhood from "./pages/Sisterhood";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/products" element={<Products />} />
             <Route path="/catalog" element={<ProductCatalog />} />
             <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/sisterhood" element={<Sisterhood />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

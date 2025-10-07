@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useUser } from '@/contexts/UserContext';
 import { BottomNav } from '@/components/BottomNav';
 import { User as UserIcon, Calendar, Droplet, RotateCcw } from 'lucide-react';
+import { products } from '@/data/productData';
 
 const Profile = () => {
   const { userData, getCurrentDay, updateUserData } = useUser();
@@ -88,6 +89,23 @@ const Profile = () => {
               {userData.ownedProducts.length} product{userData.ownedProducts.length !== 1 ? 's' : ''} in your collection
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            {userData.ownedProducts.length > 0 ? (
+              <ul className="space-y-2">
+                {userData.ownedProducts.map((productId) => {
+                  const product = products.find((p) => p.id === productId);
+                  return (
+                    <li key={productId} className="flex items-center gap-2">
+                      <span className="text-primary">•</span>
+                      <span className="text-base">{product?.name || productId}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground">No products in your collection yet.</p>
+            )}
+          </CardContent>
         </Card>
 
         <Card className="animate-slide-up border-destructive/50" style={{ animationDelay: '0.3s' }}>

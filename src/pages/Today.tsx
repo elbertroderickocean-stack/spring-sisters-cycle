@@ -4,6 +4,7 @@ import { useUser } from '@/contexts/UserContext';
 import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun, Zap, FlaskConical, Plane, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 
@@ -417,35 +418,44 @@ const Today = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {phaseInsights[phase].map((insight, index) => {
-                const IconComponent = insight.icon;
-                return (
-                  <div 
-                    key={index} 
-                    className="flex gap-4 items-start"
-                  >
-                    <div className="flex-shrink-0">
-                      <div 
-                        className="w-12 h-12 rounded-full flex items-center justify-center"
-                        style={{ backgroundColor: `${insight.color}20` }}
-                      >
-                        <IconComponent 
-                          className="h-6 w-6" 
-                          style={{ color: insight.color }}
-                        />
+            <Carousel className="w-full">
+              <CarouselContent>
+                {phaseInsights[phase].map((insight, index) => {
+                  const IconComponent = insight.icon;
+                  return (
+                    <CarouselItem key={index}>
+                      <div className="flex gap-4 items-start p-2">
+                        <div className="flex-shrink-0">
+                          <div 
+                            className="w-12 h-12 rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: `${insight.color}20` }}
+                          >
+                            <IconComponent 
+                              className="h-6 w-6" 
+                              style={{ color: insight.color }}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <h4 className="font-semibold text-foreground">{insight.title}</h4>
+                          <p className="text-sm text-foreground/80 leading-relaxed">
+                            {insight.text}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex-1 space-y-1">
-                      <h4 className="font-semibold text-foreground">{insight.title}</h4>
-                      <p className="text-sm text-foreground/80 leading-relaxed">
-                        {insight.text}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+              <div className="flex justify-center gap-2 mt-4">
+                {phaseInsights[phase].map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-2 h-2 rounded-full bg-foreground/20"
+                  />
+                ))}
+              </div>
+            </Carousel>
           </CardContent>
         </Card>
 

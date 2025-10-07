@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Package, User } from 'lucide-react';
+import { Home, BookOpen, Package, User, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseType } from '@/contexts/UserContext';
@@ -9,6 +9,7 @@ const navItems = [
   { path: '/today', label: 'Today', icon: Home },
   { path: '/guide', label: 'Guide', icon: BookOpen },
   { path: '/products', label: 'Products', icon: Package },
+  { path: '/sisterhood', label: 'Sisterhood', icon: Users },
   { path: '/profile', label: 'Profile', icon: User },
 ];
 
