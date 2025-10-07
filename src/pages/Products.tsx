@@ -136,6 +136,25 @@ const Products = () => {
             )
           )}
         </section>
+
+        {/* Discover More Section */}
+        <section className="space-y-4 animate-slide-up pt-6" style={{ animationDelay: '0.3s' }}>
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl font-heading font-medium text-foreground">
+              Discover More
+            </h2>
+            <p className="text-muted-foreground">
+              Explore the complete Spring Sisters collection
+            </p>
+            <Button
+              size="lg"
+              onClick={() => navigate('/catalog')}
+              className="rounded-full w-full max-w-md mx-auto"
+            >
+              Go to Catalog
+            </Button>
+          </div>
+        </section>
       </div>
 
       <BottomNav />

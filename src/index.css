@@ -41,15 +41,18 @@ All colors MUST be HSL.
 
     --radius: 1rem;
     
-    /* Phase-specific colors */
-    --phase-calm: 200 25% 82%;
-    --phase-calm-foreground: 200 50% 25%;
+    /* Phase-specific colors - solid backgrounds */
+    --phase-calm: 200 25% 82%; /* #AEC6CF */
+    --phase-calm-solid: 203 41% 74%; /* #AEC6CF in HSL */
+    --phase-calm-foreground: 0 0% 100%; /* White text */
     
-    --phase-glow: 30 100% 87%;
-    --phase-glow-foreground: 30 80% 30%;
+    --phase-glow: 28 100% 86%; /* #FFDAB9 in HSL */
+    --phase-glow-solid: 28 100% 86%; /* #FFDAB9 */
+    --phase-glow-foreground: 0 0% 100%; /* White text */
     
-    --phase-balance: 120 15% 70%;
-    --phase-balance-foreground: 120 30% 25%;
+    --phase-balance: 120 12% 69%; /* #B2C2B2 in HSL */
+    --phase-balance-solid: 120 12% 69%; /* #B2C2B2 */
+    --phase-balance-foreground: 0 0% 100%; /* White text */
     
     /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(30 20% 97%) 0%, hsl(30 25% 95%) 100%);
@@ -112,13 +115,16 @@ All colors MUST be HSL.
     --ring: 0 0% 80%;
     
     --phase-calm: 200 30% 50%;
-    --phase-calm-foreground: 200 25% 90%;
+    --phase-calm-solid: 203 41% 60%;
+    --phase-calm-foreground: 0 0% 100%;
     
     --phase-glow: 30 80% 55%;
-    --phase-glow-foreground: 30 100% 95%;
+    --phase-glow-solid: 28 100% 70%;
+    --phase-glow-foreground: 0 0% 100%;
     
     --phase-balance: 120 20% 50%;
-    --phase-balance-foreground: 120 15% 90%;
+    --phase-balance-solid: 120 12% 60%;
+    --phase-balance-foreground: 0 0% 100%;
   }
 }
 
@@ -159,14 +165,14 @@ All colors MUST be HSL.
   }
   
   .phase-calm {
-    @apply bg-[hsl(var(--phase-calm))] text-[hsl(var(--phase-calm-foreground))];
+    @apply bg-[hsl(var(--phase-calm-solid))] text-[hsl(var(--phase-calm-foreground))];
   }
   
   .phase-glow {
-    @apply bg-[hsl(var(--phase-glow))] text-[hsl(var(--phase-glow-foreground))];
+    @apply bg-[hsl(var(--phase-glow-solid))] text-[hsl(var(--phase-glow-foreground))];
   }
   
   .phase-balance {
-    @apply bg-[hsl(var(--phase-balance))] text-[hsl(var(--phase-balance-foreground))];
+    @apply bg-[hsl(var(--phase-balance-solid))] text-[hsl(var(--phase-balance-foreground))];
   }
 }

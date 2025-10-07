@@ -316,21 +316,17 @@ const Today = () => {
             Hello, {userData.name || 'Beautiful'}!
           </h1>
           
-          {/* Large Clickable Phase Banner with Gradient & Transition Bar */}
+          {/* Large Clickable Phase Banner with Solid Color & Transition Bar */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className={`relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg border-none overflow-hidden phase-gradient-${phase}`}
+            className={`relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg border-none overflow-hidden phase-${phase}`}
           >
             <div className="flex items-center justify-between mb-6">
               <div className="text-left flex-1">
                 <div className="text-5xl font-heading font-bold mb-1 text-white drop-shadow-sm">
                   Day {day}
                 </div>
-                <div className="text-sm font-medium" style={{ 
-                  color: phase === 'calm' ? 'hsl(200 50% 25%)' : 
-                         phase === 'glow' ? 'hsl(30 80% 30%)' : 
-                         'hsl(120 30% 25%)'
-                }}>
+                <div className="text-sm font-medium text-white/90">
                   {dailyWhisper}
                 </div>
               </div>
