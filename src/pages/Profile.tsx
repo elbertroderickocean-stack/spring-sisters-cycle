@@ -1,11 +1,29 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useUser } from '@/contexts/UserContext';
 import { BottomNav } from '@/components/BottomNav';
-import { User as UserIcon, Calendar, Droplet } from 'lucide-react';
+import { User as UserIcon, Calendar, Droplet, RotateCcw } from 'lucide-react';
 
 const Profile = () => {
-  const { userData, getCurrentDay } = useUser();
+  const { userData, getCurrentDay, updateUserData } = useUser();
+  const navigate = useNavigate();
+
+  const handleStartOver = () => {
+    // Reset all user data
+    updateUserData({
+      name: '',
+      email: '',
+      lastPeriodDate: null,
+      cycleLength: 28,
+      ageRange: '',
+      skinType: '',
+      ownedProducts: [],
+    });
+    // Navigate back to splash screen
+    navigate('/');
+  };
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -70,6 +88,27 @@ const Profile = () => {
               {userData.ownedProducts.length} product{userData.ownedProducts.length !== 1 ? 's' : ''} in your collection
             </CardDescription>
           </CardHeader>
+        </Card>
+
+        <Card className="animate-slide-up border-destructive/50" style={{ animationDelay: '0.3s' }}>
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <RotateCcw className="h-6 w-6 text-destructive" />
+              <CardTitle className="font-heading text-2xl">Reset Application</CardTitle>
+            </div>
+            <CardDescription>
+              Start fresh and go through the onboarding process again
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={handleStartOver}
+              variant="destructive"
+              className="w-full"
+            >
+              Start Over / Reset
+            </Button>
+          </CardContent>
         </Card>
       </div>
 
