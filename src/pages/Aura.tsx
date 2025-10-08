@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Send, Sparkles } from 'lucide-react';
+import { ArrowLeft, Send, Sparkles, Plus, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BottomNav } from '@/components/BottomNav';
@@ -182,7 +182,18 @@ const Aura = () => {
       </main>
 
       <div className="fixed bottom-20 left-0 right-0 bg-background border-t border-border p-4">
-        <div className="max-w-2xl mx-auto flex gap-2">
+        <div className="max-w-2xl mx-auto flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => toast({
+              title: "Attachments coming soon",
+              description: "We're working on letting you share images with Aura!"
+            })}
+            className="shrink-0"
+          >
+            <Plus className="h-5 w-5" />
+          </Button>
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -191,13 +202,28 @@ const Aura = () => {
             disabled={isLoading}
             className="flex-1"
           />
-          <Button
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading}
-            size="icon"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
+          {input.trim() ? (
+            <Button
+              onClick={handleSend}
+              disabled={isLoading}
+              size="icon"
+              className="shrink-0"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => toast({
+                title: "Voice mode is coming soon!",
+                description: "Aura is still learning to recognize your beautiful voice."
+              })}
+              className="shrink-0"
+            >
+              <Mic className="h-5 w-5" />
+            </Button>
+          )}
         </div>
       </div>
 
