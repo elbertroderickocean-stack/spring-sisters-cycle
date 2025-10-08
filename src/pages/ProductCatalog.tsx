@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import { products } from '@/data/productData';
 
 const ProductCatalog = () => {
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState<'bloom' | 'harmony' | 'precision' | null>(null);
 
   const handleBuy = (productName: string) => {
     alert(`Redirecting to the online store to purchase ${productName}`);
@@ -89,9 +91,18 @@ const ProductCatalog = () => {
         {/* Bloom Cycle Section */}
         <section className="space-y-6">
           <div className="space-y-2">
-            <h2 className="text-3xl font-heading font-semibold text-primary">
-              The Bloom Cycle™
-            </h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-3xl font-heading font-semibold text-primary">
+                The Bloom Cycle™
+              </h2>
+              <button
+                onClick={() => setOpenModal('bloom')}
+                className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
+                aria-label="Learn about The Bloom Cycle"
+              >
+                <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+              </button>
+            </div>
             <p className="text-muted-foreground">Our Core Innovation</p>
           </div>
           <div className="space-y-6">
@@ -102,9 +113,18 @@ const ProductCatalog = () => {
         {/* Spring Harmony Section */}
         <section className="space-y-6">
           <div className="space-y-2">
-            <h2 className="text-3xl font-heading font-semibold text-primary">
-              The Spring Harmony™
-            </h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-3xl font-heading font-semibold text-primary">
+                The Spring Harmony™
+              </h2>
+              <button
+                onClick={() => setOpenModal('harmony')}
+                className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
+                aria-label="Learn about The Spring Harmony"
+              >
+                <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+              </button>
+            </div>
             <p className="text-muted-foreground">Your Daily Foundation</p>
           </div>
           <div className="space-y-6">
@@ -115,9 +135,18 @@ const ProductCatalog = () => {
         {/* Precision Care Section */}
         <section className="space-y-6">
           <div className="space-y-2">
-            <h2 className="text-3xl font-heading font-semibold text-primary">
-              The Precision Care™
-            </h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-3xl font-heading font-semibold text-primary">
+                The Precision Care™
+              </h2>
+              <button
+                onClick={() => setOpenModal('precision')}
+                className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
+                aria-label="Learn about The Precision Care"
+              >
+                <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+              </button>
+            </div>
             <p className="text-muted-foreground">Your Targeted Toolkit</p>
           </div>
           <div className="space-y-6">
@@ -125,6 +154,64 @@ const ProductCatalog = () => {
           </div>
         </section>
       </div>
+
+      {/* Aura Explains Modals */}
+      <Dialog open={openModal === 'bloom'} onOpenChange={() => setOpenModal(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
+              <Sparkles className="h-6 w-6" />
+              Aura explains The Bloom Cycle™
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-foreground/90 leading-relaxed">
+              "Hello! This is our intelligent core. Think of these products as the planets in our system, moving in a predictable rhythm. They adapt to your skin's hormonal phases, working ahead of the curve to bring you harmony through change."
+            </p>
+            <Button onClick={() => setOpenModal(null)} className="w-full">
+              Got it!
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={openModal === 'harmony'} onOpenChange={() => setOpenModal(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
+              <Sparkles className="h-6 w-6" />
+              Aura explains The Spring Harmony™
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-foreground/90 leading-relaxed">
+              "This is the foundation of your ritual, our sun. These are the constants that provide balance and protection every single day, creating the perfect stable environment for your cyclical products to work their magic."
+            </p>
+            <Button onClick={() => setOpenModal(null)} className="w-full">
+              Got it!
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={openModal === 'precision'} onOpenChange={() => setOpenModal(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
+              <Sparkles className="h-6 w-6" />
+              Aura explains The Precision Care™
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-foreground/90 leading-relaxed">
+              "This is your 'emergency toolkit,' our meteorites. These are not for every day. They are highly potent, surgical tools for solving specific, acute problems when your skin calls for help. Use them when you need a powerful, targeted solution."
+            </p>
+            <Button onClick={() => setOpenModal(null)} className="w-full">
+              Got it!
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
