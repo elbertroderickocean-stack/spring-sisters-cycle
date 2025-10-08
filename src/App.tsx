@@ -21,6 +21,7 @@ import Article from "./pages/Article";
 import Products from "./pages/Products";
 import ProductCatalog from "./pages/ProductCatalog";
 import ProductDetail from "./pages/ProductDetail";
+import Scanner from "./pages/Scanner";
 import Sisterhood from "./pages/Sisterhood";
 import Profile from "./pages/Profile";
 import Aura from "./pages/Aura";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/products" element={<Products />} />
             <Route path="/catalog" element={<ProductCatalog />} />
             <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/scanner" element={<Scanner />} />
             <Route path="/sisterhood" element={<Sisterhood />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/aura" element={<Aura />} />

@@ -2,6 +2,12 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export type PhaseType = 'calm' | 'glow' | 'balance';
 
+export interface ScannedProduct {
+  name: string;
+  brand: string;
+  analysis: string;
+}
+
 export interface UserData {
   name: string;
   email: string;
@@ -11,6 +17,7 @@ export interface UserData {
   skinType: string;
   skinConcerns: string[];
   ownedProducts: string[];
+  scannedProducts: ScannedProduct[];
 }
 
 interface UserContextType {
@@ -18,6 +25,7 @@ interface UserContextType {
   updateUserData: (data: Partial<UserData>) => void;
   getCurrentPhase: () => PhaseType;
   getCurrentDay: () => number;
+  addScannedProduct: (product: ScannedProduct) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -31,6 +39,7 @@ const defaultUserData: UserData = {
   skinType: '',
   skinConcerns: [],
   ownedProducts: [],
+  scannedProducts: [],
 };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -38,6 +47,13 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const updateUserData = (data: Partial<UserData>) => {
     setUserData((prev) => ({ ...prev, ...data }));
+  };
+
+  const addScannedProduct = (product: ScannedProduct) => {
+    setUserData((prev) => ({
+      ...prev,
+      scannedProducts: [...prev.scannedProducts, product],
+    }));
   };
 
   const getCurrentDay = (): number => {
@@ -66,7 +82,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <UserContext.Provider value={{ userData, updateUserData, getCurrentPhase, getCurrentDay }}>
+    <UserContext.Provider value={{ userData, updateUserData, getCurrentPhase, getCurrentDay, addScannedProduct }}>
       {children}
     </UserContext.Provider>
   );

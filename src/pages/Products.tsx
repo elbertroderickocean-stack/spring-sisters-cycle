@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/BottomNav';
 import { useUser } from '@/contexts/UserContext';
 import { products } from '@/data/productData';
+import { ScanLine, Package } from 'lucide-react';
 
 const Products = () => {
   const navigate = useNavigate();
@@ -137,8 +138,49 @@ const Products = () => {
           )}
         </section>
 
-        {/* Discover More Section */}
+        {/* Your Other Products Section */}
         <section className="space-y-4 animate-slide-up pt-6" style={{ animationDelay: '0.3s' }}>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-heading font-medium text-foreground">
+              Your Other Products
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              We know you use other great products. Let's make sure they work in harmony with your Spring Sisters ritual.
+            </p>
+          </div>
+
+          {userData.scannedProducts.length > 0 ? (
+            <div className="space-y-3">
+              {userData.scannedProducts.map((product, index) => (
+                <Card key={index} className="p-4 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center">
+                    <Package className="h-6 w-6 text-primary/60" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-heading font-medium text-sm">
+                      {product.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      {product.brand}
+                    </p>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : null}
+
+          <Button
+            size="lg"
+            onClick={() => navigate('/scanner')}
+            className="w-full h-14 text-base rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+          >
+            <ScanLine className="h-5 w-5 mr-2" />
+            Scan a New Product
+          </Button>
+        </section>
+
+        {/* Discover More Section */}
+        <section className="space-y-4 animate-slide-up pt-6" style={{ animationDelay: '0.4s' }}>
           <div className="text-center space-y-3">
             <h2 className="text-2xl font-heading font-medium text-foreground">
               Discover More
