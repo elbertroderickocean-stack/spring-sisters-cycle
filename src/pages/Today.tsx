@@ -2,31 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
+import { DailyPlanModal } from '@/components/DailyPlanModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun, Zap, FlaskConical, Plane, LucideIcon } from 'lucide-react';
+import { Sparkles, Star, ChevronRight, Zap, FlaskConical, Plane, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 
-const phaseInsights = {
-  calm: [
-    { icon: Sparkle, title: "For Your Skin", text: "Your estrogen and progesterone are at their lowest. Your skin barrier is vulnerable. Focus on gentle, nourishing care and avoid harsh exfoliants.", color: "hsl(200 50% 60%)" },
-    { icon: Droplet, title: "For Your Body", text: "Hydration is key during this phase. Try adding a slice of lemon or cucumber to your water to make it more appealing.", color: "hsl(200 50% 50%)" },
-    { icon: Moon, title: "For Your Mind", text: "Your energy may be low. Prioritize rest and consider a calming activity like reading or a warm bath tonight.", color: "hsl(200 50% 70%)" }
-  ],
-  glow: [
-    { icon: Sun, title: "For Your Skin", text: "Your estrogen levels are rising, putting your skin in its 'golden week.' Collagen production is at its peak. Our job is to enhance this natural radiance.", color: "hsl(30 90% 60%)" },
-    { icon: Activity, title: "For Your Body", text: "Your physical energy is at its highest this week. This is the perfect time for high-intensity workouts or trying something new.", color: "hsl(30 90% 50%)" },
-    { icon: Sun, title: "For Your Mind", text: "You may feel more social and creative. Plan that brainstorm or coffee date you've been putting off.", color: "hsl(30 90% 70%)" }
-  ],
-  balance: [
-    { icon: Sparkle, title: "For Your Skin", text: "Your skin may be producing more oil as progesterone rises. Focus on balancing and clarifying products to prevent breakouts.", color: "hsl(120 40% 50%)" },
-    { icon: Heart, title: "For Your Body", text: "Support hormonal balance with leafy greens, whole grains, and magnesium-rich foods like dark chocolate and nuts.", color: "hsl(120 40% 60%)" },
-    { icon: Brain, title: "For Your Mind", text: "You may feel more introspective. Practice mindfulness, journaling, or meditation to maintain balance.", color: "hsl(120 40% 70%)" }
-  ]
-};
 
 const Today = () => {
   const { userData, getCurrentPhase, getCurrentDay } = useUser();
@@ -34,6 +17,7 @@ const Today = () => {
   const phase = getCurrentPhase();
   const day = getCurrentDay();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const { activeWhisper, checkWhispers, dismissWhisper, triggerProTip } = useAuraWhispers();
 
   useEffect(() => {
@@ -489,55 +473,29 @@ const Today = () => {
           </Card>
         )}
 
-        {/* Module 4: Today's Focus */}
-        <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.2s', backgroundColor: '#F5F1E9' }}>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Lightbulb className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading">💡 Today's Focus</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <Carousel className="w-full">
-              <CarouselContent>
-                {phaseInsights[phase].map((insight, index) => {
-                  const IconComponent = insight.icon;
-                  return (
-                    <CarouselItem key={index}>
-                      <div className="flex gap-4 items-start p-2">
-                        <div className="flex-shrink-0">
-                          <div 
-                            className="w-12 h-12 rounded-full flex items-center justify-center"
-                            style={{ backgroundColor: `${insight.color}20` }}
-                          >
-                            <IconComponent 
-                              className="h-6 w-6" 
-                              style={{ color: insight.color }}
-                            />
-                          </div>
-                        </div>
-                        <div className="flex-1 space-y-1">
-                          <h4 className="font-semibold text-foreground">{insight.title}</h4>
-                          <p className="text-sm text-foreground/80 leading-relaxed">
-                            {insight.text}
-                          </p>
-                        </div>
-                      </div>
-                    </CarouselItem>
-                  );
-                })}
-              </CarouselContent>
-              <div className="flex justify-center gap-2 mt-4">
-                {phaseInsights[phase].map((_, index) => (
-                  <div
-                    key={index}
-                    className="w-2 h-2 rounded-full bg-foreground/20"
-                  />
-                ))}
+        {/* Module 4: Aura's Plan for You */}
+        <button
+          onClick={() => setIsPlanModalOpen(true)}
+          className="w-full animate-slide-up shadow-lg rounded-lg p-6 transition-all hover:scale-[1.02] text-left"
+          style={{ animationDelay: '0.2s', backgroundColor: '#EAEAF2' }}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-5 w-5" style={{ color: phaseIconColor }} />
+                <h3 className="text-xl font-heading font-semibold">✨ Aura's Plan for You</h3>
               </div>
-            </Carousel>
-          </CardContent>
-        </Card>
+              <p className="text-foreground/70 text-sm">
+                {phase === 'calm' 
+                  ? "Tap to discover today's rituals for rest and recovery."
+                  : phase === 'glow'
+                  ? "Tap here to harness your peak energy for a truly radiant day."
+                  : "Ready for your daily balancing act? Tap to see Aura's plan."}
+              </p>
+            </div>
+            <ChevronRight className="h-6 w-6 text-foreground/40 flex-shrink-0" />
+          </div>
+        </button>
 
         {/* Module 5: Smart Suggestion */}
         <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.3s', backgroundColor: '#EAEAF2' }}>
@@ -565,6 +523,14 @@ const Today = () => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         phase={phase} 
+      />
+
+      {/* Daily Plan Modal */}
+      <DailyPlanModal
+        isOpen={isPlanModalOpen}
+        onClose={() => setIsPlanModalOpen(false)}
+        phase={phase}
+        day={day}
       />
 
       <BottomNav />
