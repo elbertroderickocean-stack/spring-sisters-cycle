@@ -9,24 +9,35 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 
+interface AnalysisResult {
+  productName: string;
+  theGood: string;
+  thingsToWatch: string;
+  auraSuggestion: string;
+}
+
 interface ScanAnalysisModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  analysisResult: AnalysisResult | null;
   onAddToProducts: () => void;
 }
 
 export const ScanAnalysisModal = ({
   open,
   onOpenChange,
+  analysisResult,
   onAddToProducts,
 }: ScanAnalysisModalProps) => {
   const { addScannedProduct } = useUser();
 
+  if (!analysisResult) return null;
+
   const handleAddToProducts = () => {
     addScannedProduct({
-      name: 'Your Moisturizer',
-      brand: 'Other Brand',
-      analysis: 'Scanned product',
+      name: analysisResult.productName,
+      brand: 'Scanned Product',
+      analysis: `Good: ${analysisResult.theGood}`,
     });
     onAddToProducts();
   };
@@ -45,7 +56,7 @@ export const ScanAnalysisModal = ({
           {/* Product Name */}
           <div className="text-center pb-4 border-b border-border">
             <h3 className="text-xl font-heading font-medium text-foreground">
-              Your Moisturizer
+              {analysisResult.productName}
             </h3>
           </div>
 
@@ -58,8 +69,7 @@ export const ScanAnalysisModal = ({
                   The Good
                 </h4>
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  This is a solid hydrating formula! It contains Glycerin and
-                  Hyaluronic Acid, which are great for basic moisture.
+                  {analysisResult.theGood}
                 </p>
               </div>
             </div>
@@ -74,9 +84,7 @@ export const ScanAnalysisModal = ({
                   Things to Watch Out For
                 </h4>
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  We noticed it contains a high concentration of Denatured
-                  Alcohol. This can be drying for some skin types, especially
-                  during your Calm & Renew phase.
+                  {analysisResult.thingsToWatch}
                 </p>
               </div>
             </div>
@@ -91,14 +99,7 @@ export const ScanAnalysisModal = ({
                   Aura's Suggestion
                 </h4>
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  It's a good daily cream. However, if you ever feel it's not
-                  enough to support your skin's barrier, our{' '}
-                  <span className="font-semibold text-primary">
-                    Spring Harmony Daily Moisturizer
-                  </span>{' '}
-                  was specifically designed without drying alcohols and is
-                  enriched with 5 types of Ceramides to work in perfect synergy
-                  with your cycle.
+                  {analysisResult.auraSuggestion}
                 </p>
               </div>
             </div>
