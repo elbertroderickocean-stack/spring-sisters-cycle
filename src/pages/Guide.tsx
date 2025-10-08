@@ -10,7 +10,8 @@ const guideContent = [
     icon: BookOpen,
     items: [
       { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created Spring Sisters', articleId: 'mission' },
-      { title: 'Our Lines: Bloom Cycle, Harmony, Precision Care Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
+      { title: 'Our Lines: The Orbital System Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
+      { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of Spring Sisters', articleId: 'aura-intro' },
     ]
   },
   {

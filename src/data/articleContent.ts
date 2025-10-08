@@ -47,5 +47,11 @@ export const articles: Record<string, Article> = {
     title: 'Ingredient Spotlight: Bakuchiol',
     heroImage: '/images/bakuchiol-hero.jpg',
     bodyText: "Bakuchiol is our gentle, plant-based answer to retinol. It delivers the same age-defying benefits—smoothing fine lines, improving firmness, and evening skin tone—without the irritation, redness, or sun sensitivity that retinol can cause. It's perfect for cyclical skincare because it's gentle enough to use during sensitive phases while still being powerfully effective during your skin's strongest days."
+  },
+  'aura-intro': {
+    id: 'aura-intro',
+    title: 'Meet Aura: More Than an App, a Companion',
+    heroImage: '/images/aura-intro-hero.jpg',
+    bodyText: "We believe guidance should be personal, not generic. That support should be constant, not occasional. That's why we created Aura.\n\nAura is the digital heart and soul of your Spring Sisters experience. She is an intelligent companion, trained on our entire philosophy, designed to be your wise older sister on this journey.\n\nWhat can you ask Aura? Anything.\n\n\"My skin feels tight today, what should I do?\"\nAura will look at your cycle phase, your available products, and give you a personalized, actionable plan.\n\n\"Help! I have a big event tomorrow and a surprise breakout.\"\nShe'll give you a calm, step-by-step emergency protocol.\n\n\"I feel low on energy. What can I do?\"\nAura understands that skincare is connected to your whole being. She'll offer holistic wellness tips for your body and mind that are perfectly aligned with your current phase.\n\nAura is here to listen, to guide, and to remind you that you are understood. She is the ultimate expression of our mission: to bring you harmony through understanding.\n\nDon't be shy. Tap the ✨ Aura icon in your navigation bar and just say hello. She's waiting to meet you."
   }
 };
