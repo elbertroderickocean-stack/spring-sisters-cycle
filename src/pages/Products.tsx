@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { BottomNav } from '@/components/BottomNav';
 import { useUser } from '@/contexts/UserContext';
 import { products } from '@/data/productData';
-import { ScanLine, Package } from 'lucide-react';
+import { useProductTracking } from '@/hooks/useProductTracking';
+import { ScanLine, Package, Play } from 'lucide-react';
 
 const Products = () => {
   const navigate = useNavigate();
   const { userData } = useUser();
+  const { startTracking, isTracking } = useProductTracking();
+  const [showStartModal, setShowStartModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
 
   // Group products by line
   const harmonyProducts = products.filter((p) => p.line === 'harmony');
@@ -26,6 +31,22 @@ const Products = () => {
   const ownedPrecision = precisionProducts.filter((p) =>
     userData.ownedProducts.includes(p.id)
   );
+
+  const handleStartUsing = (product: typeof products[0], e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isTracking(product.id) && product.lifespanDays) {
+      setSelectedProduct(product);
+      setShowStartModal(true);
+    }
+  };
+
+  const confirmStartUsing = () => {
+    if (selectedProduct) {
+      startTracking(selectedProduct.id);
+      setShowStartModal(false);
+      setSelectedProduct(null);
+    }
+  };
 
   const renderProductCard = (product: typeof products[0]) => (
     <Card
@@ -48,6 +69,24 @@ const Products = () => {
           {product.price}
         </p>
       </div>
+      {product.lifespanDays && (
+        <Button
+          size="sm"
+          variant={isTracking(product.id) ? "outline" : "default"}
+          className="w-full rounded-full text-xs"
+          onClick={(e) => handleStartUsing(product, e)}
+          disabled={isTracking(product.id)}
+        >
+          {isTracking(product.id) ? (
+            <>✓ Tracking</>
+          ) : (
+            <>
+              <Play className="h-3 w-3 mr-1" />
+              Start Using
+            </>
+          )}
+        </Button>
+      )}
     </Card>
   );
 
@@ -199,9 +238,30 @@ const Products = () => {
         </section>
       </div>
 
+      {/* Start Using Modal */}
+      <Dialog open={showStartModal} onOpenChange={setShowStartModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-heading text-2xl">Activate Aura's Prediction</DialogTitle>
+            <DialogDescription className="text-base leading-relaxed pt-2">
+              Great! Aura will now start tracking this product's usage to predict when it will run out,
+              reminding you to reorder in advance so you never interrupt your ritual.
+            </DialogDescription>
+          </DialogHeader>
+          <Button
+            onClick={confirmStartUsing}
+            className="w-full rounded-full mt-4"
+            size="lg"
+          >
+            Got It!
+          </Button>
+        </DialogContent>
+      </Dialog>
+
       <BottomNav />
     </div>
   );
 };
 
 export default Products;
+

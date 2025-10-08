@@ -1,13 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useUser } from '@/contexts/UserContext';
+import { useProductTracking } from './useProductTracking';
 
-export type WhisperType = 'welcome' | 'milestone' | 'protip' | 'transition';
+export type WhisperType = 'welcome' | 'milestone' | 'protip' | 'transition' | 'reorder';
 
 export interface Whisper {
   id: string;
   type: WhisperType;
   message: string;
   phase: 'calm' | 'glow' | 'balance';
+  productId?: string;
 }
 
 const STORAGE_KEYS = {
@@ -19,6 +21,7 @@ const STORAGE_KEYS = {
 
 export const useAuraWhispers = () => {
   const { userData } = useUser();
+  const { getProductsNeedingReorder } = useProductTracking();
   const [activeWhisper, setActiveWhisper] = useState<Whisper | null>(null);
 
   const getCurrentDay = (): number => {
@@ -164,10 +167,36 @@ export const useAuraWhispers = () => {
     });
   }, [userData.lastPeriodDate, userData.cycleLength]);
 
+  const checkReorderReminder = useCallback((): Whisper | null => {
+    const needingReorder = getProductsNeedingReorder();
+    
+    if (needingReorder.length > 0 && !hasShownWhisperToday('reorder')) {
+      const product = needingReorder[0]; // Show whisper for the first product needing reorder
+      const userName = userData.name || 'beautiful';
+      const dayText = product.daysLeft === 1 ? 'about a day' : `about ${product.daysLeft} days`;
+      
+      markWhisperShown('reorder');
+      return {
+        id: `reorder-${Date.now()}`,
+        type: 'reorder',
+        message: `Just a friendly whisper, ${userName}! Your ${product.productName} will likely run out in ${dayText}. Time to order a refill to keep the ritual going. ✨`,
+        phase: getCurrentPhase(),
+        productId: product.productId,
+      };
+    }
+    return null;
+  }, [userData.name, userData.lastPeriodDate, userData.cycleLength, getProductsNeedingReorder]);
+
   const checkWhispers = useCallback(() => {
     if (activeWhisper) return;
 
-    // Priority order: welcome -> milestone -> transition
+    // Priority order: reorder -> welcome -> milestone -> transition
+    const reorder = checkReorderReminder();
+    if (reorder) {
+      setActiveWhisper(reorder);
+      return;
+    }
+
     const welcome = checkWelcomeBack();
     if (welcome) {
       setActiveWhisper(welcome);
@@ -184,7 +213,7 @@ export const useAuraWhispers = () => {
     if (transition) {
       setActiveWhisper(transition);
     }
-  }, [activeWhisper, checkWelcomeBack, checkMilestone, checkTransition]);
+  }, [activeWhisper, checkReorderReminder, checkWelcomeBack, checkMilestone, checkTransition]);
 
   const dismissWhisper = useCallback(() => {
     setActiveWhisper(null);

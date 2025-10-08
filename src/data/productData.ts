@@ -9,6 +9,7 @@ export interface Product {
   howToUse: string;
   keyIngredients: string[];
   ritualPurpose?: string;
+  lifespanDays?: number; // How many days the product typically lasts
 }
 
 export const products: Product[] = [
@@ -23,7 +24,8 @@ export const products: Product[] = [
     price: '$85.00',
     image: '/images/products/serum-trio.jpg',
     line: 'bloom',
-    ritualPurpose: 'Delivers phase-specific active ingredients to match your hormonal needs.'
+    ritualPurpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
+    lifespanDays: 30,
   },
   {
     id: 'mask-trio',
@@ -35,6 +37,7 @@ export const products: Product[] = [
     price: '$78.00',
     image: '/images/products/mask-trio.jpg',
     line: 'bloom',
+    lifespanDays: 90,
   },
 
   // SPRING HARMONY™ LINE
@@ -48,7 +51,8 @@ export const products: Product[] = [
     price: '$32.00',
     image: '/images/products/cleanser.jpg',
     line: 'harmony',
-    ritualPurpose: 'Creates a clean, balanced canvas for your treatment products.'
+    ritualPurpose: 'Creates a clean, balanced canvas for your treatment products.',
+    lifespanDays: 45,
   },
   {
     id: 'moisturizer',
@@ -60,7 +64,8 @@ export const products: Product[] = [
     price: '$48.00',
     image: '/images/products/moisturizer.jpg',
     line: 'harmony',
-    ritualPurpose: 'Seals in hydration and protects your skin barrier all day long.'
+    ritualPurpose: 'Seals in hydration and protects your skin barrier all day long.',
+    lifespanDays: 60,
   },
   {
     id: 'eye-cream',

@@ -27,6 +27,8 @@ import LegacyPoints from "./pages/LegacyPoints";
 import ProductRating from "./pages/ProductRating";
 import RDPanel from "./pages/RDPanel";
 import LegacyFundVote from "./pages/LegacyFundVote";
+import PodChat from "./pages/PodChat";
+import BountyBoard from "./pages/BountyBoard";
 import Profile from "./pages/Profile";
 import Aura from "./pages/Aura";
 import NotFound from "./pages/NotFound";
@@ -64,6 +66,8 @@ const App = () => (
             <Route path="/product-rating" element={<ProductRating />} />
             <Route path="/rd-panel" element={<RDPanel />} />
             <Route path="/legacy-fund-vote" element={<LegacyFundVote />} />
+            <Route path="/pod-chat" element={<PodChat />} />
+            <Route path="/bounty-board" element={<BountyBoard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/aura" element={<Aura />} />
             <Route path="*" element={<NotFound />} />
