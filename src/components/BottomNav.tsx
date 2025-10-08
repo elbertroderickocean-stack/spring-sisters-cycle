@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Package, User, Users } from 'lucide-react';
+import { Home, BookOpen, Package, User, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseType } from '@/contexts/UserContext';
@@ -8,8 +8,8 @@ import { PhaseType } from '@/contexts/UserContext';
 const navItems = [
   { path: '/today', label: 'Today', icon: Home },
   { path: '/guide', label: 'Guide', icon: BookOpen },
+  { path: '/aura', label: 'Aura', icon: Sparkles, isCentral: true },
   { path: '/products', label: 'Products', icon: Package },
-  { path: '/sisterhood', label: 'Sisterhood', icon: Users },
   { path: '/profile', label: 'Profile', icon: User },
 ];
 
@@ -39,6 +39,7 @@ export const BottomNav = () => {
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
+            const isCentral = 'isCentral' in item && item.isCentral;
             
             return (
               <button
@@ -46,13 +47,14 @@ export const BottomNav = () => {
                 onClick={() => navigate(item.path)}
                 className={cn(
                   'flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-lg transition-colors',
+                  isCentral && 'scale-110',
                   isActive 
                     ? '' 
                     : 'text-muted-foreground hover:text-foreground'
                 )}
                 style={isActive ? { color: getPhaseColor(phase) } : {}}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className={cn('h-5 w-5', isCentral && 'h-6 w-6')} />
                 <span className="text-xs font-medium">{item.label}</span>
               </button>
             );

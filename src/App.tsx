@@ -23,6 +23,7 @@ import ProductCatalog from "./pages/ProductCatalog";
 import ProductDetail from "./pages/ProductDetail";
 import Sisterhood from "./pages/Sisterhood";
 import Profile from "./pages/Profile";
+import Aura from "./pages/Aura";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/sisterhood" element={<Sisterhood />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/aura" element={<Aura />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
