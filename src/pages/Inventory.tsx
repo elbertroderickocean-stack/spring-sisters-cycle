@@ -5,6 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useUser } from '@/contexts/UserContext';
 import { Droplet, Sparkles, Eye, FlaskConical } from 'lucide-react';
+import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 
 const products = [
   { id: 'cleanser', name: 'Gentle Cleanser', icon: Droplet },
@@ -19,6 +20,7 @@ const products = [
 const Inventory = () => {
   const navigate = useNavigate();
   const { updateUserData } = useUser();
+  const { triggerProTip } = useAuraWhispers();
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
 
   const toggleProduct = (productId: string) => {
@@ -31,6 +33,20 @@ const Inventory = () => {
 
   const handleNext = () => {
     updateUserData({ ownedProducts: selectedProducts });
+    
+    // Trigger a pro-tip if user added precision products
+    const precisionProductNames: Record<string, string> = {
+      'vitamin-c': 'Vitamin C Concentrate',
+      'ceramide': 'Ceramide Concentrate'
+    };
+    
+    const addedPrecisionProduct = selectedProducts.find(id => precisionProductNames[id]);
+    if (addedPrecisionProduct) {
+      const productName = precisionProductNames[addedPrecisionProduct];
+      // Store the pro-tip to show on the Today page after navigation
+      localStorage.setItem('pending_protip', productName);
+    }
+    
     navigate('/push-notification');
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { Sparkles, Lightbulb, Star, Droplet, Moon, Sparkle, Heart, Dumbbell, Brain, ChevronRight, Activity, Sun, Zap, FlaskConical, Plane, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
+import { AuraWhisper } from '@/components/AuraWhisper';
+import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 
 const phaseInsights = {
   calm: [
@@ -32,6 +34,20 @@ const Today = () => {
   const phase = getCurrentPhase();
   const day = getCurrentDay();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { activeWhisper, checkWhispers, dismissWhisper, triggerProTip } = useAuraWhispers();
+
+  useEffect(() => {
+    // Check for pending pro-tip from onboarding
+    const pendingProTip = localStorage.getItem('pending_protip');
+    if (pendingProTip) {
+      localStorage.removeItem('pending_protip');
+      setTimeout(() => {
+        triggerProTip(pendingProTip);
+      }, 1000);
+    } else {
+      checkWhispers();
+    }
+  }, [checkWhispers, triggerProTip]);
 
   const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
   
@@ -309,6 +325,14 @@ const Today = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
+      {activeWhisper && (
+        <AuraWhisper
+          message={activeWhisper.message}
+          phase={activeWhisper.phase}
+          onClose={dismissWhisper}
+        />
+      )}
+      
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
         {/* Module 1: The Living Banner */}
         <div className="space-y-3 animate-fade-in">
