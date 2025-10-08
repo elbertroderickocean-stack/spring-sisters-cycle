@@ -32,19 +32,19 @@ const Sisterhood = () => {
       icon: Star,
       title: 'Rate Your Products',
       description: 'Give us your honest feedback on your arsenal.',
-      action: () => console.log('Navigate to ratings'),
+      action: () => navigate('/product-rating'),
     },
     {
       icon: FlaskConical,
       title: 'Join the R&D Panel',
       description: 'Vote on our next product. What should we create next?',
-      action: () => console.log('Navigate to R&D survey'),
+      action: () => navigate('/rd-panel'),
     },
     {
       icon: Heart,
       title: 'Vote on the Legacy Fund',
       description: 'Decide where our 1% profit share goes this quarter.',
-      action: () => console.log('Navigate to voting'),
+      action: () => navigate('/legacy-fund-vote'),
     },
   ];
 
@@ -56,30 +56,35 @@ const Sisterhood = () => {
         {/* Header */}
         <h1 className="text-3xl font-heading font-semibold">The Sisterhood Circle</h1>
 
-        {/* Module 1: Your Status */}
-        <Card className="shadow-lg">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Star className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading">Your Status</CardTitle>
-            </div>
-            <CardDescription className="text-lg font-semibold">{userStatus.level}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Legacy Points</span>
-                <span className="font-semibold">
-                  {userStatus.currentPoints} / {userStatus.nextLevelPoints}
-                </span>
+        {/* Module 1: Your Status - Now Clickable */}
+        <button
+          onClick={() => navigate('/legacy-points')}
+          className="w-full text-left"
+        >
+          <Card className="shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Star className="h-5 w-5" style={{ color: phaseIconColor }} />
+                <CardTitle className="font-heading">Your Status</CardTitle>
               </div>
-              <Progress value={progressPercentage} className="h-2" />
-              <p className="text-xs text-muted-foreground">
-                {userStatus.nextLevelPoints - userStatus.currentPoints} points to next level
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+              <CardDescription className="text-lg font-semibold">{userStatus.level}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Legacy Points</span>
+                  <span className="font-semibold">
+                    {userStatus.currentPoints} / {userStatus.nextLevelPoints}
+                  </span>
+                </div>
+                <Progress value={progressPercentage} className="h-2" />
+                <p className="text-xs text-muted-foreground">
+                  {userStatus.nextLevelPoints - userStatus.currentPoints} points to next level
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </button>
 
         {/* Module 2: Contribute & Influence */}
         <Card className="shadow-lg">

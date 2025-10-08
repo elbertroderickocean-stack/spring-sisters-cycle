@@ -23,6 +23,10 @@ import ProductCatalog from "./pages/ProductCatalog";
 import ProductDetail from "./pages/ProductDetail";
 import Scanner from "./pages/Scanner";
 import Sisterhood from "./pages/Sisterhood";
+import LegacyPoints from "./pages/LegacyPoints";
+import ProductRating from "./pages/ProductRating";
+import RDPanel from "./pages/RDPanel";
+import LegacyFundVote from "./pages/LegacyFundVote";
 import Profile from "./pages/Profile";
 import Aura from "./pages/Aura";
 import NotFound from "./pages/NotFound";
@@ -56,6 +60,10 @@ const App = () => (
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/scanner" element={<Scanner />} />
             <Route path="/sisterhood" element={<Sisterhood />} />
+            <Route path="/legacy-points" element={<LegacyPoints />} />
+            <Route path="/product-rating" element={<ProductRating />} />
+            <Route path="/rd-panel" element={<RDPanel />} />
+            <Route path="/legacy-fund-vote" element={<LegacyFundVote />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/aura" element={<Aura />} />
             <Route path="*" element={<NotFound />} />
