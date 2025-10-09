@@ -12,7 +12,7 @@ import { ScanLine, Package, Play } from 'lucide-react';
 const Products = () => {
   const navigate = useNavigate();
   const { userData } = useUser();
-  const { startTracking, isTracking } = useProductTracking();
+  const { startTracking, isTracking, getDaysUntilRunOut } = useProductTracking();
   const [showStartModal, setShowStartModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
 
@@ -48,47 +48,57 @@ const Products = () => {
     }
   };
 
-  const renderProductCard = (product: typeof products[0]) => (
-    <Card
-      key={product.id}
-      className="p-4 space-y-3 hover:shadow-lg transition-shadow cursor-pointer"
-      onClick={() => navigate(`/product/${product.id}`)}
-    >
-      <div className="aspect-square rounded-lg overflow-hidden bg-accent">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div>
-        <h3 className="font-heading font-medium text-sm">
-          {product.name}
-        </h3>
-        <p className="text-xs text-muted-foreground mt-1">
-          {product.price}
-        </p>
-      </div>
-      {product.lifespanDays && (
-        <Button
-          size="sm"
-          variant={isTracking(product.id) ? "outline" : "default"}
-          className="w-full rounded-full text-xs"
-          onClick={(e) => handleStartUsing(product, e)}
-          disabled={isTracking(product.id)}
-        >
-          {isTracking(product.id) ? (
-            <>✓ Tracking</>
+  const renderProductCard = (product: typeof products[0]) => {
+    const tracking = isTracking(product.id);
+    const daysRemaining = getDaysUntilRunOut(product.id);
+
+    return (
+      <Card
+        key={product.id}
+        className="p-4 space-y-3 hover:shadow-lg transition-shadow cursor-pointer"
+        onClick={() => navigate(`/product/${product.id}`)}
+      >
+        <div className="aspect-square rounded-lg overflow-hidden bg-accent">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <h3 className="font-heading font-medium text-sm">
+            {product.name}
+          </h3>
+          <p className="text-xs text-muted-foreground mt-1">
+            {product.price}
+          </p>
+        </div>
+        
+        {product.lifespanDays && (
+          tracking && daysRemaining !== null ? (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-xs bg-accent/50 rounded-full px-3 py-2">
+                <div className="text-primary">⏳</div>
+                <span className="font-medium">
+                  Est. remaining: {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'}
+                </span>
+              </div>
+            </div>
           ) : (
-            <>
+            <Button
+              size="sm"
+              variant="default"
+              className="w-full rounded-full text-xs"
+              onClick={(e) => handleStartUsing(product, e)}
+            >
               <Play className="h-3 w-3 mr-1" />
               Start Using
-            </>
-          )}
-        </Button>
-      )}
-    </Card>
-  );
+            </Button>
+          )
+        )}
+      </Card>
+    );
+  };
 
   const renderEmptyState = (
     title: string,
