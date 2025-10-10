@@ -287,7 +287,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
                   Aura's Insight
                 </div>
                 <div className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">
-                  <TypingText text={auraInsight} speed={225} />
+                  <TypingText text={auraInsight} />
                 </div>
               </div>
 
