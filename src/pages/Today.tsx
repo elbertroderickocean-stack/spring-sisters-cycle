@@ -12,7 +12,8 @@ import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import { SymbioticCheckIn } from '@/components/SymbioticCheckIn';
 import { RitualSection } from '@/components/RitualSection';
-import { Sunrise, Moon } from 'lucide-react';
+import { Sunrise, Moon, Camera } from 'lucide-react';
+import { WeeklyReflectionModal } from '@/components/WeeklyReflectionModal';
 
 
 const Today = () => {
@@ -24,6 +25,7 @@ const Today = () => {
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const [showCheckIn, setShowCheckIn] = useState(false);
   const [checkInDismissed, setCheckInDismissed] = useState(false);
+  const [showWeeklyReflection, setShowWeeklyReflection] = useState(false);
   const { activeWhisper, checkWhispers, dismissWhisper, triggerProTip } = useAuraWhispers();
 
   useEffect(() => {
@@ -416,7 +418,18 @@ const Today = () => {
     const hasMaskTrio = isProductOwned('mask-trio');
     const skinConcerns = userData.skinConcerns || [];
     
-    // PRIORITY 0: Calendar-based suggestions (placeholder for future integration)
+    // PRIORITY 0: Weekly Reflection on Sundays
+    if (day % 7 === 0) {
+      return {
+        title: "📸 Weekly Reflection",
+        message: "It's Sunday—time for your weekly skin check-in. Let me analyze your progress and create a personalized insight based on real data from your skin.",
+        buttonText: "Start Reflection",
+        action: () => setShowWeeklyReflection(true),
+        icon: Camera
+      };
+    }
+    
+    // PRIORITY 1: Calendar-based suggestions (placeholder for future integration)
     const hasUpcomingFlight = false; // Placeholder: would check Google Calendar API
     if (hasUpcomingFlight) {
       return {
@@ -794,6 +807,21 @@ const Today = () => {
         onClose={() => setIsPlanModalOpen(false)}
         phase={phase}
         day={day}
+      />
+
+      {/* Weekly Reflection Modal */}
+      <WeeklyReflectionModal
+        open={showWeeklyReflection}
+        onOpenChange={setShowWeeklyReflection}
+        userName={userData.name || 'beautiful'}
+        currentPhase={phase}
+        primaryConcern={userData.skinConcerns?.[0]}
+        recentProducts={
+          userData.productInventory
+            ?.filter(item => item.quantity > 0)
+            .map(item => item.productId)
+            .join(', ')
+        }
       />
 
       <BottomNav />
