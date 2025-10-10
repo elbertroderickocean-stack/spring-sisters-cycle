@@ -8,6 +8,11 @@ export interface ScannedProduct {
   analysis: string;
 }
 
+export interface ProductInventory {
+  productId: string;
+  quantity: number;
+}
+
 export interface UserData {
   name: string;
   email: string;
@@ -16,13 +21,19 @@ export interface UserData {
   ageRange: string;
   skinType: string;
   skinConcerns: string[];
-  ownedProducts: string[];
+  ownedProducts: string[]; // Legacy - kept for backward compatibility
+  productInventory: ProductInventory[]; // New inventory with quantities
   scannedProducts: ScannedProduct[];
   isDemoMode: boolean;
   checkIn?: {
     energy: string;
     skin: string;
     date: string;
+  };
+  customRituals?: {
+    morning: string[];
+    evening: string[];
+    auraNote?: string;
   };
 }
 
@@ -36,6 +47,12 @@ interface UserContextType {
   exitDemoMode: () => void;
   updateCheckIn: (energy: string, skin: string) => void;
   needsCheckIn: () => boolean;
+  addProductToInventory: (productId: string, quantity: number) => void;
+  removeProductFromInventory: (productId: string) => void;
+  updateProductQuantity: (productId: string, quantity: number) => void;
+  getProductQuantity: (productId: string) => number;
+  isProductOwned: (productId: string) => boolean;
+  updateCustomRituals: (morning: string[], evening: string[], auraNote?: string) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -49,6 +66,7 @@ const defaultUserData: UserData = {
   skinType: '',
   skinConcerns: [],
   ownedProducts: [],
+  productInventory: [],
   scannedProducts: [],
   isDemoMode: false,
 };
@@ -62,6 +80,10 @@ const demoUserData: UserData = {
   skinType: 'combination',
   skinConcerns: ['Dark Spots & Uneven Tone', 'Fine Lines & Wrinkles'],
   ownedProducts: ['serum-trio', 'cleanser'],
+  productInventory: [
+    { productId: 'serum-trio', quantity: 1 },
+    { productId: 'cleanser', quantity: 2 }
+  ],
   scannedProducts: [],
   isDemoMode: true,
 };
@@ -130,6 +152,66 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return userData.checkIn.date !== today;
   };
 
+  const addProductToInventory = (productId: string, quantity: number) => {
+    setUserData((prev) => {
+      const existing = prev.productInventory.find(p => p.productId === productId);
+      if (existing) {
+        return {
+          ...prev,
+          productInventory: prev.productInventory.map(p =>
+            p.productId === productId ? { ...p, quantity: p.quantity + quantity } : p
+          ),
+          ownedProducts: Array.from(new Set([...prev.ownedProducts, productId]))
+        };
+      }
+      return {
+        ...prev,
+        productInventory: [...prev.productInventory, { productId, quantity }],
+        ownedProducts: Array.from(new Set([...prev.ownedProducts, productId]))
+      };
+    });
+  };
+
+  const removeProductFromInventory = (productId: string) => {
+    setUserData((prev) => ({
+      ...prev,
+      productInventory: prev.productInventory.filter(p => p.productId !== productId),
+      ownedProducts: prev.ownedProducts.filter(id => id !== productId)
+    }));
+  };
+
+  const updateProductQuantity = (productId: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeProductFromInventory(productId);
+      return;
+    }
+    setUserData((prev) => ({
+      ...prev,
+      productInventory: prev.productInventory.map(p =>
+        p.productId === productId ? { ...p, quantity } : p
+      )
+    }));
+  };
+
+  const getProductQuantity = (productId: string): number => {
+    const item = userData.productInventory.find(p => p.productId === productId);
+    return item?.quantity || 0;
+  };
+
+  const isProductOwned = (productId: string): boolean => {
+    return userData.productInventory.some(p => p.productId === productId);
+  };
+
+  const updateCustomRituals = (morning: string[], evening: string[], auraNote?: string) => {
+    updateUserData({
+      customRituals: {
+        morning,
+        evening,
+        auraNote
+      }
+    });
+  };
+
   return (
     <UserContext.Provider value={{ 
       userData, 
@@ -140,7 +222,13 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       enableDemoMode,
       exitDemoMode,
       updateCheckIn,
-      needsCheckIn
+      needsCheckIn,
+      addProductToInventory,
+      removeProductFromInventory,
+      updateProductQuantity,
+      getProductQuantity,
+      isProductOwned,
+      updateCustomRituals
     }}>
       {children}
     </UserContext.Provider>

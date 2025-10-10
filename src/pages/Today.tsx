@@ -11,10 +11,12 @@ import { BottomNav } from '@/components/BottomNav';
 import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import { SymbioticCheckIn } from '@/components/SymbioticCheckIn';
+import { RitualSection } from '@/components/RitualSection';
+import { Sunrise, Moon } from 'lucide-react';
 
 
 const Today = () => {
-  const { userData, getCurrentPhase, getCurrentDay, exitDemoMode, updateCheckIn, needsCheckIn } = useUser();
+  const { userData, getCurrentPhase, getCurrentDay, exitDemoMode, updateCheckIn, needsCheckIn, isProductOwned } = useUser();
   const navigate = useNavigate();
   const phase = getCurrentPhase();
   const day = getCurrentDay();
@@ -103,24 +105,45 @@ const Today = () => {
     return 'hsl(120 40% 50%)';
   };
 
-  const getRitualSteps = () => {
-    const hasSerumTrio = userData.ownedProducts.includes('serum-trio');
-    const hasCleanser = userData.ownedProducts.includes('cleanser');
-    const hasEyeCream = userData.ownedProducts.includes('eye-cream');
-    const hasMoisturizer = userData.ownedProducts.includes('moisturizer');
+  const getMorningRitualSteps = () => {
+    const { isProductOwned } = useUser();
+    
+    // Check if there are custom rituals from Aura
+    if (userData.customRituals?.morning) {
+      return userData.customRituals.morning.map((productId, index) => {
+        const product = getProductInfo(productId);
+        return {
+          number: index + 1,
+          name: product.name,
+          purpose: product.purpose,
+          owned: isProductOwned(productId),
+          productId,
+          isPhaseProduct: productId === 'serum-trio'
+        };
+      });
+    }
 
-    const allSteps = [
+    // Default morning ritual
+    const hasSerumTrio = isProductOwned('serum-trio');
+    const hasCleanser = isProductOwned('cleanser');
+    const hasEyeCream = isProductOwned('eye-cream');
+    const hasMoisturizer = isProductOwned('moisturizer');
+    const hasVitaminC = isProductOwned('vitamin-c');
+
+    return [
       {
         number: 1,
         name: 'Spring Harmony Gentle Cleanser',
         purpose: 'Creates a clean, balanced canvas for your treatment products.',
         owned: hasCleanser,
+        productId: 'cleanser'
       },
       {
         number: 2,
         name: phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum',
         purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
         owned: hasSerumTrio,
+        productId: 'serum-trio',
         isPhaseProduct: true,
       },
       {
@@ -128,24 +151,119 @@ const Today = () => {
         name: 'Spring Harmony Eye Cream',
         purpose: 'Reduces puffiness and fine lines around your eyes.',
         owned: hasEyeCream,
+        productId: 'eye-cream'
       },
       {
         number: 4,
         name: 'Spring Harmony Daily Moisturizer',
         purpose: 'Seals in hydration and protects your skin barrier all day long.',
         owned: hasMoisturizer,
+        productId: 'moisturizer'
       },
     ];
+  };
 
-    return allSteps;
+  const getEveningRitualSteps = () => {
+    const { isProductOwned } = useUser();
+    
+    // Check if there are custom rituals from Aura
+    if (userData.customRituals?.evening) {
+      return userData.customRituals.evening.map((productId, index) => {
+        const product = getProductInfo(productId);
+        return {
+          number: index + 1,
+          name: product.name,
+          purpose: product.purpose,
+          owned: isProductOwned(productId),
+          productId,
+          isPhaseProduct: productId === 'serum-trio'
+        };
+      });
+    }
+
+    // Default evening ritual
+    const hasSerumTrio = isProductOwned('serum-trio');
+    const hasCleanser = isProductOwned('cleanser');
+    const hasEyeCream = isProductOwned('eye-cream');
+    const hasMoisturizer = isProductOwned('moisturizer');
+
+    return [
+      {
+        number: 1,
+        name: 'Spring Harmony Gentle Cleanser',
+        purpose: 'Creates a clean, balanced canvas for your treatment products.',
+        owned: hasCleanser,
+        productId: 'cleanser'
+      },
+      {
+        number: 2,
+        name: phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum',
+        purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
+        owned: hasSerumTrio,
+        productId: 'serum-trio',
+        isPhaseProduct: true,
+      },
+      {
+        number: 3,
+        name: 'Spring Harmony Eye Cream',
+        purpose: 'Reduces puffiness and fine lines around your eyes.',
+        owned: hasEyeCream,
+        productId: 'eye-cream'
+      },
+      {
+        number: 4,
+        name: 'Spring Harmony Daily Moisturizer',
+        purpose: 'Seals in hydration and protects your skin barrier all day long.',
+        owned: hasMoisturizer,
+        productId: 'moisturizer'
+      },
+    ];
+  };
+
+  const getProductInfo = (productId: string) => {
+    const productMap: Record<string, { name: string; purpose: string }> = {
+      'cleanser': {
+        name: 'Spring Harmony Gentle Cleanser',
+        purpose: 'Creates a clean, balanced canvas for your treatment products.'
+      },
+      'serum-trio': {
+        name: phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum',
+        purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.'
+      },
+      'eye-cream': {
+        name: 'Spring Harmony Eye Cream',
+        purpose: 'Reduces puffiness and fine lines around your eyes.'
+      },
+      'moisturizer': {
+        name: 'Spring Harmony Daily Moisturizer',
+        purpose: 'Seals in hydration and protects your skin barrier all day long.'
+      },
+      'vitamin-c': {
+        name: 'Vitamin C Concentrate',
+        purpose: 'Delivers an extra dose of radiance exactly when your skin is primed to shine.'
+      },
+      'ceramide': {
+        name: 'Ceramide Concentrate',
+        purpose: 'Provides emergency relief and barrier repair for stressed skin.'
+      },
+      'bakuchiol': {
+        name: 'Bakuchiol Concentrate',
+        purpose: 'Reduces inflammation without causing irritation.'
+      },
+      'mask-trio': {
+        name: phase === 'calm' ? 'Calm & Renew Mask' : phase === 'glow' ? 'Glow & Energize Mask' : 'Balance & Clarify Mask',
+        purpose: 'Intensive weekly treatment matched to your current phase.'
+      }
+    };
+    return productMap[productId] || { name: 'Product', purpose: 'Skincare step' };
   };
 
   const getSmartSuggestion = () => {
-    const hasSerumTrio = userData.ownedProducts.includes('serum-trio');
-    const hasCleanser = userData.ownedProducts.includes('cleanser');
-    const hasMoisturizer = userData.ownedProducts.includes('moisturizer');
-    const hasEyeCream = userData.ownedProducts.includes('eye-cream');
-    const hasMaskTrio = userData.ownedProducts.includes('mask-trio');
+    const hasSerumTrio = isProductOwned('serum-trio');
+    const hasCleanser = isProductOwned('cleanser');
+    const hasMoisturizer = isProductOwned('moisturizer');
+    const hasEyeCream = isProductOwned('eye-cream');
+    const hasMaskTrio = isProductOwned('mask-trio');
     const skinConcerns = userData.skinConcerns || [];
     
     // PRIORITY 0: Calendar-based suggestions (placeholder for future integration)
@@ -308,7 +426,7 @@ const Today = () => {
     ];
     
     return precisionProducts.filter(product => 
-      userData.ownedProducts.includes(product.id)
+      isProductOwned(product.id)
     );
   };
 
@@ -395,80 +513,24 @@ const Today = () => {
           </button>
         </div>
 
-        {/* Module 2: Today's Ritual */}
-
-        <Card className="animate-slide-up shadow-lg">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading">✨ Today's Ritual</CardTitle>
-            </div>
-            <CardDescription>Morning Routine</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {getRitualSteps().map((step) => (
-                <Card
-                  key={step.number}
-                  className={`p-4 ${
-                    step.owned 
-                      ? 'bg-background border-solid' 
-                      : 'bg-muted/30 border-dashed opacity-70'
-                  }`}
-                >
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0">
-                      <div 
-                        className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          step.owned 
-                            ? '' 
-                            : 'border-2 border-muted-foreground/30'
-                        }`}
-                        style={step.owned ? { backgroundColor: phaseIconColor } : {}}
-                      >
-                        <span 
-                          className={`font-semibold ${
-                            step.owned ? 'text-white' : 'text-muted-foreground'
-                          }`}
-                        >
-                          {step.number}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className={`font-heading font-medium text-base mb-1 ${
-                        step.owned 
-                          ? (step.isPhaseProduct ? 'text-foreground' : 'text-foreground') 
-                          : 'text-muted-foreground'
-                      }`}>
-                        {step.name}
-                      </h4>
-                      {step.owned ? (
-                        <p className="text-sm text-muted-foreground">
-                          Why: {step.purpose}
-                        </p>
-                      ) : (
-                        <>
-                          <p className="text-sm text-muted-foreground mb-3">
-                            Complete your ritual to see the full benefits.
-                          </p>
-                          <Button 
-                            size="sm"
-                            style={{ backgroundColor: phaseIconColor }}
-                            className="text-white hover:opacity-90"
-                            onClick={() => navigate('/catalog')}
-                          >
-                            Discover Product
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        {/* Module 2: Today's Ritual - Morning & Evening */}
+        <div className="space-y-4 animate-slide-up">
+          <RitualSection
+            title="☀️ Morning Ritual"
+            icon={<Sunrise className="h-5 w-5" style={{ color: phaseIconColor }} />}
+            steps={getMorningRitualSteps()}
+            phaseIconColor={phaseIconColor}
+            defaultOpen={true}
+            auraNote={userData.customRituals?.auraNote}
+          />
+          <RitualSection
+            title="🌙 Evening Ritual"
+            icon={<Moon className="h-5 w-5" style={{ color: phaseIconColor }} />}
+            steps={getEveningRitualSteps()}
+            phaseIconColor={phaseIconColor}
+            defaultOpen={true}
+          />
+        </div>
 
         {/* Module 3: Your Precision Toolkit */}
         {precisionProducts.length > 0 && (

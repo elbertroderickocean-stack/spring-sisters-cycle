@@ -6,13 +6,19 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+interface RitualUpdate {
+  morning: string[];
+  evening: string[];
+  auraNote: string;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { message, checkIn } = await req.json();
+    const { message, checkIn, currentPhase, currentDay } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
     if (!LOVABLE_API_KEY) {
@@ -103,15 +109,17 @@ Your Task: Respond to the user's question following the 5-step structure. Check 
 The user shared their current state this morning:
 - Energy Level: ${checkIn.energy}
 - Skin Condition: ${checkIn.skin}
+- Current Phase: ${currentPhase}
+- Current Day: ${currentDay}
 
-CRITICAL INSTRUCTIONS:
+CRITICAL INSTRUCTIONS FOR RITUAL MODIFICATION:
 1. Always acknowledge their check-in first in your response
-2. If their skin is "sensitive", this is a SAFETY OVERRIDE - recommend only gentle, soothing products (Bakuchiol Concentrate, Ceramide Concentrate, Gentle Cleanser). Remove any aggressive actives from suggestions.
-3. If their energy is "low", simplify recommendations and use a gentle, supportive tone
-4. If their skin is "dry", prioritize hydration products (Ceramide Concentrate, Overnight Recovery Mask)
-5. If their skin is "oily", prioritize balancing products from Bloom Cycle and oil-control concentrates
+2. If their skin is "Sensitive & Irritated", this is a SAFETY OVERRIDE - respond with JSON to modify evening ritual: {"message": "I've seen your skin is feeling sensitive today. I've updated your evening ritual to swap aggressive products for gentle ones.", "ritualUpdate": {"morning": ["cleanser", "serum-trio", "eye-cream", "moisturizer"], "evening": ["cleanser", "bakuchiol", "ceramide", "eye-cream", "moisturizer"], "auraNote": "Updated to focus on calming and repair"}}
+3. If energy is "Low", simplify rituals with a gentle tone
+4. If skin is "Dry & Tight", add ceramide to evening ritual via JSON response
+5. Only return JSON when actually modifying rituals, otherwise use regular text
 
-Always connect their check-in state to the collective wisdom of the Archive. Example: "You mentioned your skin feels sensitive this morning, and the Archive shows that 1,200+ sisters experienced the same during this phase..."`;
+Always connect their check-in state to the collective wisdom of the Archive.`;
     }
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {

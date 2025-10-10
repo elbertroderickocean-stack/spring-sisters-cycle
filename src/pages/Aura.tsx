@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BottomNav } from '@/components/BottomNav';
 import { useUser } from '@/contexts/UserContext';
+import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -15,7 +16,7 @@ interface Message {
 
 const Aura = () => {
   const navigate = useNavigate();
-  const { userData } = useUser();
+  const { userData, getCurrentPhase, getCurrentDay, updateCustomRituals } = useUser();
   const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -65,7 +66,9 @@ const Aura = () => {
       const { data, error } = await supabase.functions.invoke('aura-chat', {
         body: { 
           message: input,
-          checkIn: userData.checkIn
+          checkIn: userData.checkIn,
+          currentPhase: getCurrentPhase(),
+          currentDay: getCurrentDay()
         }
       });
 
@@ -93,9 +96,29 @@ const Aura = () => {
         return;
       }
 
+      // Check if Aura is updating rituals
+      let responseText = data.response;
+      try {
+        const parsedResponse = JSON.parse(data.response);
+        if (parsedResponse.ritualUpdate) {
+          updateCustomRituals(
+            parsedResponse.ritualUpdate.morning,
+            parsedResponse.ritualUpdate.evening,
+            parsedResponse.ritualUpdate.auraNote
+          );
+          responseText = parsedResponse.message;
+          toast({
+            title: "Ritual Updated",
+            description: "Aura has adjusted your daily rituals based on how you're feeling today.",
+          });
+        }
+      } catch {
+        // Response is not JSON, use as is
+      }
+
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.response
+        content: responseText
       };
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
