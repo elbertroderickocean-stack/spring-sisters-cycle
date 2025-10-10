@@ -7,7 +7,7 @@ import { PhaseType } from '@/contexts/UserContext';
 
 const navItems = [
   { path: '/today', label: 'Today', icon: Home },
-  { path: '/my-shelf', label: 'My Shelf', icon: Package },
+  { path: '/sisterhood', label: 'Sisterhood', icon: Users },
   { path: '/guide', label: 'Guide', icon: BookOpen },
   { path: '/products', label: 'Shop', icon: ShoppingBag },
   { path: '/profile', label: 'Profile', icon: User },

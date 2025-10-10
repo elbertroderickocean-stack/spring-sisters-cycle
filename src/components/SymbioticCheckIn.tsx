@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sparkles } from 'lucide-react';
 
 interface SymbioticCheckInProps {
-  open: boolean;
   onComplete: (energy: string, skin: string) => void;
+  onDismiss: () => void;
   currentDay: number;
 }
 
 export const SymbioticCheckIn: React.FC<SymbioticCheckInProps> = ({
-  open,
   onComplete,
+  onDismiss,
   currentDay
 }) => {
+  const [showQuestions, setShowQuestions] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
   const [energy, setEnergy] = useState<string>('');
 
@@ -24,78 +24,103 @@ export const SymbioticCheckIn: React.FC<SymbioticCheckInProps> = ({
 
   const handleSkinSelect = (skin: string) => {
     onComplete(energy, skin);
+    setStep(1);
+    setEnergy('');
+    setShowQuestions(false);
   };
 
-  const energyOptions = [
-    { value: 'low', label: 'Low', description: 'Feeling tired or drained' },
-    { value: 'medium', label: 'Medium', description: 'Normal energy levels' },
-    { value: 'high', label: 'High', description: 'Energized and ready' }
-  ];
-
-  const skinOptions = [
-    { value: 'balanced', label: 'Balanced', description: 'Comfortable and normal' },
-    { value: 'dry', label: 'Dry & Tight', description: 'Needs extra hydration' },
-    { value: 'oily', label: 'Oily', description: 'Excess oil production' },
-    { value: 'sensitive', label: 'Sensitive & Irritated', description: 'Red or uncomfortable' }
-  ];
+  if (!showQuestions) {
+    return (
+      <div className="bg-gradient-to-r from-primary/10 to-accent/10 border-b border-border px-6 py-4">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
+          <button
+            onClick={() => setShowQuestions(true)}
+            className="flex-1 text-left"
+          >
+            <p className="text-sm font-medium text-foreground">
+              Good morning. How are you feeling today?{' '}
+              <span className="text-primary underline">Tap here to adapt your ritual</span>
+            </p>
+          </button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 ml-4"
+            onClick={onDismiss}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <Dialog open={open} onOpenChange={() => {}}>
-      <DialogContent className="max-w-md" onPointerDownOutside={(e) => e.preventDefault()}>
-        <DialogHeader>
-          <div className="flex items-center justify-center mb-4">
-            <Sparkles className="h-8 w-8 text-primary animate-pulse" />
-          </div>
-          <DialogTitle className="text-2xl font-heading text-center">
-            {step === 1 ? 'Good morning.' : 'And your skin?'}
-          </DialogTitle>
-          <DialogDescription className="text-center text-base pt-2">
-            {step === 1 ? (
-              <>
-                The calendar says it's Day {currentDay}, but let's start with you.
-                <br />
-                <span className="font-medium">How is your energy feeling today?</span>
-              </>
-            ) : (
-              <span className="font-medium">How does it feel at this moment?</span>
-            )}
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-3 mt-4">
-          {step === 1 ? (
-            energyOptions.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => handleEnergySelect(option.value)}
-                className="w-full p-4 text-left rounded-xl border-2 border-border hover:border-primary transition-all bg-background hover:bg-accent/50 group"
-              >
-                <div className="font-medium text-foreground group-hover:text-primary transition-colors">
-                  {option.label}
-                </div>
-                <div className="text-sm text-muted-foreground mt-1">
-                  {option.description}
-                </div>
-              </button>
-            ))
-          ) : (
-            skinOptions.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => handleSkinSelect(option.value)}
-                className="w-full p-4 text-left rounded-xl border-2 border-border hover:border-primary transition-all bg-background hover:bg-accent/50 group"
-              >
-                <div className="font-medium text-foreground group-hover:text-primary transition-colors">
-                  {option.label}
-                </div>
-                <div className="text-sm text-muted-foreground mt-1">
-                  {option.description}
-                </div>
-              </button>
-            ))
-          )}
+    <div className="bg-card border-b border-border px-6 py-6">
+      <div className="max-w-2xl mx-auto space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-heading font-semibold text-foreground">
+            {step === 1 ? 'Morning Check-in' : 'Your Skin Today'}
+          </h3>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => {
+              setShowQuestions(false);
+              setStep(1);
+              setEnergy('');
+            }}
+          >
+            <X className="h-4 w-4" />
+          </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+
+        {step === 1 ? (
+          <div className="space-y-4">
+            <p className="text-sm text-foreground/80">
+              Good morning. The calendar says it's Day {currentDay}, but let's start with you. How is your energy feeling today?
+            </p>
+            
+            <div className="grid grid-cols-3 gap-3">
+              {['low', 'medium', 'high'].map((level) => (
+                <Button
+                  key={level}
+                  variant="outline"
+                  className="h-auto py-3"
+                  onClick={() => handleEnergySelect(level)}
+                >
+                  {level.charAt(0).toUpperCase() + level.slice(1)}
+                </Button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <p className="text-sm text-foreground/80">
+              And what about your skin? How does it feel at this moment?
+            </p>
+            
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { value: 'balanced', label: 'Balanced' },
+                { value: 'dry', label: 'Dry & Tight' },
+                { value: 'oily', label: 'Oily' },
+                { value: 'sensitive', label: 'Sensitive & Irritated' }
+              ].map((condition) => (
+                <Button
+                  key={condition.value}
+                  variant="outline"
+                  className="h-auto py-3 text-sm"
+                  onClick={() => handleSkinSelect(condition.value)}
+                >
+                  {condition.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };

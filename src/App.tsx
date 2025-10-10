@@ -13,7 +13,6 @@ import Register from "./pages/Register";
 import Details from "./pages/Details";
 import SkinConcerns from "./pages/SkinConcerns";
 import Inventory from "./pages/Inventory";
-import MyShelf from "./pages/MyShelf";
 import PushNotification from "./pages/PushNotification";
 import Integrations from "./pages/Integrations";
 import Today from "./pages/Today";
@@ -53,7 +52,6 @@ const App = () => (
             <Route path="/details" element={<Details />} />
             <Route path="/skin-concerns" element={<SkinConcerns />} />
             <Route path="/inventory" element={<Inventory />} />
-            <Route path="/my-shelf" element={<MyShelf />} />
             <Route path="/push-notification" element={<PushNotification />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/today" element={<Today />} />

@@ -23,13 +23,14 @@ const Today = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const [showCheckIn, setShowCheckIn] = useState(false);
+  const [checkInDismissed, setCheckInDismissed] = useState(false);
   const { activeWhisper, checkWhispers, dismissWhisper, triggerProTip } = useAuraWhispers();
 
   useEffect(() => {
     // Check if we need to show the check-in
-    if (needsCheckIn()) {
+    if (needsCheckIn() && !checkInDismissed) {
       setShowCheckIn(true);
-    } else {
+    } else if (!needsCheckIn()) {
       // Check for pending pro-tip from onboarding
       const pendingProTip = localStorage.getItem('pending_protip');
       if (pendingProTip) {
@@ -41,7 +42,7 @@ const Today = () => {
         checkWhispers();
       }
     }
-  }, [checkWhispers, triggerProTip, needsCheckIn]);
+  }, [checkWhispers, triggerProTip, needsCheckIn, checkInDismissed]);
 
   const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
   
@@ -441,11 +442,25 @@ const Today = () => {
   const handleCheckInComplete = (energy: string, skin: string) => {
     updateCheckIn(energy, skin);
     setShowCheckIn(false);
+    setCheckInDismissed(true);
     checkWhispers();
+  };
+
+  const handleCheckInDismiss = () => {
+    setShowCheckIn(false);
+    setCheckInDismissed(true);
   };
 
   return (
     <div className="min-h-screen bg-background pb-24">
+      {showCheckIn && (
+        <SymbioticCheckIn 
+          onComplete={handleCheckInComplete}
+          onDismiss={handleCheckInDismiss}
+          currentDay={day}
+        />
+      )}
+
       {activeWhisper && (
         <AuraWhisper
           message={activeWhisper.message}
@@ -631,12 +646,6 @@ const Today = () => {
       />
 
       <BottomNav />
-
-      <SymbioticCheckIn
-        open={showCheckIn}
-        onComplete={handleCheckInComplete}
-        currentDay={day}
-      />
     </div>
   );
 };
