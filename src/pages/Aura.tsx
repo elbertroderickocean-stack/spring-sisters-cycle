@@ -8,10 +8,12 @@ import { useUser } from '@/contexts/UserContext';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { TypingText } from '@/components/TypingText';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  isTyping?: boolean;
 }
 
 const Aura = () => {
@@ -38,11 +40,18 @@ const Aura = () => {
       setMessages([
         {
           role: 'assistant',
-          content: `Hello, ${userName}. I'm Aura, your personal guide to the world of Spring Sisters. Think of me as your wise older sister, always here to help. What's on your mind today?`
+          content: `Hello, ${userName}. I'm Aura, your personal guide to the world of Spring Sisters. Think of me as your wise older sister, always here to help. What's on your mind today?`,
+          isTyping: true
         }
       ]);
     }
   }, [userData.name, messages.length]);
+
+  const handleTypingComplete = (index: number) => {
+    setMessages(prev => prev.map((msg, i) => 
+      i === index ? { ...msg, isTyping: false } : msg
+    ));
+  };
 
   const suggestedPrompts = [
     "What's the best mask for me today?",
@@ -118,7 +127,8 @@ const Aura = () => {
 
       const assistantMessage: Message = {
         role: 'assistant',
-        content: responseText
+        content: responseText,
+        isTyping: true
       };
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
@@ -171,7 +181,16 @@ const Aura = () => {
                   : 'bg-muted text-foreground'
               }`}
             >
-              <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+              <p className="text-sm">
+                {message.role === 'assistant' && message.isTyping ? (
+                  <TypingText 
+                    text={message.content} 
+                    onComplete={() => handleTypingComplete(index)}
+                  />
+                ) : (
+                  <span className="whitespace-pre-wrap">{message.content}</span>
+                )}
+              </p>
             </div>
           </div>
         ))}
