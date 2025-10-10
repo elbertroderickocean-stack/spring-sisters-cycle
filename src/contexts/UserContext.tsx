@@ -19,6 +19,11 @@ export interface UserData {
   ownedProducts: string[];
   scannedProducts: ScannedProduct[];
   isDemoMode: boolean;
+  checkIn?: {
+    energy: string;
+    skin: string;
+    date: string;
+  };
 }
 
 interface UserContextType {
@@ -29,6 +34,8 @@ interface UserContextType {
   addScannedProduct: (product: ScannedProduct) => void;
   enableDemoMode: () => void;
   exitDemoMode: () => void;
+  updateCheckIn: (energy: string, skin: string) => void;
+  needsCheckIn: () => boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -106,6 +113,23 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUserData(defaultUserData);
   };
 
+  const updateCheckIn = (energy: string, skin: string) => {
+    const today = new Date().toISOString().split('T')[0];
+    updateUserData({
+      checkIn: {
+        energy,
+        skin,
+        date: today
+      }
+    });
+  };
+
+  const needsCheckIn = () => {
+    if (!userData.checkIn) return true;
+    const today = new Date().toISOString().split('T')[0];
+    return userData.checkIn.date !== today;
+  };
+
   return (
     <UserContext.Provider value={{ 
       userData, 
@@ -114,7 +138,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       getCurrentDay, 
       addScannedProduct,
       enableDemoMode,
-      exitDemoMode
+      exitDemoMode,
+      updateCheckIn,
+      needsCheckIn
     }}>
       {children}
     </UserContext.Provider>

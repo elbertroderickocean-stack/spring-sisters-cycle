@@ -63,7 +63,10 @@ const Aura = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('aura-chat', {
-        body: { message: input }
+        body: { 
+          message: input,
+          checkIn: userData.checkIn
+        }
       });
 
       if (error) {

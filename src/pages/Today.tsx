@@ -10,29 +10,36 @@ import { Sparkles, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, Lu
 import { BottomNav } from '@/components/BottomNav';
 import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
+import { SymbioticCheckIn } from '@/components/SymbioticCheckIn';
 
 
 const Today = () => {
-  const { userData, getCurrentPhase, getCurrentDay, exitDemoMode } = useUser();
+  const { userData, getCurrentPhase, getCurrentDay, exitDemoMode, updateCheckIn, needsCheckIn } = useUser();
   const navigate = useNavigate();
   const phase = getCurrentPhase();
   const day = getCurrentDay();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
+  const [showCheckIn, setShowCheckIn] = useState(false);
   const { activeWhisper, checkWhispers, dismissWhisper, triggerProTip } = useAuraWhispers();
 
   useEffect(() => {
-    // Check for pending pro-tip from onboarding
-    const pendingProTip = localStorage.getItem('pending_protip');
-    if (pendingProTip) {
-      localStorage.removeItem('pending_protip');
-      setTimeout(() => {
-        triggerProTip(pendingProTip);
-      }, 1000);
+    // Check if we need to show the check-in
+    if (needsCheckIn()) {
+      setShowCheckIn(true);
     } else {
-      checkWhispers();
+      // Check for pending pro-tip from onboarding
+      const pendingProTip = localStorage.getItem('pending_protip');
+      if (pendingProTip) {
+        localStorage.removeItem('pending_protip');
+        setTimeout(() => {
+          triggerProTip(pendingProTip);
+        }, 1000);
+      } else {
+        checkWhispers();
+      }
     }
-  }, [checkWhispers, triggerProTip]);
+  }, [checkWhispers, triggerProTip, needsCheckIn]);
 
   const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
   
@@ -313,6 +320,12 @@ const Today = () => {
     navigate('/welcome');
   };
 
+  const handleCheckInComplete = (energy: string, skin: string) => {
+    updateCheckIn(energy, skin);
+    setShowCheckIn(false);
+    checkWhispers();
+  };
+
   return (
     <div className="min-h-screen bg-background pb-24">
       {activeWhisper && (
@@ -556,6 +569,12 @@ const Today = () => {
       />
 
       <BottomNav />
+
+      <SymbioticCheckIn
+        open={showCheckIn}
+        onComplete={handleCheckInComplete}
+        currentDay={day}
+      />
     </div>
   );
 };

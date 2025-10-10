@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message } = await req.json();
+    const { message, checkIn } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
     if (!LOVABLE_API_KEY) {
@@ -95,6 +95,25 @@ If the question isn't in the Golden Core, follow this protocol:
 
 Your Task: Respond to the user's question following the 5-step structure. Check if it matches a Golden Core question first. Always speak as "Aura." Never give medical advice.`;
 
+    // Build context-aware system prompt
+    let contextualPrompt = masterPrompt;
+    
+    if (checkIn) {
+      contextualPrompt += `\n\nIMPORTANT CONTEXT - Today's Symbiotic Check-in:
+The user shared their current state this morning:
+- Energy Level: ${checkIn.energy}
+- Skin Condition: ${checkIn.skin}
+
+CRITICAL INSTRUCTIONS:
+1. Always acknowledge their check-in first in your response
+2. If their skin is "sensitive", this is a SAFETY OVERRIDE - recommend only gentle, soothing products (Bakuchiol Concentrate, Ceramide Concentrate, Gentle Cleanser). Remove any aggressive actives from suggestions.
+3. If their energy is "low", simplify recommendations and use a gentle, supportive tone
+4. If their skin is "dry", prioritize hydration products (Ceramide Concentrate, Overnight Recovery Mask)
+5. If their skin is "oily", prioritize balancing products from Bloom Cycle and oil-control concentrates
+
+Always connect their check-in state to the collective wisdom of the Archive. Example: "You mentioned your skin feels sensitive this morning, and the Archive shows that 1,200+ sisters experienced the same during this phase..."`;
+    }
+
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -104,7 +123,7 @@ Your Task: Respond to the user's question following the 5-step structure. Check 
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [
-          { role: 'system', content: masterPrompt },
+          { role: 'system', content: contextualPrompt },
           { role: 'user', content: message }
         ],
       }),
