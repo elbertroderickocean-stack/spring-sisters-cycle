@@ -3,20 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useUser } from '@/contexts/UserContext';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { updateUserData } = useUser();
+  const { updateUserData, enableDemoMode } = useUser();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   const handleCreateAccount = () => {
     if (name && email && password) {
       updateUserData({ name, email });
       navigate('/details');
     }
+  };
+
+  const handleDemoMode = () => {
+    setShowDemoModal(true);
+  };
+
+  const confirmDemoMode = () => {
+    enableDemoMode();
+    setShowDemoModal(false);
+    navigate('/today');
   };
 
   return (
@@ -94,8 +106,38 @@ const Register = () => {
               Apple
             </Button>
           </div>
+
+          <div className="text-center mt-6">
+            <button
+              onClick={handleDemoMode}
+              className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+            >
+              Исследовать в Демо-режиме
+            </button>
+          </div>
         </div>
       </div>
+
+      <Dialog open={showDemoModal} onOpenChange={setShowDemoModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-heading text-center">
+              Добро пожаловать в Демо-режим!
+            </DialogTitle>
+            <DialogDescription className="text-center text-base pt-4">
+              Сейчас вы увидите, как приложение работает для нашего демо-пользователя "Кейт". 
+              Чтобы разблокировать ваш <span className="font-semibold italic">личный</span> ритм 
+              и персональные рекомендации, пожалуйста, создайте аккаунт в любое время.
+            </DialogDescription>
+          </DialogHeader>
+          <Button
+            onClick={confirmDemoMode}
+            className="w-full h-12 rounded-full mt-4"
+          >
+            Я понимаю
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

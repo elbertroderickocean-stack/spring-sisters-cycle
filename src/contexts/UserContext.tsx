@@ -18,6 +18,7 @@ export interface UserData {
   skinConcerns: string[];
   ownedProducts: string[];
   scannedProducts: ScannedProduct[];
+  isDemoMode: boolean;
 }
 
 interface UserContextType {
@@ -26,6 +27,8 @@ interface UserContextType {
   getCurrentPhase: () => PhaseType;
   getCurrentDay: () => number;
   addScannedProduct: (product: ScannedProduct) => void;
+  enableDemoMode: () => void;
+  exitDemoMode: () => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -40,6 +43,20 @@ const defaultUserData: UserData = {
   skinConcerns: [],
   ownedProducts: [],
   scannedProducts: [],
+  isDemoMode: false,
+};
+
+const demoUserData: UserData = {
+  name: 'Kate',
+  email: 'kate@demo.com',
+  lastPeriodDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+  cycleLength: 28,
+  ageRange: '25-34',
+  skinType: 'combination',
+  skinConcerns: ['Dark Spots & Uneven Tone', 'Fine Lines & Wrinkles'],
+  ownedProducts: ['serum-trio', 'cleanser'],
+  scannedProducts: [],
+  isDemoMode: true,
 };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -81,8 +98,24 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return 'balance';
   };
 
+  const enableDemoMode = () => {
+    setUserData(demoUserData);
+  };
+
+  const exitDemoMode = () => {
+    setUserData(defaultUserData);
+  };
+
   return (
-    <UserContext.Provider value={{ userData, updateUserData, getCurrentPhase, getCurrentDay, addScannedProduct }}>
+    <UserContext.Provider value={{ 
+      userData, 
+      updateUserData, 
+      getCurrentPhase, 
+      getCurrentDay, 
+      addScannedProduct,
+      enableDemoMode,
+      exitDemoMode
+    }}>
       {children}
     </UserContext.Provider>
   );

@@ -5,14 +5,15 @@ import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
 import { DailyPlanModal } from '@/components/DailyPlanModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Star, ChevronRight, Zap, FlaskConical, Plane, LucideIcon } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Sparkles, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 
 
 const Today = () => {
-  const { userData, getCurrentPhase, getCurrentDay } = useUser();
+  const { userData, getCurrentPhase, getCurrentDay, exitDemoMode } = useUser();
   const navigate = useNavigate();
   const phase = getCurrentPhase();
   const day = getCurrentDay();
@@ -307,6 +308,11 @@ const Today = () => {
   const precisionProducts = getPrecisionProducts();
   const dailyWhisper = getDailyWhisper();
 
+  const handleExitDemoMode = () => {
+    exitDemoMode();
+    navigate('/welcome');
+  };
+
   return (
     <div className="min-h-screen bg-background pb-24">
       {activeWhisper && (
@@ -318,6 +324,22 @@ const Today = () => {
       )}
       
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
+        {userData.isDemoMode && (
+          <Alert className="border-primary/50 bg-primary/5 animate-fade-in">
+            <AlertCircle className="h-4 w-4 text-primary" />
+            <AlertDescription className="flex items-center justify-between gap-3">
+              <span className="text-sm">Вы в Демо-режиме.</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleExitDemoMode}
+                className="h-7 text-xs underline underline-offset-4 hover:no-underline shrink-0"
+              >
+                Создайте аккаунт
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
         {/* Module 1: The Living Banner */}
         <div className="space-y-3 animate-fade-in">
           <h1 className="text-3xl font-heading font-semibold">
