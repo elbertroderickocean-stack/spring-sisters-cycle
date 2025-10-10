@@ -112,7 +112,7 @@ const Register = () => {
               onClick={handleDemoMode}
               className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
             >
-              Исследовать в Демо-режиме
+              Explore in Discovery Mode
             </button>
           </div>
         </div>
@@ -122,19 +122,19 @@ const Register = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-center">
-              Добро пожаловать в Демо-режим!
+              Welcome to Discovery Mode!
             </DialogTitle>
             <DialogDescription className="text-center text-base pt-4">
-              Сейчас вы увидите, как приложение работает для нашего демо-пользователя "Кейт". 
-              Чтобы разблокировать ваш <span className="font-semibold italic">личный</span> ритм 
-              и персональные рекомендации, пожалуйста, создайте аккаунт в любое время.
+              You are now viewing the app as our demo user, "Kate." 
+              To unlock your <span className="font-semibold italic">personal</span> rhythm 
+              and recommendations, please create an account at any time.
             </DialogDescription>
           </DialogHeader>
           <Button
             onClick={confirmDemoMode}
             className="w-full h-12 rounded-full mt-4"
           >
-            Я понимаю
+            I Understand
           </Button>
         </DialogContent>
       </Dialog>

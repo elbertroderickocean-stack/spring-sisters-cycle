@@ -328,14 +328,14 @@ const Today = () => {
           <Alert className="border-primary/50 bg-primary/5 animate-fade-in">
             <AlertCircle className="h-4 w-4 text-primary" />
             <AlertDescription className="flex items-center justify-between gap-3">
-              <span className="text-sm">Вы в Демо-режиме.</span>
+              <span className="text-sm">You are in Discovery Mode.</span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleExitDemoMode}
                 className="h-7 text-xs underline underline-offset-4 hover:no-underline shrink-0"
               >
-                Создайте аккаунт
+                Create an account
               </Button>
             </AlertDescription>
           </Alert>
