@@ -32,7 +32,16 @@ const Inventory = () => {
   };
 
   const handleNext = () => {
-    updateUserData({ ownedProducts: selectedProducts });
+    // Create product inventory with quantity 1 for each selected product
+    const productInventory = selectedProducts.map(productId => ({
+      productId,
+      quantity: 1
+    }));
+    
+    updateUserData({ 
+      ownedProducts: selectedProducts,
+      productInventory
+    });
     
     // Trigger a pro-tip if user added precision products
     const precisionProductNames: Record<string, string> = {

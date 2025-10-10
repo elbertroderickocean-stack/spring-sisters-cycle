@@ -9,7 +9,7 @@ const navItems = [
   { path: '/today', label: 'Today', icon: Home },
   { path: '/sisterhood', label: 'Sisterhood', icon: Users },
   { path: '/guide', label: 'Guide', icon: BookOpen },
-  { path: '/products', label: 'Shop', icon: ShoppingBag },
+  { path: '/products', label: 'Product', icon: ShoppingBag },
   { path: '/profile', label: 'Profile', icon: User },
 ];
 
