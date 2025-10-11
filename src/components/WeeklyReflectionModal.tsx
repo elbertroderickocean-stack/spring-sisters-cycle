@@ -11,6 +11,8 @@ interface WeeklyReflectionModalProps {
   onOpenChange: (open: boolean) => void;
   userName: string;
   currentPhase: string;
+  ageRange?: string;
+  skinType?: string;
   primaryConcern?: string;
   recentProducts?: string;
 }
@@ -28,6 +30,8 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
   onOpenChange,
   userName,
   currentPhase,
+  ageRange,
+  skinType,
   primaryConcern,
   recentProducts
 }) => {
@@ -114,6 +118,8 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           imageData,
           userName,
           currentPhase,
+          ageRange,
+          skinType,
           primaryConcern,
           recentProducts
         }
@@ -173,12 +179,12 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
                 <Sparkles className="h-6 w-6 text-primary" />
-                Weekly Reflection
+                Aura Vision
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
               <p className="text-foreground/80">
-                Every Sunday, we pause to truly see your skin's journey. This isn't just a photo—it's a moment of connection between you and your body's wisdom.
+                Let's see your skin through my eyes. This analysis combines AI-powered visual insights with your unique profile—your age, skin type, and personal goals.
               </p>
               <div className="bg-muted rounded-lg p-4 space-y-2">
                 <h3 className="font-semibold text-sm">What I'll analyze:</h3>
@@ -190,7 +196,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
                 </ul>
               </div>
               <p className="text-sm text-foreground/70">
-                I'll interpret these metrics within the context of your cycle phase, your products, and your personal journey. Ready?
+                I'll interpret these metrics through the lens of your age, skin type, current phase, and your primary concern. This is personalized just for you.
               </p>
               <Button 
                 onClick={() => setStep('camera')}
@@ -256,7 +262,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
                 <Sparkles className="h-6 w-6 text-primary" />
-                Your Weekly Reflection
+                Your Aura Vision Analysis
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
@@ -296,7 +302,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
                 className="w-full"
                 size="lg"
               >
-                Complete Reflection
+                Complete Analysis
               </Button>
             </div>
           </>

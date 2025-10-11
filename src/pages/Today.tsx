@@ -418,17 +418,6 @@ const Today = () => {
     const hasMaskTrio = isProductOwned('mask-trio');
     const skinConcerns = userData.skinConcerns || [];
     
-    // PRIORITY 0: Weekly Reflection on Sundays
-    if (day % 7 === 0) {
-      return {
-        title: "📸 Weekly Reflection",
-        message: "It's Sunday—time for your weekly skin check-in. Let me analyze your progress and create a personalized insight based on real data from your skin.",
-        buttonText: "Start Reflection",
-        action: () => setShowWeeklyReflection(true),
-        icon: Camera
-      };
-    }
-    
     // PRIORITY 1: Calendar-based suggestions (placeholder for future integration)
     const hasUpcomingFlight = false; // Placeholder: would check Google Calendar API
     if (hasUpcomingFlight) {
@@ -711,6 +700,26 @@ const Today = () => {
           />
         </div>
 
+        {/* Aura Vision - Persistent Feature */}
+        <div className="mb-6 animate-slide-up" style={{ animationDelay: '0.05s' }}>
+          <div 
+            onClick={() => setShowWeeklyReflection(true)}
+            className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20 cursor-pointer hover:border-primary/40 transition-all shadow-lg"
+          >
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-primary/20 rounded-xl">
+                <Camera className="h-6 w-6 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg mb-1">Aura Vision: Analyze Your Skin</h3>
+                <p className="text-sm text-foreground/70">
+                  Take a photo anytime for personalized insights based on your unique skin journey, age, and concerns.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Module 3: Your Precision Toolkit */}
         {precisionProducts.length > 0 && (
           <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.1s', backgroundColor: '#EAEFF2' }}>
@@ -809,19 +818,16 @@ const Today = () => {
         day={day}
       />
 
-      {/* Weekly Reflection Modal */}
+      {/* Aura Vision Modal */}
       <WeeklyReflectionModal
         open={showWeeklyReflection}
         onOpenChange={setShowWeeklyReflection}
         userName={userData.name || 'beautiful'}
         currentPhase={phase}
+        ageRange={userData.ageRange}
+        skinType={userData.skinType}
         primaryConcern={userData.skinConcerns?.[0]}
-        recentProducts={
-          userData.productInventory
-            ?.filter(item => item.quantity > 0)
-            .map(item => item.productId)
-            .join(', ')
-        }
+        recentProducts={userData.productInventory?.map(p => p.productId).join(', ')}
       />
 
       <BottomNav />

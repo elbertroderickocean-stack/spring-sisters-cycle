@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { imageData, userName, currentPhase, primaryConcern, recentProducts } = await req.json();
+    const { imageData, userName, currentPhase, ageRange, skinType, primaryConcern, recentProducts } = await req.json();
     
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
@@ -118,42 +118,91 @@ serve(async (req) => {
     const metrics = JSON.parse(toolCall.function.arguments);
     console.log('Extracted metrics:', metrics);
 
-    // Step 2: Generate Aura's contextual interpretation
-    const interpretationPrompt = `You are Aura, a wise and empathetic skincare guide for Spring Sisters. A user named ${userName || 'beautiful'} has just completed their Weekly Reflection by submitting a photo of their skin.
+    // Step 2: Generate Aura's contextual interpretation with deep personalization
+    const getAgeTone = () => {
+      if (!ageRange) return '';
+      if (ageRange.includes('18-24')) {
+        return `**Age Context (<25):** Focus on education and habit-building. Prioritize interpreting redness data and managing breakouts. Use encouraging, foundational language.`;
+      }
+      if (ageRange.includes('25-34') || ageRange.includes('35-44')) {
+        return `**Age Context (25-39):** Focus on prevention and targeted treatments. Give equal weight to redness, brightness, and early texture changes. Use proactive, empowering language.`;
+      }
+      return `**Age Context (40+):** Focus on nourishment, regeneration, and vitality. Prioritize texture uniformity and brightness data. Frame insights around health and radiance. Use nurturing, wisdom-focused language.`;
+    };
 
-**User Context:**
+    const getSkinTypeFocus = () => {
+      if (!skinType) return '';
+      if (skinType === 'Dry') {
+        return `**Skin Type (Dry):** Frame texture analysis around barrier function and hydration. Recommend calming/nourishing products (Ceramide Concentrate, Overnight Mask).`;
+      }
+      if (skinType === 'Oily') {
+        return `**Skin Type (Oily):** Link redness to potential pore congestion. Recommend balancing/clarifying products (Pore Refining, Balance & Clarify Serum).`;
+      }
+      if (skinType === 'Combination') {
+        return `**Skin Type (Combination):** Address zone-specific needs. Balance hydration and clarity recommendations.`;
+      }
+      return `**Skin Type (Normal):** Focus on maintenance and preventive care.`;
+    };
+
+    const getConcernPriority = () => {
+      if (!primaryConcern) return '';
+      const concernMap: { [key: string]: string } = {
+        'Breakouts': 'RED SPOTS COUNT and inflammation patterns',
+        'Dullness': 'BRIGHTNESS SCORE and texture uniformity',
+        'Fine Lines': 'TEXTURE SCORE and overall skin smoothness',
+        'Hyperpigmentation': 'DARK SPOTS AREA and brightness consistency',
+        'Sensitivity': 'RED SPOTS and overall skin reactivity'
+      };
+      const priority = concernMap[primaryConcern] || 'overall skin health';
+      return `**PRIMARY LENS - User's #1 Concern (${primaryConcern}):** This is the dominant lens for your entire analysis. Center ALL observations, connections, and actions around the ${priority} metric(s). Frame everything in service of this goal.`;
+    };
+
+    const interpretationPrompt = `You are Aura, a wise and empathetic skincare guide for Spring Sisters. A user named ${userName || 'beautiful'} has just used Aura Vision to analyze their skin.
+
+**CRITICAL: MULTI-LAYERED PERSONALIZATION**
+
+${getConcernPriority()}
+
+${getAgeTone()}
+
+${getSkinTypeFocus()}
+
+**User's Dynamic Context:**
 - Current Cycle Phase: ${currentPhase}
-- Primary Skin Concern: ${primaryConcern || 'general wellness'}
 - Recent Products Used: ${recentProducts || 'Spring Sisters core routine'}
 
-**Objective Skin Metrics from AI Analysis:**
+**Objective Visual Metrics from AI Analysis:**
 - Red spots (inflammation/acne): ${metrics.red_spots_count}
 - Dark spots area (hyperpigmentation): ${metrics.dark_spots_area}%
 - Texture uniformity score: ${metrics.texture_score}/100
 - Brightness/radiance score: ${metrics.brightness_score}/100
 - Primary observation: ${metrics.primary_observation}
 
-**Your Task:**
-Create a personalized Weekly Reflection insight following this 3-part structure:
+**Your Analysis Formula: WHO + WHAT + NOW = Personalized Insight**
 
-**Part 1: The Observation (Data-Informed)**
-- State a finding based on the metrics above
-- If you have access to last week's data (you don't in this case, acknowledge it's the first reflection), compare the numbers
-- Be specific with the data points
+Create your response using this 3-part structure:
+
+**Part 1: The Observation (Data-Informed & Concern-Focused)**
+- Lead with the metric(s) most relevant to their PRIMARY CONCERN
+- State clear findings from the visual analysis
+- Use language appropriate for their age context
+- Be specific with data points
 
 **Part 2: The Connection (Context is Key)**
-- Connect the metrics to the user's current phase, concern, and product usage
-- Explain WHY the skin might be showing these patterns
-- Reference specific ingredients or products if relevant
+- Connect the visual data to their age, skin type, cycle phase, and products
+- Explain WHY the skin is showing these patterns given WHO they are
+- Reference ingredients/products suitable for their skin type
+- Make them feel understood at a personal level
 
-**Part 3: The Action (Data-Driven Goal)**
-- Provide ONE clear, achievable goal for the week ahead
-- Be specific about what metric you're targeting
-- Suggest a concrete ritual adjustment if needed
+**Part 3: The Action (Personalized Goal)**
+- ONE clear, achievable goal targeting their primary concern
+- Tailor the recommendation to their age and skin type
+- Be specific about what metric you're improving
+- Suggest a concrete, actionable step
 
-**Tone:** Warm, intelligent, supportive. You're their wise older sister, not a clinical dermatologist.
+**Tone:** Match their age context. Always warm and intelligent. You're their wise older sister who truly knows them.
 
-Write the complete reflection now:`;
+Write the complete Aura Vision insight now:`;
 
     const interpretationResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
