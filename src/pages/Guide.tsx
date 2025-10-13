@@ -38,7 +38,17 @@ const Guide = () => {
   const navigate = useNavigate();
   const { userData } = useUser();
   
-  // Dynamic content based on user mode
+  // Dynamic content based on user mode - CRITICAL: This must check userData.wiseBloomMode
+  const philosophySection = {
+    section: 'Our Philosophy',
+    icon: BookOpen,
+    items: [
+      { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created Spring Sisters', articleId: 'mission' },
+      { title: 'Our Lines: The Orbital System Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
+      { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of Spring Sisters', articleId: 'aura-intro' },
+    ]
+  };
+
   const knowYourSkinSection = userData.wiseBloomMode ? {
     section: 'Your New Rhythm',
     icon: Sparkles,
@@ -56,11 +66,20 @@ const Guide = () => {
       { title: 'Phase 3: Balance & Clarify', description: 'Progesterone Dominance - Days 15+', articleId: 'phase-balance' },
     ]
   };
+
+  const ingredientSection = {
+    section: 'Ingredient Glossary',
+    icon: Leaf,
+    items: [
+      { title: 'What are Ceramides?', description: 'The building blocks of healthy skin', articleId: 'ceramides' },
+      { title: 'Bakuchiol: Our Answer to Retinol', description: 'Gentle yet powerful age-defying care', articleId: 'bakuchiol' },
+    ]
+  };
   
   const dynamicGuideContent = [
-    guideContent[0], // Our Philosophy
+    philosophySection,
     knowYourSkinSection,
-    guideContent[2], // Ingredient Glossary
+    ingredientSection,
   ];
 
   return (

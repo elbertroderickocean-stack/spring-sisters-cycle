@@ -19,9 +19,11 @@ const Personalize = () => {
 
   const handleNext = () => {
     if (selectedRhythm === 'hormonal' && lastPeriodDate && cycleLength) {
+      // CRITICAL: Explicitly set wiseBloomMode to false for hormonal rhythm users
       updateUserData({
         lastPeriodDate,
         cycleLength: parseInt(cycleLength),
+        wiseBloomMode: false,
       });
       navigate('/register', { state: { selectedRhythm: 'hormonal' } });
     } else if (selectedRhythm === 'cellular') {
