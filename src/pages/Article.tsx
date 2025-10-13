@@ -3,12 +3,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { articles } from '@/data/articleContent';
 import { Button } from '@/components/ui/button';
+import { useUser } from '@/contexts/UserContext';
 
 const Article = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { userData } = useUser();
   
   const article = id ? articles[id] : null;
+  
+  // Determine which body text to show based on user mode
+  const bodyText = article && userData.wiseBloomMode && article.bodyTextCellular 
+    ? article.bodyTextCellular 
+    : article?.bodyText;
 
   if (!article) {
     return (
@@ -50,8 +57,8 @@ const Article = () => {
         </h1>
 
         <div className="prose prose-lg max-w-none">
-          <p className="text-foreground leading-relaxed text-lg">
-            {article.bodyText}
+          <p className="text-foreground leading-relaxed text-lg whitespace-pre-line">
+            {bodyText}
           </p>
         </div>
       </article>

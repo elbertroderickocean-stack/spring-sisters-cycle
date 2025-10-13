@@ -23,9 +23,9 @@ const Personalize = () => {
         lastPeriodDate,
         cycleLength: parseInt(cycleLength),
       });
-      navigate('/register');
+      navigate('/register', { state: { selectedRhythm: 'hormonal' } });
     } else if (selectedRhythm === 'cellular') {
-      navigate('/wise-bloom');
+      navigate('/wise-bloom', { state: { selectedRhythm: 'cellular' } });
     }
   };
 

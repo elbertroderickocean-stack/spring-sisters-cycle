@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,6 +8,7 @@ import { useUser } from '@/contexts/UserContext';
 
 const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { updateUserData, enableDemoMode } = useUser();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ const Register = () => {
   const handleCreateAccount = () => {
     if (name && email && password) {
       updateUserData({ name, email });
-      navigate('/details');
+      navigate('/details', { state: { selectedRhythm: location.state?.selectedRhythm || 'hormonal' } });
     }
   };
 

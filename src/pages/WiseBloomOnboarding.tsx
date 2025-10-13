@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 
 const WiseBloomOnboarding = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { updateUserData } = useUser();
   const [currentScreen, setCurrentScreen] = useState(1);
 
@@ -15,7 +16,7 @@ const WiseBloomOnboarding = () => {
     } else {
       // Enable Wise Bloom mode
       updateUserData({ wiseBloomMode: true });
-      navigate('/register');
+      navigate('/register', { state: { selectedRhythm: location.state?.selectedRhythm || 'cellular' } });
     }
   };
 

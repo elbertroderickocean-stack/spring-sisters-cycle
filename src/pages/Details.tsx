@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -7,9 +7,13 @@ import { useUser } from '@/contexts/UserContext';
 
 const Details = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { updateUserData } = useUser();
   const [ageRange, setAgeRange] = useState('');
   const [skinType, setSkinType] = useState('');
+  
+  // Check if user selected cellular training rhythm
+  const isCellularTraining = location.state?.selectedRhythm === 'cellular';
 
   const handleNext = () => {
     if (ageRange && skinType) {
@@ -35,10 +39,21 @@ const Details = () => {
                 <SelectValue placeholder="Select your age range" />
               </SelectTrigger>
               <SelectContent className="bg-popover z-50">
-                <SelectItem value="under-25">Under 25</SelectItem>
-                <SelectItem value="25-34">25-34</SelectItem>
-                <SelectItem value="35-44">35-44</SelectItem>
-                <SelectItem value="45+">45+</SelectItem>
+                {isCellularTraining ? (
+                  <>
+                    <SelectItem value="40s">40s</SelectItem>
+                    <SelectItem value="50s">50s</SelectItem>
+                    <SelectItem value="60s">60s</SelectItem>
+                    <SelectItem value="70+">70+</SelectItem>
+                  </>
+                ) : (
+                  <>
+                    <SelectItem value="under-25">Under 25</SelectItem>
+                    <SelectItem value="25-34">25-34</SelectItem>
+                    <SelectItem value="35-44">35-44</SelectItem>
+                    <SelectItem value="45+">45+</SelectItem>
+                  </>
+                )}
               </SelectContent>
             </Select>
           </div>

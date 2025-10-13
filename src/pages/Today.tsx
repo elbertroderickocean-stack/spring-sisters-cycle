@@ -14,6 +14,7 @@ import { SymbioticCheckIn } from '@/components/SymbioticCheckIn';
 import { RitualSection } from '@/components/RitualSection';
 import { Sunrise, Moon, Camera } from 'lucide-react';
 import { WeeklyReflectionModal } from '@/components/WeeklyReflectionModal';
+import { WeeklyPlanModal } from '@/components/WeeklyPlanModal';
 
 
 const Today = () => {
@@ -34,6 +35,7 @@ const Today = () => {
   const [showCheckIn, setShowCheckIn] = useState(false);
   const [checkInDismissed, setCheckInDismissed] = useState(false);
   const [showWeeklyReflection, setShowWeeklyReflection] = useState(false);
+  const [showWeeklyPlan, setShowWeeklyPlan] = useState(false);
   const { activeWhisper, checkWhispers, dismissWhisper, triggerProTip } = useAuraWhispers();
 
   useEffect(() => {
@@ -759,8 +761,8 @@ const Today = () => {
           
           {/* Large Clickable Phase Banner with Solid Color & Transition Bar */}
           <button
-            onClick={() => userData.wiseBloomMode ? null : setIsModalOpen(true)}
-            className={`relative w-full p-6 rounded-2xl transition-all ${userData.wiseBloomMode ? '' : 'hover:scale-[1.02]'} shadow-lg border-none overflow-hidden phase-${phase}`}
+            onClick={() => setShowWeeklyPlan(true)}
+            className="relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg border-none overflow-hidden phase-${phase}"
           >
             <div className="flex items-center justify-between mb-6">
               <div className="text-left flex-1">
@@ -953,6 +955,12 @@ const Today = () => {
         skinType={userData.skinType}
         primaryConcern={userData.skinConcerns?.[0]}
         recentProducts={userData.productInventory?.map(p => p.productId).join(', ')}
+      />
+
+      {/* Weekly Plan Modal */}
+      <WeeklyPlanModal
+        open={showWeeklyPlan}
+        onOpenChange={setShowWeeklyPlan}
       />
 
       <BottomNav />
