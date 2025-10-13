@@ -9,37 +9,87 @@ const Solution = () => {
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-3xl text-center space-y-10 animate-slide-up">
         <h2 className="text-4xl md:text-5xl font-heading font-semibold text-primary">
-          We are the brand that understands this.
+          We help you build your dynamic ritual.
         </h2>
         
         <div className="flex justify-center my-12">
           <svg className="w-64 h-64" viewBox="0 0 200 200">
-            {/* Phase 1: Calm & Renew (Days 1-7) */}
+            {/* Base circle being drawn */}
+            <circle
+              cx="100"
+              cy="100"
+              r="80"
+              fill="none"
+              stroke="hsl(var(--border))"
+              strokeWidth="2"
+              strokeDasharray="503"
+              strokeDashoffset="503"
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                from="503"
+                to="0"
+                dur="1.5s"
+                fill="freeze"
+              />
+            </circle>
+
+            {/* Phase 1: Calm & Renew */}
             <path
               d="M 100,20 A 80,80 0 0,1 156.57,43.43"
               fill="none"
               stroke="hsl(var(--phase-calm))"
               strokeWidth="16"
               strokeLinecap="round"
-            />
+              opacity="0"
+            >
+              <animate
+                attributeName="opacity"
+                from="0"
+                to="1"
+                begin="1.5s"
+                dur="0.4s"
+                fill="freeze"
+              />
+            </path>
             
-            {/* Phase 2: Glow & Energize (Days 8-14) */}
+            {/* Phase 2: Glow & Energize */}
             <path
               d="M 156.57,43.43 A 80,80 0 0,1 180,100"
               fill="none"
               stroke="hsl(var(--phase-glow))"
               strokeWidth="16"
               strokeLinecap="round"
-            />
+              opacity="0"
+            >
+              <animate
+                attributeName="opacity"
+                from="0"
+                to="1"
+                begin="1.9s"
+                dur="0.4s"
+                fill="freeze"
+              />
+            </path>
             
-            {/* Phase 3: Balance & Clarify (Days 15-28) */}
+            {/* Phase 3: Balance & Clarify */}
             <path
               d="M 180,100 A 80,80 0 1,1 100,20"
               fill="none"
               stroke="hsl(var(--phase-balance))"
               strokeWidth="16"
               strokeLinecap="round"
-            />
+              opacity="0"
+            >
+              <animate
+                attributeName="opacity"
+                from="0"
+                to="1"
+                begin="2.3s"
+                dur="0.4s"
+                fill="freeze"
+              />
+            </path>
 
             <circle
               cx="100"
@@ -47,8 +97,18 @@ const Solution = () => {
               r="6"
               fill="hsl(var(--primary))"
               className="animate-pulse"
+              opacity="0"
             >
+              <animate
+                attributeName="opacity"
+                from="0"
+                to="1"
+                begin="2.7s"
+                dur="0.3s"
+                fill="freeze"
+              />
               <animateMotion
+                begin="2.7s"
                 dur="6s"
                 repeatCount="indefinite"
                 path="M 100,20 A 80,80 0 1,1 99.9,20 Z"
@@ -73,7 +133,7 @@ const Solution = () => {
         </div>
 
         <p className="text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
-          Our intelligent system offers the right tool for each of the three phases of your cycle.
+          Our intelligent system identifies your skin's true pattern — whether it's a <strong>28-day hormonal rhythm</strong> or a <strong>7-day cellular training rhythm</strong> — to offer the right tool at the right time.
         </p>
 
         <Button 

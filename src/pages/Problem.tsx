@@ -39,7 +39,7 @@ const Problem = () => {
         </div>
 
         <p className="text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
-          Your skin isn't a static canvas. It changes every single day, following the rhythm of your cycle. This is why universal products often fail.
+          Your skin isn't a static canvas. It changes every day, influenced by <strong>hormones, sleep, and even stress.</strong> This is why a 'one-size-fits-all' approach always fails.
         </p>
 
         <Button 
