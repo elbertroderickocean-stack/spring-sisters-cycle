@@ -766,15 +766,15 @@ const Today = () => {
           >
             <div className="flex items-center justify-between mb-6">
               <div className="text-left flex-1">
-                <div className="text-5xl font-heading font-bold mb-1 text-white drop-shadow-sm">
+                <div className="text-5xl font-heading font-bold mb-1 text-primary drop-shadow-sm">
                   {userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
                 </div>
-                <div className="text-sm font-medium text-white/90">
+                <div className="text-sm font-medium text-primary/80">
                   {dailyWhisper}
                 </div>
               </div>
               {!userData.wiseBloomMode && (
-                <div className="flex items-center gap-3 text-white">
+                <div className="flex items-center gap-3 text-primary">
                   <span className="text-xl font-heading font-semibold">
                     {phaseName}
                   </span>
@@ -782,7 +782,7 @@ const Today = () => {
                 </div>
               )}
               {userData.wiseBloomMode && (
-                <div className="text-right text-white">
+                <div className="text-right text-primary">
                   <div className="text-lg font-heading font-semibold">
                     {getMicroCycleDayName(day).split(':')[1]}
                   </div>

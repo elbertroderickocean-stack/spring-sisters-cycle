@@ -14,25 +14,29 @@ interface WeeklyPlanModalProps {
 }
 
 export const WeeklyPlanModal = ({ open, onOpenChange }: WeeklyPlanModalProps) => {
-  const { userData, getCurrentPhase } = useUser();
+  const { userData, getCurrentDay } = useUser();
 
   const getHormonalWeeklyPlan = () => {
     const cycleLength = userData.cycleLength;
+    const currentDay = getCurrentDay();
     const plan = [];
     
-    for (let day = 1; day <= 7; day++) {
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const today = new Date();
+    
+    for (let offset = 0; offset < 7; offset++) {
+      const futureDate = new Date(today.getTime() + offset * 24 * 60 * 60 * 1000);
+      const dayOfWeek = futureDate.getDay();
+      const cycleDayNumber = ((currentDay + offset - 1) % cycleLength) + 1;
+      
       let phase;
-      if (day <= 7) {
+      if (cycleDayNumber <= 7) {
         phase = 'Calm & Renew';
-      } else if (day <= Math.floor(cycleLength / 2)) {
+      } else if (cycleDayNumber <= Math.floor(cycleLength / 2)) {
         phase = 'Glow & Energize';
       } else {
         phase = 'Balance & Clarify';
       }
-      
-      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const today = new Date();
-      const dayOfWeek = new Date(today.getTime() + (day - 1) * 24 * 60 * 60 * 1000).getDay();
       
       plan.push({
         day: dayNames[dayOfWeek],
