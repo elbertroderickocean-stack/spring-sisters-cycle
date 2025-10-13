@@ -84,29 +84,34 @@ const WiseBloomOnboarding = () => {
               Your focus is restoration and support.
             </h1>
             
+            <p className="text-xl text-foreground/80 leading-relaxed max-w-xl mx-auto pt-4">
+              To achieve this, we'll use our complete orbital system, re-imagined into a powerful 7-day training rhythm for your skin:
+            </p>
+            
             <div className="pt-6 pb-8 space-y-4 text-left max-w-xl mx-auto">
-              <p className="text-lg text-foreground/80 leading-relaxed">
-                We will recommend a routine built on our two most powerful lines:
-              </p>
-              
-              <div className="space-y-4 pt-2">
-                <div className="bg-primary/5 rounded-xl p-4 border border-primary/20">
-                  <h3 className="font-semibold text-lg mb-2">The Spring Harmony™</h3>
-                  <p className="text-foreground/70">
-                    For daily barrier support and gentle, consistent nourishment
-                  </p>
-                </div>
-                
-                <div className="bg-primary/5 rounded-xl p-4 border border-primary/20">
-                  <h3 className="font-semibold text-lg mb-2">The Precision Care™</h3>
-                  <p className="text-foreground/70">
-                    For targeted anti-aging and intensive regeneration
-                  </p>
-                </div>
+              <div className="bg-primary/5 rounded-xl p-5 border border-primary/20">
+                <h3 className="font-heading font-semibold text-xl mb-2">The Spring Harmony™</h3>
+                <p className="text-foreground/70 leading-relaxed">
+                  Your daily foundation for barrier support and constant nourishment.
+                </p>
               </div>
               
-              <p className="text-lg text-foreground/80 leading-relaxed pt-4 italic">
-                Your skin is no longer a 'planet'—it's a 'star' that needs constant, steady radiance.
+              <div className="bg-primary/5 rounded-xl p-5 border border-primary/20">
+                <h3 className="font-heading font-semibold text-xl mb-2">The Bloom Cycle™</h3>
+                <p className="text-foreground/70 leading-relaxed">
+                  The heart of your 7-day training rhythm. We use these serums as targeted 'exercises' for your skin cells on different days.
+                </p>
+              </div>
+              
+              <div className="bg-primary/5 rounded-xl p-5 border border-primary/20">
+                <h3 className="font-heading font-semibold text-xl mb-2">The Precision Care™</h3>
+                <p className="text-foreground/70 leading-relaxed">
+                  Your specialized tools for targeting specific concerns and boosting your weekly training results.
+                </p>
+              </div>
+              
+              <p className="text-lg text-foreground/80 leading-relaxed pt-6 italic text-center">
+                Your skin's rhythm is no longer a monthly orbit—it's a weekly pulse, and you are the star at its center.
               </p>
             </div>
 

@@ -92,32 +92,57 @@ const Profile = () => {
           </CardContent>
         </Card>
 
-        <Card className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <Calendar className="h-6 w-6 text-primary" />
-              <CardTitle className="font-heading text-2xl">Cycle Information</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <p className="text-sm text-muted-foreground">Current Cycle Day</p>
-              <p className="text-base font-medium">Day {getCurrentDay()}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Cycle Length</p>
-              <p className="text-base font-medium">{userData.cycleLength} days</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Age Range</p>
-              <p className="text-base font-medium">{userData.ageRange || 'Not set'}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Skin Type</p>
-              <p className="text-base font-medium">{userData.skinType || 'Not set'}</p>
-            </div>
-          </CardContent>
-        </Card>
+        {userData.wiseBloomMode ? (
+          <Card className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <Calendar className="h-6 w-6 text-primary" />
+                <CardTitle className="font-heading text-2xl">Rhythm Information</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Rhythm Type</p>
+                <p className="text-base font-medium">Cellular Training</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Age Range</p>
+                <p className="text-base font-medium">{userData.ageRange || 'Not set'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Skin Type</p>
+                <p className="text-base font-medium">{userData.skinType || 'Not set'}</p>
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <Calendar className="h-6 w-6 text-primary" />
+                <CardTitle className="font-heading text-2xl">Cycle Information</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Current Cycle Day</p>
+                <p className="text-base font-medium">Day {getCurrentDay()}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Cycle Length</p>
+                <p className="text-base font-medium">{userData.cycleLength} days</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Age Range</p>
+                <p className="text-base font-medium">{userData.ageRange || 'Not set'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Skin Type</p>
+                <p className="text-base font-medium">{userData.skinType || 'Not set'}</p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <Card className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <CardHeader>

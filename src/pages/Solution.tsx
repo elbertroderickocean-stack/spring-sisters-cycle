@@ -8,9 +8,13 @@ const Solution = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-3xl text-center space-y-10 animate-slide-up">
-        <h2 className="text-4xl md:text-5xl font-heading font-semibold text-primary">
-          We help you build your dynamic ritual.
-        </h2>
+        <h1 className="text-4xl md:text-5xl font-heading font-semibold text-primary">
+          Every skin needs the right tool at the right time.
+        </h1>
+        
+        <p className="text-xl md:text-2xl text-foreground/80 font-heading">
+          Our entire system is built on three core pillars of skin health:
+        </p>
         
         <div className="flex justify-center my-12">
           <svg className="w-64 h-64" viewBox="0 0 200 200">
@@ -120,20 +124,20 @@ const Solution = () => {
         <div className="space-y-4 max-w-2xl mx-auto">
           <div className="flex items-center gap-3 justify-center">
             <div className="w-4 h-4 rounded-full bg-phase-calm"></div>
-            <span className="text-foreground/80">Calm & Renew</span>
+            <span className="text-foreground/80"><strong>Calm & Renew:</strong> For recovery and strength.</span>
           </div>
           <div className="flex items-center gap-3 justify-center">
             <div className="w-4 h-4 rounded-full bg-phase-glow"></div>
-            <span className="text-foreground/80">Glow & Energize</span>
+            <span className="text-foreground/80"><strong>Glow & Energize:</strong> For vitality and radiance.</span>
           </div>
           <div className="flex items-center gap-3 justify-center">
             <div className="w-4 h-4 rounded-full bg-phase-balance"></div>
-            <span className="text-foreground/80">Balance & Clarify</span>
+            <span className="text-foreground/80"><strong>Balance & Clarify:</strong> For harmony and purity.</span>
           </div>
         </div>
 
         <p className="text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
-          Our intelligent system identifies your skin's true pattern — whether it's a <strong>28-day hormonal rhythm</strong> or a <strong>7-day cellular training rhythm</strong> — to offer the right tool at the right time.
+          Our intelligent system uses these pillars to build your personal rhythm — whether it's a <strong>28-day hormonal rhythm</strong> or a <strong>7-day cellular training rhythm</strong>.
         </p>
 
         <Button 

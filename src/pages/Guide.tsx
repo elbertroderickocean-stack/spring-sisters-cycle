@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookOpen, Sparkles, Leaf } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
+import { useUser } from '@/contexts/UserContext';
 
 const guideContent = [
   {
@@ -35,6 +36,32 @@ const guideContent = [
 
 const Guide = () => {
   const navigate = useNavigate();
+  const { userData } = useUser();
+  
+  // Dynamic content based on user mode
+  const knowYourSkinSection = userData.wiseBloomMode ? {
+    section: 'Your New Rhythm',
+    icon: Sparkles,
+    items: [
+      { title: 'The Cellular Training Rhythm: Explained', description: 'Understanding your 7-day skin training cycle', articleId: 'cellular-training' },
+      { title: 'Understanding Your Skin in Menopause', description: 'The science of mature skin', articleId: 'menopause-skin' },
+      { title: 'Power Ingredients for Mature Skin', description: 'What works and why', articleId: 'power-ingredients' },
+    ]
+  } : {
+    section: 'Know Your Skin',
+    icon: Sparkles,
+    items: [
+      { title: 'Phase 1: Calm & Renew', description: 'Low Estrogen & Progesterone - Days 1-7', articleId: 'phase-calm' },
+      { title: 'Phase 2: Glow & Energize', description: 'Estrogen Peak - Days 8-14', articleId: 'phase-glow' },
+      { title: 'Phase 3: Balance & Clarify', description: 'Progesterone Dominance - Days 15+', articleId: 'phase-balance' },
+    ]
+  };
+  
+  const dynamicGuideContent = [
+    guideContent[0], // Our Philosophy
+    knowYourSkinSection,
+    guideContent[2], // Ingredient Glossary
+  ];
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -43,7 +70,7 @@ const Guide = () => {
           The Spring Sisters Guide
         </h1>
 
-        {guideContent.map((section, sectionIndex) => {
+        {dynamicGuideContent.map((section, sectionIndex) => {
           const Icon = section.icon;
           return (
             <div key={section.section} className="space-y-4 animate-slide-up" style={{ animationDelay: `${sectionIndex * 0.1}s` }}>
