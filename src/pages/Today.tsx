@@ -19,8 +19,16 @@ import { WeeklyReflectionModal } from '@/components/WeeklyReflectionModal';
 const Today = () => {
   const { userData, getCurrentPhase, getCurrentDay, exitDemoMode, updateCheckIn, needsCheckIn, isProductOwned } = useUser();
   const navigate = useNavigate();
-  const phase = getCurrentPhase();
-  const day = getCurrentDay();
+  
+  // Get the current day in the 7-day micro-cycle for Wise Bloom users
+  const getMicroCycleDay = (): number => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    return dayOfWeek === 0 ? 7 : dayOfWeek; // Convert Sunday to 7, keep others as-is
+  };
+  
+  const phase = userData.wiseBloomMode ? 'calm' : getCurrentPhase(); // Wise Bloom users always get 'calm' phase styling
+  const day = userData.wiseBloomMode ? getMicroCycleDay() : getCurrentDay();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const [showCheckIn, setShowCheckIn] = useState(false);
@@ -48,7 +56,32 @@ const Today = () => {
 
   const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
   
+  const getMicroCycleDayName = (day: number): string => {
+    const dayNames = [
+      'Monday: Recovery Night',
+      'Tuesday: Recovery Night',
+      'Wednesday: Exfoliation Night',
+      'Thursday: Activation Night',
+      'Friday: Recovery Night',
+      'Saturday: Recovery Night',
+      'Sunday: Flex Night'
+    ];
+    return dayNames[day - 1] || 'Recovery Night';
+  };
+
   const getDailyWhisper = () => {
+    if (userData.wiseBloomMode) {
+      const whispers = [
+        "Embrace the wisdom of renewal today.",
+        "Your skin thrives on steady, consistent care.",
+        "Strength comes from nourishment, not from cycles.",
+        "Today is another step toward radiant vitality.",
+        "Your beauty is timeless—nurture it with intention.",
+        "Steady radiance comes from daily devotion.",
+        "Your skin is a star—let it shine consistently."
+      ];
+      return whispers[(day - 1) % whispers.length];
+    }
     const { progressPercentage } = getPhaseProgress();
     const isEarlyPhase = progressPercentage < 33;
     const isMidPhase = progressPercentage >= 33 && progressPercentage < 66;
@@ -230,6 +263,11 @@ const Today = () => {
   const getEveningRitualSteps = () => {
     const { isProductOwned } = useUser();
     
+    // Wise Bloom 7-Day Micro-Cycle
+    if (userData.wiseBloomMode) {
+      return getWiseBloomEveningSteps();
+    }
+    
     // Check if there are custom rituals from Aura
     if (userData.customRituals?.evening) {
       return userData.customRituals.evening.map((productId, index) => {
@@ -366,6 +404,82 @@ const Today = () => {
             'This is your meditation moment'
           ]
         }
+      }
+    ];
+
+    return steps;
+  };
+
+  const getWiseBloomEveningSteps = () => {
+    const hasSerumTrio = isProductOwned('serum-trio');
+    const hasCleanser = isProductOwned('cleanser');
+    const hasMoisturizer = isProductOwned('moisturizer');
+    const hasCeramide = isProductOwned('ceramide');
+    const hasMaskTrio = isProductOwned('mask-trio');
+
+    const microCycleDay = getMicroCycleDay();
+    let primarySerum = 'Calm & Renew Serum';
+    let auraVoice = '';
+
+    // Days 1 & 2 (Mon & Tue): Recovery Nights
+    if (microCycleDay === 1 || microCycleDay === 2) {
+      primarySerum = 'Calm & Renew Serum';
+      auraVoice = "Tonight, we focus on recovery. We are using the Calm & Renew Serum to strengthen your skin's foundation.";
+    }
+    // Day 3 (Wed): Exfoliation Night
+    else if (microCycleDay === 3) {
+      primarySerum = hasMaskTrio ? 'Gentle Exfoliating Component' : 'Calm & Renew Serum';
+      auraVoice = "Tonight is Exfoliation Night. We are gently polishing the skin to prepare it for the powerful ingredients to come.";
+    }
+    // Day 4 (Thu): Activation Night
+    else if (microCycleDay === 4) {
+      primarySerum = 'Glow & Energize Serum';
+      auraVoice = "Your skin is perfectly prepared. Tonight, we use our most potent antioxidant cocktail, the Glow & Energize Serum, to awaken the cells.";
+    }
+    // Days 5 & 6 (Fri & Sat): Recovery Nights
+    else if (microCycleDay === 5 || microCycleDay === 6) {
+      primarySerum = 'Calm & Renew Serum';
+      auraVoice = "After hard work comes rest. We are returning to the calming embrace of the Calm & Renew Serum.";
+    }
+    // Day 7 (Sun): Flex Night
+    else if (microCycleDay === 7) {
+      primarySerum = 'Balance & Clarify Serum or Your Choice';
+      auraVoice = "Tonight is your 'flex' day. If your pores need attention, use the Balance & Clarify Serum. Otherwise, a Recovery Night is a wonderful choice.";
+    }
+
+    const steps: any[] = [
+      {
+        number: 1,
+        type: 'product',
+        name: 'Spring Harmony Gentle Cleanser (First Cleanse)',
+        purpose: 'Removes makeup, SPF, and surface impurities.',
+        owned: hasCleanser,
+        productId: 'cleanser',
+      },
+      {
+        number: 2,
+        type: 'product',
+        name: 'Spring Harmony Gentle Cleanser (Second Cleanse)',
+        purpose: 'Deep cleans pores and prepares skin for treatment.',
+        owned: hasCleanser,
+        productId: 'cleanser',
+      },
+      {
+        number: 3,
+        type: 'product',
+        name: primarySerum,
+        purpose: auraVoice,
+        owned: hasSerumTrio,
+        productId: 'serum-trio',
+        isPhaseProduct: true,
+      },
+      {
+        number: 4,
+        type: 'product',
+        name: hasCeramide ? 'Ceramide Concentrate' : 'Spring Harmony Daily Moisturizer',
+        purpose: hasCeramide ? 'Intensive barrier repair and deep nourishment.' : 'Seals in hydration and protects your skin barrier all night long.',
+        owned: hasCeramide || hasMoisturizer,
+        productId: hasCeramide ? 'ceramide' : 'moisturizer',
       }
     ];
 
@@ -645,37 +759,48 @@ const Today = () => {
           
           {/* Large Clickable Phase Banner with Solid Color & Transition Bar */}
           <button
-            onClick={() => setIsModalOpen(true)}
-            className={`relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg border-none overflow-hidden phase-${phase}`}
+            onClick={() => userData.wiseBloomMode ? null : setIsModalOpen(true)}
+            className={`relative w-full p-6 rounded-2xl transition-all ${userData.wiseBloomMode ? '' : 'hover:scale-[1.02]'} shadow-lg border-none overflow-hidden phase-${phase}`}
           >
             <div className="flex items-center justify-between mb-6">
               <div className="text-left flex-1">
                 <div className="text-5xl font-heading font-bold mb-1 text-white drop-shadow-sm">
-                  Day {day}
+                  {userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
                 </div>
                 <div className="text-sm font-medium text-white/90">
                   {dailyWhisper}
                 </div>
               </div>
-              <div className="flex items-center gap-3 text-white">
-                <span className="text-xl font-heading font-semibold">
-                  {phaseName}
-                </span>
-                <ChevronRight className="h-6 w-6" />
-              </div>
+              {!userData.wiseBloomMode && (
+                <div className="flex items-center gap-3 text-white">
+                  <span className="text-xl font-heading font-semibold">
+                    {phaseName}
+                  </span>
+                  <ChevronRight className="h-6 w-6" />
+                </div>
+              )}
+              {userData.wiseBloomMode && (
+                <div className="text-right text-white">
+                  <div className="text-lg font-heading font-semibold">
+                    {getMicroCycleDayName(day).split(':')[1]}
+                  </div>
+                </div>
+              )}
             </div>
             
-            {/* Transition Progress Bar */}
-            <div className="absolute bottom-0 left-0 right-0 h-2 bg-white/20">
-              <div 
-                className="h-full transition-all duration-500 ease-out"
-                style={{
-                  width: `${progressPercentage}%`,
-                  background: `linear-gradient(to right, currentColor ${Math.max(0, progressPercentage - 10)}%, ${nextPhaseColor} 100%)`,
-                  color: phase === 'calm' ? 'hsl(200 50% 60%)' : phase === 'glow' ? 'hsl(30 90% 60%)' : 'hsl(120 40% 50%)'
-                }}
-              />
-            </div>
+            {/* Transition Progress Bar - Only for regular cycle users */}
+            {!userData.wiseBloomMode && (
+              <div className="absolute bottom-0 left-0 right-0 h-2 bg-white/20">
+                <div 
+                  className="h-full transition-all duration-500 ease-out"
+                  style={{
+                    width: `${progressPercentage}%`,
+                    background: `linear-gradient(to right, currentColor ${Math.max(0, progressPercentage - 10)}%, ${nextPhaseColor} 100%)`,
+                    color: phase === 'calm' ? 'hsl(200 50% 60%)' : phase === 'glow' ? 'hsl(30 90% 60%)' : 'hsl(120 40% 50%)'
+                  }}
+                />
+              </div>
+            )}
           </button>
         </div>
 

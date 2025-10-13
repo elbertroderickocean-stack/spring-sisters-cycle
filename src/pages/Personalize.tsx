@@ -93,6 +93,15 @@ const Personalize = () => {
           >
             Next
           </Button>
+
+          <div className="text-center mt-6 pt-4 border-t border-border">
+            <button
+              onClick={() => navigate('/wise-bloom')}
+              className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+            >
+              I no longer have a regular cycle / I am in menopause
+            </button>
+          </div>
         </div>
       </div>
     </div>

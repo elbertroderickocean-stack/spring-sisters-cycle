@@ -25,6 +25,7 @@ export interface UserData {
   productInventory: ProductInventory[]; // New inventory with quantities
   scannedProducts: ScannedProduct[];
   isDemoMode: boolean;
+  wiseBloomMode: boolean; // True for menopause/no cycle users
   checkIn?: {
     energy: string;
     skin: string;
@@ -69,6 +70,7 @@ const defaultUserData: UserData = {
   productInventory: [],
   scannedProducts: [],
   isDemoMode: false,
+  wiseBloomMode: false,
 };
 
 const demoUserData: UserData = {
@@ -86,6 +88,7 @@ const demoUserData: UserData = {
   ],
   scannedProducts: [],
   isDemoMode: true,
+  wiseBloomMode: false,
 };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {

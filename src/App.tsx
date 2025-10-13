@@ -9,6 +9,7 @@ import Welcome from "./pages/Welcome";
 import Problem from "./pages/Problem";
 import Solution from "./pages/Solution";
 import Personalize from "./pages/Personalize";
+import WiseBloomOnboarding from "./pages/WiseBloomOnboarding";
 import Register from "./pages/Register";
 import Details from "./pages/Details";
 import SkinConcerns from "./pages/SkinConcerns";
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/problem" element={<Problem />} />
             <Route path="/solution" element={<Solution />} />
             <Route path="/personalize" element={<Personalize />} />
+            <Route path="/wise-bloom" element={<WiseBloomOnboarding />} />
             <Route path="/register" element={<Register />} />
             <Route path="/details" element={<Details />} />
             <Route path="/skin-concerns" element={<SkinConcerns />} />
