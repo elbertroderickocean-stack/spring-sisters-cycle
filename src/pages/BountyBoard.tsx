@@ -23,21 +23,21 @@ const BountyBoard = () => {
       icon: Camera,
       title: 'Texture Tuesday',
       brief: 'Capture an aesthetic macro shot of your daily serum\'s texture.',
-      reward: '100 LP',
+      reward: '1,000 LP',
       status: 'active',
     },
     {
       icon: Camera,
       title: 'Selfie Sunday',
       brief: 'Share your glow-up selfie after a full week of ritual.',
-      reward: '75 LP',
+      reward: '750 LP',
       status: 'active',
     },
     {
       icon: BookOpen,
       title: 'Ingredient Deep-Dive',
       brief: 'Write a mini-review explaining your favorite ingredient and why it works for you.',
-      reward: '150 LP',
+      reward: '1,500 LP',
       status: 'active',
     },
     {
@@ -66,7 +66,7 @@ const BountyBoard = () => {
         </div>
 
         <p className="text-muted-foreground leading-relaxed">
-          Complete creative missions to earn Legacy Points and help us build a more authentic community.
+          Complete creative missions to earn Legacy Points. The rewards listed are the base payment for your work. Your earnings can grow with the <strong className="text-primary">'Impact Multiplier'</strong> — the more views and engagement your content gets, the more bonus LP you'll receive at the end of the month!
         </p>
 
         {/* Active Bounties */}

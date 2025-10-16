@@ -24,7 +24,7 @@ const Sisterhood = () => {
   // Mock user status data
   const userStatus = {
     level: 'Initiate',
-    currentPoints: 150,
+    currentPoints: 1250,
     nextLevelPoints: 1000,
   };
 
@@ -44,9 +44,9 @@ const Sisterhood = () => {
 
   // Mock bounties data
   const activeBounties = [
-    { title: 'Texture Tuesday', reward: '100 LP' },
-    { title: 'Selfie Sunday', reward: '75 LP' },
-    { title: 'Ingredient Deep-Dive', reward: '150 LP' },
+    { title: 'Texture Tuesday', reward: '1,000 LP' },
+    { title: 'Selfie Sunday', reward: '750 LP' },
+    { title: 'Ingredient Deep-Dive', reward: '1,500 LP' },
   ];
 
   const contributionActions = [
