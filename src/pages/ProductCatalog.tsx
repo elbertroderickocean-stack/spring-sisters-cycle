@@ -5,13 +5,18 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 import { products } from '@/data/productData';
+import ProductCheckoutModal from '@/components/ProductCheckoutModal';
 
 const ProductCatalog = () => {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState<'bloom' | 'harmony' | 'precision' | null>(null);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
+  const userBalance = 1250; // Static demo balance
 
-  const handleBuy = (productName: string) => {
-    alert(`Redirecting to the online store to purchase ${productName}`);
+  const handleBuy = (product: typeof products[0]) => {
+    setSelectedProduct(product);
+    setShowCheckout(true);
   };
 
   const bloomProducts = products.filter(p => p.line === 'bloom');
@@ -60,7 +65,7 @@ const ProductCatalog = () => {
           <Button
             size="sm"
             className="flex-1"
-            onClick={() => handleBuy(product.name)}
+            onClick={() => handleBuy(product)}
           >
             Buy
           </Button>
@@ -212,6 +217,17 @@ const ProductCatalog = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Product Checkout Modal */}
+      {selectedProduct && (
+        <ProductCheckoutModal
+          isOpen={showCheckout}
+          onClose={() => setShowCheckout(false)}
+          productName={selectedProduct.name}
+          productPrice={parseFloat(selectedProduct.price.replace('$', ''))}
+          userBalance={userBalance}
+        />
+      )}
     </div>
   );
 };
