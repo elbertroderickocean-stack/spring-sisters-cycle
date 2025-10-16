@@ -25,6 +25,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Scanner from "./pages/Scanner";
 import Sisterhood from "./pages/Sisterhood";
 import LegacyPoints from "./pages/LegacyPoints";
+import LegacyTreasury from "./pages/LegacyTreasury";
 import ProductRating from "./pages/ProductRating";
 import RDPanel from "./pages/RDPanel";
 import LegacyFundVote from "./pages/LegacyFundVote";
@@ -65,6 +66,7 @@ const App = () => (
             <Route path="/scanner" element={<Scanner />} />
             <Route path="/sisterhood" element={<Sisterhood />} />
             <Route path="/legacy-points" element={<LegacyPoints />} />
+            <Route path="/legacy-treasury" element={<LegacyTreasury />} />
             <Route path="/product-rating" element={<ProductRating />} />
             <Route path="/rd-panel" element={<RDPanel />} />
             <Route path="/legacy-fund-vote" element={<LegacyFundVote />} />

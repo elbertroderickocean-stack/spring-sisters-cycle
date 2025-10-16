@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Avatar } from '@/components/ui/avatar';
-import { Star, Vote, FlaskConical, Heart, Users, Target } from 'lucide-react';
+import { Star, Vote, FlaskConical, Heart, Users, Target, Sparkles } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 
 const Sisterhood = () => {
@@ -77,6 +77,16 @@ const Sisterhood = () => {
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
         {/* Header */}
         <h1 className="text-3xl font-heading font-semibold">The Sisterhood Circle</h1>
+
+        {/* Legacy Treasury Button */}
+        <Button
+          onClick={() => navigate('/legacy-treasury')}
+          className="w-full rounded-full shadow-lg"
+          size="lg"
+        >
+          <Sparkles className="h-5 w-5 mr-2" />
+          Open The Legacy Treasury
+        </Button>
 
         {/* Module 1: Your Status - Now Clickable */}
         <button
