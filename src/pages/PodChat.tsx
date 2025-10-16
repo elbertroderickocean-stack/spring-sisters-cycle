@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Send } from 'lucide-react';
+import { ArrowLeft, Send, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useUser } from '@/contexts/UserContext';
+import GiftLPModal from '@/components/GiftLPModal';
 
 const PodChat = () => {
   const navigate = useNavigate();
   const { getCurrentPhase } = useUser();
   const phase = getCurrentPhase();
   const [message, setMessage] = useState('');
+  const [selectedMember, setSelectedMember] = useState<{ name: string; avatar: string } | null>(null);
+  const [showGiftModal, setShowGiftModal] = useState(false);
+  
+  const userBalance = 1250; // Static demo balance matching LegacyTreasury
 
   const getPhaseColor = () => {
     if (phase === 'calm') return 'hsl(200 50% 60%)';
@@ -20,13 +26,31 @@ const PodChat = () => {
 
   const phaseColor = getPhaseColor();
 
+  // Mock pod members (excluding "You")
+  const podMembers = [
+    { name: 'Sarah K.', avatar: '👩' },
+    { name: 'Emma L.', avatar: '👩‍🦰' },
+    { name: 'Maya P.', avatar: '👩‍🦱' },
+  ];
+
   // Mock messages
   const messages = [
-    { sender: 'Sarah K.', message: 'Just finished my morning ritual! Who else?', time: '9:45 AM', isMe: false },
-    { sender: 'You', message: 'Me! Feeling so good today ✨', time: '9:47 AM', isMe: true },
-    { sender: 'Emma L.', message: 'On it! My skin feels amazing this week', time: '9:50 AM', isMe: false },
-    { sender: 'Maya P.', message: "Can't wait to see our challenge results!", time: '10:02 AM', isMe: false },
+    { sender: 'Sarah K.', message: 'Just finished my morning ritual! Who else?', time: '9:45 AM', isMe: false, avatar: '👩' },
+    { sender: 'You', message: 'Me! Feeling so good today ✨', time: '9:47 AM', isMe: true, avatar: '✨' },
+    { sender: 'Emma L.', message: 'On it! My skin feels amazing this week', time: '9:50 AM', isMe: false, avatar: '👩‍🦰' },
+    { sender: 'Maya P.', message: "Can't wait to see our challenge results!", time: '10:02 AM', isMe: false, avatar: '👩‍🦱' },
   ];
+
+  const handleMemberClick = (member: { name: string; avatar: string }) => {
+    setSelectedMember(member);
+  };
+
+  const handleGiftLP = () => {
+    if (selectedMember) {
+      setSelectedMember(null);
+      setShowGiftModal(true);
+    }
+  };
 
   const handleSend = () => {
     if (message.trim()) {
@@ -74,8 +98,16 @@ const PodChat = () => {
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`flex ${msg.isMe ? 'justify-end' : 'justify-start'}`}
+            className={`flex ${msg.isMe ? 'justify-end' : 'justify-start'} items-start gap-2`}
           >
+            {!msg.isMe && (
+              <button
+                onClick={() => handleMemberClick(podMembers.find(m => m.name === msg.sender)!)}
+                className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-lg shrink-0 hover:bg-primary/20 transition-colors"
+              >
+                {msg.avatar}
+              </button>
+            )}
             <div className={`max-w-[75%] space-y-1`}>
               {!msg.isMe && (
                 <p className="text-xs font-semibold text-foreground px-3">{msg.sender}</p>
@@ -117,6 +149,46 @@ const PodChat = () => {
           </div>
         </div>
       </div>
+
+      {/* Member Profile Modal */}
+      <Dialog open={!!selectedMember} onOpenChange={() => setSelectedMember(null)}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <div className="text-6xl text-center mb-4">{selectedMember?.avatar}</div>
+            <DialogTitle className="text-2xl font-heading text-center">{selectedMember?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-4">
+            <Button
+              onClick={handleGiftLP}
+              className="w-full rounded-full"
+              size="lg"
+            >
+              <Gift className="h-4 w-4 mr-2" />
+              Gift LP
+            </Button>
+            <Button
+              onClick={() => setSelectedMember(null)}
+              variant="outline"
+              className="w-full rounded-full"
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Gift LP Modal */}
+      {selectedMember && (
+        <GiftLPModal
+          isOpen={showGiftModal}
+          onClose={() => {
+            setShowGiftModal(false);
+            setSelectedMember(null);
+          }}
+          recipientName={selectedMember.name}
+          userBalance={userBalance}
+        />
+      )}
     </div>
   );
 };

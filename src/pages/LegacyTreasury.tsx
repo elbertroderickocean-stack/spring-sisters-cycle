@@ -30,6 +30,15 @@ const treasuryItems: TreasuryItem[] = [
     detailDescription: 'Convert your Legacy Points directly into credit to use on any Spring Sisters product. Your loyalty, your choice.\n\nExchange Rate: 100 LP = $1'
   },
   {
+    id: 'share-legacy',
+    title: 'Share Your Legacy',
+    description: 'Gift Legacy Points to members of your Sisterhood Pod',
+    price: 'Any Amount',
+    category: 'essentials',
+    imagePlaceholder: '💝',
+    detailDescription: 'The greatest gift is support. You can gift your Legacy Points to any member of your Sisterhood Pod directly from their profile.\n\nSpread the love. Build each other up. This is the power of sisterhood.'
+  },
+  {
     id: 'silk-robe',
     title: 'The Alchemist\'s Robe',
     description: 'Limited edition silk robe - Exclusive to our community',
@@ -56,6 +65,24 @@ const treasuryItems: TreasuryItem[] = [
     category: 'wellness',
     imagePlaceholder: '🕉️',
     detailDescription: 'Bring harmony to your body and mind with a full year of access to world-class yoga and fitness instructors.\n\nPartner: Glo, Alo Moves, or similar premium platform.\n\nFlow through your practice, guided by the best.'
+  },
+  {
+    id: 'fitness',
+    title: '1-Year Premium Fitness Membership',
+    description: 'Full access to partner premium fitness clubs',
+    priceLP: 75000,
+    category: 'wellness',
+    imagePlaceholder: '💪',
+    detailDescription: 'Invest in your strength and vitality. A full year of access to our partner premium fitness clubs in your city.\n\nPartner with top-tier fitness facilities nationwide.\n\nYour body is your temple. Honor it with movement.'
+  },
+  {
+    id: 'wellness-concierge',
+    title: 'Wellness Concierge Credit',
+    description: 'Credit for beauty and wellness services',
+    priceLP: 10000,
+    category: 'wellness',
+    imagePlaceholder: '📅',
+    detailDescription: 'Your personal credit for beauty and wellness. Redeemable for a consultation with a top cosmetologist or a spa treatment with our certified partners.\n\nExpert care, personalized for you.\n\nBecause you deserve professional support on your journey.'
   },
   // CATEGORY C: The Dream
   {
@@ -91,6 +118,20 @@ const LegacyTreasury = () => {
   };
 
   const handleRedeem = () => {
+    // Special handling for "convert-credit" - redirect to products
+    if (selectedItem?.id === 'convert-credit') {
+      setSelectedItem(null);
+      navigate('/products');
+      return;
+    }
+    
+    // Special handling for "share-legacy" - redirect to pod chat
+    if (selectedItem?.id === 'share-legacy') {
+      setSelectedItem(null);
+      navigate('/pod-chat');
+      return;
+    }
+    
     setSelectedItem(null);
     setShowComingSoon(true);
   };
@@ -233,21 +274,21 @@ const LegacyTreasury = () => {
                 <div className="flex items-center justify-center gap-4 py-3">
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl mb-2">
-                      💗
+                      🎀
                     </div>
-                    <p className="text-xs text-muted-foreground">Partner 1</p>
+                    <p className="text-xs text-muted-foreground font-medium">Breast Cancer Research</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl mb-2">
-                      🌸
+                      💜
                     </div>
-                    <p className="text-xs text-muted-foreground">Partner 2</p>
+                    <p className="text-xs text-muted-foreground font-medium">The Loveland Foundation</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl mb-2">
-                      🤝
+                      🌍
                     </div>
-                    <p className="text-xs text-muted-foreground">Partner 3</p>
+                    <p className="text-xs text-muted-foreground font-medium">Women for Women Intl</p>
                   </div>
                 </div>
 

@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { products } from '@/data/productData';
+import ProductCheckoutModal from '@/components/ProductCheckoutModal';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const [showCheckout, setShowCheckout] = useState(false);
   
   const product = products.find(p => p.id === id);
+  const userBalance = 1250; // Static demo balance matching LegacyTreasury
 
   if (!product) {
     return (
@@ -23,7 +26,7 @@ const ProductDetail = () => {
   }
 
   const handleBuy = () => {
-    alert(`Redirecting to the online store to purchase ${product.name}`);
+    setShowCheckout(true);
   };
 
   const getLineLabel = (line: string) => {
@@ -132,6 +135,17 @@ const ProductDetail = () => {
           </Button>
         </div>
       </div>
+
+      {/* Checkout Modal */}
+      {product && (
+        <ProductCheckoutModal
+          isOpen={showCheckout}
+          onClose={() => setShowCheckout(false)}
+          productName={product.name}
+          productPrice={parseFloat(product.price.replace('$', ''))}
+          userBalance={userBalance}
+        />
+      )}
     </div>
   );
 };
