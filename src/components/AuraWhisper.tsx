@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Sparkles, X } from 'lucide-react';
+import { Hexagon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -51,7 +51,7 @@ export const AuraWhisper: React.FC<AuraWhisperProps> = ({
           phase === 'balance' && "bg-phase-balance/90"
         )}>
           <div className="shrink-0">
-            <Sparkles className="h-5 w-5 text-white animate-pulse" />
+            <Hexagon className="h-5 w-5 text-white animate-pulse" />
           </div>
           <p className="flex-1 text-sm text-white font-medium">
             {message}

@@ -11,7 +11,7 @@ export const TypingText: React.FC<TypingTextProps> = ({
 }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const skipToEnd = () => {
     if (!isComplete) {

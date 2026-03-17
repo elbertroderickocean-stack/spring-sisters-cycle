@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { PhaseType } from '@/contexts/UserContext';
-import { Sparkles, Droplet, Activity, Brain, Apple, Dumbbell, Heart, Sun, Moon, Shield } from 'lucide-react';
+import { Circle, Droplet, Activity, Brain, Apple, Dumbbell, Heart, Sun, Moon, Shield } from 'lucide-react';
 import { X } from 'lucide-react';
 
 interface DailyPlanModalProps {
@@ -130,7 +130,7 @@ export const DailyPlanModal = ({ isOpen, onClose, phase, day }: DailyPlanModalPr
 
           {/* Today's Mantra */}
           <div className="text-center py-6 px-4 rounded-2xl" style={{ backgroundColor: `${phaseColor}15` }}>
-            <Sparkles className="h-8 w-8 mx-auto mb-3" style={{ color: phaseColor }} />
+            <Circle className="h-8 w-8 mx-auto mb-3" style={{ color: phaseColor }} />
             <p className="text-2xl font-heading italic text-foreground">
               "{content.mantra}"
             </p>

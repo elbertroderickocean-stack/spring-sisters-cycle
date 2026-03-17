@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Gift, Sparkles } from 'lucide-react';
+import { Gift, Hexagon } from 'lucide-react';
 
 interface GiftLPModalProps {
   isOpen: boolean;
@@ -57,7 +57,7 @@ const GiftLPModal: React.FC<GiftLPModalProps> = ({
           {/* User Balance */}
           <div className="p-3 rounded-lg bg-primary/5 border border-primary/20 text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <Sparkles className="h-4 w-4 text-primary" />
+              <Hexagon className="h-4 w-4 text-primary" />
               <span className="text-xs text-muted-foreground">Your Available Balance</span>
             </div>
             <span className="text-2xl font-bold text-primary">{userBalance.toLocaleString()} LP</span>

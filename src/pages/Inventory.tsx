@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useUser } from '@/contexts/UserContext';
-import { Droplet, Sparkles, Eye, FlaskConical } from 'lucide-react';
+import { Droplet, Circle, Eye, FlaskConical } from 'lucide-react';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 
 const products = [
   { id: 'cleanser', name: 'Gentle Cleanser', icon: Droplet },
-  { id: 'moisturizer', name: 'Daily Moisturizer', icon: Sparkles },
+  { id: 'moisturizer', name: 'Daily Moisturizer', icon: Circle },
   { id: 'eye-cream', name: 'Eye Cream', icon: Eye },
   { id: 'serum-trio', name: 'Bloom Cycle Serum Trio', icon: FlaskConical },
   { id: 'mask-trio', name: 'Bloom Cycle Mask Trio', icon: FlaskConical },
@@ -64,7 +64,7 @@ const Inventory = () => {
       <div className="max-w-lg w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">
-            Let's check your Spring Sisters arsenal.
+            Let's check your meanwhile. arsenal.
           </h2>
           <p className="text-foreground/70 text-lg">
             Select the products you already own so we can build your perfect ritual.

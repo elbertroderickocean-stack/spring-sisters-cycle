@@ -14,8 +14,8 @@ const Splash = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
-      <h1 className="text-5xl md:text-6xl font-heading font-bold text-primary animate-fade-in-slow">
-        Spring Sisters
+      <h1 className="text-5xl md:text-6xl font-heading font-light tracking-wider text-foreground animate-fade-in-slow lowercase">
+        meanwhile.
       </h1>
     </div>
   );

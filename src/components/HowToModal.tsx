@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles } from 'lucide-react';
+import { Circle } from 'lucide-react';
 
 interface HowToContent {
   quantity?: string;
@@ -33,7 +33,7 @@ export const HowToModal: React.FC<HowToModalProps> = ({
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="h-5 w-5 text-primary" />
+            <Circle className="h-5 w-5 text-primary" />
             <Badge variant="outline" className="text-xs">
               {timeOfDay === 'morning' ? '☀️ Morning' : '🌙 Evening'} • {stepType === 'product' ? 'Product' : 'Wellness'}
             </Badge>
@@ -80,7 +80,7 @@ export const HowToModal: React.FC<HowToModalProps> = ({
           {content.proTips && content.proTips.length > 0 && (
             <div className="space-y-2 pt-2 border-t border-border">
               <h4 className="font-semibold text-sm text-primary flex items-center gap-1">
-                <Sparkles className="h-3 w-3" />
+                <Circle className="h-3 w-3" />
                 Key Pointers
               </h4>
               <ul className="space-y-1 list-disc list-inside text-sm text-muted-foreground">
