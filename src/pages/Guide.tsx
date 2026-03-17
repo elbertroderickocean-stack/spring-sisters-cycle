@@ -13,9 +13,9 @@ const Guide = () => {
     section: 'The Philosophy',
     icon: TrendingUp,
     items: [
-      { title: 'From Skincare to Skinvestment: Why we ignore trends and focus on assets.', description: 'The meanwhile. investment thesis for your skin.', articleId: 'mission' },
-      { title: 'Managing the Portfolio: How the Constants & Shifts work together.', description: 'Understanding the Management Framework.', articleId: 'lines' },
-      { title: 'Meet m.i.: How meanwhile.intelligence manages your skin in the background.', description: 'Your strategic partner in skin longevity.', articleId: 'aura-intro' },
+      { title: 'From Skincare to Skinvestment', description: 'Why we ignore trends and focus on assets.', articleId: 'mission' },
+      { title: 'Managing your Biological Capital', description: 'How The Constants & The Shifts work together.', articleId: 'lines' },
+      { title: 'The meanwhile. Logic', description: 'How m.i. manages your skin in the background.', articleId: 'aura-intro' },
     ]
   };
 
