@@ -261,8 +261,8 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
-                <Circle className="h-6 w-6 text-primary" />
-                Your Aura Vision Analysis
+                <Cpu className="h-6 w-6 text-primary" />
+                m.i. Vision Analysis
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
