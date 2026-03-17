@@ -43,9 +43,9 @@ const Guide = () => {
     section: 'Compound Science',
     icon: FlaskConical,
     items: [
-      { title: 'PDRN: The High-Yield Asset for DNA repair.', description: 'The science behind cellular reconstruction.', articleId: 'pdrn' },
-      { title: 'Ceramides: The defensive wall of your Index Fund.', description: 'Building blocks of barrier resilience.', articleId: 'ceramides' },
-      { title: 'Bakuchiol: The gentle powerhouse.', description: 'Plant-based retinol alternative for all strategies.', articleId: 'bakuchiol' },
+      { title: 'PDRN: DNA-Level Yield', description: 'The high-yield asset for cellular reconstruction.', articleId: 'pdrn' },
+      { title: 'Ceramides: The Defensive Wall', description: 'Building blocks of your Index Fund\'s barrier resilience.', articleId: 'ceramides' },
+      { title: 'Bakuchiol: The Gentle Powerhouse', description: 'Plant-based retinol alternative for all strategies.', articleId: 'bakuchiol' },
     ]
   };
   
