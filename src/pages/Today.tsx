@@ -426,7 +426,7 @@ const Today = () => {
     // Days 1 & 2 (Mon & Tue): Recovery Nights
     if (microCycleDay === 1 || microCycleDay === 2) {
       primarySerum = 'Calm & Renew Serum';
-      auraVoice = "Tonight, we focus on recovery. We are using the Calm & Renew Serum to strengthen your skin's foundation.";
+      miVoice = "You rest. meanwhile., the Calm & Renew Serum is rebuilding your barrier foundation.";
     }
     // Day 3 (Wed): Exfoliation Night
     else if (microCycleDay === 3) {
