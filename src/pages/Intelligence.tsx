@@ -10,6 +10,7 @@ import { GlucoseWidget } from '@/components/intelligence/GlucoseWidget';
 import { SleepWidget } from '@/components/intelligence/SleepWidget';
 import { StressWidget } from '@/components/intelligence/StressWidget';
 import { CausalityCard } from '@/components/intelligence/CausalityCard';
+import { SkinAuditWidget } from '@/components/intelligence/SkinAuditWidget';
 
 const Intelligence = () => {
   const navigate = useNavigate();
@@ -28,6 +29,9 @@ const Intelligence = () => {
       </HeaderBar>
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-5">
+        {/* Skin Audit Widget */}
+        <SkinAuditWidget />
+
         {/* Glucose Hero Widget — clickable */}
         <div className="cursor-pointer" onClick={() => navigate('/intelligence/glucose')}>
           <GlucoseWidget />
