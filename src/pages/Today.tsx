@@ -810,7 +810,7 @@ const Today = () => {
         {/* Module 2: Today's Ritual - Morning & Evening */}
         <div className="space-y-4 animate-slide-up">
           <RitualSection
-            title="☀️ Morning Ritual"
+            title="☀️ Morning Deployment"
             icon={<Sunrise className="h-5 w-5" style={{ color: phaseIconColor }} />}
             steps={getMorningRitualSteps()}
             phaseIconColor={phaseIconColor}
