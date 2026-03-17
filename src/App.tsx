@@ -33,6 +33,8 @@ import PodChat from "./pages/PodChat";
 import BountyBoard from "./pages/BountyBoard";
 import Profile from "./pages/Profile";
 import Aura from "./pages/Aura";
+import Intelligence from "./pages/Intelligence";
+import MiChat from "./pages/MiChat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
