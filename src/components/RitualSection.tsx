@@ -77,7 +77,7 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
           {auraNote && (
             <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
               <p className="text-sm text-foreground/80 italic">
-                <span className="font-semibold text-primary">Aura says:</span> {auraNote}
+                <span className="font-semibold text-primary">m.i. says:</span> {auraNote}
               </p>
             </div>
           )}

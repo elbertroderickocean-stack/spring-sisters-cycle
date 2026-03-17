@@ -40,7 +40,7 @@ export const HowToModal: React.FC<HowToModalProps> = ({
           </div>
           <DialogTitle className="font-heading text-2xl">{stepName}</DialogTitle>
           <DialogDescription className="text-base">
-            Pro-tips from Aura for optimal results
+            Strategic guidance from m.i. for optimal results
           </DialogDescription>
         </DialogHeader>
 

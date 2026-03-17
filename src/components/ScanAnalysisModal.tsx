@@ -96,7 +96,7 @@ export const ScanAnalysisModal = ({
               <Circle className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-heading font-semibold text-primary mb-1">
-                  Aura's Suggestion
+                  m.i. Recommendation
                 </h4>
                 <p className="text-sm text-foreground/80 leading-relaxed">
                   {analysisResult.auraSuggestion}

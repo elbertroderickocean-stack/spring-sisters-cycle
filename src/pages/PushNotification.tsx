@@ -48,7 +48,7 @@ const PushNotification = () => {
             className="w-full"
             size="lg"
           >
-            Enable Daily Whispers
+            Enable Smart Notifications
           </Button>
           
           <Button 
