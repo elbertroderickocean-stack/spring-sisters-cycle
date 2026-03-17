@@ -446,7 +446,7 @@ const Today = () => {
     // Day 7 (Sun): Flex Night
     else if (microCycleDay === 7) {
       primarySerum = 'Balance & Clarify Serum or Your Choice';
-      auraVoice = "Tonight is your 'flex' day. If your pores need attention, use the Balance & Clarify Serum. Otherwise, a Recovery Night is a wonderful choice.";
+      miVoice = "Tonight is your flex day. meanwhile., m.i. recommends addressing any specific concerns or continuing recovery.";
     }
 
     const steps: any[] = [
