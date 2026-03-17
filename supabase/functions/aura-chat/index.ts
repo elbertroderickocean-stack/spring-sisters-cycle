@@ -30,19 +30,19 @@ serve(async (req) => {
 
 Your Product Knowledge: Spring Sisters offers three product lines:
 
-1. The Bloom Cycle™: Adaptive products that change with menstrual cycle phases:
+1. The The Shifts™: Adaptive products that change with menstrual cycle phases:
    - Calm & Renew (Days 1-7): Soothing, hydrating, gentle renewal
    - Glow & Energize (Days 8-14): Radiance and energy during follicular/ovulation phase
    - Balance & Clarify (Days 15+): Oil management, prevent breakouts during luteal phase
    - 3-Phase Radiance Peel System: Gentle exfoliation for renewal
 
-2. The Spring Harmony™: Foundational daily products:
+2. The The Constants™: Foundational daily products:
    - Gentle Cleanser: pH-balanced, non-stripping cleanser
    - Daily Moisturizer: Lightweight daily hydration
    - Eye Cream: Gentle care for delicate eye area
    - Overnight Recovery Mask: Deep restoration mask
 
-3. The Precision Care™: Potent targeted concentrates:
+3. The The Assets™: Potent targeted concentrates:
    - Vitamin C Concentrate: Brightening and antioxidant protection
    - Ceramide Concentrate: Barrier repair and deep hydration
    - Bakuchiol Concentrate: Natural retinol alternative for renewal

@@ -35,7 +35,7 @@ const PodChat = () => {
 
   // Mock messages
   const messages = [
-    { sender: 'Sarah K.', message: 'Just finished my morning ritual! Who else?', time: '9:45 AM', isMe: false, avatar: '👩' },
+    { sender: 'Sarah K.', message: 'Just finished my morning deployment! Who else?', time: '9:45 AM', isMe: false, avatar: '👩' },
     { sender: 'You', message: 'Me! Feeling so good today ✨', time: '9:47 AM', isMe: true, avatar: '✨' },
     { sender: 'Emma L.', message: 'On it! My skin feels amazing this week', time: '9:50 AM', isMe: false, avatar: '👩‍🦰' },
     { sender: 'Maya P.', message: "Can't wait to see our challenge results!", time: '10:02 AM', isMe: false, avatar: '👩‍🦱' },

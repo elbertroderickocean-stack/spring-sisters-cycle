@@ -16,7 +16,7 @@ const Solution = () => {
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
       <div className="max-w-lg w-full text-center space-y-10 animate-slide-up">
         <div className="space-y-4">
-          <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground font-body">The Pivot</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-body">The Strategy Pivot</p>
           <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight">
             Choose your Management Strategy
           </h1>
@@ -51,7 +51,7 @@ const Solution = () => {
                   Hormonal Management
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  For women with regular or irregular menstrual cycles. Your skincare adapts to your 28-day hormonal rhythm.
+                  For those in their regular cycle. Adapts to your 28-day rhythm + lifestyle data.
                 </p>
               </div>
             </div>
@@ -82,7 +82,7 @@ const Solution = () => {
                   Longevity Management
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  For menopause, post-menopause, or skin-cycling focus. A 7-day cellular training rhythm for lasting vitality.
+                  Optimized for menopause or skin-cycling. A 7-day cellular training pulse + lifestyle data (glucose & sleep).
                 </p>
               </div>
             </div>

@@ -11,7 +11,7 @@ const guideContent = [
     icon: BookOpen,
     items: [
       { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created meanwhile.', articleId: 'mission' },
-      { title: 'Our Lines: The Orbital System Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
+      { title: 'Our Lines: The Management Framework Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
       { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of meanwhile.', articleId: 'aura-intro' },
     ]
   },
@@ -44,7 +44,7 @@ const Guide = () => {
     icon: BookOpen,
     items: [
       { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created meanwhile.', articleId: 'mission' },
-      { title: 'Our Lines: The Orbital System Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
+      { title: 'Our Lines: The Management Framework Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
       { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of meanwhile.', articleId: 'aura-intro' },
     ]
   };
