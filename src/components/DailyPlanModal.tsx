@@ -196,7 +196,7 @@ export const DailyPlanModal = ({ isOpen, onClose, phase, day }: DailyPlanModalPr
             <div className="text-sm text-muted-foreground space-y-2">
               <p className="font-semibold text-foreground/60">Coming Soon</p>
               <p className="leading-relaxed">
-                Soon, Aura will be able to connect to your location and calendar to give you hyper-personalized advice, like reminding you to pack your Ceramide Concentrate before a flight or suggesting a hydrating mask on a dry, windy day.
+                Soon, m.i. will connect to your location and calendar for hyper-personalized protocols. You pack for your trip. meanwhile., we remind you to deploy the Ceramide Concentrate before your flight.
               </p>
             </div>
           </div>

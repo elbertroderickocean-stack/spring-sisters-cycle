@@ -13,10 +13,10 @@ export interface Whisper {
 }
 
 const STORAGE_KEYS = {
-  LAST_LOGIN: 'aura_last_login',
-  CONSECUTIVE_DAYS: 'aura_consecutive_days',
-  SHOWN_WHISPERS: 'aura_shown_whispers',
-  LAST_PRODUCT_ADD: 'aura_last_product_add'
+  LAST_LOGIN: 'mi_last_login',
+  CONSECUTIVE_DAYS: 'mi_consecutive_days',
+  SHOWN_WHISPERS: 'mi_shown_whispers',
+  LAST_PRODUCT_ADD: 'mi_last_product_add'
 };
 
 export const useAuraWhispers = () => {
@@ -78,15 +78,14 @@ export const useAuraWhispers = () => {
     
     if (lastLogin !== today && !hasShownWhisperToday('welcome')) {
       const phase = getCurrentPhase();
-      const userName = userData.name || 'beautiful';
+      const userName = userData.name || 'there';
       
       const messages = {
-        calm: `Welcome back, ${userName}! Your skin is in renewal mode. Let's nurture it gently today.`,
-        glow: `Welcome back, ${userName}! Your skin is at its strongest today. Let's make it shine.`,
-        balance: `Welcome back, ${userName}! Your skin needs clarity today. We've got the perfect plan.`
+        calm: `Welcome back, ${userName}. You focus on your morning. meanwhile., recovery protocols are active and your barrier is being reinforced.`,
+        glow: `Welcome back, ${userName}. You start your day. meanwhile., your skin is at peak performance—collagen output is maximized.`,
+        balance: `Welcome back, ${userName}. You stay focused. meanwhile., clarifying protocols are managing your skin portfolio.`
       };
 
-      // Update consecutive days
       const lastDate = lastLogin ? new Date(lastLogin) : null;
       const isConsecutive = lastDate && 
         (new Date(today).getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24) === 1;
@@ -115,7 +114,7 @@ export const useAuraWhispers = () => {
       return {
         id: `milestone-${Date.now()}`,
         type: 'milestone',
-        message: "You've completed your first full week! Consistency is the key to harmony. Your skin is thanking you.",
+        message: "7-day streak achieved. Consistency is the compound interest of skincare. Your biological capital is appreciating.",
         phase: getCurrentPhase()
       };
     }
@@ -131,9 +130,9 @@ export const useAuraWhispers = () => {
       const nextPhaseName = getPhaseDisplayName(nextPhase);
       
       const messages = {
-        glow: `Heads up! Your '${nextPhaseName}' phase starts in 2 days. Don't be surprised if your skin feels a bit oilier. We're ready for it.`,
-        balance: `Heads up! Your '${nextPhaseName}' phase starts in 2 days. Time to prepare for renewal and gentle care.`,
-        calm: `Heads up! Your '${nextPhaseName}' phase starts in 2 days. Get ready for radiance and energy!`
+        glow: `Portfolio transition in 2 days. You continue your routine. meanwhile., we're preparing your ${nextPhaseName} assets for deployment.`,
+        balance: `Portfolio transition in 2 days. You enjoy your glow. meanwhile., we're staging recovery and renewal protocols.`,
+        calm: `Portfolio transition in 2 days. You stay balanced. meanwhile., we're preparing to maximize your next performance window.`
       };
 
       markWhisperShown('transition');
@@ -151,13 +150,13 @@ export const useAuraWhispers = () => {
     const phase = getCurrentPhase();
     
     const tips: Record<string, string> = {
-      'Ceramide Concentrate': 'Great choice! Pro-Tip: For an intense recovery mask, mix a few drops of your new Ceramide Concentrate with your Daily Moisturizer.',
-      'Vitamin C Concentrate': 'Excellent! Pro-Tip: Use your Vitamin C Concentrate in the morning for maximum brightness. Your skin will glow all day.',
-      'Bakuchiol Concentrate': 'Smart pick! Pro-Tip: Bakuchiol works beautifully at night. Layer it under your moisturizer for smooth, renewed skin by morning.',
-      'Peptide Concentrate': 'Perfect! Pro-Tip: Peptides love consistency. Use your concentrate daily for the best firming and smoothing results.'
+      'Ceramide Concentrate': 'Asset deployed. Pro-strategy: mix a few drops of Ceramide Concentrate with your Long-Term Moisturizer for an intensive barrier recovery protocol.',
+      'Vitamin C Concentrate': 'Asset deployed. Pro-strategy: use your Vitamin C Concentrate in the morning for maximum brightness ROI.',
+      'Bakuchiol Concentrate': 'Asset deployed. Pro-strategy: Bakuchiol works optimally overnight. Layer under your moisturizer for compounding renewal.',
+      'Peptide Concentrate': 'Asset deployed. Pro-strategy: Peptides reward consistency. Daily deployment yields the best firming returns.'
     };
 
-    const message = tips[productName] || `Great addition! Your ${productName} will work beautifully with your existing routine.`;
+    const message = tips[productName] || `New asset deployed. Your ${productName} has been integrated into your portfolio.`;
 
     setActiveWhisper({
       id: `protip-${Date.now()}`,
@@ -171,15 +170,14 @@ export const useAuraWhispers = () => {
     const needingReorder = getProductsNeedingReorder();
     
     if (needingReorder.length > 0 && !hasShownWhisperToday('reorder')) {
-      const product = needingReorder[0]; // Show whisper for the first product needing reorder
-      const userName = userData.name || 'beautiful';
+      const product = needingReorder[0];
       const dayText = product.daysLeft === 1 ? 'about a day' : `about ${product.daysLeft} days`;
       
       markWhisperShown('reorder');
       return {
         id: `reorder-${Date.now()}`,
         type: 'reorder',
-        message: `Just a friendly whisper, ${userName}! Your ${product.productName} will likely run out in ${dayText}. Time to order a refill to keep the ritual going. ✨`,
+        message: `Supply alert: Your ${product.productName} will deplete in ${dayText}. You focus on your day. meanwhile., we recommend reordering to maintain portfolio continuity.`,
         phase: getCurrentPhase(),
         productId: product.productId,
       };
@@ -190,7 +188,6 @@ export const useAuraWhispers = () => {
   const checkWhispers = useCallback(() => {
     if (activeWhisper) return;
 
-    // Priority order: reorder -> welcome -> milestone -> transition
     const reorder = checkReorderReminder();
     if (reorder) {
       setActiveWhisper(reorder);
