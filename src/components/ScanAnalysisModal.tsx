@@ -48,7 +48,7 @@ export const ScanAnalysisModal = ({
         <DialogHeader>
           <DialogTitle className="text-2xl font-heading font-semibold text-primary flex items-center gap-2">
             <Circle className="h-6 w-6" />
-            Aura's Analysis
+            m.i. Analysis
           </DialogTitle>
         </DialogHeader>
 
