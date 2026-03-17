@@ -161,7 +161,7 @@ const Today = () => {
       });
     }
 
-    // Morning ritual: Protection & Awakening
+    // Morning Deployment: Protection & Awakening
     const hasSerumTrio = isProductOwned('serum-trio');
     const hasCleanser = isProductOwned('cleanser');
     const hasEyeCream = isProductOwned('eye-cream');

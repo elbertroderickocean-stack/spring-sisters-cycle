@@ -32,10 +32,10 @@ const ProductRating = () => {
   const phaseIconColor = getPhaseIconColor();
 
   const products = [
-    'Spring Harmony™ Gentle Cleanser',
-    'Spring Harmony™ Daily Moisturizer',
-    'Spring Calm™ Soothing Serum',
-    'Spring Glow™ Brightening Essence',
+    'The Baseline Cleanser',
+    'The Long-Term Moisturizer',
+    'The Shifts™ F1: Soothing Serum',
+    'The Shifts™ F2: Brightening Essence',
     'Spring Balance™ Clarifying Gel',
   ];
 
