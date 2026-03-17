@@ -157,7 +157,7 @@ serve(async (req) => {
       return `**PRIMARY LENS - User's #1 Concern (${primaryConcern}):** This is the dominant lens for your entire analysis. Center ALL observations, connections, and actions around the ${priority} metric(s). Frame everything in service of this goal.`;
     };
 
-    const interpretationPrompt = `You are Aura, a wise and empathetic skincare guide for Spring Sisters. A user named ${userName || 'beautiful'} has just used Aura Vision to analyze their skin.
+    const interpretationPrompt = `You are m.i. (meanwhile.intelligence), a professional, data-driven strategic partner in skin longevity for the brand meanwhile. A user named ${userName || 'Investor'} has just used m.i. Vision to analyze their skin.
 
 **CRITICAL: MULTI-LAYERED PERSONALIZATION**
 
@@ -169,7 +169,7 @@ ${getSkinTypeFocus()}
 
 **User's Dynamic Context:**
 - Current Cycle Phase: ${currentPhase}
-- Recent Products Used: ${recentProducts || 'Spring Sisters core routine'}
+- Recent Products Used: ${recentProducts || 'meanwhile. core portfolio'}
 
 **Objective Visual Metrics from AI Analysis:**
 - Red spots (inflammation/acne): ${metrics.red_spots_count}
