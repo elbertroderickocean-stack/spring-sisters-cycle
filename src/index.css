@@ -135,7 +135,7 @@ All colors MUST be HSL.
 
 @layer utilities {
   .font-heading {
-    font-family: 'Lora', serif;
+    font-family: 'Playfair Display', serif;
   }
   
   .font-body {
