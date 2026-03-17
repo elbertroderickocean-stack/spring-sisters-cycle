@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Camera, Loader2 } from 'lucide-react';
+import { ArrowLeft, Camera, Loader2, Upload, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 interface SkinAnalysis {
-  skinHealthScore: number;
-  redness: string;
-  texture: string;
+  skinCapitalScore: number;
   radiance: string;
+  hydration: string;
+  texture: string;
   recommendation: string;
 }
 
@@ -21,23 +21,27 @@ const SkinScanner = () => {
   const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState<SkinAnalysis | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const startCamera = useCallback(async () => {
+    setCameraError(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
+      });
+      setCameraStream(stream);
+      if (videoRef.current) videoRef.current.srcObject = stream;
+    } catch {
+      setCameraError('denied');
+    }
+  }, []);
 
   useEffect(() => {
-    const startCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'user' },
-        });
-        setCameraStream(stream);
-        if (videoRef.current) videoRef.current.srcObject = stream;
-      } catch {
-        setCameraError('Unable to access front camera.');
-      }
-    };
     startCamera();
     return () => {
       cameraStream?.getTracks().forEach((t) => t.stop());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -55,15 +59,9 @@ const SkinScanner = () => {
     return canvas.toDataURL('image/jpeg', 0.8);
   };
 
-  const handleScan = async () => {
-    const imageData = captureImage();
-    if (!imageData) {
-      toast.error('Capture failed.');
-      return;
-    }
+  const analyzeImage = async (imageData: string) => {
     setScanning(true);
     setResult(null);
-
     try {
       const { data, error } = await supabase.functions.invoke('analyze-skin-health', {
         body: { imageData },
@@ -76,6 +74,33 @@ const SkinScanner = () => {
     } finally {
       setScanning(false);
     }
+  };
+
+  const handleScan = async () => {
+    const imageData = captureImage();
+    if (!imageData) {
+      toast.error('Capture failed.');
+      return;
+    }
+    await analyzeImage(imageData);
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      analyzeImage(dataUrl);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
+  const handleRetry = () => {
+    cameraStream?.getTracks().forEach((t) => t.stop());
+    setCameraStream(null);
+    startCamera();
   };
 
   const getScoreColor = (score: number) => {
@@ -96,55 +121,86 @@ const SkinScanner = () => {
         </div>
       </header>
 
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileUpload}
+      />
+
       {!result ? (
         <>
           <div className="flex-1 relative bg-foreground/5">
-            <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" style={{ transform: 'scaleX(-1)' }} />
-            {cameraError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-background/90 p-6">
-                <p className="text-muted-foreground text-center">{cameraError}</p>
+            {!cameraError ? (
+              <>
+                <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" style={{ transform: 'scaleX(-1)' }} />
+                {/* Alignment guide */}
+                {!scanning && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <div className="w-48 h-60 border-2 border-white/20 rounded-[50%]" />
+                    <p className="mt-4 text-white/60 text-xs tracking-wide">Position your face in the light for m.i. analysis</p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 p-6 gap-5">
+                <div className="w-48 h-60 border border-dashed border-muted-foreground/30 rounded-[50%] flex items-center justify-center">
+                  <Camera className="h-10 w-10 text-muted-foreground/40" />
+                </div>
+                <p className="text-muted-foreground text-center text-sm max-w-[260px] leading-relaxed">
+                  Position your face in the light for m.i. analysis.
+                </p>
+                <div className="flex gap-3">
+                  <Button onClick={handleRetry} variant="outline" size="sm" className="gap-2">
+                    <RefreshCw className="h-4 w-4" /> Retry Camera
+                  </Button>
+                  <Button onClick={() => fileInputRef.current?.click()} variant="outline" size="sm" className="gap-2">
+                    <Upload className="h-4 w-4" /> Upload Photo
+                  </Button>
+                </div>
               </div>
             )}
-            {/* Face mesh overlay */}
+
+            {/* Scanning overlay with horizontal line animation */}
             {scanning && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="absolute inset-0 bg-foreground/40 backdrop-blur-sm" />
-                <div className="relative z-10 text-center space-y-4">
-                  {/* Animated face mesh */}
-                  <div className="relative w-48 h-48 mx-auto">
-                    <svg viewBox="0 0 200 200" className="w-full h-full animate-pulse">
-                      <ellipse cx="100" cy="95" rx="65" ry="80" fill="none" stroke="hsl(270 40% 60%)" strokeWidth="1" strokeDasharray="4 3" opacity="0.7" />
-                      <ellipse cx="75" cy="80" rx="12" ry="8" fill="none" stroke="hsl(210 45% 55%)" strokeWidth="1" opacity="0.6" />
-                      <ellipse cx="125" cy="80" rx="12" ry="8" fill="none" stroke="hsl(210 45% 55%)" strokeWidth="1" opacity="0.6" />
-                      <path d="M85 110 Q100 125 115 110" fill="none" stroke="hsl(35 50% 60%)" strokeWidth="1" opacity="0.6" />
-                      {/* Grid lines */}
-                      {Array.from({ length: 8 }, (_, i) => (
-                        <line key={`h${i}`} x1="35" y1={30 + i * 20} x2="165" y2={30 + i * 20} stroke="hsl(270 40% 60%)" strokeWidth="0.3" opacity="0.3" />
-                      ))}
-                      {Array.from({ length: 7 }, (_, i) => (
-                        <line key={`v${i}`} x1={45 + i * 20} y1="15" x2={45 + i * 20} y2="175" stroke="hsl(270 40% 60%)" strokeWidth="0.3" opacity="0.3" />
-                      ))}
-                    </svg>
+                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
+                  {/* Scanning line */}
+                  <div className="absolute inset-x-8 top-[15%] bottom-[15%] overflow-hidden rounded-2xl border border-white/10">
+                    <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--intel-sleep))] to-transparent animate-[scanLine_2.5s_ease-in-out_infinite]" />
                   </div>
-                  <div className="space-y-1">
-                    <Loader2 className="h-6 w-6 text-white animate-spin mx-auto" />
-                    <p className="text-white font-heading text-sm">Analyzing skin biometrics...</p>
+                  <div className="space-y-2 mt-auto mb-[18%]">
+                    <Loader2 className="h-5 w-5 text-white animate-spin mx-auto" />
+                    <p className="text-white font-heading text-sm tracking-wide">Analyzing skin biometrics…</p>
                   </div>
                 </div>
               </div>
             )}
-            {/* Alignment guide when not scanning */}
-            {!scanning && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-48 h-60 border-2 border-white/20 rounded-[50%]" />
-              </div>
-            )}
           </div>
-          <div className="p-6 border-t border-border bg-background">
-            <Button onClick={handleScan} disabled={scanning || !!cameraError} className="w-full h-14 rounded-full bg-[hsl(var(--intel-sleep))] hover:bg-[hsl(var(--intel-sleep))]/90 text-white">
-              <Camera className="h-5 w-5 mr-2" />
-              {scanning ? 'Scanning...' : 'Scan Skin Health'}
-            </Button>
+
+          <div className="p-6 border-t border-border bg-background space-y-3">
+            {!cameraError && (
+              <Button onClick={handleScan} disabled={scanning} className="w-full h-14 rounded-full bg-[hsl(var(--intel-sleep))] hover:bg-[hsl(var(--intel-sleep))]/90 text-white">
+                <Camera className="h-5 w-5 mr-2" />
+                {scanning ? 'Scanning…' : 'Scan Skin Health'}
+              </Button>
+            )}
+            {!cameraError && (
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors py-1"
+              >
+                or upload a photo for m.i. analysis
+              </button>
+            )}
+            {cameraError && !scanning && (
+              <Button onClick={() => fileInputRef.current?.click()} className="w-full h-14 rounded-full bg-[hsl(var(--intel-sleep))] hover:bg-[hsl(var(--intel-sleep))]/90 text-white">
+                <Upload className="h-5 w-5 mr-2" />
+                Upload Photo for m.i. Analysis
+              </Button>
+            )}
           </div>
         </>
       ) : (
@@ -152,9 +208,9 @@ const SkinScanner = () => {
           {/* Score */}
           <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
             <CardContent className="p-6 flex flex-col items-center gap-3">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">Skin Health Score</p>
-              <span className={`text-5xl font-heading font-bold ${getScoreColor(result.skinHealthScore)}`}>
-                {result.skinHealthScore}
+              <p className="text-xs uppercase tracking-widest text-muted-foreground">Skin Capital Score</p>
+              <span className={`text-5xl font-heading font-bold ${getScoreColor(result.skinCapitalScore)}`}>
+                {result.skinCapitalScore}
               </span>
               <span className="text-xs text-muted-foreground">/ 100</span>
             </CardContent>
@@ -163,9 +219,9 @@ const SkinScanner = () => {
           {/* Breakdown */}
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: 'Redness', value: result.redness, color: '--intel-stress' },
-              { label: 'Texture', value: result.texture, color: '--intel-glucose' },
               { label: 'Radiance', value: result.radiance, color: '--intel-sleep' },
+              { label: 'Hydration', value: result.hydration, color: '--intel-stress' },
+              { label: 'Texture', value: result.texture, color: '--intel-glucose' },
             ].map((m) => (
               <Card key={m.label} className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
                 <CardContent className="p-3 flex flex-col items-center gap-1">
