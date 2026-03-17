@@ -470,7 +470,7 @@ const Today = () => {
         number: 3,
         type: 'product',
         name: primarySerum,
-        purpose: auraVoice,
+        purpose: miVoice,
         owned: hasSerumTrio,
         productId: 'serum-trio',
         isPhaseProduct: true,
