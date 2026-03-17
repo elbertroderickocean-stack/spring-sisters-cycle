@@ -178,13 +178,13 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
-                <Circle className="h-6 w-6 text-primary" />
-                Aura Vision
+                <Cpu className="h-6 w-6 text-primary" />
+                m.i. Vision
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
               <p className="text-foreground/80">
-                Let's see your skin through my eyes. This analysis combines AI-powered visual insights with your unique profile—your age, skin type, and personal goals.
+                You take a photo. meanwhile., m.i. analyzes your skin's biological data using AI-powered visual metrics combined with your unique profile.
               </p>
               <div className="bg-muted rounded-lg p-4 space-y-2">
                 <h3 className="font-semibold text-sm">What I'll analyze:</h3>
