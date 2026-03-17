@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { Avatar } from '@/components/ui/avatar';
 import { Star, Vote, FlaskConical, Heart, Users, Target, Circle } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
+import { HeaderBar } from '@/components/HeaderBar';
 
 const Sisterhood = () => {
   const navigate = useNavigate();
