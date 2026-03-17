@@ -1,15 +1,15 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Package, User, Users, Hexagon, ShoppingBag } from 'lucide-react';
+import { Home, User, Users, Cpu, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseType } from '@/contexts/UserContext';
 
 const navItems = [
   { path: '/today', label: 'Today', icon: Home },
-  { path: '/sisterhood', label: 'Sisterhood', icon: Users },
-  { path: '/guide', label: 'Guide', icon: BookOpen },
-  { path: '/products', label: 'Product', icon: ShoppingBag },
+  { path: '/intelligence', label: 'Intelligence', icon: Cpu },
+  { path: '/sisterhood', label: 'Syndicate', icon: Users },
+  { path: '/catalog', label: 'Catalog', icon: ShoppingBag },
   { path: '/profile', label: 'Profile', icon: User },
 ];
 
