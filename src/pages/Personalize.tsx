@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,77 +12,79 @@ import { useUser } from '@/contexts/UserContext';
 
 const Personalize = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { updateUserData } = useUser();
-  const [selectedRhythm, setSelectedRhythm] = useState<'hormonal' | 'cellular' | null>(null);
+  const strategy = (location.state as any)?.strategy as 'hormonal' | 'longevity' | undefined;
+
   const [lastPeriodDate, setLastPeriodDate] = useState<Date>();
   const [cycleLength, setCycleLength] = useState<string>('28');
+  const [cgmChoice, setCgmChoice] = useState<'apple-health' | 'manual' | null>(null);
+
+  const isHormonal = strategy === 'hormonal';
 
   const handleNext = () => {
-    if (selectedRhythm === 'hormonal' && lastPeriodDate && cycleLength) {
-      // CRITICAL: Explicitly set wiseBloomMode to false for hormonal rhythm users
+    if (isHormonal && lastPeriodDate && cycleLength && cgmChoice) {
       updateUserData({
         lastPeriodDate,
         cycleLength: parseInt(cycleLength),
         wiseBloomMode: false,
       });
       navigate('/register', { state: { selectedRhythm: 'hormonal' } });
-    } else if (selectedRhythm === 'cellular') {
+    } else if (!isHormonal && cgmChoice) {
       navigate('/wise-bloom', { state: { selectedRhythm: 'cellular' } });
     }
   };
+
+  const canProceed = cgmChoice && (isHormonal ? (lastPeriodDate && cycleLength) : true);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
-          <h2 className="text-4xl font-heading font-semibold text-primary">
-            Let's create your personal skin map.
-          </h2>
-          <p className="text-lg text-foreground/80">
-            To create your map, let's first identify your primary rhythm.
+          <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground font-body">
+            {isHormonal ? 'Hormonal Management' : 'Longevity Management'}
           </p>
+          <h2 className="text-3xl md:text-4xl font-heading font-semibold text-foreground">
+            Let's personalize your strategy.
+          </h2>
         </div>
 
-        <div className="space-y-6 pt-6">
-          {/* Rhythm Selection Cards */}
-          <div className="grid grid-cols-1 gap-4">
-            <button
-              onClick={() => setSelectedRhythm('hormonal')}
-              className={cn(
-                "p-6 rounded-xl border-2 text-left transition-all hover:border-primary/50",
-                selectedRhythm === 'hormonal' 
-                  ? "border-primary bg-primary/5" 
-                  : "border-border bg-background"
-              )}
-            >
-              <h3 className="text-xl font-heading font-semibold mb-2">
-                The Hormonal Rhythm
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                For women with a regular or irregular menstrual cycle.
-              </p>
-            </button>
-
-            <button
-              onClick={() => setSelectedRhythm('cellular')}
-              className={cn(
-                "p-6 rounded-xl border-2 text-left transition-all hover:border-primary/50",
-                selectedRhythm === 'cellular' 
-                  ? "border-primary bg-primary/5" 
-                  : "border-border bg-background"
-              )}
-            >
-              <h3 className="text-xl font-heading font-semibold mb-2">
-                The Cellular Training Rhythm
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                For women in menopause or without a regular cycle.
-              </p>
-            </button>
+        <div className="space-y-6 pt-4">
+          {/* CGM Question */}
+          <div className="space-y-3">
+            <Label className="text-base font-medium text-foreground">
+              Do you use a CGM (Glucose Monitor)?
+            </Label>
+            <div className="grid grid-cols-1 gap-3">
+              <button
+                onClick={() => setCgmChoice('apple-health')}
+                className={cn(
+                  "p-4 rounded-xl border-2 text-left transition-all",
+                  cgmChoice === 'apple-health'
+                    ? "border-primary bg-primary/5"
+                    : "border-border bg-card hover:border-primary/40"
+                )}
+              >
+                <p className="font-medium text-foreground">Yes, connect via Apple Health</p>
+                <p className="text-xs text-muted-foreground mt-1">We'll sync your glucose data automatically.</p>
+              </button>
+              <button
+                onClick={() => setCgmChoice('manual')}
+                className={cn(
+                  "p-4 rounded-xl border-2 text-left transition-all",
+                  cgmChoice === 'manual'
+                    ? "border-primary bg-primary/5"
+                    : "border-border bg-card hover:border-primary/40"
+                )}
+              >
+                <p className="font-medium text-foreground">No, I will log manually</p>
+                <p className="text-xs text-muted-foreground mt-1">Quick daily check-ins to track your levels.</p>
+              </button>
+            </div>
           </div>
 
-          {/* Cycle Input Fields - Only shown when Hormonal Rhythm is selected */}
-          {selectedRhythm === 'hormonal' && (
+          {/* Cycle Input Fields - Only for Hormonal */}
+          {isHormonal && (
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-3">
                 <Label htmlFor="period-date" className="text-base">
@@ -128,21 +130,18 @@ const Personalize = () => {
                   className="h-12 text-base"
                 />
               </div>
-
-              <p className="text-sm text-muted-foreground pt-2">
-                This data remains confidential and is used only to give you accurate daily recommendations.
-              </p>
             </div>
           )}
+
+          <p className="text-xs text-muted-foreground text-center pt-2">
+            Your data remains confidential and is used only to personalize your strategy.
+          </p>
 
           <Button
             size="lg"
             onClick={handleNext}
-            disabled={
-              !selectedRhythm || 
-              (selectedRhythm === 'hormonal' && (!lastPeriodDate || !cycleLength))
-            }
-            className="w-full mt-6 h-12 text-base rounded-full"
+            disabled={!canProceed}
+            className="w-full mt-4 h-12 text-base rounded-lg"
           >
             Next
           </Button>

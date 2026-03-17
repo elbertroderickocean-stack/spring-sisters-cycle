@@ -1,152 +1,106 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const Solution = () => {
   const navigate = useNavigate();
+  const [selected, setSelected] = useState<'hormonal' | 'longevity' | null>(null);
+
+  const handleContinue = () => {
+    if (selected) {
+      navigate('/personalize', { state: { strategy: selected } });
+    }
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6">
-      <div className="max-w-3xl text-center space-y-10 animate-slide-up">
-        <h1 className="text-4xl md:text-5xl font-heading font-semibold text-primary">
-          Every skin needs the right tool at the right time.
-        </h1>
-        
-        <p className="text-xl md:text-2xl text-foreground/80 font-heading">
-          Our entire system is built on three core pillars of skin health:
-        </p>
-        
-        <div className="flex justify-center my-12">
-          <svg className="w-64 h-64" viewBox="0 0 200 200">
-            {/* Base circle being drawn */}
-            <circle
-              cx="100"
-              cy="100"
-              r="80"
-              fill="none"
-              stroke="hsl(var(--border))"
-              strokeWidth="2"
-              strokeDasharray="503"
-              strokeDashoffset="503"
-            >
-              <animate
-                attributeName="stroke-dashoffset"
-                from="503"
-                to="0"
-                dur="1.5s"
-                fill="freeze"
-              />
-            </circle>
-
-            {/* Phase 1: Calm & Renew */}
-            <path
-              d="M 100,20 A 80,80 0 0,1 156.57,43.43"
-              fill="none"
-              stroke="hsl(var(--phase-calm))"
-              strokeWidth="16"
-              strokeLinecap="round"
-              opacity="0"
-            >
-              <animate
-                attributeName="opacity"
-                from="0"
-                to="1"
-                begin="1.5s"
-                dur="0.4s"
-                fill="freeze"
-              />
-            </path>
-            
-            {/* Phase 2: Glow & Energize */}
-            <path
-              d="M 156.57,43.43 A 80,80 0 0,1 180,100"
-              fill="none"
-              stroke="hsl(var(--phase-glow))"
-              strokeWidth="16"
-              strokeLinecap="round"
-              opacity="0"
-            >
-              <animate
-                attributeName="opacity"
-                from="0"
-                to="1"
-                begin="1.9s"
-                dur="0.4s"
-                fill="freeze"
-              />
-            </path>
-            
-            {/* Phase 3: Balance & Clarify */}
-            <path
-              d="M 180,100 A 80,80 0 1,1 100,20"
-              fill="none"
-              stroke="hsl(var(--phase-balance))"
-              strokeWidth="16"
-              strokeLinecap="round"
-              opacity="0"
-            >
-              <animate
-                attributeName="opacity"
-                from="0"
-                to="1"
-                begin="2.3s"
-                dur="0.4s"
-                fill="freeze"
-              />
-            </path>
-
-            <circle
-              cx="100"
-              cy="100"
-              r="6"
-              fill="hsl(var(--primary))"
-              className="animate-pulse"
-              opacity="0"
-            >
-              <animate
-                attributeName="opacity"
-                from="0"
-                to="1"
-                begin="2.7s"
-                dur="0.3s"
-                fill="freeze"
-              />
-              <animateMotion
-                begin="2.7s"
-                dur="6s"
-                repeatCount="indefinite"
-                path="M 100,20 A 80,80 0 1,1 99.9,20 Z"
-              />
-            </circle>
-          </svg>
+    <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+      <div className="max-w-lg w-full text-center space-y-10 animate-slide-up">
+        <div className="space-y-4">
+          <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground font-body">The Pivot</p>
+          <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight">
+            Choose your Management Strategy
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            Your skin's needs depend on your biology. Select the path that fits you.
+          </p>
         </div>
 
-        <div className="space-y-4 max-w-2xl mx-auto">
-          <div className="flex items-center gap-3 justify-center">
-            <div className="w-4 h-4 rounded-full bg-phase-calm"></div>
-            <span className="text-foreground/80"><strong>Calm & Renew:</strong> For recovery and strength.</span>
-          </div>
-          <div className="flex items-center gap-3 justify-center">
-            <div className="w-4 h-4 rounded-full bg-phase-glow"></div>
-            <span className="text-foreground/80"><strong>Glow & Energize:</strong> For vitality and radiance.</span>
-          </div>
-          <div className="flex items-center gap-3 justify-center">
-            <div className="w-4 h-4 rounded-full bg-phase-balance"></div>
-            <span className="text-foreground/80"><strong>Balance & Clarify:</strong> For harmony and purity.</span>
-          </div>
+        <div className="grid grid-cols-1 gap-5 pt-4">
+          {/* Card A: Hormonal Management */}
+          <button
+            onClick={() => setSelected('hormonal')}
+            className={cn(
+              "group relative p-8 rounded-xl border-2 text-left transition-all duration-300",
+              selected === 'hormonal'
+                ? "border-primary bg-primary/5 shadow-md"
+                : "border-border bg-card hover:border-primary/40 hover:shadow-sm"
+            )}
+          >
+            <div className="flex items-start gap-5">
+              <div className={cn(
+                "w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-colors",
+                selected === 'hormonal' ? "bg-phase-calm" : "bg-muted"
+              )}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 3c-2 4-2 8 0 12s2 4 0 6" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">
+                  Hormonal Management
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  For women with regular or irregular menstrual cycles. Your skincare adapts to your 28-day hormonal rhythm.
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* Card B: Longevity Management */}
+          <button
+            onClick={() => setSelected('longevity')}
+            className={cn(
+              "group relative p-8 rounded-xl border-2 text-left transition-all duration-300",
+              selected === 'longevity'
+                ? "border-primary bg-primary/5 shadow-md"
+                : "border-border bg-card hover:border-primary/40 hover:shadow-sm"
+            )}
+          >
+            <div className="flex items-start gap-5">
+              <div className={cn(
+                "w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-colors",
+                selected === 'longevity' ? "bg-phase-balance" : "bg-muted"
+              )}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white">
+                  <path d="M12 2v20M2 12h20" />
+                  <circle cx="12" cy="12" r="9" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">
+                  Longevity Management
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  For menopause, post-menopause, or skin-cycling focus. A 7-day cellular training rhythm for lasting vitality.
+                </p>
+              </div>
+            </div>
+          </button>
         </div>
 
-        <p className="text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
-          Our intelligent system uses these pillars to build your personal rhythm — whether it's a <strong>28-day hormonal rhythm</strong> or a <strong>7-day cellular training rhythm</strong>.
-        </p>
-
-        <Button 
-          size="lg" 
-          onClick={() => navigate('/personalize')}
-          className="mt-8 px-8 py-6 text-lg rounded-full"
+        <button
+          onClick={handleContinue}
+          disabled={!selected}
+          className={cn(
+            "w-full py-4 rounded-lg text-lg font-medium transition-all duration-300",
+            selected
+              ? "bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
+              : "bg-muted text-muted-foreground cursor-not-allowed"
+          )}
         >
-          Personalize My Rhythm
-        </Button>
+          Continue
+        </button>
       </div>
     </div>
   );

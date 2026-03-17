@@ -8,46 +8,30 @@ const Problem = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-3xl text-center space-y-10 animate-slide-up">
-        <h2 className="text-4xl md:text-5xl font-heading font-semibold text-primary">
-          Why does your "perfect" routine sometimes stop working?
+        <h2 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight">
+          Why does your routine stop working?
         </h2>
         
         <div className="flex justify-center my-12">
-          <svg className="w-64 h-64" viewBox="0 0 200 200">
-            <circle
-              cx="100"
-              cy="100"
-              r="80"
-              fill="none"
-              stroke="hsl(var(--border))"
-              strokeWidth="2"
-            />
-            <circle
-              cx="100"
-              cy="100"
-              r="6"
-              fill="hsl(var(--primary))"
-              className="animate-pulse"
-            >
-              <animateMotion
-                dur="6s"
-                repeatCount="indefinite"
-                path="M 100,20 A 80,80 0 1,1 99.9,20 Z"
-              />
-            </circle>
+          <svg className="w-56 h-56" viewBox="0 0 200 200">
+            {/* Geometric line-art: intersecting circles representing biological systems */}
+            <circle cx="80" cy="100" r="60" fill="none" stroke="hsl(var(--phase-calm))" strokeWidth="1.5" opacity="0.6" />
+            <circle cx="120" cy="100" r="60" fill="none" stroke="hsl(var(--phase-glow))" strokeWidth="1.5" opacity="0.6" />
+            <circle cx="100" cy="75" r="60" fill="none" stroke="hsl(var(--phase-balance))" strokeWidth="1.5" opacity="0.6" />
+            <circle cx="100" cy="95" r="4" fill="hsl(var(--foreground))" className="animate-pulse" />
           </svg>
         </div>
 
-        <p className="text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
-          Your skin isn't a static canvas. It changes every day, influenced by <strong>hormones, sleep, and even stress.</strong> This is why a 'one-size-fits-all' approach always fails.
+        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+          Your skin is not a static canvas. It's a <strong className="text-foreground">biological asset</strong> influenced by glucose, hormones, and stress. Managing it requires a strategy, not a routine.
         </p>
 
         <Button 
           size="lg" 
           onClick={() => navigate('/solution')}
-          className="mt-8 px-8 py-6 text-lg rounded-full"
+          className="mt-8 px-8 py-6 text-lg rounded-lg"
         >
-          Learn More
+          Learn the Strategy
         </Button>
       </div>
     </div>
