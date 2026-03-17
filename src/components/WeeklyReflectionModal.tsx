@@ -286,11 +286,11 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
                 </div>
               </div>
 
-              {/* Aura's Insight */}
+              {/* m.i. Insight */}
               <div className="bg-primary/5 border border-primary/20 rounded-lg p-6 space-y-3">
                 <div className="flex items-center gap-2 text-primary font-semibold">
-                  <Circle className="h-4 w-4" />
-                  Aura's Insight
+                  <Cpu className="h-4 w-4" />
+                  m.i. Analysis
                 </div>
                 <div className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">
                   <TypingText text={auraInsight} />
