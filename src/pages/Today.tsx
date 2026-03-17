@@ -441,7 +441,7 @@ const Today = () => {
     // Days 5 & 6 (Fri & Sat): Recovery Nights
     else if (microCycleDay === 5 || microCycleDay === 6) {
       primarySerum = 'Calm & Renew Serum';
-      auraVoice = "After hard work comes rest. We are returning to the calming embrace of the Calm & Renew Serum.";
+      miVoice = "You unwind. meanwhile., the Calm & Renew Serum is executing post-activation recovery.";
     }
     // Day 7 (Sun): Flex Night
     else if (microCycleDay === 7) {
