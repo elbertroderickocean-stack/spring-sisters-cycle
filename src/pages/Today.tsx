@@ -421,7 +421,7 @@ const Today = () => {
 
     const microCycleDay = getMicroCycleDay();
     let primarySerum = 'Calm & Renew Serum';
-    let auraVoice = '';
+    let miVoice = '';
 
     // Days 1 & 2 (Mon & Tue): Recovery Nights
     if (microCycleDay === 1 || microCycleDay === 2) {
