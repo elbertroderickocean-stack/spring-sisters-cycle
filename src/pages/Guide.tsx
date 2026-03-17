@@ -57,13 +57,14 @@ const Guide = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <div className="max-w-3xl mx-auto px-6 py-8 space-y-8">
-        <div className="space-y-1 animate-fade-in">
+      <HeaderBar>
+        <div>
           <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">meanwhile.</p>
-          <h1 className="text-4xl font-heading font-semibold text-primary">
-            Strategic Knowledge
-          </h1>
+          <h1 className="text-2xl font-heading font-semibold text-primary">Insights</h1>
         </div>
+      </HeaderBar>
+
+      <div className="max-w-3xl mx-auto px-6 py-8 space-y-8">
 
         {dynamicGuideContent.map((section, sectionIndex) => {
           const Icon = section.icon;
