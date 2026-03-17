@@ -32,11 +32,11 @@ const ProductDetail = () => {
   const getLineLabel = (line: string) => {
     switch (line) {
       case 'bloom':
-        return 'The Bloom Cycle™ Line';
+        return 'The Shifts™ — Dynamic Management';
       case 'harmony':
-        return 'The Spring Harmony™ Line';
+        return 'The Constants™ — Your Index Fund';
       case 'precision':
-        return 'The Precision Care™ Line';
+        return 'The Assets™ — Venture Investments';
       default:
         return '';
     }

@@ -167,10 +167,10 @@ const Products = () => {
           )}
         </section>
 
-        {/* The Precision Care™ Collection */}
+        {/* The Assets™ (Venture Investments) */}
         <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            The Precision Care™ Collection
+            The Assets™ <span className="text-sm text-muted-foreground font-body">Venture Investments</span>
           </h2>
           
           {ownedPrecision.length > 0 ? (
@@ -179,9 +179,9 @@ const Products = () => {
             </div>
           ) : (
             renderEmptyState(
-              'The Precision Care™ Collection',
-              'Your Precision Care collection is ready. Discover targeted solutions with powerful actives for your specific skin concerns.',
-              'Discover Precision Care',
+              'The Assets™',
+              'Your venture portfolio is ready. Discover high-conviction targeted solutions including our flagship Cellular Architect Cream.',
+              'Discover Assets',
               'precision'
             )
           )}
