@@ -828,7 +828,7 @@ const Today = () => {
           />
         </div>
 
-        {/* Aura Vision - Persistent Feature */}
+        {/* m.i. Vision - Persistent Feature */}
         <div className="mb-6 animate-slide-up" style={{ animationDelay: '0.05s' }}>
           <div 
             onClick={() => setShowWeeklyReflection(true)}
@@ -839,9 +839,9 @@ const Today = () => {
                 <Camera className="h-6 w-6 text-primary" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-lg mb-1">Aura Vision: Analyze Your Skin</h3>
+                <h3 className="font-semibold text-lg mb-1">m.i. Vision: Analyze Your Skin</h3>
                 <p className="text-sm text-foreground/70">
-                  Take a photo anytime for personalized insights based on your unique skin journey, age, and concerns.
+                  You take a photo. meanwhile., m.i. analyzes your skin's biological data and deploys personalized insights.
                 </p>
               </div>
             </div>
