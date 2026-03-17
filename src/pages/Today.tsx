@@ -946,7 +946,7 @@ const Today = () => {
         day={day}
       />
 
-      {/* Aura Vision Modal */}
+      {/* m.i. Vision Modal */}
       <WeeklyReflectionModal
         open={showWeeklyReflection}
         onOpenChange={setShowWeeklyReflection}
