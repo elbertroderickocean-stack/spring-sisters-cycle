@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Circle, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
+import { HeaderBar } from '@/components/HeaderBar';
 import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import { SymbioticCheckIn } from '@/components/SymbioticCheckIn';
