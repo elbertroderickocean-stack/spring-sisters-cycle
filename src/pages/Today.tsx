@@ -270,7 +270,7 @@ const Today = () => {
       return getWiseBloomEveningSteps();
     }
     
-    // Check if there are custom rituals from Aura
+    // Check if there are custom rituals from m.i.
     if (userData.customRituals?.evening) {
       return userData.customRituals.evening.map((productId, index) => {
         const product = getProductInfo(productId);
