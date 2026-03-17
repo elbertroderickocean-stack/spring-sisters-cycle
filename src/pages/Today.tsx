@@ -723,8 +723,8 @@ const Today = () => {
     <div className="min-h-screen bg-background pb-24">
       <HeaderBar>
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-body">Portfolio Status: Optimizing</p>
-          <h1 className="text-xl font-heading font-semibold">Hello, {userData.name || 'Beautiful'}!</h1>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body">Portfolio Status: Optimizing</p>
+          <h1 className="text-base font-heading font-medium text-foreground/80">Hello, {userData.name || 'Investor'}</h1>
         </div>
       </HeaderBar>
 
@@ -744,7 +744,7 @@ const Today = () => {
         />
       )}
       
-      <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
+      <div className="max-w-2xl mx-auto px-5 py-6 space-y-5">
         {userData.isDemoMode && (
           <Alert className="border-primary/50 bg-primary/5 animate-fade-in">
             <AlertCircle className="h-4 w-4 text-primary" />
@@ -761,61 +761,61 @@ const Today = () => {
             </AlertDescription>
           </Alert>
         )}
-        {/* Module 1: The Living Banner */}
-        <div className="space-y-3 animate-fade-in">
-          
-          {/* Large Clickable Phase Banner with Solid Color & Transition Bar */}
-          <button
-            onClick={() => setShowWeeklyPlan(true)}
-            className="relative w-full p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-lg border-none overflow-hidden phase-${phase}"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <div className="text-left flex-1">
-                <div className="text-5xl font-heading font-bold mb-1 text-primary drop-shadow-sm">
-                  {userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
-                </div>
-                <div className="text-sm font-medium text-primary/80">
-                  {dailyWhisper}
-                </div>
+
+        {/* Module 1: Glassmorphism Phase Card */}
+        <button
+          onClick={() => setShowWeeklyPlan(true)}
+          className="relative w-full p-6 rounded-2xl transition-all hover:scale-[1.01] overflow-hidden border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg animate-fade-in"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="text-left flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: phaseIconColor }} />
+                <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Live Data Linked</span>
               </div>
-              {!userData.wiseBloomMode && (
-                <div className="flex items-center gap-3 text-primary">
-                  <span className="text-xl font-heading font-semibold">
-                    {phaseName}
-                  </span>
-                  <ChevronRight className="h-6 w-6" />
-                </div>
-              )}
-              {userData.wiseBloomMode && (
-                <div className="text-right text-primary">
-                  <div className="text-lg font-heading font-semibold">
-                    {getMicroCycleDayName(day).split(':')[1]}
-                  </div>
-                </div>
-              )}
+              <div className="text-3xl font-heading font-bold mb-1" style={{ color: phaseIconColor }}>
+                {userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-[280px]">
+                {dailyWhisper}
+              </p>
             </div>
-            
-            {/* Transition Progress Bar - Only for regular cycle users */}
             {!userData.wiseBloomMode && (
-              <div className="absolute bottom-0 left-0 right-0 h-2 bg-white/20">
-                <div 
-                  className="h-full transition-all duration-500 ease-out"
-                  style={{
-                    width: `${progressPercentage}%`,
-                    background: `linear-gradient(to right, currentColor ${Math.max(0, progressPercentage - 10)}%, ${nextPhaseColor} 100%)`,
-                    color: phase === 'calm' ? 'hsl(200 50% 60%)' : phase === 'glow' ? 'hsl(30 90% 60%)' : 'hsl(120 40% 50%)'
-                  }}
-                />
+              <div className="text-right">
+                <span className="text-lg font-heading font-semibold" style={{ color: phaseIconColor }}>
+                  {phaseName}
+                </span>
+                <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto mt-1" />
               </div>
             )}
-          </button>
-        </div>
+            {userData.wiseBloomMode && (
+              <div className="text-right">
+                <div className="text-base font-heading font-semibold" style={{ color: phaseIconColor }}>
+                  {getMicroCycleDayName(day).split(':')[1]}
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Transition Progress Bar */}
+          {!userData.wiseBloomMode && (
+            <div className="h-[3px] rounded-full bg-border/30 overflow-hidden">
+              <div 
+                className="h-full rounded-full transition-all duration-500 ease-out"
+                style={{
+                  width: `${progressPercentage}%`,
+                  background: `linear-gradient(to right, ${phaseIconColor}, ${nextPhaseColor})`,
+                }}
+              />
+            </div>
+          )}
+        </button>
 
         {/* Module 2: Today's Ritual - Morning & Evening */}
         <div className="space-y-4 animate-slide-up">
           <RitualSection
-            title="☀️ Morning Deployment"
-            icon={<Sunrise className="h-5 w-5" style={{ color: phaseIconColor }} />}
+            title="Morning Deployment"
+            icon={<Sunrise className="h-4 w-4" style={{ color: phaseIconColor }} />}
             steps={getMorningRitualSteps()}
             phaseIconColor={phaseIconColor}
             defaultOpen={true}
@@ -823,8 +823,8 @@ const Today = () => {
             timeOfDay="morning"
           />
           <RitualSection
-            title="🌙 Evening Deployment"
-            icon={<Moon className="h-5 w-5" style={{ color: phaseIconColor }} />}
+            title="Evening Deployment"
+            icon={<Moon className="h-4 w-4" style={{ color: phaseIconColor }} />}
             steps={getEveningRitualSteps()}
             phaseIconColor={phaseIconColor}
             defaultOpen={true}
@@ -832,77 +832,72 @@ const Today = () => {
           />
         </div>
 
-        {/* m.i. Vision - Persistent Feature */}
-        <div className="mb-6 animate-slide-up" style={{ animationDelay: '0.05s' }}>
+        {/* m.i. Vision Widget */}
+        <div className="animate-slide-up" style={{ animationDelay: '0.05s' }}>
           <div 
             onClick={() => setShowWeeklyReflection(true)}
-            className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20 cursor-pointer hover:border-primary/40 transition-all shadow-lg"
+            className="rounded-2xl p-5 border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg cursor-pointer hover:border-border transition-all"
           >
             <div className="flex items-start gap-4">
-              <div className="p-3 bg-primary/20 rounded-xl">
-                <Camera className="h-6 w-6 text-primary" />
+              <div className="p-2.5 rounded-xl bg-[hsl(var(--intel-sleep))]/10 border border-[hsl(var(--intel-sleep))]/15">
+                <Camera className="h-5 w-5 text-[hsl(var(--intel-sleep))]" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-lg mb-1">m.i. Vision: Analyze Your Skin</h3>
-                <p className="text-sm text-foreground/70">
-                  You take a photo. meanwhile., m.i. analyzes your skin's biological data and deploys personalized insights.
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-heading font-semibold text-sm">m.i. Vision</h3>
+                  <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-sleep))]/20 text-[hsl(var(--intel-sleep))]">
+                    Analyze
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  You take a photo. meanwhile., m.i. deploys personalized skin intelligence.
                 </p>
               </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground/40 mt-1" />
             </div>
           </div>
         </div>
 
-        {/* Module 3: Your Precision Toolkit */}
+        {/* Your Assets Toolkit */}
         {precisionProducts.length > 0 && (
-          <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.1s', backgroundColor: '#EAEFF2' }}>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Zap className="h-5 w-5" style={{ color: phaseIconColor }} />
-                <CardTitle className="font-heading">⚡ Your Assets Toolkit</CardTitle>
-              </div>
-              <CardDescription>Targeted care for specific needs</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {precisionProducts.map((product) => {
-                  const IconComponent = product.icon;
-                  return (
-                    <div 
-                      key={product.id} 
-                      className="flex gap-4 items-start"
-                    >
-                      <div className="flex-shrink-0">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <IconComponent className="h-5 w-5" style={{ color: phaseIconColor }} />
-                        </div>
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <h4 className="font-semibold text-foreground">{product.name}</h4>
-                        <p className="text-sm text-foreground/80 leading-relaxed">
-                          {product.usage}
-                        </p>
-                      </div>
+          <div className="rounded-2xl border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg p-5 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <div className="flex items-center gap-2 mb-4">
+              <Zap className="h-4 w-4" style={{ color: phaseIconColor }} />
+              <h3 className="font-heading font-semibold text-sm">Your Assets Toolkit</h3>
+              <span className="text-[9px] uppercase tracking-widest text-muted-foreground">Targeted</span>
+            </div>
+            <div className="space-y-3">
+              {precisionProducts.map((product) => {
+                const IconComponent = product.icon;
+                return (
+                  <div key={product.id} className="flex gap-3 items-start p-3 rounded-xl bg-background/40 border border-border/30">
+                    <div className="w-8 h-8 rounded-lg bg-primary/8 flex items-center justify-center flex-shrink-0">
+                      <IconComponent className="h-4 w-4" style={{ color: phaseIconColor }} />
                     </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-heading text-sm font-medium">{product.name}</h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{product.usage}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         )}
 
-        {/* Module 4: m.i.'s Protocol */}
+        {/* m.i. Daily Protocol Widget */}
         <button
           onClick={() => setIsPlanModalOpen(true)}
-          className="w-full animate-slide-up shadow-lg rounded-lg p-6 transition-all hover:scale-[1.02] text-left"
-          style={{ animationDelay: '0.2s', backgroundColor: '#EAEAF2' }}
+          className="w-full rounded-2xl p-5 border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg transition-all hover:border-border text-left animate-slide-up"
+          style={{ animationDelay: '0.15s' }}
         >
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <Circle className="h-5 w-5" style={{ color: phaseIconColor }} />
-                <h3 className="text-xl font-heading font-semibold">m.i. Daily Protocol</h3>
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: phaseIconColor }} />
+                <h3 className="font-heading font-semibold text-sm">m.i. Daily Protocol</h3>
               </div>
-              <p className="text-foreground/70 text-sm">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 {phase === 'calm' 
                   ? "You focus on recovery. meanwhile., your protocol is optimized for barrier repair."
                   : phase === 'glow'
@@ -910,29 +905,37 @@ const Today = () => {
                   : "You stay balanced. meanwhile., clarifying protocols are managing excess sebum."}
               </p>
             </div>
-            <ChevronRight className="h-6 w-6 text-foreground/40 flex-shrink-0" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground/40 flex-shrink-0" />
           </div>
         </button>
 
-        {/* Module 5: Smart Suggestion */}
-        <Card className="animate-slide-up shadow-lg" style={{ animationDelay: '0.3s', backgroundColor: '#EAEAF2' }}>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              {suggestion.icon ? <suggestion.icon className="h-5 w-5" style={{ color: phaseIconColor }} /> : <Star className="h-5 w-5" style={{ color: phaseIconColor }} />}
-              <CardTitle className="font-heading">{suggestion.title}</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-foreground/80 leading-relaxed">
-              {suggestion.message}
-            </p>
-            {suggestion.action && (
-              <Button onClick={suggestion.action} className="w-full">
-                {suggestion.buttonText}
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+        {/* Smart Suggestion Widget */}
+        <div className="rounded-2xl border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg p-5 animate-slide-up" style={{ animationDelay: '0.25s' }}>
+          <div className="flex items-center gap-2 mb-3">
+            {suggestion.icon ? <suggestion.icon className="h-4 w-4" style={{ color: phaseIconColor }} /> : <Star className="h-4 w-4" style={{ color: phaseIconColor }} />}
+            <h3 className="font-heading font-semibold text-sm">{suggestion.title}</h3>
+          </div>
+          <p className="text-xs text-muted-foreground leading-relaxed mb-4">
+            {suggestion.message}
+          </p>
+          {suggestion.action && (
+            <Button
+              onClick={suggestion.action}
+              variant="outline"
+              size="sm"
+              className="h-8 text-[10px] uppercase tracking-wider border-primary/30 text-primary hover:bg-primary/10"
+            >
+              {suggestion.buttonText === 'Discover Product' || suggestion.buttonText === 'Discover the Serum Trio' ? 'Integrate' : suggestion.buttonText}
+            </Button>
+          )}
+        </div>
+
+        {/* meanwhile. footer whisper */}
+        <div className="text-center py-4">
+          <p className="text-[10px] text-muted-foreground/50 tracking-widest uppercase">
+            You focus on your day. meanwhile., your long-term assets are growing.
+          </p>
+        </div>
       </div>
 
       {/* Phase Deep Dive Modal */}
