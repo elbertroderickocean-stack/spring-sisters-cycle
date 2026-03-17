@@ -763,10 +763,6 @@ const Today = () => {
         )}
         {/* Module 1: The Living Banner */}
         <div className="space-y-3 animate-fade-in">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-body">Portfolio Status: Optimizing</p>
-          <h1 className="text-3xl font-heading font-semibold">
-            Hello, {userData.name || 'Beautiful'}!
-          </h1>
           
           {/* Large Clickable Phase Banner with Solid Color & Transition Bar */}
           <button
