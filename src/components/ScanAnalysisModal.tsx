@@ -90,7 +90,7 @@ export const ScanAnalysisModal = ({
             </div>
           </div>
 
-          {/* Aura's Suggestion */}
+          {/* m.i. Recommendation */}
           <div className="space-y-3 bg-accent/30 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <Circle className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />

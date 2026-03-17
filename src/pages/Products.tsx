@@ -252,10 +252,10 @@ const Products = () => {
       <Dialog open={showStartModal} onOpenChange={setShowStartModal}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-heading text-2xl">Activate Aura's Prediction</DialogTitle>
+            <DialogTitle className="font-heading text-2xl">Activate m.i. Tracking</DialogTitle>
             <DialogDescription className="text-base leading-relaxed pt-2">
-              Great! Aura will now start tracking this product's usage to predict when it will run out,
-              reminding you to reorder in advance so you never interrupt your ritual.
+              m.i. will now track this asset's usage and predict depletion,
+              alerting you to reorder in advance so your portfolio stays uninterrupted.
             </DialogDescription>
           </DialogHeader>
           <Button
