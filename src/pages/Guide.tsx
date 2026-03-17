@@ -51,7 +51,7 @@ const Guide = () => {
   
   const dynamicGuideContent = [
     philosophySection,
-    biologicalMarketSection,
+    marketAnalysisSection,
     compoundScienceSection,
   ];
 
