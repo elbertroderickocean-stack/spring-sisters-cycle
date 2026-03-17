@@ -10,6 +10,7 @@ import { GlucoseWidget } from '@/components/intelligence/GlucoseWidget';
 import { SleepWidget } from '@/components/intelligence/SleepWidget';
 import { StressWidget } from '@/components/intelligence/StressWidget';
 import { CausalityCard } from '@/components/intelligence/CausalityCard';
+import { SkinAuditWidget } from '@/components/intelligence/SkinAuditWidget';
 
 const Intelligence = () => {
   const navigate = useNavigate();
