@@ -9,20 +9,19 @@ interface SkinMetric {
 }
 
 const DEFAULT_METRICS: SkinMetric[] = [
-  { label: 'Hydration', sublabel: 'Увлажненность', value: 0 },
-  { label: 'Barrier', sublabel: 'Защитный барьер', value: 0 },
-  { label: 'Collagen', sublabel: 'Упругость', value: 0 },
-  { label: 'Luminance', sublabel: 'Сияние', value: 0 },
-  { label: 'Texture', sublabel: 'Чистота', value: 0 },
+  { label: 'Hydration', sublabel: 'Moisture Level', value: 0 },
+  { label: 'Barrier', sublabel: 'Barrier Resilience', value: 0 },
+  { label: 'Collagen', sublabel: 'Elasticity Index', value: 0 },
+  { label: 'Luminance', sublabel: 'Radiance Tone', value: 0 },
+  { label: 'Texture', sublabel: 'Texture Purity', value: 0 },
 ];
 
-// Simulated last-scan data (will be replaced with real scan persistence later)
 const DEMO_METRICS: SkinMetric[] = [
-  { label: 'Hydration', sublabel: 'Увлажненность', value: 82 },
-  { label: 'Barrier', sublabel: 'Защитный барьер', value: 68 },
-  { label: 'Collagen', sublabel: 'Упругость', value: 75 },
-  { label: 'Luminance', sublabel: 'Сияние', value: 88 },
-  { label: 'Texture', sublabel: 'Чистота', value: 79 },
+  { label: 'Hydration', sublabel: 'Moisture Level', value: 82 },
+  { label: 'Barrier', sublabel: 'Barrier Resilience', value: 68 },
+  { label: 'Collagen', sublabel: 'Elasticity Index', value: 75 },
+  { label: 'Luminance', sublabel: 'Radiance Tone', value: 88 },
+  { label: 'Texture', sublabel: 'Texture Purity', value: 79 },
 ];
 
 const hasScan = true; // Toggle for demo; later driven by real scan state
