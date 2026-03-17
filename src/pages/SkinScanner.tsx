@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Camera, Loader2, Upload, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, RefreshCw, Check, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -14,12 +14,23 @@ interface SkinAnalysis {
   recommendation: string;
 }
 
+const CHECKPOINTS = [
+  { label: 'Hydration Mapping', status: 'READY' },
+  { label: 'Dermal Texture Analysis', status: 'ACTIVE' },
+  { label: 'Luminance Index', status: 'CAPTURING' },
+  { label: 'm.i. Intelligence', status: 'CONNECTED' },
+];
+
 const SkinScanner = () => {
   const navigate = useNavigate();
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [scanning, setScanning] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
   const [result, setResult] = useState<SkinAnalysis | null>(null);
+  const [showResults, setShowResults] = useState(false);
+  const [faceLocked, setFaceLocked] = useState(false);
+  const [activeCheckpoints, setActiveCheckpoints] = useState<number>(-1);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,6 +59,27 @@ const SkinScanner = () => {
     if (videoRef.current && cameraStream) videoRef.current.srcObject = cameraStream;
   }, [cameraStream]);
 
+  // Simulate face detection after 2s of camera active
+  useEffect(() => {
+    if (!cameraStream || cameraError || scanning || result) return;
+    setFaceLocked(false);
+    setActiveCheckpoints(-1);
+    const faceTimer = setTimeout(() => setFaceLocked(true), 2000);
+    return () => clearTimeout(faceTimer);
+  }, [cameraStream, cameraError, scanning, result]);
+
+  // Cascade checkpoints once face is locked
+  useEffect(() => {
+    if (!faceLocked || scanning) return;
+    let i = 0;
+    const interval = setInterval(() => {
+      setActiveCheckpoints(i);
+      i++;
+      if (i >= CHECKPOINTS.length) clearInterval(interval);
+    }, 600);
+    return () => clearInterval(interval);
+  }, [faceLocked, scanning]);
+
   const captureImage = (): string | null => {
     if (!videoRef.current) return null;
     const canvas = document.createElement('canvas');
@@ -61,18 +93,38 @@ const SkinScanner = () => {
 
   const analyzeImage = async (imageData: string) => {
     setScanning(true);
+    setScanProgress(0);
     setResult(null);
+    setShowResults(false);
+
+    // Fast progress counter
+    const progressInterval = setInterval(() => {
+      setScanProgress((p) => {
+        if (p >= 95) return 95;
+        return p + Math.random() * 8 + 2;
+      });
+    }, 80);
+
     try {
       const { data, error } = await supabase.functions.invoke('analyze-skin-health', {
         body: { imageData },
       });
       if (error) throw error;
+      clearInterval(progressInterval);
+      setScanProgress(100);
+      
+      // Brief pause at 100% then transition
+      await new Promise((r) => setTimeout(r, 400));
       setResult(data.analysis);
+      setScanning(false);
+      // Smooth entry to results
+      setTimeout(() => setShowResults(true), 50);
     } catch (e) {
+      clearInterval(progressInterval);
       console.error('Skin scan error:', e);
       toast.error('Analysis failed. Please try again.');
-    } finally {
       setScanning(false);
+      setScanProgress(0);
     }
   };
 
@@ -89,10 +141,7 @@ const SkinScanner = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = reader.result as string;
-      analyzeImage(dataUrl);
-    };
+    reader.onload = () => analyzeImage(reader.result as string);
     reader.readAsDataURL(file);
     e.target.value = '';
   };
@@ -103,14 +152,22 @@ const SkinScanner = () => {
     startCamera();
   };
 
+  const handleScanAgain = () => {
+    setResult(null);
+    setShowResults(false);
+    setFaceLocked(false);
+    setActiveCheckpoints(-1);
+  };
+
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-[hsl(var(--intel-sleep))]';
+    if (score >= 80) return 'text-primary';
     if (score >= 60) return 'text-[hsl(var(--intel-stress))]';
-    return 'text-[hsl(var(--intel-glucose))]';
+    return 'text-destructive';
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Header */}
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border px-4 py-4 flex items-center gap-3">
         <button onClick={() => navigate('/intelligence')} className="p-2 hover:bg-accent rounded-lg transition-colors">
           <ArrowLeft className="h-5 w-5" />
@@ -121,31 +178,114 @@ const SkinScanner = () => {
         </div>
       </header>
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileUpload}
-      />
+      <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
 
-      {!result ? (
+      {/* Results view */}
+      {result ? (
+        <div className={`flex-1 px-4 py-6 space-y-4 overflow-auto transition-all duration-700 ${showResults ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          {/* Score */}
+          <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
+            <CardContent className="p-6 flex flex-col items-center gap-2">
+              <p className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Skin Capital Score</p>
+              <span className={`text-6xl font-heading font-bold ${getScoreColor(result.skinCapitalScore)}`}>
+                {result.skinCapitalScore}
+              </span>
+              <div className="w-16 h-px bg-border" />
+              <span className="text-[10px] text-muted-foreground tracking-widest">/ 100</span>
+            </CardContent>
+          </Card>
+
+          {/* Metrics */}
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { label: 'Radiance', value: result.radiance },
+              { label: 'Hydration', value: result.hydration },
+              { label: 'Texture', value: result.texture },
+            ].map((m) => (
+              <Card key={m.label} className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
+                <CardContent className="p-3 flex flex-col items-center gap-1">
+                  <span className="text-[8px] text-muted-foreground uppercase tracking-[0.15em]">{m.label}</span>
+                  <span className="text-xs font-heading font-bold text-foreground">{m.value}</span>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Recommendation */}
+          <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
+            <CardContent className="p-5 space-y-3">
+              <h3 className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">m.i. Recommendation</h3>
+              <p className="text-sm leading-relaxed text-foreground/90">{result.recommendation}</p>
+            </CardContent>
+          </Card>
+
+          {/* meanwhile. signature */}
+          <div className="py-3 px-4 rounded-lg bg-muted/40 border border-border">
+            <p className="text-[10px] text-muted-foreground italic text-center leading-relaxed">
+              m.i. is calculating your investment. <span className="font-heading">meanwhile.</span>, your current protocol remains optimal.
+            </p>
+          </div>
+
+          <Button onClick={handleScanAgain} variant="outline" className="w-full text-xs tracking-wider uppercase">
+            Scan Again
+          </Button>
+          <Button onClick={() => navigate('/today')} className="w-full text-xs tracking-wider uppercase">
+            View Updated Protocol
+          </Button>
+        </div>
+      ) : (
         <>
+          {/* Camera view */}
           <div className="flex-1 relative bg-foreground/5">
             {!cameraError ? (
               <>
                 <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" style={{ transform: 'scaleX(-1)' }} />
-                {/* Alignment guide */}
+
+                {/* Reactive Face Oval */}
                 {!scanning && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <div className="w-48 h-60 border-2 border-white/20 rounded-[50%]" />
-                    <p className="mt-4 text-white/60 text-xs tracking-wide">Position your face in the light for m.i. analysis</p>
+                    <div
+                      className={`w-52 h-64 rounded-[50%] border-[3px] transition-all duration-700 ${
+                        faceLocked
+                          ? 'border-primary shadow-[0_0_20px_hsl(var(--primary)/0.4),0_0_40px_hsl(var(--primary)/0.15)]'
+                          : 'border-white/25'
+                      }`}
+                    />
+                    <p className={`mt-4 text-[10px] tracking-widest uppercase transition-colors duration-500 ${faceLocked ? 'text-primary' : 'text-white/50'}`}>
+                      {faceLocked ? 'Face locked — ready for analysis' : 'Position your face in the light'}
+                    </p>
+                  </div>
+                )}
+
+                {/* Real-time checkpoints */}
+                {!scanning && (
+                  <div className="absolute left-4 top-1/3 space-y-3 pointer-events-none">
+                    {CHECKPOINTS.map((cp, i) => {
+                      const isActive = i <= activeCheckpoints;
+                      return (
+                        <div key={cp.label} className={`flex items-center gap-2 transition-all duration-500 ${isActive ? 'opacity-100' : 'opacity-30'}`}>
+                          {isActive ? (
+                            <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+                              <Check className="h-2.5 w-2.5 text-primary-foreground" />
+                            </div>
+                          ) : (
+                            <Loader2 className="h-4 w-4 text-white/40 animate-spin" />
+                          )}
+                          <div className="flex flex-col">
+                            <span className="text-[9px] font-medium text-white tracking-wide">{cp.label}</span>
+                            <span className={`text-[8px] tracking-widest uppercase ${isActive ? 'text-primary' : 'text-white/30'}`}>
+                              {cp.status}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </>
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/95 p-6 gap-5">
-                <div className="w-48 h-60 border border-dashed border-muted-foreground/30 rounded-[50%] flex items-center justify-center">
+                <div className="w-52 h-64 border border-dashed border-muted-foreground/30 rounded-[50%] flex items-center justify-center">
                   <Camera className="h-10 w-10 text-muted-foreground/40" />
                 </div>
                 <p className="text-muted-foreground text-center text-sm max-w-[260px] leading-relaxed">
@@ -162,92 +302,74 @@ const SkinScanner = () => {
               </div>
             )}
 
-            {/* Scanning overlay with horizontal line animation */}
+            {/* Biometric mesh scanning overlay */}
             {scanning && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute inset-0 bg-foreground/40 backdrop-blur-sm" />
-                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                  {/* Scanning line */}
-                  <div className="absolute inset-x-8 top-[15%] bottom-[15%] overflow-hidden rounded-2xl border border-white/10">
-                    <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[hsl(var(--intel-sleep))] to-transparent animate-[scanLine_2.5s_ease-in-out_infinite]" />
-                  </div>
-                  <div className="space-y-2 mt-auto mb-[18%]">
-                    <Loader2 className="h-5 w-5 text-white animate-spin mx-auto" />
-                    <p className="text-white font-heading text-sm tracking-wide">Analyzing skin biometrics…</p>
+                <div className="absolute inset-0 bg-foreground/50 backdrop-blur-sm" />
+
+                {/* Biometric grid mesh */}
+                <div className="absolute inset-x-6 top-[10%] bottom-[10%] overflow-hidden rounded-2xl border border-primary/20">
+                  {/* Grid lines */}
+                  <div className="absolute inset-0 opacity-20"
+                    style={{
+                      backgroundImage: `
+                        linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px),
+                        linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)
+                      `,
+                      backgroundSize: '24px 24px',
+                    }}
+                  />
+                  {/* Green laser line */}
+                  <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_12px_hsl(var(--primary)/0.6)] animate-[scanLine_1.8s_ease-in-out_infinite]" />
+                </div>
+
+                {/* Progress */}
+                <div className="relative z-10 flex flex-col items-center gap-3 mt-auto mb-[16%]">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-primary font-medium">
+                    Processing Skin Data
+                  </p>
+                  <span className="text-3xl font-heading font-bold text-white tabular-nums">
+                    {Math.min(Math.round(scanProgress), 100)}%
+                  </span>
+                  <div className="w-40 h-1 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full bg-primary rounded-full transition-all duration-100" style={{ width: `${Math.min(scanProgress, 100)}%` }} />
                   </div>
                 </div>
               </div>
             )}
           </div>
 
+          {/* Bottom controls */}
           <div className="p-6 border-t border-border bg-background space-y-3">
             {!cameraError && (
-              <Button onClick={handleScan} disabled={scanning} className="w-full h-14 rounded-full bg-[hsl(var(--intel-sleep))] hover:bg-[hsl(var(--intel-sleep))]/90 text-white">
-                <Camera className="h-5 w-5 mr-2" />
-                {scanning ? 'Scanning…' : 'Scan Skin Health'}
+              <Button
+                onClick={handleScan}
+                disabled={scanning}
+                className="w-full h-14 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs tracking-widest uppercase"
+              >
+                <Camera className="h-4 w-4 mr-2" />
+                {scanning ? 'Analyzing…' : 'Scan Skin Health'}
               </Button>
             )}
-            {!cameraError && (
+            {!cameraError && !scanning && (
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors py-1"
+                className="w-full text-center text-[10px] text-muted-foreground hover:text-foreground transition-colors py-1 tracking-wider uppercase"
               >
                 or upload a photo for m.i. analysis
               </button>
             )}
             {cameraError && !scanning && (
-              <Button onClick={() => fileInputRef.current?.click()} className="w-full h-14 rounded-full bg-[hsl(var(--intel-sleep))] hover:bg-[hsl(var(--intel-sleep))]/90 text-white">
-                <Upload className="h-5 w-5 mr-2" />
+              <Button
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full h-14 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs tracking-widest uppercase"
+              >
+                <Upload className="h-4 w-4 mr-2" />
                 Upload Photo for m.i. Analysis
               </Button>
             )}
           </div>
         </>
-      ) : (
-        <div className="flex-1 px-4 py-6 space-y-4 overflow-auto">
-          {/* Score */}
-          <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
-            <CardContent className="p-6 flex flex-col items-center gap-3">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">Skin Capital Score</p>
-              <span className={`text-5xl font-heading font-bold ${getScoreColor(result.skinCapitalScore)}`}>
-                {result.skinCapitalScore}
-              </span>
-              <span className="text-xs text-muted-foreground">/ 100</span>
-            </CardContent>
-          </Card>
-
-          {/* Breakdown */}
-          <div className="grid grid-cols-3 gap-3">
-            {[
-              { label: 'Radiance', value: result.radiance, color: '--intel-sleep' },
-              { label: 'Hydration', value: result.hydration, color: '--intel-stress' },
-              { label: 'Texture', value: result.texture, color: '--intel-glucose' },
-            ].map((m) => (
-              <Card key={m.label} className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
-                <CardContent className="p-3 flex flex-col items-center gap-1">
-                  <span className="text-[9px] text-muted-foreground uppercase tracking-wider">{m.label}</span>
-                  <span className={`text-sm font-heading font-bold text-[hsl(var(${m.color}))]`}>{m.value}</span>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Recommendation */}
-          <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
-            <CardContent className="p-5 space-y-3">
-              <h3 className="text-xs uppercase tracking-widest text-muted-foreground">m.i. Recommendation</h3>
-              <p className="text-sm leading-relaxed">{result.recommendation}</p>
-              <div className="p-3 rounded-lg bg-muted/50 border border-border">
-                <p className="text-xs text-muted-foreground italic">
-                  You check your skin. meanwhile., we are already optimizing your protocol.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Button onClick={() => setResult(null)} variant="outline" className="w-full">Scan Again</Button>
-          <Button onClick={() => navigate('/today')} className="w-full">View Updated Protocol</Button>
-        </div>
       )}
     </div>
   );
