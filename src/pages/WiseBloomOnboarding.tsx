@@ -14,7 +14,6 @@ const WiseBloomOnboarding = () => {
     if (currentScreen === 1) {
       setCurrentScreen(2);
     } else {
-      // Enable Wise Bloom mode
       updateUserData({ wiseBloomMode: true });
       navigate('/register', { state: { selectedRhythm: location.state?.selectedRhythm || 'cellular' } });
     }
@@ -41,39 +40,36 @@ const WiseBloomOnboarding = () => {
 
         {currentScreen === 1 ? (
           <div className="text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-primary leading-tight">
-              Your skin lives by a new, wise rhythm.
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-body">Longevity Strategy</p>
+            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight">
+              Your focus is resilience and density.
             </h1>
             
             <div className="pt-6 pb-8 space-y-4 text-left max-w-xl mx-auto">
-              <p className="text-lg text-foreground/80 leading-relaxed">
-                After menopause, the skin is no longer subject to cyclical fluctuations, but it faces new challenges:
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Since your skin no longer has a monthly cycle, we implement a <strong className="text-foreground">7-day Cellular Training Rhythm</strong>. We alternate between Restoration (The Constants) and Stimulation (The Shifts) to keep your skin cells in peak performance.
               </p>
               
-              <ul className="space-y-3 text-foreground/80">
+              <ul className="space-y-3 text-muted-foreground pt-2">
                 <li className="flex gap-3">
                   <span className="text-primary flex-shrink-0">•</span>
-                  <span>Reduced collagen production</span>
+                  <span>Reduced collagen production → targeted stimulation</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary flex-shrink-0">•</span>
-                  <span>Loss of density and firmness</span>
+                  <span>Loss of density and firmness → structural rebuilding</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary flex-shrink-0">•</span>
-                  <span>Increased dryness due to consistently low estrogen levels</span>
+                  <span>Increased dryness → deep barrier restoration</span>
                 </li>
               </ul>
-              
-              <p className="text-lg text-foreground/80 leading-relaxed pt-4">
-                Our system is perfectly suited to address these specific concerns with a dedicated approach designed just for you.
-              </p>
             </div>
 
             <Button 
               size="lg" 
               onClick={handleContinue}
-              className="mt-8 px-8 py-6 text-lg rounded-full"
+              className="mt-8 px-8 py-6 text-lg rounded-lg"
             >
               Continue
               <ChevronRight className="ml-2 h-5 w-5" />
@@ -81,47 +77,48 @@ const WiseBloomOnboarding = () => {
           </div>
         ) : (
           <div className="text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-primary leading-tight">
-              Your focus is restoration and support.
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-body">Your Management Framework</p>
+            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight">
+              The 7-Day Cellular Training Pulse
             </h1>
             
-            <p className="text-xl text-foreground/80 leading-relaxed max-w-xl mx-auto pt-4">
-              To achieve this, we'll use our complete orbital system, re-imagined into a powerful 7-day training rhythm for your skin:
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto pt-4">
+              Your complete management framework, re-imagined into a powerful weekly rhythm:
             </p>
             
             <div className="pt-6 pb-8 space-y-4 text-left max-w-xl mx-auto">
               <div className="bg-primary/5 rounded-xl p-5 border border-primary/20">
-                <h3 className="font-heading font-semibold text-xl mb-2">The Spring Harmony™</h3>
-                <p className="text-foreground/70 leading-relaxed">
-                  Your daily foundation for barrier support and constant nourishment.
+                <h3 className="font-heading font-semibold text-xl mb-2">The Constants™</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Your Index Fund — daily foundation for barrier support and constant nourishment.
                 </p>
               </div>
               
               <div className="bg-primary/5 rounded-xl p-5 border border-primary/20">
-                <h3 className="font-heading font-semibold text-xl mb-2">The Bloom Cycle™</h3>
-                <p className="text-foreground/70 leading-relaxed">
-                  The heart of your 7-day training rhythm. We use these serums as targeted 'exercises' for your skin cells on different days.
+                <h3 className="font-heading font-semibold text-xl mb-2">The Shifts™</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Dynamic Assets — the heart of your 7-day training rhythm. Targeted 'exercises' for your skin cells on different days.
                 </p>
               </div>
               
               <div className="bg-primary/5 rounded-xl p-5 border border-primary/20">
-                <h3 className="font-heading font-semibold text-xl mb-2">The Precision Care™</h3>
-                <p className="text-foreground/70 leading-relaxed">
-                  Your specialized tools for targeting specific concerns and boosting your weekly training results.
+                <h3 className="font-heading font-semibold text-xl mb-2">The Assets™</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  High-Yield Interventions — specialized tools for targeting specific concerns and boosting your weekly results.
                 </p>
               </div>
               
-              <p className="text-lg text-foreground/80 leading-relaxed pt-6 italic text-center">
-                Your skin's rhythm is no longer a monthly orbit—it's a weekly pulse, and you are the star at its center.
+              <p className="text-base text-muted-foreground leading-relaxed pt-6 italic text-center">
+                Your rhythm is a weekly pulse—and your skin stays in peak performance.
               </p>
             </div>
 
             <Button 
               size="lg" 
               onClick={handleContinue}
-              className="mt-8 px-8 py-6 text-lg rounded-full"
+              className="mt-8 px-8 py-6 text-lg rounded-lg"
             >
-              Begin My Journey
+              Begin My Strategy
               <ChevronRight className="ml-2 h-5 w-5" />
             </Button>
           </div>

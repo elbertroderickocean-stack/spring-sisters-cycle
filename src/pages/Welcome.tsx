@@ -10,7 +10,7 @@ const Welcome = () => {
       <div className="max-w-4xl text-center space-y-8">
         {/* Orbital Animation */}
         <div className="relative w-full h-80 mb-12 flex items-center justify-center">
-          {/* The Sun - Harmony (center) */}
+          {/* The Sun - center */}
           <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/60 animate-fade-in shadow-elegant" 
                style={{ animationDelay: '0s' }} />
           
@@ -22,40 +22,40 @@ const Welcome = () => {
           <div className="absolute w-80 h-56 border-2 border-primary/10 rounded-full animate-fade-in" 
                style={{ animationDelay: '0.9s' }} />
           
-          {/* Planet 1 - Calm & Renew (blue) */}
+          {/* The Constants */}
           <div className="absolute w-8 h-8 rounded-full bg-phase-calm shadow-lg animate-orbit-1" 
                style={{ animationDelay: '1.2s' }} />
           
-          {/* Planet 2 - Glow & Energize (peach) */}
+          {/* The Shifts */}
           <div className="absolute w-8 h-8 rounded-full bg-phase-glow shadow-lg animate-orbit-2" 
                style={{ animationDelay: '1.4s' }} />
           
-          {/* Planet 3 - Balance & Clarify (green) */}
+          {/* The Assets */}
           <div className="absolute w-8 h-8 rounded-full bg-phase-balance shadow-lg animate-orbit-3" 
                style={{ animationDelay: '1.6s' }} />
           
-          {/* Meteorite - Precision Care */}
+          {/* High-Yield Intervention */}
           <div className="absolute w-3 h-3 rounded-full bg-primary animate-meteorite" 
                style={{ animationDelay: '2s' }} />
         </div>
 
-        {/* Sequential Text - New Design */}
+        {/* Text */}
         <div className="space-y-6 animate-fade-in" style={{ animationDelay: '2.5s' }}>
           <h1 className="text-4xl md:text-5xl font-heading font-normal leading-tight lowercase">
             your skin has a{' '}
-            <span style={{ color: 'hsl(200 50% 60%)' }}>rhythm</span>.
+            <span style={{ color: 'hsl(var(--phase-calm))' }}>rhythm</span>.
           </h1>
           <h2 className="text-4xl md:text-5xl font-heading font-normal leading-tight lowercase">
             let's find it{' '}
-            <span style={{ color: 'hsl(30 90% 60%)' }}>together</span>.
+            <span style={{ color: 'hsl(var(--phase-glow))' }}>together</span>.
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mt-8">
-            Welcome to meanwhile. We are the first skincare system that adapts to your unique biological rhythm.
+            Welcome to meanwhile. The first skincare management system that adapts to your unique biological rhythm.
           </p>
           <Button 
             size="lg" 
             onClick={() => navigate('/problem')}
-            className="mt-8 px-8 py-6 text-lg rounded-full"
+            className="mt-8 px-8 py-6 text-lg rounded-lg"
           >
             Get Started
           </Button>
