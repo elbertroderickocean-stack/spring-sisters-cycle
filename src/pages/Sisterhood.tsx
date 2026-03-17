@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Avatar } from '@/components/ui/avatar';
-import { Star, Vote, FlaskConical, Heart, Users, Target, Sparkles } from 'lucide-react';
+import { Star, Vote, FlaskConical, Heart, Users, Target, Circle } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 
 const Sisterhood = () => {
@@ -84,7 +84,7 @@ const Sisterhood = () => {
           className="w-full rounded-full shadow-lg"
           size="lg"
         >
-          <Sparkles className="h-5 w-5 mr-2" />
+          <Circle className="h-5 w-5 mr-2" />
           Open The Legacy Treasury
         </Button>
 

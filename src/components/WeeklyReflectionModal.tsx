@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Camera, Sparkles, ScanLine } from 'lucide-react';
+import { Camera, Circle, ScanLine } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { TypingText } from '@/components/TypingText';
@@ -178,7 +178,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
-                <Sparkles className="h-6 w-6 text-primary" />
+                <Circle className="h-6 w-6 text-primary" />
                 Aura Vision
               </DialogTitle>
             </DialogHeader>
@@ -261,7 +261,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
-                <Sparkles className="h-6 w-6 text-primary" />
+                <Circle className="h-6 w-6 text-primary" />
                 Your Aura Vision Analysis
               </DialogTitle>
             </DialogHeader>
@@ -289,7 +289,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
               {/* Aura's Insight */}
               <div className="bg-primary/5 border border-primary/20 rounded-lg p-6 space-y-3">
                 <div className="flex items-center gap-2 text-primary font-semibold">
-                  <Sparkles className="h-4 w-4" />
+                  <Circle className="h-4 w-4" />
                   Aura's Insight
                 </div>
                 <div className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">

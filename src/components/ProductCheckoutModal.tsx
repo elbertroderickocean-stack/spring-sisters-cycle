@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Sparkles } from 'lucide-react';
+import { Hexagon } from 'lucide-react';
 
 interface ProductCheckoutModalProps {
   isOpen: boolean;
@@ -62,7 +62,7 @@ const ProductCheckoutModal: React.FC<ProductCheckoutModalProps> = ({
           <div className="space-y-4 p-4 rounded-lg bg-primary/5 border border-primary/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-primary" />
+                <Hexagon className="h-5 w-5 text-primary" />
                 <Label htmlFor="apply-lp" className="font-semibold">Apply Legacy Points</Label>
               </div>
               <Switch

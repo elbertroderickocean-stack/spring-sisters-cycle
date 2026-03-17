@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Hexagon } from 'lucide-react';
 import { products } from '@/data/productData';
 import ProductCheckoutModal from '@/components/ProductCheckoutModal';
 
@@ -105,7 +105,7 @@ const ProductCatalog = () => {
                 className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
                 aria-label="Learn about The Bloom Cycle"
               >
-                <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+                <Hexagon className="h-5 w-5 text-primary animate-pulse" />
               </button>
             </div>
             <p className="text-muted-foreground">Our Core Innovation</p>
@@ -127,7 +127,7 @@ const ProductCatalog = () => {
                 className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
                 aria-label="Learn about The Spring Harmony"
               >
-                <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+                <Hexagon className="h-5 w-5 text-primary animate-pulse" />
               </button>
             </div>
             <p className="text-muted-foreground">Your Daily Foundation</p>
@@ -149,7 +149,7 @@ const ProductCatalog = () => {
                 className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
                 aria-label="Learn about The Precision Care"
               >
-                <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+                <Hexagon className="h-5 w-5 text-primary animate-pulse" />
               </button>
             </div>
             <p className="text-muted-foreground">Your Targeted Toolkit</p>
@@ -165,7 +165,7 @@ const ProductCatalog = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Sparkles className="h-6 w-6" />
+              <Hexagon className="h-6 w-6" />
               Aura explains The Bloom Cycle™
             </DialogTitle>
           </DialogHeader>
@@ -184,7 +184,7 @@ const ProductCatalog = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Sparkles className="h-6 w-6" />
+              <Hexagon className="h-6 w-6" />
               Aura explains The Spring Harmony™
             </DialogTitle>
           </DialogHeader>
@@ -203,7 +203,7 @@ const ProductCatalog = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Sparkles className="h-6 w-6" />
+              <Hexagon className="h-6 w-6" />
               Aura explains The Precision Care™
             </DialogTitle>
           </DialogHeader>

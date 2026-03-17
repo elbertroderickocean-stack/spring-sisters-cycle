@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Send, Sparkles, Plus, Mic } from 'lucide-react';
+import { ArrowLeft, Send, Hexagon, Plus, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BottomNav } from '@/components/BottomNav';
@@ -162,7 +162,7 @@ const Aura = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex items-center gap-2 flex-1">
-            <Sparkles className="h-6 w-6 text-primary" />
+            <Hexagon className="h-6 w-6 text-primary" />
             <h1 className="text-2xl font-semibold">Aura</h1>
           </div>
         </div>

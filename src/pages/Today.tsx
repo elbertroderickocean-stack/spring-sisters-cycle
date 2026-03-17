@@ -6,7 +6,7 @@ import { DailyPlanModal } from '@/components/DailyPlanModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Sparkles, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon } from 'lucide-react';
+import { Circle, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
@@ -894,7 +894,7 @@ const Today = () => {
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="h-5 w-5" style={{ color: phaseIconColor }} />
+                <Circle className="h-5 w-5" style={{ color: phaseIconColor }} />
                 <h3 className="text-xl font-heading font-semibold">✨ Aura's Plan for You</h3>
               </div>
               <p className="text-foreground/70 text-sm">

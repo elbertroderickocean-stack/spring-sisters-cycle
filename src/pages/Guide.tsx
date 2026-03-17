@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookOpen, Sparkles, Leaf } from 'lucide-react';
+import { BookOpen, Circle, Leaf } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 import { useUser } from '@/contexts/UserContext';
 
@@ -17,7 +17,7 @@ const guideContent = [
   },
   {
     section: 'Know Your Skin',
-    icon: Sparkles,
+    icon: Circle,
     items: [
       { title: 'Phase 1: Calm & Renew', description: 'Low Estrogen & Progesterone - Days 1-7', articleId: 'phase-calm' },
       { title: 'Phase 2: Glow & Energize', description: 'Estrogen Peak - Days 8-14', articleId: 'phase-glow' },
@@ -51,7 +51,7 @@ const Guide = () => {
 
   const knowYourSkinSection = userData.wiseBloomMode ? {
     section: 'Your New Rhythm',
-    icon: Sparkles,
+    icon: Circle,
     items: [
       { title: 'The Cellular Training Rhythm: Explained', description: 'Understanding your 7-day skin training cycle', articleId: 'cellular-training' },
       { title: 'Understanding Your Skin in Menopause', description: 'The science of mature skin', articleId: 'menopause-skin' },
@@ -59,7 +59,7 @@ const Guide = () => {
     ]
   } : {
     section: 'Know Your Skin',
-    icon: Sparkles,
+    icon: Circle,
     items: [
       { title: 'Phase 1: Calm & Renew', description: 'Low Estrogen & Progesterone - Days 1-7', articleId: 'phase-calm' },
       { title: 'Phase 2: Glow & Energize', description: 'Estrogen Peak - Days 8-14', articleId: 'phase-glow' },

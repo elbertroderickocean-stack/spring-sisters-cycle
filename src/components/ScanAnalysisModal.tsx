@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Circle } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 
 interface AnalysisResult {
@@ -47,7 +47,7 @@ export const ScanAnalysisModal = ({
       <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-heading font-semibold text-primary flex items-center gap-2">
-            <Sparkles className="h-6 w-6" />
+            <Circle className="h-6 w-6" />
             Aura's Analysis
           </DialogTitle>
         </DialogHeader>
@@ -93,7 +93,7 @@ export const ScanAnalysisModal = ({
           {/* Aura's Suggestion */}
           <div className="space-y-3 bg-accent/30 rounded-xl p-4">
             <div className="flex items-start gap-3">
-              <Sparkles className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
+              <Circle className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-heading font-semibold text-primary mb-1">
                   Aura's Suggestion

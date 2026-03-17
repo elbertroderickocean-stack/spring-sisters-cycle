@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { PhaseType } from '@/contexts/UserContext';
 import { HowToModal } from './HowToModal';
-import { Sparkles, Heart } from 'lucide-react';
+import { Circle, Heart } from 'lucide-react';
 
 interface RitualStep {
   number: number;
@@ -141,7 +141,7 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                           </Badge>
                         )}
                         {hasHowTo && step.owned && (
-                          <Sparkles className="h-3 w-3 text-primary ml-auto" />
+                          <Circle className="h-3 w-3 text-primary ml-auto" />
                         )}
                       </div>
                       {step.owned ? (

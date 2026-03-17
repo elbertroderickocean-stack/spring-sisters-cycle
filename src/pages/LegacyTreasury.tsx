@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Sparkles, Heart, Gift, DollarSign, ShoppingBag, Brain, Target, Crown, Users, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Circle, Heart, Gift, DollarSign, ShoppingBag, Brain, Target, Crown, Users, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
@@ -189,7 +189,7 @@ const LegacyTreasury = () => {
           <CardContent className="pt-6">
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center gap-2">
-                <Sparkles className="h-6 w-6 text-primary" />
+                <Circle className="h-6 w-6 text-primary" />
                 <p className="text-sm font-medium text-muted-foreground">Your Legacy</p>
               </div>
               <p className="text-5xl font-heading font-bold text-primary">{userBalance.toLocaleString()} LP</p>
