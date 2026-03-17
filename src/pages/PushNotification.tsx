@@ -33,12 +33,12 @@ const PushNotification = () => {
 
         {/* Title */}
         <h1 className="text-3xl font-heading font-semibold text-foreground">
-          Let your wise sister whisper to you.
+          Let m.i. manage in the background.
         </h1>
 
         {/* Body Text */}
         <p className="text-lg text-foreground/80 leading-relaxed">
-          Our daily reminders are the heart of meanwhile.. They are gentle whispers that guide your morning and evening rituals, ensuring you never have to guess what your skin needs today. May we send them to you?
+          You focus on your day. meanwhile., our intelligent notifications keep your skin portfolio optimized—deploying the right protocol at the right time, so you never have to think about it.
         </p>
 
         {/* Buttons */}
