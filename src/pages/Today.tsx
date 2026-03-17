@@ -74,13 +74,13 @@ const Today = () => {
   const getDailyWhisper = () => {
     if (userData.wiseBloomMode) {
       const whispers = [
-        "Embrace the wisdom of renewal today.",
-        "Your skin thrives on steady, consistent care.",
-        "Strength comes from nourishment, not from cycles.",
-        "Today is another step toward radiant vitality.",
-        "Your beauty is timeless—nurture it with intention.",
-        "Steady radiance comes from daily devotion.",
-        "Your skin is a star—let it shine consistently."
+        "You rest. meanwhile., your barrier is being reinforced.",
+        "You focus on your day. meanwhile., The Long-Term Moisturizer is compounding.",
+        "You sleep. meanwhile., cellular renewal is at peak capacity.",
+        "You live your life. meanwhile., your skin portfolio is appreciating.",
+        "You enjoy your morning. meanwhile., your assets are being deployed.",
+        "You unwind. meanwhile., recovery protocols are active.",
+        "You take a breath. meanwhile., your skin's ROI is being maximized."
       ];
       return whispers[(day - 1) % whispers.length];
     }
@@ -90,21 +90,21 @@ const Today = () => {
     const isLatePhase = progressPercentage >= 66;
     
     if (phase === 'calm') {
-      if (isEarlyPhase) return "Listen to your body's need for rest today.";
-      if (isMidPhase) return "A day for gentle nourishment and care.";
-      return "Your barrier is strengthening—keep nurturing it.";
+      if (isEarlyPhase) return "You rest. meanwhile., your barrier is being rebuilt.";
+      if (isMidPhase) return "You recover. meanwhile., ceramides are reinforcing your foundation.";
+      return "You strengthen. meanwhile., your skin's defensive wall is holding.";
     }
     
     if (phase === 'glow') {
-      if (isEarlyPhase) return "Your day to shine—embrace your energy.";
-      if (isMidPhase) return "Radiance is peaking—show the world your glow.";
-      return "Capture this energy while it lasts.";
+      if (isEarlyPhase) return "You shine. meanwhile., collagen synthesis is at peak output.";
+      if (isMidPhase) return "You radiate. meanwhile., your skin's ROI is compounding.";
+      return "You glow. meanwhile., we're locking in this phase's gains.";
     }
     
     // balance
-    if (isEarlyPhase) return "A day to focus on clarifying foods and gentle care.";
-    if (isMidPhase) return "Balance is the name of the game today.";
-    return "Your cycle is completing—prepare for renewal.";
+    if (isEarlyPhase) return "You balance. meanwhile., sebum management is active.";
+    if (isMidPhase) return "You stay steady. meanwhile., clarifying protocols are running.";
+    return "You prepare. meanwhile., we're transitioning your portfolio for renewal.";
   };
   
   const getNextPhaseInfo = () => {
