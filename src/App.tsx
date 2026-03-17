@@ -35,6 +35,11 @@ import Profile from "./pages/Profile";
 import Aura from "./pages/Aura";
 import Intelligence from "./pages/Intelligence";
 import MiChat from "./pages/MiChat";
+import SleepDetail from "./pages/SleepDetail";
+import StressDetail from "./pages/StressDetail";
+import GlucoseDetail from "./pages/GlucoseDetail";
+import MealScanner from "./pages/MealScanner";
+import SkinScanner from "./pages/SkinScanner";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -77,6 +82,11 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/aura" element={<Aura />} />
             <Route path="/intelligence" element={<Intelligence />} />
+            <Route path="/intelligence/sleep" element={<SleepDetail />} />
+            <Route path="/intelligence/stress" element={<StressDetail />} />
+            <Route path="/intelligence/glucose" element={<GlucoseDetail />} />
+            <Route path="/meal-scanner" element={<MealScanner />} />
+            <Route path="/skin-scanner" element={<SkinScanner />} />
             <Route path="/mi-chat" element={<MiChat />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

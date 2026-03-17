@@ -5,3 +5,12 @@ verify_jwt = false
 
 [functions.analyze-skin-photo]
 verify_jwt = false
+
+[functions.scan-ingredients]
+verify_jwt = false
+
+[functions.analyze-meal]
+verify_jwt = false
+
+[functions.analyze-skin-health]
+verify_jwt = false
