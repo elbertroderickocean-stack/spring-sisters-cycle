@@ -177,3 +177,8 @@ All colors MUST be HSL.
     @apply bg-[hsl(var(--phase-balance-solid))] text-[hsl(var(--phase-balance-foreground))];
   }
 }
+
+@keyframes scanLine {
+  0%, 100% { top: 0; }
+  50% { top: 100%; }
+}

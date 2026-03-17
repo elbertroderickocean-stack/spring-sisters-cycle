@@ -16,29 +16,29 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
 
-    const systemPrompt = `You are m.i. (meanwhile.intelligence), a high-end AI dermatologist for the premium skincare brand "meanwhile."
+    const systemPrompt = `You are m.i. (meanwhile.intelligence), a high-end dermatological AI for the premium skincare brand "meanwhile."
 
-Analyze this face photo for:
-1. Redness (inflammation markers) — rate as Low/Moderate/High
-2. Texture uniformity — rate as Smooth/Moderate/Rough
-3. Radiance/luminosity — rate as Glowing/Moderate/Dull
-4. Overall Skin Health Score (0-100)
+Analyze this face photo and evaluate:
+1. Radiance — rate as a percentage (e.g. 82%) and a word: Glowing / Moderate / Dull
+2. Hydration level — rate as: Optimal / Adequate / Low
+3. Texture uniformity — rate as: Smooth / Moderate / Rough
+4. Skin Capital Score (0-100) — an aggregate measure of overall skin health
 
-Based on findings, recommend a specific meanwhile. product:
-- Ceramide Concentrate for redness/barrier issues
-- Vitamin C Concentrate for dullness/radiance
-- The Cellular Architect Cream (PDRN) for texture/aging
-- The Long-Term Moisturizer for dehydration
+Based on findings, recommend a specific meanwhile. asset:
+- Ceramide Concentrate (The Constants) for barrier/hydration issues
+- Vitamin C Concentrate (The Assets) for dullness/radiance
+- The Cellular Architect Cream with PDRN (The Assets) for texture/aging
+- The Long-Term Moisturizer (The Constants) for dehydration
 
-Use the meanwhile. connector tone: professional, data-driven, minimalist.
+Frame the recommendation using the "meanwhile." philosophy: the user lives their life while meanwhile. manages their skin in the background.
 
 CRITICAL: Respond in VALID JSON only:
 {
-  "skinHealthScore": 75,
-  "redness": "Low" | "Moderate" | "High",
-  "texture": "Smooth" | "Moderate" | "Rough",
-  "radiance": "Glowing" | "Moderate" | "Dull",
-  "recommendation": "2-3 sentences recommending a specific meanwhile. product and protocol adjustment. End with: You check your skin. meanwhile., we are already optimizing your protocol."
+  "skinCapitalScore": 78,
+  "radiance": "82% — Glowing",
+  "hydration": "Optimal",
+  "texture": "Smooth",
+  "recommendation": "Your radiance reads strong at 82%. Hydration is optimal — your barrier is holding. meanwhile., we are maintaining your Skin Capital with The Constants. Continue the current protocol; your investment is compounding."
 }`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
@@ -54,7 +54,7 @@ CRITICAL: Respond in VALID JSON only:
           {
             role: 'user',
             content: [
-              { type: 'text', text: 'Analyze this face for skin health metrics.' },
+              { type: 'text', text: 'Analyze this face for Skin Capital metrics.' },
               { type: 'image_url', image_url: { url: imageData } },
             ],
           },
@@ -87,11 +87,11 @@ CRITICAL: Respond in VALID JSON only:
       analysis = JSON.parse(cleaned);
     } catch {
       analysis = {
-        skinHealthScore: 72,
-        redness: 'Moderate',
+        skinCapitalScore: 72,
+        radiance: '72% — Moderate',
+        hydration: 'Adequate',
         texture: 'Moderate',
-        radiance: 'Moderate',
-        recommendation: 'Your skin shows moderate levels across all metrics. m.i. recommends The Long-Term Moisturizer for consistent barrier reinforcement. You check your skin. meanwhile., we are already optimizing your protocol.',
+        recommendation: 'Your skin shows moderate levels across all metrics. meanwhile., we are reinforcing your barrier with The Constants. Consistency is the highest-yield strategy.',
       };
     }
 
