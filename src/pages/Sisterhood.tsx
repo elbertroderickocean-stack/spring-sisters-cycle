@@ -75,9 +75,10 @@ const Sisterhood = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
+      <HeaderBar>
+        <h1 className="text-2xl font-heading font-semibold">The Syndicate</h1>
+      </HeaderBar>
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
-        {/* Header */}
-        <h1 className="text-3xl font-heading font-semibold">The Sisterhood Circle</h1>
 
         {/* Legacy Treasury Button */}
         <Button

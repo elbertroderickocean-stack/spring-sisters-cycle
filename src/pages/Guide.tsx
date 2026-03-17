@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, Activity, FlaskConical } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
+import { HeaderBar } from '@/components/HeaderBar';
 import { useUser } from '@/contexts/UserContext';
 
 const Guide = () => {

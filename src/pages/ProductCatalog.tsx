@@ -96,7 +96,7 @@ const ProductCatalog = () => {
                 <Hexagon className="h-5 w-5 text-primary" />
               </button>
             </div>
-            <p className="text-muted-foreground">Venture Investments</p>
+            <p className="text-muted-foreground">High-yield interventions for immediate results.</p>
           </div>
           <div className="space-y-6">{precisionProducts.map((p, i) => renderProductCard(p, i))}</div>
         </section>
