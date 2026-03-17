@@ -196,7 +196,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
                 </ul>
               </div>
               <p className="text-sm text-foreground/70">
-                I'll interpret these metrics through the lens of your age, skin type, current phase, and your primary concern. This is personalized just for you.
+                m.i. interprets these metrics through the lens of your age, skin type, current phase, and primary concern. Personalized portfolio analysis.
               </p>
               <Button 
                 onClick={() => setStep('camera')}
