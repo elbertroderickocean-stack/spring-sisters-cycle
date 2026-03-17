@@ -33,6 +33,8 @@ import PodChat from "./pages/PodChat";
 import BountyBoard from "./pages/BountyBoard";
 import Profile from "./pages/Profile";
 import Aura from "./pages/Aura";
+import Intelligence from "./pages/Intelligence";
+import MiChat from "./pages/MiChat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -74,6 +76,8 @@ const App = () => (
             <Route path="/bounty-board" element={<BountyBoard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/aura" element={<Aura />} />
+            <Route path="/intelligence" element={<Intelligence />} />
+            <Route path="/mi-chat" element={<MiChat />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

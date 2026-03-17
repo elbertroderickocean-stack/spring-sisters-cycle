@@ -1,15 +1,15 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Package, User, Users, Hexagon, ShoppingBag } from 'lucide-react';
+import { Home, User, Users, Cpu, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseType } from '@/contexts/UserContext';
 
 const navItems = [
   { path: '/today', label: 'Today', icon: Home },
-  { path: '/sisterhood', label: 'Sisterhood', icon: Users },
-  { path: '/guide', label: 'Guide', icon: BookOpen },
-  { path: '/products', label: 'Product', icon: ShoppingBag },
+  { path: '/intelligence', label: 'Intelligence', icon: Cpu },
+  { path: '/sisterhood', label: 'Syndicate', icon: Users },
+  { path: '/catalog', label: 'Catalog', icon: ShoppingBag },
   { path: '/profile', label: 'Profile', icon: User },
 ];
 
@@ -34,19 +34,6 @@ export const BottomNav = () => {
 
   return (
     <>
-      {/* Floating Action Button for Aura */}
-      <button
-        onClick={() => navigate('/aura')}
-        className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 w-16 h-16 rounded-full shadow-lg flex items-center justify-center animate-pulse"
-        style={{ 
-          backgroundColor: getPhaseColor(phase),
-          animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-        }}
-        aria-label="Open Aura Chat"
-      >
-        <Hexagon className="h-7 w-7 text-white" />
-      </button>
-
       {/* Bottom Navigation Bar */}
       <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-lg z-50">
         <div className="max-w-2xl mx-auto px-4">
