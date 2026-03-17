@@ -48,10 +48,10 @@ const ProductCatalog = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background pb-8">
-      <div className="sticky top-0 z-10 bg-background border-b border-border">
+    <div className="min-h-screen bg-background pb-24">
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center gap-4">
-          <button onClick={() => navigate('/products')} className="p-2 hover:bg-accent rounded-lg transition-colors">
+          <button onClick={() => navigate(-1 as any)} className="p-2 hover:bg-accent rounded-lg transition-colors">
             <ArrowLeft className="h-5 w-5" />
           </button>
           <h1 className="text-2xl font-heading font-semibold text-primary">The meanwhile. Collection</h1>
