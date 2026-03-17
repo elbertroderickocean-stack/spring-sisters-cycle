@@ -886,7 +886,7 @@ const Today = () => {
           </Card>
         )}
 
-        {/* Module 4: Aura's Plan for You */}
+        {/* Module 4: m.i.'s Protocol */}
         <button
           onClick={() => setIsPlanModalOpen(true)}
           className="w-full animate-slide-up shadow-lg rounded-lg p-6 transition-all hover:scale-[1.02] text-left"
@@ -896,14 +896,14 @@ const Today = () => {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <Circle className="h-5 w-5" style={{ color: phaseIconColor }} />
-                <h3 className="text-xl font-heading font-semibold">✨ Aura's Plan for You</h3>
+                <h3 className="text-xl font-heading font-semibold">m.i. Daily Protocol</h3>
               </div>
               <p className="text-foreground/70 text-sm">
                 {phase === 'calm' 
-                  ? "Tap to discover today's rituals for rest and recovery."
+                  ? "You focus on recovery. meanwhile., your protocol is optimized for barrier repair."
                   : phase === 'glow'
-                  ? "Tap here to harness your peak energy for a truly radiant day."
-                  : "Ready for your daily balancing act? Tap to see Aura's plan."}
+                  ? "You seize the day. meanwhile., your portfolio is leveraging peak collagen output."
+                  : "You stay balanced. meanwhile., clarifying protocols are managing excess sebum."}
               </p>
             </div>
             <ChevronRight className="h-6 w-6 text-foreground/40 flex-shrink-0" />
