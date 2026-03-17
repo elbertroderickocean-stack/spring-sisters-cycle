@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Package, User, Users, Sparkles, ShoppingBag } from 'lucide-react';
+import { Home, BookOpen, Package, User, Users, Hexagon, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
 import { PhaseType } from '@/contexts/UserContext';
