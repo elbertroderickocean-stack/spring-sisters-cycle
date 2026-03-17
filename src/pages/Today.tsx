@@ -854,7 +854,7 @@ const Today = () => {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Zap className="h-5 w-5" style={{ color: phaseIconColor }} />
-                <CardTitle className="font-heading">⚡ Your Precision Toolkit</CardTitle>
+                <CardTitle className="font-heading">⚡ Your Assets Toolkit</CardTitle>
               </div>
               <CardDescription>Targeted care for specific needs</CardDescription>
             </CardHeader>
