@@ -123,7 +123,7 @@ const ProductCatalog = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Hexagon className="h-6 w-6" /> Aura explains The Shifts™
+              <Hexagon className="h-6 w-6" /> m.i. on The Shifts™
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
