@@ -12,7 +12,7 @@ const ProductCatalog = () => {
   const [openModal, setOpenModal] = useState<'bloom' | 'harmony' | 'precision' | null>(null);
   const [showCheckout, setShowCheckout] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
-  const userBalance = 1250; // Static demo balance
+  const userBalance = 1250;
 
   const handleBuy = (product: typeof products[0]) => {
     setSelectedProduct(product);
@@ -30,45 +30,18 @@ const ProductCatalog = () => {
       style={{ animationDelay: `${index * 0.05}s` }}
       onClick={() => navigate(`/product/${product.id}`)}
     >
-      {/* Product Image */}
       <div className="w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-accent">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover"
-        />
+        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
       </div>
-
-      {/* Product Info */}
       <div className="flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-xl font-heading font-semibold text-foreground mb-2">
-            {product.name}
-          </h3>
-          <p className="text-sm text-foreground/70 mb-3">
-            {product.description}
-          </p>
-          <p className="text-lg font-semibold text-primary">
-            {product.price}
-          </p>
+          <h3 className="text-xl font-heading font-semibold text-foreground mb-2">{product.name}</h3>
+          <p className="text-sm text-foreground/70 mb-3">{product.description}</p>
+          <p className="text-lg font-semibold text-primary">{product.price}</p>
         </div>
-
         <div className="flex gap-3 mt-4" onClick={(e) => e.stopPropagation()}>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex-1"
-            onClick={() => navigate(`/product/${product.id}`)}
-          >
-            Details
-          </Button>
-          <Button
-            size="sm"
-            className="flex-1"
-            onClick={() => handleBuy(product)}
-          >
-            Buy
-          </Button>
+          <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate(`/product/${product.id}`)}>Details</Button>
+          <Button size="sm" className="flex-1" onClick={() => handleBuy(product)}>Buy</Button>
         </div>
       </div>
     </Card>
@@ -76,125 +49,88 @@ const ProductCatalog = () => {
 
   return (
     <div className="min-h-screen bg-background pb-8">
-      {/* Header */}
       <div className="sticky top-0 z-10 bg-background border-b border-border">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center gap-4">
-          <button
-            onClick={() => navigate('/products')}
-            className="p-2 hover:bg-accent rounded-lg transition-colors"
-          >
+          <button onClick={() => navigate('/products')} className="p-2 hover:bg-accent rounded-lg transition-colors">
             <ArrowLeft className="h-5 w-5" />
           </button>
-          <h1 className="text-2xl font-heading font-semibold text-primary">
-            The meanwhile. Collection
-          </h1>
+          <h1 className="text-2xl font-heading font-semibold text-primary">The meanwhile. Collection</h1>
         </div>
       </div>
 
-      {/* Product Sections */}
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-12">
-        {/* Bloom Cycle Section */}
+        {/* The Constants */}
         <section className="space-y-6">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <h2 className="text-3xl font-heading font-semibold text-primary">
-                The Bloom Cycle™
-              </h2>
-              <button
-                onClick={() => setOpenModal('bloom')}
-                className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
-                aria-label="Learn about The Bloom Cycle"
-              >
-                <Hexagon className="h-5 w-5 text-primary animate-pulse" />
+              <h2 className="text-3xl font-heading font-semibold text-primary">The Constants™</h2>
+              <button onClick={() => setOpenModal('harmony')} className="p-1.5 hover:bg-accent rounded-lg transition-colors">
+                <Hexagon className="h-5 w-5 text-primary" />
               </button>
             </div>
-            <p className="text-muted-foreground">Our Core Innovation</p>
+            <p className="text-muted-foreground">Your Index Fund</p>
           </div>
-          <div className="space-y-6">
-            {bloomProducts.map((product, index) => renderProductCard(product, index))}
-          </div>
+          <div className="space-y-6">{harmonyProducts.map((p, i) => renderProductCard(p, i))}</div>
         </section>
 
-        {/* Spring Harmony Section */}
+        {/* The Shifts */}
         <section className="space-y-6">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <h2 className="text-3xl font-heading font-semibold text-primary">
-                The Spring Harmony™
-              </h2>
-              <button
-                onClick={() => setOpenModal('harmony')}
-                className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
-                aria-label="Learn about The Spring Harmony"
-              >
-                <Hexagon className="h-5 w-5 text-primary animate-pulse" />
+              <h2 className="text-3xl font-heading font-semibold text-primary">The Shifts™</h2>
+              <button onClick={() => setOpenModal('bloom')} className="p-1.5 hover:bg-accent rounded-lg transition-colors">
+                <Hexagon className="h-5 w-5 text-primary" />
               </button>
             </div>
-            <p className="text-muted-foreground">Your Daily Foundation</p>
+            <p className="text-muted-foreground">Dynamic Management</p>
           </div>
-          <div className="space-y-6">
-            {harmonyProducts.map((product, index) => renderProductCard(product, index))}
-          </div>
+          <div className="space-y-6">{bloomProducts.map((p, i) => renderProductCard(p, i))}</div>
         </section>
 
-        {/* Precision Care Section */}
+        {/* The Assets */}
         <section className="space-y-6">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <h2 className="text-3xl font-heading font-semibold text-primary">
-                The Precision Care™
-              </h2>
-              <button
-                onClick={() => setOpenModal('precision')}
-                className="p-1.5 hover:bg-accent rounded-lg transition-colors group"
-                aria-label="Learn about The Precision Care"
-              >
-                <Hexagon className="h-5 w-5 text-primary animate-pulse" />
+              <h2 className="text-3xl font-heading font-semibold text-primary">The Assets™</h2>
+              <button onClick={() => setOpenModal('precision')} className="p-1.5 hover:bg-accent rounded-lg transition-colors">
+                <Hexagon className="h-5 w-5 text-primary" />
               </button>
             </div>
-            <p className="text-muted-foreground">Your Targeted Toolkit</p>
+            <p className="text-muted-foreground">Venture Investments</p>
           </div>
-          <div className="space-y-6">
-            {precisionProducts.map((product, index) => renderProductCard(product, index))}
-          </div>
+          <div className="space-y-6">{precisionProducts.map((p, i) => renderProductCard(p, i))}</div>
         </section>
       </div>
 
       {/* Aura Explains Modals */}
-      <Dialog open={openModal === 'bloom'} onOpenChange={() => setOpenModal(null)}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Hexagon className="h-6 w-6" />
-              Aura explains The Bloom Cycle™
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <p className="text-foreground/90 leading-relaxed">
-              "Hello! This is our intelligent core. Think of these products as the planets in our system, moving in a predictable rhythm. They adapt to your skin's hormonal phases, working ahead of the curve to bring you harmony through change."
-            </p>
-            <Button onClick={() => setOpenModal(null)} className="w-full">
-              Got it!
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       <Dialog open={openModal === 'harmony'} onOpenChange={() => setOpenModal(null)}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Hexagon className="h-6 w-6" />
-              Aura explains The Spring Harmony™
+              <Hexagon className="h-6 w-6" /> Aura explains The Constants™
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <p className="text-foreground/90 leading-relaxed">
-              "This is the foundation of your ritual, our sun. These are the constants that provide balance and protection every single day, creating the perfect stable environment for your cyclical products to work their magic."
+              "Think of The Constants as your index fund — steady, reliable, always compounding. These are the foundational products that provide balance and protection every single day, creating the stable base your dynamic products need to perform."
             </p>
-            <Button onClick={() => setOpenModal(null)} className="w-full">
-              Got it!
-            </Button>
+            <Button onClick={() => setOpenModal(null)} className="w-full">Got it!</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={openModal === 'bloom'} onOpenChange={() => setOpenModal(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
+              <Hexagon className="h-6 w-6" /> Aura explains The Shifts™
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-foreground/90 leading-relaxed">
+              "The Shifts are your dynamic management strategy. F1: Recovery rebuilds. F2: Peak Glow maximizes. F3: Reset rebalances. They adapt to your biological phases, working ahead of the curve so your skin is always optimally managed."
+            </p>
+            <Button onClick={() => setOpenModal(null)} className="w-full">Got it!</Button>
           </div>
         </DialogContent>
       </Dialog>
@@ -203,22 +139,18 @@ const ProductCatalog = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Hexagon className="h-6 w-6" />
-              Aura explains The Precision Care™
+              <Hexagon className="h-6 w-6" /> Aura explains The Assets™
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <p className="text-foreground/90 leading-relaxed">
-              "This is your 'emergency toolkit,' our meteorites. These are not for every day. They are highly potent, surgical tools for solving specific, acute problems when your skin calls for help. Use them when you need a powerful, targeted solution."
+              "The Assets are your venture investments — high-conviction, high-reward. These are potent, targeted tools for specific concerns. Deploy them strategically for powerful returns on your skin's long-term health."
             </p>
-            <Button onClick={() => setOpenModal(null)} className="w-full">
-              Got it!
-            </Button>
+            <Button onClick={() => setOpenModal(null)} className="w-full">Got it!</Button>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Product Checkout Modal */}
       {selectedProduct && (
         <ProductCheckoutModal
           isOpen={showCheckout}

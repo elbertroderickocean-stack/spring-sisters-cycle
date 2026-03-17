@@ -9,41 +9,41 @@ export interface Product {
   howToUse: string;
   keyIngredients: string[];
   ritualPurpose?: string;
-  lifespanDays?: number; // How many days the product typically lasts
+  lifespanDays?: number;
 }
 
 export const products: Product[] = [
-  // BLOOM CYCLE™ LINE
+  // THE SHIFTS™ (Dynamic Management) — formerly Bloom Cycle
   {
     id: 'serum-trio',
-    name: 'Bloom Cycle Serum Trio',
-    description: 'The intelligent 3-serum system that adapts to your skin\'s monthly rhythm.',
-    detailedDescription: 'Our flagship product and the heart of the meanwhile. philosophy. This revolutionary trio contains three distinct serums, each scientifically formulated to work in perfect harmony with one of your cycle\'s three phases. By matching your skincare to your hormones, you eliminate the guesswork and finally achieve consistent, radiant results.',
+    name: 'The Shifts Serum Trio',
+    description: 'F1: Recovery · F2: Peak Glow · F3: Reset — the dynamic trio that adapts to your cycle.',
+    detailedDescription: 'Our flagship product and the heart of the meanwhile. philosophy. Three distinct serums — F1: Recovery, F2: Peak Glow, F3: Reset — each scientifically formulated to work in perfect harmony with your biological phases. Dynamic management for dynamic skin.',
     howToUse: 'Each morning and evening, apply 2-3 drops of the serum that corresponds to your current phase. Gently press into clean skin before your moisturizer.',
-    keyIngredients: ['Ceramides (for Calm & Renew)', 'Vitamin C (for Glow & Energize)', 'Niacinamide (for Balance & Clarify)'],
+    keyIngredients: ['Ceramides (F1: Recovery)', 'Vitamin C (F2: Peak Glow)', 'Niacinamide (F3: Reset)'],
     price: '$85.00',
     image: '/images/products/serum-trio.jpg',
     line: 'bloom',
-    ritualPurpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
+    ritualPurpose: 'Delivers phase-specific active ingredients matched to your biological rhythm.',
     lifespanDays: 30,
   },
   {
     id: 'mask-trio',
-    name: 'Bloom Cycle Mask Trio',
-    description: 'A weekly spa ritual with a targeted mask for each phase of your cycle.',
-    detailedDescription: 'Transform your self-care Sunday into a scientifically optimized treatment. Each mask is designed to amplify the benefits of its corresponding phase, giving your skin an intensive boost exactly when it needs it most.',
+    name: 'The Shifts Mask Trio',
+    description: 'A weekly intensive treatment with a targeted mask for each phase: Recovery, Peak Glow, Reset.',
+    detailedDescription: 'Transform your self-care ritual into a scientifically optimized treatment. Each mask amplifies the benefits of its corresponding phase, giving your skin an intensive boost exactly when it needs it most.',
     howToUse: 'Once per week, apply a generous layer of your phase-matched mask to clean skin. Leave on for 15-20 minutes, then rinse thoroughly.',
-    keyIngredients: ['Kaolin Clay (Calm & Renew)', 'Vitamin C + AHAs (Glow & Energize)', 'Charcoal + Tea Tree (Balance & Clarify)'],
+    keyIngredients: ['Kaolin Clay (F1: Recovery)', 'Vitamin C + AHAs (F2: Peak Glow)', 'Charcoal + Tea Tree (F3: Reset)'],
     price: '$78.00',
     image: '/images/products/mask-trio.jpg',
     line: 'bloom',
     lifespanDays: 90,
   },
 
-  // SPRING HARMONY™ LINE
+  // THE CONSTANTS™ (Your Index Fund) — formerly Spring Harmony
   {
     id: 'cleanser',
-    name: 'Spring Harmony Gentle Cleanser',
+    name: 'The Baseline Cleanser',
     description: 'A pH-balanced daily wash that cleanses effectively without stripping the skin.',
     detailedDescription: 'The perfect first step. This hydrating gel cleanser removes makeup, SPF, and impurities while maintaining your skin\'s natural moisture barrier. Formulated to be gentle enough for even the most sensitive days of your cycle.',
     howToUse: 'Massage a small amount onto damp skin morning and evening. Rinse thoroughly with lukewarm water.',
@@ -56,9 +56,9 @@ export const products: Product[] = [
   },
   {
     id: 'moisturizer',
-    name: 'Spring Harmony Daily Moisturizer',
+    name: 'The Long-Term Moisturizer',
     description: 'Your daily foundational cream to support a healthy skin barrier.',
-    detailedDescription: 'This lightweight yet deeply nourishing cream is your skin\'s constant companion. It provides essential hydration and barrier support every single day, regardless of your cycle phase. Think of it as your skin\'s "multivitamin."',
+    detailedDescription: 'This lightweight yet deeply nourishing cream is your skin\'s constant companion. It provides essential hydration and barrier support every single day, regardless of your phase. Think of it as your skin\'s index fund — steady, reliable, compounding.',
     howToUse: 'Apply to clean skin morning and evening as the final step of your routine. Massage gently until absorbed.',
     keyIngredients: ['Hyaluronic Acid', 'Squalane', 'Ceramide Complex'],
     price: '$48.00',
@@ -69,7 +69,7 @@ export const products: Product[] = [
   },
   {
     id: 'eye-cream',
-    name: 'Spring Harmony Eye Cream',
+    name: 'The Long-Term Eye Cream',
     description: 'Specialized gentle care for the delicate eye area.',
     detailedDescription: 'The skin around your eyes is the thinnest and most sensitive on your face. This feather-light yet powerful cream hydrates, smooths, and brightens without any heaviness or irritation.',
     howToUse: 'Using your ring finger, gently pat a rice-grain amount around the orbital bone morning and evening.',
@@ -80,7 +80,7 @@ export const products: Product[] = [
     ritualPurpose: 'Reduces puffiness and fine lines around your eyes.'
   },
 
-  // PRECISION CARE™ LINE
+  // THE ASSETS™ (Venture Investments) — formerly Precision Care
   {
     id: 'vitamin-c',
     name: 'Vitamin C Concentrate',
@@ -100,6 +100,17 @@ export const products: Product[] = [
     howToUse: 'Apply 3-4 drops to clean skin before moisturizer, focusing on areas of dryness or sensitivity. Use daily until skin feels restored.',
     keyIngredients: ['5-Ceramide Complex', 'Cholesterol', 'Fatty Acids'],
     price: '$56.00',
+    image: '/images/products/ceramide.jpg',
+    line: 'precision',
+  },
+  {
+    id: 'cellular-architect',
+    name: 'The Cellular Architect Cream (with PDRN)',
+    description: 'Our flagship venture asset — advanced cellular regeneration powered by PDRN technology.',
+    detailedDescription: 'The pinnacle of our Assets line. PDRN (Polydeoxyribonucleotide) is a breakthrough ingredient derived from salmon DNA that accelerates cellular repair and regeneration. This luxurious cream delivers deep structural renewal, improving elasticity, firmness, and skin vitality at the cellular level.',
+    howToUse: 'Apply a pearl-sized amount to clean skin in the evening, after serums and before moisturizer. Focus on areas where firmness and renewal are most needed.',
+    keyIngredients: ['PDRN (Polydeoxyribonucleotide)', 'Peptide Complex', 'Adenosine', 'Niacinamide'],
+    price: '$128.00',
     image: '/images/products/ceramide.jpg',
     line: 'precision',
   },

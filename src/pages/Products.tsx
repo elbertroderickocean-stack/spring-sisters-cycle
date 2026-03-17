@@ -92,7 +92,7 @@ const Products = () => {
               onClick={(e) => handleStartUsing(product, e)}
             >
               <Play className="h-3 w-3 mr-1" />
-              Start Using
+              Deploy Asset
             </Button>
           )
         )}
@@ -127,10 +127,10 @@ const Products = () => {
           My Products
         </h1>
 
-        {/* The Spring Harmony™ Collection */}
+        {/* The Constants™ (Your Index Fund) */}
         <section className="space-y-4 animate-slide-up">
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            The Spring Harmony™ Collection
+            The Constants™ <span className="text-sm text-muted-foreground font-body">Your Index Fund</span>
           </h2>
           
           {ownedHarmony.length > 0 ? (
@@ -139,18 +139,18 @@ const Products = () => {
             </div>
           ) : (
             renderEmptyState(
-              'The Spring Harmony™ Collection',
-              'Your Harmony collection is waiting. Discover the foundational products that provide balance and stability every day.',
-              'Discover Harmony',
+              'The Constants™',
+              'Your foundational index fund is waiting. Discover the steady, reliable products that compound results every day.',
+              'Discover Constants',
               'harmony'
             )
           )}
         </section>
 
-        {/* The Bloom Cycle™ Collection */}
+        {/* The Shifts™ (Dynamic Management) */}
         <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            The Bloom Cycle™ Collection
+            The Shifts™ <span className="text-sm text-muted-foreground font-body">Dynamic Management</span>
           </h2>
           
           {ownedBloom.length > 0 ? (
@@ -159,18 +159,18 @@ const Products = () => {
             </div>
           ) : (
             renderEmptyState(
-              'The Bloom Cycle™ Collection',
-              'Your Bloom Cycle collection awaits. Explore products designed to sync with your natural rhythm and honor every phase.',
-              'Discover Bloom Cycle',
+              'The Shifts™',
+              'Your dynamic management portfolio awaits. Explore products that adapt to your biological phases — F1: Recovery, F2: Peak Glow, F3: Reset.',
+              'Discover Shifts',
               'bloom'
             )
           )}
         </section>
 
-        {/* The Precision Care™ Collection */}
+        {/* The Assets™ (Venture Investments) */}
         <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            The Precision Care™ Collection
+            The Assets™ <span className="text-sm text-muted-foreground font-body">Venture Investments</span>
           </h2>
           
           {ownedPrecision.length > 0 ? (
@@ -179,9 +179,9 @@ const Products = () => {
             </div>
           ) : (
             renderEmptyState(
-              'The Precision Care™ Collection',
-              'Your Precision Care collection is ready. Discover targeted solutions with powerful actives for your specific skin concerns.',
-              'Discover Precision Care',
+              'The Assets™',
+              'Your venture portfolio is ready. Discover high-conviction targeted solutions including our flagship Cellular Architect Cream.',
+              'Discover Assets',
               'precision'
             )
           )}

@@ -8,13 +8,14 @@ import { Droplet, Circle, Eye, FlaskConical } from 'lucide-react';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 
 const products = [
-  { id: 'cleanser', name: 'Gentle Cleanser', icon: Droplet },
-  { id: 'moisturizer', name: 'Daily Moisturizer', icon: Circle },
-  { id: 'eye-cream', name: 'Eye Cream', icon: Eye },
-  { id: 'serum-trio', name: 'Bloom Cycle Serum Trio', icon: FlaskConical },
-  { id: 'mask-trio', name: 'Bloom Cycle Mask Trio', icon: FlaskConical },
+  { id: 'cleanser', name: 'The Baseline Cleanser', icon: Droplet },
+  { id: 'moisturizer', name: 'The Long-Term Moisturizer', icon: Circle },
+  { id: 'eye-cream', name: 'The Long-Term Eye Cream', icon: Eye },
+  { id: 'serum-trio', name: 'The Shifts Serum Trio', icon: FlaskConical },
+  { id: 'mask-trio', name: 'The Shifts Mask Trio', icon: FlaskConical },
   { id: 'vitamin-c', name: 'Vitamin C Concentrate', icon: FlaskConical },
   { id: 'ceramide', name: 'Ceramide Concentrate', icon: FlaskConical },
+  { id: 'cellular-architect', name: 'The Cellular Architect Cream', icon: FlaskConical },
 ];
 
 const Inventory = () => {
