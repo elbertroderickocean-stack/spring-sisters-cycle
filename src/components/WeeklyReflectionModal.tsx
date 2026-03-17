@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Camera, Circle, ScanLine } from 'lucide-react';
+import { Camera, Cpu, ScanLine } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { TypingText } from '@/components/TypingText';
@@ -178,13 +178,13 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
-                <Circle className="h-6 w-6 text-primary" />
-                Aura Vision
+                <Cpu className="h-6 w-6 text-primary" />
+                m.i. Vision
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
               <p className="text-foreground/80">
-                Let's see your skin through my eyes. This analysis combines AI-powered visual insights with your unique profile—your age, skin type, and personal goals.
+                You take a photo. meanwhile., m.i. analyzes your skin's biological data using AI-powered visual metrics combined with your unique profile.
               </p>
               <div className="bg-muted rounded-lg p-4 space-y-2">
                 <h3 className="font-semibold text-sm">What I'll analyze:</h3>
@@ -196,7 +196,7 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
                 </ul>
               </div>
               <p className="text-sm text-foreground/70">
-                I'll interpret these metrics through the lens of your age, skin type, current phase, and your primary concern. This is personalized just for you.
+                m.i. interprets these metrics through the lens of your age, skin type, current phase, and primary concern. Personalized portfolio analysis.
               </p>
               <Button 
                 onClick={() => setStep('camera')}
@@ -261,8 +261,8 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-2xl">
-                <Circle className="h-6 w-6 text-primary" />
-                Your Aura Vision Analysis
+                <Cpu className="h-6 w-6 text-primary" />
+                m.i. Vision Analysis
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
@@ -286,11 +286,11 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
                 </div>
               </div>
 
-              {/* Aura's Insight */}
+              {/* m.i. Insight */}
               <div className="bg-primary/5 border border-primary/20 rounded-lg p-6 space-y-3">
                 <div className="flex items-center gap-2 text-primary font-semibold">
-                  <Circle className="h-4 w-4" />
-                  Aura's Insight
+                  <Cpu className="h-4 w-4" />
+                  m.i. Analysis
                 </div>
                 <div className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">
                   <TypingText text={auraInsight} />

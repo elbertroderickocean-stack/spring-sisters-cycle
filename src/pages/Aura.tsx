@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Send, Hexagon, Plus, Mic } from 'lucide-react';
+import { ArrowLeft, Send, Cpu, Plus, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BottomNav } from '@/components/BottomNav';
@@ -34,13 +34,12 @@ const Aura = () => {
   }, [messages]);
 
   useEffect(() => {
-    // Add welcome message on first load
     if (messages.length === 0) {
-      const userName = userData.name || 'beautiful';
+      const userName = userData.name || 'there';
       setMessages([
         {
           role: 'assistant',
-          content: `Hello, ${userName}. I'm Aura, your personal guide to the world of meanwhile.. Think of me as your wise older sister, always here to help. What's on your mind today?`,
+          content: `Hello, ${userName}. I'm m.i. — your strategic partner in skin longevity. I analyze your biological data and optimize your skin portfolio in real-time. What can I help you with today?`,
           isTyping: true
         }
       ]);
@@ -54,9 +53,9 @@ const Aura = () => {
   };
 
   const suggestedPrompts = [
-    "What's the best mask for me today?",
+    "What's my portfolio status today?",
     "I have a big event tomorrow, help!",
-    "Explain Ceramides to me like I'm 5"
+    "My glucose was high yesterday—what's the impact?"
   ];
 
   const handleSuggestedPrompt = (prompt: string) => {
@@ -98,14 +97,13 @@ const Aura = () => {
         } else {
           toast({
             title: "Error",
-            description: "Failed to get response from Aura. Please try again.",
+            description: "Failed to get response from m.i. Please try again.",
             variant: "destructive"
           });
         }
         return;
       }
 
-      // Check if Aura is updating rituals
       let responseText = data.response;
       try {
         const parsedResponse = JSON.parse(data.response);
@@ -117,8 +115,8 @@ const Aura = () => {
           );
           responseText = parsedResponse.message;
           toast({
-            title: "Ritual Updated",
-            description: "Aura has adjusted your daily rituals based on how you're feeling today.",
+            title: "Deployment Updated",
+            description: "m.i. has adjusted your daily protocol based on current data.",
           });
         }
       } catch {
@@ -162,8 +160,9 @@ const Aura = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex items-center gap-2 flex-1">
-            <Hexagon className="h-6 w-6 text-primary" />
-            <h1 className="text-2xl font-semibold">Aura</h1>
+            <Cpu className="h-6 w-6 text-primary" />
+            <h1 className="text-2xl font-semibold">m.i.</h1>
+            <span className="text-xs text-muted-foreground tracking-widest uppercase">meanwhile.intelligence</span>
           </div>
         </div>
       </header>
@@ -233,7 +232,7 @@ const Aura = () => {
             size="icon"
             onClick={() => toast({
               title: "Attachments coming soon",
-              description: "We're working on letting you share images with Aura!"
+              description: "We're working on letting you share images with m.i."
             })}
             className="shrink-0"
           >
@@ -243,7 +242,7 @@ const Aura = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask Aura anything..."
+            placeholder="Ask m.i. anything..."
             disabled={isLoading}
             className="flex-1"
           />
@@ -261,8 +260,8 @@ const Aura = () => {
               variant="ghost"
               size="icon"
               onClick={() => toast({
-                title: "Voice mode is coming soon!",
-                description: "Aura is still learning to recognize your beautiful voice."
+                title: "Voice mode coming soon",
+                description: "m.i. voice interface is in development."
               })}
               className="shrink-0"
             >

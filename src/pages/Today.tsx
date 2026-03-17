@@ -74,13 +74,13 @@ const Today = () => {
   const getDailyWhisper = () => {
     if (userData.wiseBloomMode) {
       const whispers = [
-        "Embrace the wisdom of renewal today.",
-        "Your skin thrives on steady, consistent care.",
-        "Strength comes from nourishment, not from cycles.",
-        "Today is another step toward radiant vitality.",
-        "Your beauty is timeless—nurture it with intention.",
-        "Steady radiance comes from daily devotion.",
-        "Your skin is a star—let it shine consistently."
+        "You rest. meanwhile., your barrier is being reinforced.",
+        "You focus on your day. meanwhile., The Long-Term Moisturizer is compounding.",
+        "You sleep. meanwhile., cellular renewal is at peak capacity.",
+        "You live your life. meanwhile., your skin portfolio is appreciating.",
+        "You enjoy your morning. meanwhile., your assets are being deployed.",
+        "You unwind. meanwhile., recovery protocols are active.",
+        "You take a breath. meanwhile., your skin's ROI is being maximized."
       ];
       return whispers[(day - 1) % whispers.length];
     }
@@ -90,21 +90,21 @@ const Today = () => {
     const isLatePhase = progressPercentage >= 66;
     
     if (phase === 'calm') {
-      if (isEarlyPhase) return "Listen to your body's need for rest today.";
-      if (isMidPhase) return "A day for gentle nourishment and care.";
-      return "Your barrier is strengthening—keep nurturing it.";
+      if (isEarlyPhase) return "You rest. meanwhile., your barrier is being rebuilt.";
+      if (isMidPhase) return "You recover. meanwhile., ceramides are reinforcing your foundation.";
+      return "You strengthen. meanwhile., your skin's defensive wall is holding.";
     }
     
     if (phase === 'glow') {
-      if (isEarlyPhase) return "Your day to shine—embrace your energy.";
-      if (isMidPhase) return "Radiance is peaking—show the world your glow.";
-      return "Capture this energy while it lasts.";
+      if (isEarlyPhase) return "You shine. meanwhile., collagen synthesis is at peak output.";
+      if (isMidPhase) return "You radiate. meanwhile., your skin's ROI is compounding.";
+      return "You glow. meanwhile., we're locking in this phase's gains.";
     }
     
     // balance
-    if (isEarlyPhase) return "A day to focus on clarifying foods and gentle care.";
-    if (isMidPhase) return "Balance is the name of the game today.";
-    return "Your cycle is completing—prepare for renewal.";
+    if (isEarlyPhase) return "You balance. meanwhile., sebum management is active.";
+    if (isMidPhase) return "You stay steady. meanwhile., clarifying protocols are running.";
+    return "You prepare. meanwhile., we're transitioning your portfolio for renewal.";
   };
   
   const getNextPhaseInfo = () => {
@@ -146,7 +146,7 @@ const Today = () => {
   const getMorningRitualSteps = () => {
     const { isProductOwned } = useUser();
     
-    // Check if there are custom rituals from Aura
+     // Check if there are custom rituals from m.i.
     if (userData.customRituals?.morning) {
       return userData.customRituals.morning.map((productId, index) => {
         const product = getProductInfo(productId);
@@ -270,7 +270,7 @@ const Today = () => {
       return getWiseBloomEveningSteps();
     }
     
-    // Check if there are custom rituals from Aura
+    // Check if there are custom rituals from m.i.
     if (userData.customRituals?.evening) {
       return userData.customRituals.evening.map((productId, index) => {
         const product = getProductInfo(productId);
@@ -421,32 +421,32 @@ const Today = () => {
 
     const microCycleDay = getMicroCycleDay();
     let primarySerum = 'Calm & Renew Serum';
-    let auraVoice = '';
+    let miVoice = '';
 
     // Days 1 & 2 (Mon & Tue): Recovery Nights
     if (microCycleDay === 1 || microCycleDay === 2) {
       primarySerum = 'Calm & Renew Serum';
-      auraVoice = "Tonight, we focus on recovery. We are using the Calm & Renew Serum to strengthen your skin's foundation.";
+      miVoice = "You rest. meanwhile., the Calm & Renew Serum is rebuilding your barrier foundation.";
     }
     // Day 3 (Wed): Exfoliation Night
     else if (microCycleDay === 3) {
       primarySerum = hasMaskTrio ? 'Gentle Exfoliating Component' : 'Calm & Renew Serum';
-      auraVoice = "Tonight is Exfoliation Night. We are gently polishing the skin to prepare it for the powerful ingredients to come.";
+      miVoice = "You enjoy your evening. meanwhile., we are gently polishing the skin to prepare it for activation.";
     }
     // Day 4 (Thu): Activation Night
     else if (microCycleDay === 4) {
       primarySerum = 'Glow & Energize Serum';
-      auraVoice = "Your skin is perfectly prepared. Tonight, we use our most potent antioxidant cocktail, the Glow & Energize Serum, to awaken the cells.";
+      miVoice = "Your skin is perfectly prepared. meanwhile., we are deploying the Glow & Energize Serum for maximum activation.";
     }
     // Days 5 & 6 (Fri & Sat): Recovery Nights
     else if (microCycleDay === 5 || microCycleDay === 6) {
       primarySerum = 'Calm & Renew Serum';
-      auraVoice = "After hard work comes rest. We are returning to the calming embrace of the Calm & Renew Serum.";
+      miVoice = "You unwind. meanwhile., the Calm & Renew Serum is executing post-activation recovery.";
     }
     // Day 7 (Sun): Flex Night
     else if (microCycleDay === 7) {
       primarySerum = 'Balance & Clarify Serum or Your Choice';
-      auraVoice = "Tonight is your 'flex' day. If your pores need attention, use the Balance & Clarify Serum. Otherwise, a Recovery Night is a wonderful choice.";
+      miVoice = "Tonight is your flex day. meanwhile., m.i. recommends addressing any specific concerns or continuing recovery.";
     }
 
     const steps: any[] = [
@@ -470,7 +470,7 @@ const Today = () => {
         number: 3,
         type: 'product',
         name: primarySerum,
-        purpose: auraVoice,
+        purpose: miVoice,
         owned: hasSerumTrio,
         productId: 'serum-trio',
         isPhaseProduct: true,
@@ -828,7 +828,7 @@ const Today = () => {
           />
         </div>
 
-        {/* Aura Vision - Persistent Feature */}
+        {/* m.i. Vision - Persistent Feature */}
         <div className="mb-6 animate-slide-up" style={{ animationDelay: '0.05s' }}>
           <div 
             onClick={() => setShowWeeklyReflection(true)}
@@ -839,9 +839,9 @@ const Today = () => {
                 <Camera className="h-6 w-6 text-primary" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-lg mb-1">Aura Vision: Analyze Your Skin</h3>
+                <h3 className="font-semibold text-lg mb-1">m.i. Vision: Analyze Your Skin</h3>
                 <p className="text-sm text-foreground/70">
-                  Take a photo anytime for personalized insights based on your unique skin journey, age, and concerns.
+                  You take a photo. meanwhile., m.i. analyzes your skin's biological data and deploys personalized insights.
                 </p>
               </div>
             </div>
@@ -886,7 +886,7 @@ const Today = () => {
           </Card>
         )}
 
-        {/* Module 4: Aura's Plan for You */}
+        {/* Module 4: m.i.'s Protocol */}
         <button
           onClick={() => setIsPlanModalOpen(true)}
           className="w-full animate-slide-up shadow-lg rounded-lg p-6 transition-all hover:scale-[1.02] text-left"
@@ -896,14 +896,14 @@ const Today = () => {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <Circle className="h-5 w-5" style={{ color: phaseIconColor }} />
-                <h3 className="text-xl font-heading font-semibold">✨ Aura's Plan for You</h3>
+                <h3 className="text-xl font-heading font-semibold">m.i. Daily Protocol</h3>
               </div>
               <p className="text-foreground/70 text-sm">
                 {phase === 'calm' 
-                  ? "Tap to discover today's rituals for rest and recovery."
+                  ? "You focus on recovery. meanwhile., your protocol is optimized for barrier repair."
                   : phase === 'glow'
-                  ? "Tap here to harness your peak energy for a truly radiant day."
-                  : "Ready for your daily balancing act? Tap to see Aura's plan."}
+                  ? "You seize the day. meanwhile., your portfolio is leveraging peak collagen output."
+                  : "You stay balanced. meanwhile., clarifying protocols are managing excess sebum."}
               </p>
             </div>
             <ChevronRight className="h-6 w-6 text-foreground/40 flex-shrink-0" />
@@ -946,7 +946,7 @@ const Today = () => {
         day={day}
       />
 
-      {/* Aura Vision Modal */}
+      {/* m.i. Vision Modal */}
       <WeeklyReflectionModal
         open={showWeeklyReflection}
         onOpenChange={setShowWeeklyReflection}

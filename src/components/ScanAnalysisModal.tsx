@@ -48,7 +48,7 @@ export const ScanAnalysisModal = ({
         <DialogHeader>
           <DialogTitle className="text-2xl font-heading font-semibold text-primary flex items-center gap-2">
             <Circle className="h-6 w-6" />
-            Aura's Analysis
+            m.i. Analysis
           </DialogTitle>
         </DialogHeader>
 
@@ -90,13 +90,13 @@ export const ScanAnalysisModal = ({
             </div>
           </div>
 
-          {/* Aura's Suggestion */}
+          {/* m.i. Recommendation */}
           <div className="space-y-3 bg-accent/30 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <Circle className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-heading font-semibold text-primary mb-1">
-                  Aura's Suggestion
+                  m.i. Recommendation
                 </h4>
                 <p className="text-sm text-foreground/80 leading-relaxed">
                   {analysisResult.auraSuggestion}

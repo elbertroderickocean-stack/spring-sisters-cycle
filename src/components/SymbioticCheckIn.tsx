@@ -39,7 +39,7 @@ export const SymbioticCheckIn: React.FC<SymbioticCheckInProps> = ({
           >
             <p className="text-sm font-medium text-foreground">
               Good morning. How are you feeling today?{' '}
-              <span className="text-primary underline">Tap here to adapt your ritual</span>
+              <span className="text-primary underline">Tap here to calibrate your protocol</span>
             </p>
           </button>
           <Button

@@ -102,12 +102,12 @@ const ProductCatalog = () => {
         </section>
       </div>
 
-      {/* Aura Explains Modals */}
+      {/* m.i. Explains Modals */}
       <Dialog open={openModal === 'harmony'} onOpenChange={() => setOpenModal(null)}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Hexagon className="h-6 w-6" /> Aura explains The Constants™
+              <Hexagon className="h-6 w-6" /> m.i. on The Constants™
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
@@ -123,7 +123,7 @@ const ProductCatalog = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Hexagon className="h-6 w-6" /> Aura explains The Shifts™
+              <Hexagon className="h-6 w-6" /> m.i. on The Shifts™
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
@@ -139,7 +139,7 @@ const ProductCatalog = () => {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading text-primary flex items-center gap-2">
-              <Hexagon className="h-6 w-6" /> Aura explains The Assets™
+              <Hexagon className="h-6 w-6" /> m.i. on The Assets™
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">

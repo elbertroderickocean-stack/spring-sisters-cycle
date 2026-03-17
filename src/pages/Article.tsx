@@ -23,7 +23,7 @@ const Article = () => {
         <div className="text-center">
           <h1 className="text-2xl font-heading mb-4">Article not found</h1>
           <Button onClick={() => navigate('/guide')}>
-            Return to Guide
+            Return to Strategic Knowledge
           </Button>
         </div>
       </div>
