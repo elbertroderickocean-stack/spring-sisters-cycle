@@ -34,19 +34,6 @@ export const BottomNav = () => {
 
   return (
     <>
-      {/* Floating Action Button for Aura */}
-      <button
-        onClick={() => navigate('/aura')}
-        className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 w-16 h-16 rounded-full shadow-lg flex items-center justify-center animate-pulse"
-        style={{ 
-          backgroundColor: getPhaseColor(phase),
-          animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-        }}
-        aria-label="Open Aura Chat"
-      >
-        <Hexagon className="h-7 w-7 text-white" />
-      </button>
-
       {/* Bottom Navigation Bar */}
       <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-lg z-50">
         <div className="max-w-2xl mx-auto px-4">
