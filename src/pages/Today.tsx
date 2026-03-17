@@ -6,6 +6,7 @@ import { DailyPlanModal } from '@/components/DailyPlanModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Circle, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 import { HeaderBar } from '@/components/HeaderBar';
