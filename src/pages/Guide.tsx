@@ -19,23 +19,23 @@ const Guide = () => {
     ]
   };
 
-  const biologicalMarketSection = userData.wiseBloomMode ? {
-    section: 'The Biological Market',
+  const marketAnalysisSection = userData.wiseBloomMode ? {
+    section: 'Market Analysis',
     icon: Activity,
     items: [
-      { title: 'The Glucose Factor: Why your dinner determines your skin\'s tomorrow.', description: 'Anti-glycation intelligence for skin longevity.', articleId: 'glucose-factor' },
-      { title: 'Circadian ROI: Maximizing recovery while you sleep.', description: 'Sleep as a compounding investment.', articleId: 'circadian-roi' },
-      { title: 'Longevity 101: Preventing collagen bankruptcy in menopause.', description: 'The science of mature skin capital.', articleId: 'menopause-skin' },
+      { title: 'The Glucose Factor: Anti-Glycation Strategy', description: 'Why your dinner determines your skin\'s tomorrow.', articleId: 'glucose-factor' },
+      { title: 'Circadian ROI: Sleep as a Repair Asset', description: 'Maximizing recovery while you sleep.', articleId: 'circadian-roi' },
+      { title: 'Longevity 101: Preventing collagen bankruptcy', description: 'The science of mature skin capital.', articleId: 'menopause-skin' },
     ]
   } : {
-    section: 'The Biological Market',
+    section: 'Market Analysis',
     icon: Activity,
     items: [
-      { title: 'The Glucose Factor: Why your dinner determines your skin\'s tomorrow.', description: 'Anti-glycation intelligence for skin longevity.', articleId: 'glucose-factor' },
-      { title: 'Circadian ROI: Maximizing recovery while you sleep.', description: 'Sleep as a compounding investment.', articleId: 'circadian-roi' },
-      { title: 'Phase 1: Calm & Renew', description: 'Low Estrogen & Progesterone - Days 1-7', articleId: 'phase-calm' },
-      { title: 'Phase 2: Glow & Energize', description: 'Estrogen Peak - Days 8-14', articleId: 'phase-glow' },
-      { title: 'Phase 3: Balance & Clarify', description: 'Progesterone Dominance - Days 15+', articleId: 'phase-balance' },
+      { title: 'The Glucose Factor: Anti-Glycation Strategy', description: 'Why your dinner determines your skin\'s tomorrow.', articleId: 'glucose-factor' },
+      { title: 'Circadian ROI: Sleep as a Repair Asset', description: 'Maximizing recovery while you sleep.', articleId: 'circadian-roi' },
+      { title: 'Phase 1: Calm & Renew', description: 'Low Estrogen & Progesterone — Days 1-7', articleId: 'phase-calm' },
+      { title: 'Phase 2: Glow & Energize', description: 'Estrogen Peak — Days 8-14', articleId: 'phase-glow' },
+      { title: 'Phase 3: Balance & Clarify', description: 'Progesterone Dominance — Days 15+', articleId: 'phase-balance' },
     ]
   };
 
