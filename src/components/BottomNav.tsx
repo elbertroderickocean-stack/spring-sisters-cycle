@@ -44,7 +44,7 @@ export const BottomNav = () => {
         }}
         aria-label="Open Aura Chat"
       >
-        <Sparkles className="h-7 w-7 text-white" />
+        <Hexagon className="h-7 w-7 text-white" />
       </button>
 
       {/* Bottom Navigation Bar */}

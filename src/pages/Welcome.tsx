@@ -50,7 +50,7 @@ const Welcome = () => {
             <span style={{ color: 'hsl(30 90% 60%)' }}>together</span>.
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mt-8">
-            Welcome to Spring Sisters. We are the first skincare system that adapts to your unique biological rhythm.
+            Welcome to meanwhile. We are the first skincare system that adapts to your unique biological rhythm.
           </p>
           <Button 
             size="lg" 
