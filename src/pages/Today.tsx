@@ -819,7 +819,7 @@ const Today = () => {
             timeOfDay="morning"
           />
           <RitualSection
-            title="🌙 Evening Ritual"
+            title="🌙 Evening Deployment"
             icon={<Moon className="h-5 w-5" style={{ color: phaseIconColor }} />}
             steps={getEveningRitualSteps()}
             phaseIconColor={phaseIconColor}
