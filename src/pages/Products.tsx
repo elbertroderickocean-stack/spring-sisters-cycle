@@ -147,10 +147,10 @@ const Products = () => {
           )}
         </section>
 
-        {/* The Bloom Cycle™ Collection */}
+        {/* The Shifts™ (Dynamic Management) */}
         <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            The Bloom Cycle™ Collection
+            The Shifts™ <span className="text-sm text-muted-foreground font-body">Dynamic Management</span>
           </h2>
           
           {ownedBloom.length > 0 ? (
@@ -159,9 +159,9 @@ const Products = () => {
             </div>
           ) : (
             renderEmptyState(
-              'The Bloom Cycle™ Collection',
-              'Your Bloom Cycle collection awaits. Explore products designed to sync with your natural rhythm and honor every phase.',
-              'Discover Bloom Cycle',
+              'The Shifts™',
+              'Your dynamic management portfolio awaits. Explore products that adapt to your biological phases — F1: Recovery, F2: Peak Glow, F3: Reset.',
+              'Discover Shifts',
               'bloom'
             )
           )}
