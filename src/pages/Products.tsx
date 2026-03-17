@@ -92,7 +92,7 @@ const Products = () => {
               onClick={(e) => handleStartUsing(product, e)}
             >
               <Play className="h-3 w-3 mr-1" />
-              Start Using
+              Deploy Asset
             </Button>
           )
         )}
