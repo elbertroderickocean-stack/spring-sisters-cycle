@@ -436,7 +436,7 @@ const Today = () => {
     // Day 4 (Thu): Activation Night
     else if (microCycleDay === 4) {
       primarySerum = 'Glow & Energize Serum';
-      auraVoice = "Your skin is perfectly prepared. Tonight, we use our most potent antioxidant cocktail, the Glow & Energize Serum, to awaken the cells.";
+      miVoice = "Your skin is perfectly prepared. meanwhile., we are deploying the Glow & Energize Serum for maximum activation.";
     }
     // Days 5 & 6 (Fri & Sat): Recovery Nights
     else if (microCycleDay === 5 || microCycleDay === 6) {
