@@ -146,7 +146,7 @@ const Today = () => {
   const getMorningRitualSteps = () => {
     const { isProductOwned } = useUser();
     
-    // Check if there are custom rituals from Aura
+     // Check if there are custom rituals from m.i.
     if (userData.customRituals?.morning) {
       return userData.customRituals.morning.map((productId, index) => {
         const product = getProductInfo(productId);
