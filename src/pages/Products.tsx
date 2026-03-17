@@ -127,10 +127,10 @@ const Products = () => {
           My Products
         </h1>
 
-        {/* The Spring Harmony™ Collection */}
+        {/* The Constants™ (Your Index Fund) */}
         <section className="space-y-4 animate-slide-up">
           <h2 className="text-2xl font-heading font-medium text-foreground">
-            The Spring Harmony™ Collection
+            The Constants™ <span className="text-sm text-muted-foreground font-body">Your Index Fund</span>
           </h2>
           
           {ownedHarmony.length > 0 ? (
@@ -139,9 +139,9 @@ const Products = () => {
             </div>
           ) : (
             renderEmptyState(
-              'The Spring Harmony™ Collection',
-              'Your Harmony collection is waiting. Discover the foundational products that provide balance and stability every day.',
-              'Discover Harmony',
+              'The Constants™',
+              'Your foundational index fund is waiting. Discover the steady, reliable products that compound results every day.',
+              'Discover Constants',
               'harmony'
             )
           )}
