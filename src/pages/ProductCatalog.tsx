@@ -102,7 +102,7 @@ const ProductCatalog = () => {
         </section>
       </div>
 
-      {/* Aura Explains Modals */}
+      {/* m.i. Explains Modals */}
       <Dialog open={openModal === 'harmony'} onOpenChange={() => setOpenModal(null)}>
         <DialogContent className="max-w-md">
           <DialogHeader>
