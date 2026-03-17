@@ -62,7 +62,7 @@ const RDPanel = () => {
               <CardTitle className="font-heading">Active Poll</CardTitle>
             </div>
             <CardDescription className="text-base mt-4">
-              What should we create next for the Spring Harmony™ line?
+              What should we create next for the The Constants™ line?
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">

@@ -187,7 +187,7 @@ const Today = () => {
       {
         number: 2,
         type: 'product',
-        name: 'Spring Harmony Gentle Cleanser',
+        name: 'The Baseline Cleanser',
         purpose: 'Creates a clean, balanced canvas for your treatment products.',
         owned: hasCleanser,
         productId: 'cleanser',
@@ -224,7 +224,7 @@ const Today = () => {
       {
         number: 4,
         type: 'product',
-        name: 'Spring Harmony Eye Cream',
+        name: 'The Long-Term Eye Cream',
         purpose: 'Reduces puffiness and fine lines around your eyes.',
         owned: hasEyeCream,
         productId: 'eye-cream',
@@ -242,7 +242,7 @@ const Today = () => {
       {
         number: 5,
         type: 'product',
-        name: 'Spring Harmony Daily Moisturizer',
+        name: 'The Long-Term Moisturizer',
         purpose: 'Seals in hydration and protects your skin barrier all day long.',
         owned: hasMoisturizer,
         productId: 'moisturizer',
@@ -296,7 +296,7 @@ const Today = () => {
       {
         number: 1,
         type: 'product',
-        name: 'Spring Harmony Gentle Cleanser (First Cleanse)',
+        name: 'The Baseline Cleanser (First Cleanse)',
         purpose: 'Removes makeup, SPF, and surface impurities.',
         owned: hasCleanser,
         productId: 'cleanser',
@@ -314,7 +314,7 @@ const Today = () => {
       {
         number: 2,
         type: 'product',
-        name: 'Spring Harmony Gentle Cleanser (Second Cleanse)',
+        name: 'The Baseline Cleanser (Second Cleanse)',
         purpose: 'Deep cleans pores and prepares skin for treatment.',
         owned: hasCleanser,
         productId: 'cleanser',
@@ -351,7 +351,7 @@ const Today = () => {
       {
         number: 4,
         type: 'product',
-        name: 'Spring Harmony Eye Cream',
+        name: 'The Long-Term Eye Cream',
         purpose: 'Reduces puffiness and fine lines around your eyes.',
         owned: hasEyeCream,
         productId: 'eye-cream',
@@ -369,7 +369,7 @@ const Today = () => {
       {
         number: 5,
         type: 'product',
-        name: hasCeramide ? 'Ceramide Concentrate' : 'Spring Harmony Daily Moisturizer',
+        name: hasCeramide ? 'Ceramide Concentrate' : 'The Long-Term Moisturizer',
         purpose: hasCeramide ? 'Intensive barrier repair and deep nourishment.' : 'Seals in hydration and protects your skin barrier all night long.',
         owned: hasCeramide || hasMoisturizer,
         productId: hasCeramide ? 'ceramide' : 'moisturizer',
@@ -453,7 +453,7 @@ const Today = () => {
       {
         number: 1,
         type: 'product',
-        name: 'Spring Harmony Gentle Cleanser (First Cleanse)',
+        name: 'The Baseline Cleanser (First Cleanse)',
         purpose: 'Removes makeup, SPF, and surface impurities.',
         owned: hasCleanser,
         productId: 'cleanser',
@@ -461,7 +461,7 @@ const Today = () => {
       {
         number: 2,
         type: 'product',
-        name: 'Spring Harmony Gentle Cleanser (Second Cleanse)',
+        name: 'The Baseline Cleanser (Second Cleanse)',
         purpose: 'Deep cleans pores and prepares skin for treatment.',
         owned: hasCleanser,
         productId: 'cleanser',
@@ -478,7 +478,7 @@ const Today = () => {
       {
         number: 4,
         type: 'product',
-        name: hasCeramide ? 'Ceramide Concentrate' : 'Spring Harmony Daily Moisturizer',
+        name: hasCeramide ? 'Ceramide Concentrate' : 'The Long-Term Moisturizer',
         purpose: hasCeramide ? 'Intensive barrier repair and deep nourishment.' : 'Seals in hydration and protects your skin barrier all night long.',
         owned: hasCeramide || hasMoisturizer,
         productId: hasCeramide ? 'ceramide' : 'moisturizer',
@@ -491,7 +491,7 @@ const Today = () => {
   const getProductInfo = (productId: string) => {
     const productMap: Record<string, { name: string; purpose: string }> = {
       'cleanser': {
-        name: 'Spring Harmony Gentle Cleanser',
+        name: 'The Baseline Cleanser',
         purpose: 'Creates a clean, balanced canvas for your treatment products.'
       },
       'serum-trio': {
@@ -499,11 +499,11 @@ const Today = () => {
         purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.'
       },
       'eye-cream': {
-        name: 'Spring Harmony Eye Cream',
+        name: 'The Long-Term Eye Cream',
         purpose: 'Reduces puffiness and fine lines around your eyes.'
       },
       'moisturizer': {
-        name: 'Spring Harmony Daily Moisturizer',
+        name: 'The Long-Term Moisturizer',
         purpose: 'Seals in hydration and protects your skin barrier all day long.'
       },
       'vitamin-c': {
@@ -548,14 +548,14 @@ const Today = () => {
     
     // PRIORITY 1: If user doesn't have Serum Trio
     if (!hasSerumTrio) {
-      let message = "Ready to unlock the full potential of cycle-synced skincare? Our Bloom Cycle Serum Trio is the intelligent core of our entire system.";
+      let message = "Ready to unlock the full potential of cycle-synced skincare? Our The Shifts Serum Trio is the intelligent core of our entire system.";
       
       if (hasCleanser && !hasMoisturizer && !hasEyeCream) {
-        message = "You've created the perfect canvas. Ready to start painting? Our Bloom Cycle Serum Trio is the set of 'smart paints' that adapts to your skin every day.";
+        message = "You've created the perfect canvas. Ready to start painting? Our The Shifts Serum Trio is the set of 'smart paints' that adapts to your skin every day.";
       } else if (hasMoisturizer && !hasCleanser && !hasEyeCream) {
-        message = "You have the perfect shield. Now let's put a powerful weapon underneath it. Our Bloom Cycle Serum Trio is the intelligent core of our entire system.";
+        message = "You have the perfect shield. Now let's put a powerful weapon underneath it. Our The Shifts Serum Trio is the intelligent core of our entire system.";
       } else if (hasEyeCream && !hasCleanser && !hasMoisturizer) {
-        message = "You've mastered care for the most delicate area. Now let's apply that same intelligent approach to your entire face with our Bloom Cycle Serum Trio.";
+        message = "You've mastered care for the most delicate area. Now let's apply that same intelligent approach to your entire face with our The Shifts Serum Trio.";
       }
       
       return {
@@ -571,7 +571,7 @@ const Today = () => {
       if (!hasCleanser) {
         return {
           title: "Perfect Your Ritual",
-          message: "Your serums work best on a perfectly prepared canvas. Our Spring Harmony Gentle Cleanser ensures your skin is ready to absorb 100% of the active ingredients.",
+          message: "Your serums work best on a perfectly prepared canvas. Our The Baseline Cleanser ensures your skin is ready to absorb 100% of the active ingredients.",
           buttonText: "Complete Your Ritual",
           action: () => navigate('/product/cleanser')
         };
@@ -579,7 +579,7 @@ const Today = () => {
       if (!hasMoisturizer) {
         return {
           title: "Seal the Magic",
-          message: "Don't let the magic evaporate! 'Sealing' your serum with our Spring Harmony Daily Moisturizer is the final crucial step to lock in benefits and protect your skin.",
+          message: "Don't let the magic evaporate! 'Sealing' your serum with our The Long-Term Moisturizer is the final crucial step to lock in benefits and protect your skin.",
           buttonText: "Complete Your Ritual",
           action: () => navigate('/product/moisturizer')
         };
@@ -591,7 +591,7 @@ const Today = () => {
       if (!hasEyeCream) {
         return {
           title: "The Finishing Touch",
-          message: "You've perfected your facial routine. Ready for the finishing touch? Our Spring Harmony Eye Cream works in synergy with your system to target the delicate eye area.",
+          message: "You've perfected your facial routine. Ready for the finishing touch? Our The Long-Term Eye Cream works in synergy with your system to target the delicate eye area.",
           buttonText: "Discover Eye Cream",
           action: () => navigate('/product/eye-cream')
         };
@@ -612,7 +612,7 @@ const Today = () => {
         return {
           title: "Targeted Support",
           message: "Since breakouts are a key concern for you, consider amplifying your routine with our SOS Spot Treatment. It's the perfect 'sniper' to work alongside your daily 'defense system'.",
-          buttonText: "Explore Precision Care",
+          buttonText: "Explore The Assets",
           action: () => navigate('/catalog')
         };
       }
