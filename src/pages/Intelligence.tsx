@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/BottomNav';
+import { HeaderBar } from '@/components/HeaderBar';
 import { useUser } from '@/contexts/UserContext';
 import { toast } from 'sonner';
 import { Cpu, ScanLine, Moon, Activity, AlertTriangle, TrendingUp } from 'lucide-react';
@@ -18,18 +19,15 @@ const Intelligence = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-2xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-3">
-            <Cpu className="h-5 w-5 text-[hsl(var(--intel-glucose))]" />
-            <div>
-              <h1 className="text-xl font-heading font-semibold tracking-tight">meanwhile.intelligence</h1>
-              <p className="text-xs text-muted-foreground tracking-wide uppercase">Strategic Skin Analytics</p>
-            </div>
+      <HeaderBar>
+        <div className="flex items-center gap-3">
+          <Cpu className="h-5 w-5 text-[hsl(var(--intel-glucose))]" />
+          <div>
+            <h1 className="text-xl font-heading font-semibold tracking-tight">meanwhile.intelligence</h1>
+            <p className="text-xs text-muted-foreground tracking-wide uppercase">Strategic Skin Analytics</p>
           </div>
         </div>
-      </header>
+      </HeaderBar>
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-5">
         {/* Glucose Hero Widget */}

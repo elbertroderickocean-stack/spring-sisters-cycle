@@ -48,10 +48,10 @@ const ProductCatalog = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background pb-8">
-      <div className="sticky top-0 z-10 bg-background border-b border-border">
+    <div className="min-h-screen bg-background pb-24">
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center gap-4">
-          <button onClick={() => navigate('/products')} className="p-2 hover:bg-accent rounded-lg transition-colors">
+          <button onClick={() => navigate(-1 as any)} className="p-2 hover:bg-accent rounded-lg transition-colors">
             <ArrowLeft className="h-5 w-5" />
           </button>
           <h1 className="text-2xl font-heading font-semibold text-primary">The meanwhile. Collection</h1>
@@ -68,7 +68,7 @@ const ProductCatalog = () => {
                 <Hexagon className="h-5 w-5 text-primary" />
               </button>
             </div>
-            <p className="text-muted-foreground">Your Index Fund</p>
+            <p className="text-muted-foreground">Your daily Index Fund for barrier resilience.</p>
           </div>
           <div className="space-y-6">{harmonyProducts.map((p, i) => renderProductCard(p, i))}</div>
         </section>
@@ -82,7 +82,7 @@ const ProductCatalog = () => {
                 <Hexagon className="h-5 w-5 text-primary" />
               </button>
             </div>
-            <p className="text-muted-foreground">Dynamic Management</p>
+            <p className="text-muted-foreground">Dynamic assets that adapt to your internal rhythm.</p>
           </div>
           <div className="space-y-6">{bloomProducts.map((p, i) => renderProductCard(p, i))}</div>
         </section>
@@ -96,7 +96,7 @@ const ProductCatalog = () => {
                 <Hexagon className="h-5 w-5 text-primary" />
               </button>
             </div>
-            <p className="text-muted-foreground">Venture Investments</p>
+            <p className="text-muted-foreground">High-yield interventions for immediate results.</p>
           </div>
           <div className="space-y-6">{precisionProducts.map((p, i) => renderProductCard(p, i))}</div>
         </section>

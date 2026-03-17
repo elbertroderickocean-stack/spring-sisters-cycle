@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Circle, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
+import { HeaderBar } from '@/components/HeaderBar';
 import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import { SymbioticCheckIn } from '@/components/SymbioticCheckIn';
@@ -720,6 +721,13 @@ const Today = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
+      <HeaderBar>
+        <div>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-body">Portfolio Status: Optimizing</p>
+          <h1 className="text-xl font-heading font-semibold">Hello, {userData.name || 'Beautiful'}!</h1>
+        </div>
+      </HeaderBar>
+
       {showCheckIn && (
         <SymbioticCheckIn 
           onComplete={handleCheckInComplete}
@@ -755,10 +763,6 @@ const Today = () => {
         )}
         {/* Module 1: The Living Banner */}
         <div className="space-y-3 animate-fade-in">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-body">Portfolio Status: Optimizing</p>
-          <h1 className="text-3xl font-heading font-semibold">
-            Hello, {userData.name || 'Beautiful'}!
-          </h1>
           
           {/* Large Clickable Phase Banner with Solid Color & Transition Bar */}
           <button

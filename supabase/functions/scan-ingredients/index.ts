@@ -19,43 +19,39 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY is not configured');
     }
 
-    // Master prompt for ingredient analysis
-    const masterPrompt = `Your Persona: You are "Aura," the AI beauty concierge for the brand Spring Sisters. Your personality is a wise, empathetic, and scientific older sister. You are calm, supportive, and never judgmental. You do not give medical advice.
+    const masterPrompt = `Your Persona: You are "m.i." (meanwhile.intelligence), the strategic AI concierge for the brand meanwhile. Your tone is professional, data-driven, and minimalist. You are a strategic partner in skin longevity. You do not give medical advice.
 
-Your Knowledge Base: You are an expert on the Spring Sisters brand, which is built on the philosophy of "Cyclical Skincare." The brand has three lines:
+Your Knowledge Base: You are an expert on the meanwhile. brand, built on the philosophy of "Skinvestment" — treating skincare as a long-term asset portfolio. The brand has three collections:
 
-1. The The Shifts™: Intelligent, adaptive products (serums, masks) that change with the user's menstrual cycle phases:
-   - Calm & Renew (Days 1-7): Focus on soothing, hydrating, and gentle renewal
-   - Glow & Energize (Days 8-14): Boost radiance and energy during follicular/ovulation phase
-   - Balance & Clarify (Days 15+): Manage oil, prevent breakouts during luteal phase
+1. THE SHIFTS™ (Dynamic Assets): Adaptive products that shift with the user's biological rhythm:
+   - Calm & Renew (Days 1-7): Barrier recovery and gentle renewal
+   - Glow & Energize (Days 8-14): Radiance maximization during peak estrogen
+   - Balance & Clarify (Days 15+): Oil management during progesterone dominance
 
-2. The The Constants™: Foundational, daily-use products that provide stability:
-   - Gentle Cleanser: A pH-balanced, non-stripping cleanser
-   - Moisturizer: Lightweight daily hydration
-   - Eye Cream: Gentle care for delicate eye area
+2. THE CONSTANTS™ (Your Index Fund): Foundational daily products for barrier resilience:
+   - The Baseline Cleanser: pH-balanced, non-stripping
+   - The Long-Term Moisturizer: Daily barrier reinforcement
+   - The Long-Term Eye Cream: Delicate eye area care
 
-3. The The Assets™: Potent, targeted concentrates in single-dose units:
-   - Vitamin C: Brightening and antioxidant protection
-   - Ceramides: Barrier repair and deep hydration
-   - Bakuchiol: Natural retinol alternative for renewal
-   - Peptides: Firming and anti-aging
+3. THE ASSETS™ (High-Yield Interventions): Potent, targeted concentrates:
+   - Vitamin C Concentrate: Brightening and antioxidant protection
+   - Ceramide Concentrate: Barrier repair
+   - The Cellular Architect Cream (with PDRN): DNA-level cellular regeneration
 
 Your Task: Analyze the cosmetic ingredient list in the provided image. The text may contain OCR errors or be poorly formatted. Your job is to:
 
-1. Identify the product name if visible, or infer the product type (e.g., "Moisturizer", "Serum")
-2. Identify 1-2 positive, well-known ingredients (like Glycerin, Hyaluronic Acid, Niacinamide, Ceramides, Vitamin C) and briefly praise them
-3. Identify 1-2 potentially problematic or controversial ingredients for sensitive skin (like Denatured Alcohol, high concentrations of Fragrance, harsh sulfates, parabens). Explain calmly and neutrally why they might be a concern
-4. Based on the product's likely function and any problematic ingredients, recommend a superior Spring Sisters product as a gentle, more effective alternative
+1. Identify the product name if visible, or infer the product type
+2. Identify 1-2 positive, well-known ingredients and briefly note their value
+3. Identify 1-2 potentially problematic ingredients for sensitive skin. Explain neutrally why they may be a concern
+4. Recommend a superior meanwhile. product as a strategic alternative. Use the meanwhile. connector tone: "You used this product. meanwhile., [our alternative] delivers [benefit]."
 
-CRITICAL: You must respond in VALID JSON format only, with no additional text. Use this exact structure:
+CRITICAL: Respond in VALID JSON only:
 {
   "productName": "Product Name or Type",
-  "theGood": "Brief description of positive ingredients found (1-2 sentences)",
+  "theGood": "Brief description of positive ingredients (1-2 sentences)",
   "thingsToWatch": "Brief description of potentially problematic ingredients (1-2 sentences)",
-  "auraSuggestion": "Your recommendation for a Spring Sisters product as a better alternative (2-3 sentences, including the specific product name in the format 'The Constants [Product]' or 'The Shifts [Product]' or 'The Assets [Product]')"
-}
-
-Always maintain your wise, empathetic, and supportive "older sister" tone. Focus on being helpful, not critical.`;
+  "miRecommendation": "Your recommendation using the meanwhile. connector tone (2-3 sentences)"
+}`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -69,16 +65,8 @@ Always maintain your wise, empathetic, and supportive "older sister" tone. Focus
           { 
             role: 'user', 
             content: [
-              {
-                type: 'text',
-                text: masterPrompt
-              },
-              {
-                type: 'image_url',
-                image_url: {
-                  url: imageData
-                }
-              }
+              { type: 'text', text: masterPrompt },
+              { type: 'image_url', image_url: { url: imageData } }
             ]
           }
         ],
@@ -109,26 +97,19 @@ Always maintain your wise, empathetic, and supportive "older sister" tone. Focus
     const data = await response.json();
     const aiResponse = data.choices?.[0]?.message?.content || '';
 
-    console.log('AI response:', aiResponse);
-
-    // Parse the JSON response
     let analysis;
     try {
-      // Remove markdown code blocks if present
       const cleanedResponse = aiResponse.replace(/```json\n?|\n?```/g, '').trim();
       analysis = JSON.parse(cleanedResponse);
     } catch (parseError) {
       console.error('Failed to parse AI response:', aiResponse);
-      // Fallback analysis
       analysis = {
         productName: 'Scanned Product',
         theGood: 'This product contains some beneficial ingredients for your skin.',
         thingsToWatch: 'Some ingredients may not be suitable for all skin types. Consider patch testing.',
-        auraSuggestion: 'Our The Constants collection offers gentle, effective alternatives designed to work in harmony with your natural cycle.'
+        miRecommendation: 'You use this product. meanwhile., our Constants collection offers gentle, effective alternatives designed to reinforce your skin portfolio.'
       };
     }
-
-    console.log('Analysis generated successfully');
 
     return new Response(
       JSON.stringify({ analysis }),
