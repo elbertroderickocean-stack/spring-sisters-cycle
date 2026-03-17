@@ -23,11 +23,11 @@ const treasuryItems: TreasuryItem[] = [
   {
     id: 'convert-credit',
     title: 'Your Products, Your Way',
-    description: 'Convert LP to credit for any Spring Sisters product',
+    description: 'Convert LP to credit for any meanwhile. product',
     price: '100 LP = $1',
     category: 'essentials',
     imagePlaceholder: '🛍️',
-    detailDescription: 'Convert your Legacy Points directly into credit to use on any Spring Sisters product. Your loyalty, your choice.\n\nExchange Rate: 100 LP = $1'
+    detailDescription: 'Convert your Legacy Points directly into credit to use on any meanwhile. product. Your loyalty, your choice.\n\nExchange Rate: 100 LP = $1'
   },
   {
     id: 'share-legacy',

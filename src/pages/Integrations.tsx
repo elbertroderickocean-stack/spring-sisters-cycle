@@ -34,7 +34,7 @@ const Integrations = () => {
           </h1>
           
           <p className="text-foreground/70 text-lg leading-relaxed">
-            Spring Sisters becomes truly intelligent when it understands your lifestyle. Grant us permission to view your Google Calendar, and we can provide proactive advice for events like flights, late nights, or stressful meetings.
+            meanwhile. becomes truly intelligent when it understands your lifestyle. Grant us permission to view your Google Calendar, and we can provide proactive advice for events like flights, late nights, or stressful meetings.
           </p>
         </div>
 

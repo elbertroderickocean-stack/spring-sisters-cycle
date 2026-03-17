@@ -86,7 +86,7 @@ const ProductCatalog = () => {
             <ArrowLeft className="h-5 w-5" />
           </button>
           <h1 className="text-2xl font-heading font-semibold text-primary">
-            The Spring Sisters Collection
+            The meanwhile. Collection
           </h1>
         </div>
       </div>

@@ -194,7 +194,7 @@ const Products = () => {
               Your Other Products
             </h2>
             <p className="text-muted-foreground text-sm">
-              We know you use other great products. Let's make sure they work in harmony with your Spring Sisters ritual.
+              We know you use other great products. Let's make sure they work in harmony with your meanwhile. ritual.
             </p>
           </div>
 
@@ -235,7 +235,7 @@ const Products = () => {
               Discover More
             </h2>
             <p className="text-muted-foreground">
-              Explore the complete Spring Sisters collection
+              Explore the complete meanwhile. collection
             </p>
             <Button
               size="lg"

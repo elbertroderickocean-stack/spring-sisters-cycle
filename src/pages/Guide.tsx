@@ -10,9 +10,9 @@ const guideContent = [
     section: 'Our Philosophy',
     icon: BookOpen,
     items: [
-      { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created Spring Sisters', articleId: 'mission' },
+      { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created meanwhile.', articleId: 'mission' },
       { title: 'Our Lines: The Orbital System Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
-      { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of Spring Sisters', articleId: 'aura-intro' },
+      { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of meanwhile.', articleId: 'aura-intro' },
     ]
   },
   {
@@ -43,9 +43,9 @@ const Guide = () => {
     section: 'Our Philosophy',
     icon: BookOpen,
     items: [
-      { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created Spring Sisters', articleId: 'mission' },
+      { title: 'Our Mission: From Chaos to Harmony', description: 'Discover why we created meanwhile.', articleId: 'mission' },
       { title: 'Our Lines: The Orbital System Explained', description: 'Understanding our product philosophy', articleId: 'lines' },
-      { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of Spring Sisters', articleId: 'aura-intro' },
+      { title: 'Meet Aura: Your Personal Companion', description: 'Discover the digital heart of meanwhile.', articleId: 'aura-intro' },
     ]
   };
 
@@ -86,7 +86,7 @@ const Guide = () => {
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-8">
         <h1 className="text-4xl font-heading font-semibold text-primary animate-fade-in">
-          The Spring Sisters Guide
+          The meanwhile. Guide
         </h1>
 
         {dynamicGuideContent.map((section, sectionIndex) => {

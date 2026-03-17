@@ -18,7 +18,7 @@ export const products: Product[] = [
     id: 'serum-trio',
     name: 'Bloom Cycle Serum Trio',
     description: 'The intelligent 3-serum system that adapts to your skin\'s monthly rhythm.',
-    detailedDescription: 'Our flagship product and the heart of the Spring Sisters philosophy. This revolutionary trio contains three distinct serums, each scientifically formulated to work in perfect harmony with one of your cycle\'s three phases. By matching your skincare to your hormones, you eliminate the guesswork and finally achieve consistent, radiant results.',
+    detailedDescription: 'Our flagship product and the heart of the meanwhile. philosophy. This revolutionary trio contains three distinct serums, each scientifically formulated to work in perfect harmony with one of your cycle\'s three phases. By matching your skincare to your hormones, you eliminate the guesswork and finally achieve consistent, radiant results.',
     howToUse: 'Each morning and evening, apply 2-3 drops of the serum that corresponds to your current phase. Gently press into clean skin before your moisturizer.',
     keyIngredients: ['Ceramides (for Calm & Renew)', 'Vitamin C (for Glow & Energize)', 'Niacinamide (for Balance & Clarify)'],
     price: '$85.00',

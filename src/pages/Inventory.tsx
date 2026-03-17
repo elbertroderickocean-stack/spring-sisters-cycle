@@ -64,7 +64,7 @@ const Inventory = () => {
       <div className="max-w-lg w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">
-            Let's check your Spring Sisters arsenal.
+            Let's check your meanwhile. arsenal.
           </h2>
           <p className="text-foreground/70 text-lg">
             Select the products you already own so we can build your perfect ritual.

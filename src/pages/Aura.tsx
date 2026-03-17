@@ -40,7 +40,7 @@ const Aura = () => {
       setMessages([
         {
           role: 'assistant',
-          content: `Hello, ${userName}. I'm Aura, your personal guide to the world of Spring Sisters. Think of me as your wise older sister, always here to help. What's on your mind today?`,
+          content: `Hello, ${userName}. I'm Aura, your personal guide to the world of meanwhile.. Think of me as your wise older sister, always here to help. What's on your mind today?`,
           isTyping: true
         }
       ]);

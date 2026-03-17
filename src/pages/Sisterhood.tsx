@@ -212,7 +212,7 @@ const Sisterhood = () => {
               <Vote className="h-5 w-5" style={{ color: phaseIconColor }} />
               <CardTitle className="font-heading">Contribute & Influence</CardTitle>
             </div>
-            <CardDescription>Shape the future of Spring Sisters</CardDescription>
+            <CardDescription>Shape the future of meanwhile.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {contributionActions.map((item, index) => {

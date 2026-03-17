@@ -38,7 +38,7 @@ const PushNotification = () => {
 
         {/* Body Text */}
         <p className="text-lg text-foreground/80 leading-relaxed">
-          Our daily reminders are the heart of Spring Sisters. They are gentle whispers that guide your morning and evening rituals, ensuring you never have to guess what your skin needs today. May we send them to you?
+          Our daily reminders are the heart of meanwhile.. They are gentle whispers that guide your morning and evening rituals, ensuring you never have to guess what your skin needs today. May we send them to you?
         </p>
 
         {/* Buttons */}
