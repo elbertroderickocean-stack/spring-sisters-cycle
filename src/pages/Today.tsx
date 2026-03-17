@@ -431,7 +431,7 @@ const Today = () => {
     // Day 3 (Wed): Exfoliation Night
     else if (microCycleDay === 3) {
       primarySerum = hasMaskTrio ? 'Gentle Exfoliating Component' : 'Calm & Renew Serum';
-      auraVoice = "Tonight is Exfoliation Night. We are gently polishing the skin to prepare it for the powerful ingredients to come.";
+      miVoice = "You enjoy your evening. meanwhile., we are gently polishing the skin to prepare it for activation.";
     }
     // Day 4 (Thu): Activation Night
     else if (microCycleDay === 4) {
