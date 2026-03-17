@@ -721,6 +721,13 @@ const Today = () => {
 
   return (
     <div className="min-h-screen bg-background pb-24">
+      <HeaderBar>
+        <div>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-body">Portfolio Status: Optimizing</p>
+          <h1 className="text-xl font-heading font-semibold">Hello, {userData.name || 'Beautiful'}!</h1>
+        </div>
+      </HeaderBar>
+
       {showCheckIn && (
         <SymbioticCheckIn 
           onComplete={handleCheckInComplete}
