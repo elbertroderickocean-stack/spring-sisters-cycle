@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const Solution = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Solution = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+      <OnboardingProgressBar currentStep={3} />
       <div className="max-w-lg w-full text-center space-y-10 animate-slide-up">
         <div className="space-y-4">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-body">The Strategy Pivot</p>

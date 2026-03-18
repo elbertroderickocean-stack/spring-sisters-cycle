@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useUser } from '@/contexts/UserContext';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const skinConcernsList = [
   { id: 'breakouts', label: 'Breakouts & Blemishes' },
@@ -34,6 +35,7 @@ const SkinConcerns = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+      <OnboardingProgressBar currentStep={7} />
       <div className="max-w-lg w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h1 className="text-4xl font-heading font-semibold text-primary">

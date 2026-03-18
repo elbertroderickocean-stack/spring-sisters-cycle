@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const WiseBloomOnboarding = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const WiseBloomOnboarding = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+      <OnboardingProgressBar currentStep={5} />
       <div className="max-w-2xl w-full space-y-8 animate-slide-up">
         <button 
           onClick={handleBack}

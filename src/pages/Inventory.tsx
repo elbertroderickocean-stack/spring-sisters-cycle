@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useUser } from '@/contexts/UserContext';
 import { Droplet, Circle, Eye, FlaskConical } from 'lucide-react';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const products = [
   { id: 'cleanser', name: 'The Baseline Cleanser', icon: Droplet },
@@ -62,6 +63,7 @@ const Inventory = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+      <OnboardingProgressBar currentStep={8} />
       <div className="max-w-lg w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">

@@ -1,63 +1,105 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+
+const DataAlignmentVisual = () => {
+  const [aligned, setAligned] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setAligned(true), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const lines = [
+    { width: 65, delay: 0 },
+    { width: 90, delay: 0.1 },
+    { width: 45, delay: 0.2 },
+    { width: 80, delay: 0.3 },
+    { width: 55, delay: 0.4 },
+    { width: 95, delay: 0.5 },
+    { width: 40, delay: 0.6 },
+    { width: 75, delay: 0.7 },
+    { width: 60, delay: 0.8 },
+    { width: 85, delay: 0.9 },
+    { width: 50, delay: 1.0 },
+    { width: 70, delay: 1.1 },
+  ];
+
+  return (
+    <div className="relative w-full max-w-md mx-auto h-48 flex flex-col justify-center gap-[6px] overflow-hidden">
+      {lines.map((line, i) => (
+        <div
+          key={i}
+          className="relative h-[1.5px] mx-auto transition-all ease-out"
+          style={{
+            width: aligned ? '75%' : `${line.width}%`,
+            transitionDuration: '1.8s',
+            transitionDelay: `${line.delay}s`,
+          }}
+        >
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: `linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.15) 20%, hsl(var(--primary) / 0.5) 50%, hsl(var(--primary) / 0.15) 80%, transparent 100%)`,
+            }}
+          />
+          {/* Glow dot at end */}
+          <div
+            className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full transition-opacity duration-1000"
+            style={{
+              backgroundColor: 'hsl(var(--primary))',
+              boxShadow: '0 0 6px hsl(var(--primary) / 0.4)',
+              opacity: aligned ? 1 : 0,
+              transitionDelay: `${line.delay + 1.5}s`,
+            }}
+          />
+        </div>
+      ))}
+
+      {/* Pulse wave overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-1000"
+        style={{ opacity: aligned ? 0.3 : 0, transitionDelay: '2.5s' }}
+      >
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+    </div>
+  );
+};
 
 const Welcome = () => {
   const navigate = useNavigate();
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 overflow-hidden">
-      <div className="max-w-4xl text-center space-y-8">
-        {/* Orbital Animation */}
-        <div className="relative w-full h-80 mb-12 flex items-center justify-center">
-          {/* The Sun - center */}
-          <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/60 animate-fade-in shadow-elegant" 
-               style={{ animationDelay: '0s' }} />
-          
-          {/* Orbital Paths */}
-          <div className="absolute w-48 h-32 border-2 border-primary/20 rounded-full animate-fade-in" 
-               style={{ animationDelay: '0.5s' }} />
-          <div className="absolute w-64 h-44 border-2 border-primary/15 rounded-full animate-fade-in" 
-               style={{ animationDelay: '0.7s' }} />
-          <div className="absolute w-80 h-56 border-2 border-primary/10 rounded-full animate-fade-in" 
-               style={{ animationDelay: '0.9s' }} />
-          
-          {/* The Constants */}
-          <div className="absolute w-8 h-8 rounded-full bg-phase-calm shadow-lg animate-orbit-1" 
-               style={{ animationDelay: '1.2s' }} />
-          
-          {/* The Shifts */}
-          <div className="absolute w-8 h-8 rounded-full bg-phase-glow shadow-lg animate-orbit-2" 
-               style={{ animationDelay: '1.4s' }} />
-          
-          {/* The Assets */}
-          <div className="absolute w-8 h-8 rounded-full bg-phase-balance shadow-lg animate-orbit-3" 
-               style={{ animationDelay: '1.6s' }} />
-          
-          {/* High-Yield Intervention */}
-          <div className="absolute w-3 h-3 rounded-full bg-primary animate-meteorite" 
-               style={{ animationDelay: '2s' }} />
-        </div>
+      <OnboardingProgressBar currentStep={1} />
+      <div className="max-w-3xl w-full text-center space-y-8">
+        {/* Data Alignment Visualization */}
+        <DataAlignmentVisual />
 
         {/* Text */}
-        <div className="space-y-6 animate-fade-in" style={{ animationDelay: '2.5s' }}>
-          <h1 className="text-4xl md:text-5xl font-heading font-normal leading-tight lowercase">
-            your skin has a{' '}
-            <span style={{ color: 'hsl(var(--phase-calm))' }}>rhythm</span>.
+        <div className="space-y-6 animate-fade-in" style={{ animationDelay: '1.5s' }}>
+          <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight tracking-tight">
+            Stop treating your skin like a chore.
+            <br />
+            Treat it like an asset.
           </h1>
-          <h2 className="text-4xl md:text-5xl font-heading font-normal leading-tight lowercase">
-            let's find it{' '}
-            <span style={{ color: 'hsl(var(--phase-glow))' }}>together</span>.
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mt-8">
-            Welcome to meanwhile. The first skincare management system that adapts to your unique biological rhythm.
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-body" style={{ letterSpacing: '0.01em', lineHeight: '1.8' }}>
+            Your skin is biological capital that reacts to glucose, hormones, and stress.{' '}
+            <strong className="text-foreground">meanwhile.</strong>, our system manages the complexity in the background while you focus on your life.
           </p>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             onClick={() => navigate('/problem')}
-            className="mt-8 px-8 py-6 text-lg rounded-lg"
+            className="mt-10 px-10 py-6 text-lg rounded-lg tracking-wide"
           >
-            Get Started
+            Initialize Management Strategy
           </Button>
         </div>
       </div>
