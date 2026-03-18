@@ -66,11 +66,11 @@
     --glass-border: 0 0% 100% / 0.1;
     --glass-highlight: 0 0% 100% / 0.05;
 
-    /* Mesh gradient palette */
-    --mesh-blue: 210 80% 35%;
-    --mesh-teal: 175 60% 30%;
-    --mesh-earth: 30 30% 25%;
-    --mesh-deep: 240 30% 15%;
+    /* Mesh gradient palette — Navy/Charcoal/Lavender */
+    --mesh-navy: 230 35% 18%;
+    --mesh-charcoal: 220 15% 12%;
+    --mesh-lavender: 260 20% 22%;
+    --mesh-deep: 235 25% 8%;
 
     /* Intelligence palette */
     --intel-glucose: 270 60% 60%;
