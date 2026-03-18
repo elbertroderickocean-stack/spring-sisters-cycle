@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const WiseBloomOnboarding = () => {
   const navigate = useNavigate();
