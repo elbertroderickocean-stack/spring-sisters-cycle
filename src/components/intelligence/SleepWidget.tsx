@@ -31,7 +31,7 @@ export const SleepWidget = () => {
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-lg font-heading font-bold">{quality}%</span>
+            <span className="text-lg font-mono-data font-bold">{quality}%</span>
             <span className="text-[9px] text-muted-foreground">Quality</span>
           </div>
         </div>
