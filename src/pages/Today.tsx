@@ -729,7 +729,7 @@ const Today = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen mesh-gradient-bg pb-24">
       <HeaderBar>
         <div>
           <p className="text-xs font-medium text-primary tracking-wide">meanwhile</p>

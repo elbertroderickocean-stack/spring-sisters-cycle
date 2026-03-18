@@ -23,7 +23,7 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
   const activeSegment = getActiveSegment(currentStep);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--card))]/90 backdrop-blur-xl border-b border-border">
+    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--glass-bg))] backdrop-blur-[30px] backdrop-saturate-[1.4] border-b border-[hsl(var(--glass-border))]">
       <div className="max-w-sm mx-auto">
         <div className="flex items-center justify-between relative">
           {segments.map((seg, i) => {
@@ -37,13 +37,12 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
                   <div
                     className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-xs font-body font-semibold transition-all duration-700",
-                      (isComplete || isActive) && "shadow-sm",
-                      isActive && "shadow-[0_0_12px_hsl(var(--sage)_/_0.4)]"
+                      isActive && "shadow-[0_0_16px_hsl(72_100%_45%_/_0.5)]"
                     )}
                     style={{
-                      backgroundColor: isComplete || isActive ? 'hsl(var(--sage))' : 'transparent',
-                      color: isComplete || isActive ? '#FFFFFF' : 'hsl(var(--muted-foreground))',
-                      border: isPending ? '1.5px solid hsl(var(--border))' : '1.5px solid hsl(var(--sage))',
+                      backgroundColor: isComplete || isActive ? 'hsl(var(--primary))' : 'transparent',
+                      color: isComplete || isActive ? 'hsl(var(--primary-foreground))' : 'hsl(var(--muted-foreground))',
+                      border: isPending ? '1.5px solid hsl(var(--border))' : '1.5px solid hsl(var(--primary))',
                     }}
                   >
                     {isComplete ? (
@@ -71,7 +70,7 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
                       className="absolute inset-y-0 left-0 rounded-full transition-all duration-700 ease-out"
                       style={{
                         width: isComplete ? '100%' : isActive ? '50%' : '0%',
-                        backgroundColor: 'hsl(var(--sage))',
+                        backgroundColor: 'hsl(var(--primary))',
                       }}
                     />
                   </div>
