@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useUser } from '@/contexts/UserContext';
 import { Droplet, Circle, Eye, FlaskConical } from 'lucide-react';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const products = [
   { id: 'cleanser', name: 'The Baseline Cleanser', icon: Droplet },
