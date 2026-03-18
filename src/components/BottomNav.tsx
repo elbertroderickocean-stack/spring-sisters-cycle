@@ -33,7 +33,7 @@ export const BottomNav = () => {
   const phase = getCurrentPhase();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-lg z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50">
       <div className="max-w-2xl mx-auto px-2">
         <div className="flex items-center justify-around h-16">
           {navItems.map((item) => {
@@ -53,7 +53,9 @@ export const BottomNav = () => {
                 style={isActive ? { color: getPhaseColor(phase) } : {}}
               >
                 <Icon className="h-5 w-5" />
-                <span className="text-[10px] font-medium">{item.label}</span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.1em]" style={{ fontFamily: 'var(--font-secondary)' }}>
+                  {item.label}
+                </span>
               </button>
             );
           })}

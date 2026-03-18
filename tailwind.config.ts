@@ -13,43 +13,10 @@ export default {
       },
     },
     extend: {
-      animation: {
-        'orbit-1': 'orbit-1 8s linear infinite',
-        'orbit-2': 'orbit-2 10s linear infinite',
-        'orbit-3': 'orbit-3 12s linear infinite',
-        'meteorite': 'meteorite 1.5s ease-in-out forwards',
-      },
-      keyframes: {
-        'orbit-1': {
-          '0%': { transform: 'rotate(0deg) translateX(96px) rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg) translateX(96px) rotate(-360deg)' },
-        },
-        'orbit-2': {
-          '0%': { transform: 'rotate(45deg) translateX(128px) rotate(-45deg)' },
-          '100%': { transform: 'rotate(405deg) translateX(128px) rotate(-405deg)' },
-        },
-        'orbit-3': {
-          '0%': { transform: 'rotate(90deg) translateX(160px) rotate(-90deg)' },
-          '100%': { transform: 'rotate(450deg) translateX(160px) rotate(-450deg)' },
-        },
-        'meteorite': {
-          '0%': { 
-            transform: 'translate(-100px, -100px) scale(0)',
-            opacity: '0'
-          },
-          '50%': {
-            opacity: '1'
-          },
-          '100%': { 
-            transform: 'translate(120px, 80px) scale(1)',
-            opacity: '0'
-          },
-        },
-      },
       fontFamily: {
         heading: ['Lora', 'serif'],
-        body: ['Inter', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        body: ['Montserrat', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
         'mono-data': ['JetBrains Mono', 'monospace'],
       },
       colors: {
@@ -101,6 +68,23 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        'orbit-1': {
+          '0%': { transform: 'rotate(0deg) translateX(96px) rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg) translateX(96px) rotate(-360deg)' },
+        },
+        'orbit-2': {
+          '0%': { transform: 'rotate(45deg) translateX(128px) rotate(-45deg)' },
+          '100%': { transform: 'rotate(405deg) translateX(128px) rotate(-405deg)' },
+        },
+        'orbit-3': {
+          '0%': { transform: 'rotate(90deg) translateX(160px) rotate(-90deg)' },
+          '100%': { transform: 'rotate(450deg) translateX(160px) rotate(-450deg)' },
+        },
+        'meteorite': {
+          '0%': { transform: 'translate(-100px, -100px) scale(0)', opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { transform: 'translate(120px, 80px) scale(1)', opacity: '0' },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -127,6 +111,10 @@ export default {
         },
       },
       animation: {
+        'orbit-1': 'orbit-1 8s linear infinite',
+        'orbit-2': 'orbit-2 10s linear infinite',
+        'orbit-3': 'orbit-3 12s linear infinite',
+        'meteorite': 'meteorite 1.5s ease-in-out forwards',
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out",
