@@ -63,7 +63,7 @@ const Inventory = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
-      <OnboardingProgressBar currentStep={8} />
+      <OnboardingProgressBar currentStep={9} />
       <div className="max-w-lg w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">
@@ -104,7 +104,7 @@ const Inventory = () => {
         <Button
           size="lg"
           onClick={handleNext}
-          className="w-full mt-8 h-12 text-base rounded-full"
+          className="w-full mt-8 h-12 text-base rounded-lg"
         >
           Build My Routine
         </Button>

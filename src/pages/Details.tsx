@@ -25,7 +25,7 @@ const Details = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
-      <OnboardingProgressBar currentStep={6} />
+      <OnboardingProgressBar currentStep={5} />
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">
@@ -78,7 +78,7 @@ const Details = () => {
             size="lg"
             onClick={handleNext}
             disabled={!ageRange || !skinType}
-            className="w-full mt-8 h-12 text-base rounded-full"
+            className="w-full mt-8 h-12 text-base rounded-lg"
           >
             Show My Plan!
           </Button>

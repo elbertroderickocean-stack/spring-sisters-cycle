@@ -35,7 +35,7 @@ const Register = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
-      <OnboardingProgressBar currentStep={5} />
+      <OnboardingProgressBar currentStep={4} />
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">
@@ -87,7 +87,7 @@ const Register = () => {
             size="lg"
             onClick={handleCreateAccount}
             disabled={!name || !email || !password}
-            className="w-full mt-6 h-12 text-base rounded-full"
+            className="w-full mt-6 h-12 text-base rounded-lg"
           >
             Create Account
           </Button>

@@ -6,16 +6,20 @@ import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 const Solution = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<'hormonal' | 'longevity' | null>(null);
+  const [showLocked, setShowLocked] = useState(false);
 
   const handleContinue = () => {
     if (selected) {
-      navigate('/personalize', { state: { strategy: selected } });
+      setShowLocked(true);
+      setTimeout(() => {
+        navigate('/personalize', { state: { strategy: selected } });
+      }, 2200);
     }
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
-      <OnboardingProgressBar currentStep={3} />
+      <OnboardingProgressBar currentStep={2} />
       <div className="max-w-lg w-full text-center space-y-10 animate-slide-up">
         <div className="space-y-4">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-body">The Strategy Pivot</p>
@@ -28,7 +32,6 @@ const Solution = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-5 pt-4">
-          {/* Card A: Hormonal Management */}
           <button
             onClick={() => setSelected('hormonal')}
             className={cn(
@@ -59,7 +62,6 @@ const Solution = () => {
             </div>
           </button>
 
-          {/* Card B: Longevity Management */}
           <button
             onClick={() => setSelected('longevity')}
             className={cn(
@@ -104,6 +106,23 @@ const Solution = () => {
           Continue
         </button>
       </div>
+
+      {/* Strategy Locked Overlay */}
+      {showLocked && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-background/80 backdrop-blur-md animate-fade-in">
+          <div className="text-center space-y-4 animate-slide-up">
+            <div className="w-12 h-12 mx-auto rounded-full border-2 border-primary flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-primary">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-heading font-semibold text-foreground">Strategy Locked.</h3>
+            <p className="text-muted-foreground text-sm max-w-xs mx-auto leading-relaxed">
+              <strong className="text-foreground">meanwhile.</strong>, we are initializing your biological baseline.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
