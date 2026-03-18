@@ -23,7 +23,7 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
   const activeSegment = getActiveSegment(currentStep);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--glass-bg))] backdrop-blur-[30px] backdrop-saturate-[1.4] border-b border-[hsl(var(--glass-border))]">
+    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] backdrop-saturate-[1.3] border-b border-[0.5px] border-[hsl(var(--glass-border))]">
       <div className="max-w-sm mx-auto">
         <div className="flex items-center justify-between relative">
           {segments.map((seg, i) => {
