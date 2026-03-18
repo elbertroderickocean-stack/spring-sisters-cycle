@@ -15,11 +15,15 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showDemoModal, setShowDemoModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateAccount = () => {
-    if (name && email && password) {
+    if (name && email && password && !isLoading) {
+      setIsLoading(true);
       updateUserData({ name, email });
-      navigate('/details', { state: { selectedRhythm: location.state?.selectedRhythm || 'hormonal' } });
+      setTimeout(() => {
+        navigate('/today');
+      }, 1000);
     }
   };
 
