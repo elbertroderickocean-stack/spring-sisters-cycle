@@ -723,12 +723,17 @@ const Today = () => {
     setCheckInDismissed(true);
   };
 
+  const getDayOfWeek = () => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[new Date().getDay()];
+  };
+
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen mesh-gradient pb-24">
       <HeaderBar>
         <div>
-          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body">Portfolio Status: Optimizing</p>
-          <h1 className="text-base font-heading font-medium text-foreground/80">Hello, {userData.name || 'Investor'}</h1>
+          <p className="text-xs font-medium text-primary tracking-wide">meanwhile</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Hello, {userData.name || 'Investor'}</p>
         </div>
       </HeaderBar>
 
@@ -748,9 +753,9 @@ const Today = () => {
         />
       )}
       
-      <div className="max-w-2xl mx-auto px-5 py-6 space-y-5">
+      <div className="max-w-2xl mx-auto px-5 py-6 space-y-6">
         {userData.isDemoMode && (
-          <Alert className="border-primary/50 bg-primary/5 animate-fade-in">
+          <Alert className="border-primary/30 bg-primary/5 animate-fade-in backdrop-blur-lg">
             <AlertCircle className="h-4 w-4 text-primary" />
             <AlertDescription className="flex items-center justify-between gap-3">
               <span className="text-sm">You are in Discovery Mode.</span>
@@ -766,13 +771,23 @@ const Today = () => {
           </Alert>
         )}
 
+        {/* Meanwhile Connector Header */}
+        <div className="glass-card p-6 animate-fade-in">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            While you lived your <span className="text-foreground font-semibold">{getDayOfWeek()}</span> — here is what <span className="text-primary font-semibold">meanwhile.</span> happened to your skin.
+          </p>
+        </div>
+
+        {/* Dashboard Metric Cards — Horizontal Scroll */}
+        <DashboardMetrics />
+
         {/* Synergy Index Gauge */}
         <SynergyIndex />
 
-        {/* Module 1: Glassmorphism Phase Card */}
+        {/* Phase Card */}
         <button
           onClick={() => setShowWeeklyPlan(true)}
-          className="relative w-full p-6 rounded-2xl transition-all hover:scale-[1.01] overflow-hidden border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg animate-fade-in"
+          className="relative w-full p-6 rounded-2xl transition-all hover:scale-[1.01] overflow-hidden glass-card animate-fade-in"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-left flex-1">
@@ -780,16 +795,16 @@ const Today = () => {
                 <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: phaseIconColor }} />
                 <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Live Data Linked</span>
               </div>
-              <div className="text-3xl font-heading font-bold mb-1" style={{ color: phaseIconColor }}>
+              <div className="text-3xl font-bold mb-1" style={{ color: phaseIconColor }}>
                 {userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed max-w-[280px]">
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-[280px]">
                 {dailyWhisper}
               </p>
             </div>
             {!userData.wiseBloomMode && (
               <div className="text-right">
-                <span className="text-lg font-heading font-semibold" style={{ color: phaseIconColor }}>
+                <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
                   {phaseName}
                 </span>
                 <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto mt-1" />
@@ -797,16 +812,15 @@ const Today = () => {
             )}
             {userData.wiseBloomMode && (
               <div className="text-right">
-                <div className="text-base font-heading font-semibold" style={{ color: phaseIconColor }}>
+                <div className="text-base font-bold" style={{ color: phaseIconColor }}>
                   {getMicroCycleDayName(day).split(':')[1]}
                 </div>
               </div>
             )}
           </div>
           
-          {/* Transition Progress Bar */}
           {!userData.wiseBloomMode && (
-            <div className="h-[3px] rounded-full bg-border/30 overflow-hidden">
+            <div className="h-[3px] rounded-full bg-[hsl(var(--glass-border))] overflow-hidden">
               <div 
                 className="h-full rounded-full transition-all duration-500 ease-out"
                 style={{
@@ -818,7 +832,7 @@ const Today = () => {
           )}
         </button>
 
-        {/* Module 2: Today's Ritual - Morning & Evening */}
+        {/* Ritual Sections */}
         <div className="space-y-4 animate-slide-up">
           <RitualSection
             title="Morning Deployment"
@@ -839,11 +853,16 @@ const Today = () => {
           />
         </div>
 
-        {/* m.i. Vision Widget */}
+        {/* Hero Ingredients */}
         <div className="animate-slide-up" style={{ animationDelay: '0.05s' }}>
+          <HeroIngredients />
+        </div>
+
+        {/* m.i. Vision Widget */}
+        <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <div 
             onClick={() => setShowWeeklyReflection(true)}
-            className="rounded-2xl p-5 border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg cursor-pointer hover:border-border transition-all"
+            className="glass-card p-5 cursor-pointer hover:border-primary/20 transition-all"
           >
             <div className="flex items-start gap-4">
               <div className="p-2.5 rounded-xl bg-[hsl(var(--intel-sleep))]/10 border border-[hsl(var(--intel-sleep))]/15">
@@ -851,12 +870,12 @@ const Today = () => {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-heading font-semibold text-sm">m.i. Vision</h3>
+                  <h3 className="font-bold text-sm">m.i. Vision</h3>
                   <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-sleep))]/20 text-[hsl(var(--intel-sleep))]">
                     Analyze
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   You take a photo. meanwhile., m.i. deploys personalized skin intelligence.
                 </p>
               </div>
@@ -867,23 +886,23 @@ const Today = () => {
 
         {/* Your Assets Toolkit */}
         {precisionProducts.length > 0 && (
-          <div className="rounded-2xl border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg p-5 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+          <div className="glass-card p-5 animate-slide-up" style={{ animationDelay: '0.15s' }}>
             <div className="flex items-center gap-2 mb-4">
               <Zap className="h-4 w-4" style={{ color: phaseIconColor }} />
-              <h3 className="font-heading font-semibold text-sm">Your Assets Toolkit</h3>
+              <h3 className="font-bold text-sm">Your Assets Toolkit</h3>
               <span className="text-[9px] uppercase tracking-widest text-muted-foreground">Targeted</span>
             </div>
             <div className="space-y-3">
               {precisionProducts.map((product) => {
                 const IconComponent = product.icon;
                 return (
-                  <div key={product.id} className="flex gap-3 items-start p-3 rounded-xl bg-background/40 border border-border/30">
-                    <div className="w-8 h-8 rounded-lg bg-primary/8 flex items-center justify-center flex-shrink-0">
+                  <div key={product.id} className="flex gap-3 items-start p-3 rounded-xl bg-[hsl(var(--glass-highlight))] border border-[hsl(var(--glass-border))]">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <IconComponent className="h-4 w-4" style={{ color: phaseIconColor }} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-heading text-sm font-medium">{product.name}</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{product.usage}</p>
+                      <h4 className="text-sm font-semibold">{product.name}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mt-0.5">{product.usage}</p>
                     </div>
                   </div>
                 );
@@ -895,16 +914,16 @@ const Today = () => {
         {/* m.i. Daily Protocol Widget */}
         <button
           onClick={() => setIsPlanModalOpen(true)}
-          className="w-full rounded-2xl p-5 border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg transition-all hover:border-border text-left animate-slide-up"
-          style={{ animationDelay: '0.15s' }}
+          className="w-full glass-card p-5 transition-all hover:border-primary/20 text-left animate-slide-up"
+          style={{ animationDelay: '0.2s' }}
         >
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: phaseIconColor }} />
-                <h3 className="font-heading font-semibold text-sm">m.i. Daily Protocol</h3>
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                <h3 className="font-bold text-sm">m.i. Daily Protocol</h3>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {phase === 'calm' 
                   ? "You focus on recovery. meanwhile., your protocol is optimized for barrier repair."
                   : phase === 'glow'
@@ -917,20 +936,19 @@ const Today = () => {
         </button>
 
         {/* Smart Suggestion Widget */}
-        <div className="rounded-2xl border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg p-5 animate-slide-up" style={{ animationDelay: '0.25s' }}>
+        <div className="glass-card p-5 animate-slide-up" style={{ animationDelay: '0.25s' }}>
           <div className="flex items-center gap-2 mb-3">
             {suggestion.icon ? <suggestion.icon className="h-4 w-4" style={{ color: phaseIconColor }} /> : <Star className="h-4 w-4" style={{ color: phaseIconColor }} />}
-            <h3 className="font-heading font-semibold text-sm">{suggestion.title}</h3>
+            <h3 className="font-bold text-sm">{suggestion.title}</h3>
           </div>
-          <p className="text-xs text-muted-foreground leading-relaxed mb-4">
+          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             {suggestion.message}
           </p>
           {suggestion.action && (
             <Button
               onClick={suggestion.action}
-              variant="outline"
               size="sm"
-              className="h-8 text-[10px] uppercase tracking-wider border-primary/30 text-primary hover:bg-primary/10"
+              className="h-9 text-xs"
             >
               {suggestion.buttonText === 'Discover Product' || suggestion.buttonText === 'Discover the Serum Trio' ? 'Integrate' : suggestion.buttonText}
             </Button>
@@ -939,7 +957,7 @@ const Today = () => {
 
         {/* meanwhile. footer whisper */}
         <div className="text-center py-4">
-          <p className="text-[10px] text-muted-foreground/50 tracking-widest uppercase">
+          <p className="text-[10px] text-muted-foreground/40 tracking-widest uppercase">
             You focus on your day. meanwhile., your long-term assets are growing.
           </p>
         </div>
