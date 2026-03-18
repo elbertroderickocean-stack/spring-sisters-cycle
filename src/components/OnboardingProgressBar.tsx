@@ -43,7 +43,8 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
                   <div
                     className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-xs font-body font-semibold transition-all duration-700",
-                      (isComplete || isActive) && "shadow-sm"
+                      (isComplete || isActive) && "shadow-sm",
+                      isActive && "shadow-[0_0_12px_hsl(75_100%_75%_/_0.4)]"
                     )}
                     style={{
                       backgroundColor: isComplete || isActive ? SAGE : 'transparent',
