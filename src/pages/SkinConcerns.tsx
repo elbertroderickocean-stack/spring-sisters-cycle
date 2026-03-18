@@ -17,6 +17,7 @@ const skinConcernsList = [
 
 const SkinConcerns = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { updateUserData } = useUser();
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
 
