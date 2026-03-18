@@ -16,8 +16,8 @@
     --text-main: 220 10% 12%;
     --text-muted: 220 5% 45%;
 
-    /* Base — Deep dark luxury */
-    --background: 220 15% 8%;
+    /* Base — Deep luxury space (Navy/Charcoal/Lavender mesh) */
+    --background: 225 20% 7%;
     --foreground: 0 0% 95%;
 
     --card: 220 15% 12%;
@@ -61,16 +61,16 @@
     --phase-balance-solid: 75 100% 75%;
     --phase-balance-foreground: 220 15% 8%;
 
-    /* Glassmorphism */
-    --glass-bg: 220 15% 15% / 0.6;
-    --glass-border: 0 0% 100% / 0.08;
-    --glass-highlight: 0 0% 100% / 0.04;
+    /* Glassmorphism — Apple-tier liquid glass */
+    --glass-bg: 0 0% 100% / 0.03;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-highlight: 0 0% 100% / 0.05;
 
-    /* Mesh gradient palette */
-    --mesh-blue: 210 80% 35%;
-    --mesh-teal: 175 60% 30%;
-    --mesh-earth: 30 30% 25%;
-    --mesh-deep: 240 30% 15%;
+    /* Mesh gradient palette — Navy/Charcoal/Lavender */
+    --mesh-navy: 230 35% 18%;
+    --mesh-charcoal: 220 15% 12%;
+    --mesh-lavender: 260 20% 22%;
+    --mesh-deep: 235 25% 8%;
 
     /* Intelligence palette */
     --intel-glucose: 270 60% 60%;
@@ -176,32 +176,35 @@
   /* Mesh gradient background */
   .mesh-gradient {
     background: 
-      radial-gradient(ellipse at 20% 50%, hsl(210 80% 35% / 0.4) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, hsl(175 60% 30% / 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 60% 80%, hsl(30 30% 25% / 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 40% 30%, hsl(240 30% 15% / 0.4) 0%, transparent 60%),
-      hsl(220 15% 8%);
+      radial-gradient(ellipse at 15% 30%, hsl(230 35% 18% / 0.7) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 15%, hsl(260 20% 22% / 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, hsl(220 15% 12% / 0.6) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 50%, hsl(250 25% 16% / 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 70%, hsl(215 30% 14% / 0.5) 0%, transparent 50%),
+      hsl(225 20% 7%);
   }
 
   /* Glass card */
   .glass-card {
     background: hsl(var(--glass-bg));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px) saturate(1.4);
+    -webkit-backdrop-filter: blur(25px) saturate(1.4);
     border: 1px solid hsl(var(--glass-border));
     border-radius: 16px;
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.2), inset 0 1px 0 hsl(0 0% 100% / 0.04);
   }
 
   .glass-card-highlight {
     background: linear-gradient(
       135deg,
-      hsl(0 0% 100% / 0.08) 0%,
+      hsl(0 0% 100% / 0.06) 0%,
       hsl(0 0% 100% / 0.02) 100%
     );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px) saturate(1.4);
+    -webkit-backdrop-filter: blur(25px) saturate(1.4);
     border: 1px solid hsl(var(--glass-border));
     border-radius: 16px;
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.2), inset 0 1px 0 hsl(0 0% 100% / 0.04);
   }
 
   /* Phase gradients — neon tech */

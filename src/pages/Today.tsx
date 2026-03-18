@@ -753,7 +753,7 @@ const Today = () => {
         />
       )}
       
-      <div className="max-w-2xl mx-auto px-5 py-6 space-y-6">
+      <div className="max-w-2xl mx-auto px-5 py-8 space-y-8">
         {userData.isDemoMode && (
           <Alert className="border-primary/30 bg-primary/5 animate-fade-in backdrop-blur-lg">
             <AlertCircle className="h-4 w-4 text-primary" />
