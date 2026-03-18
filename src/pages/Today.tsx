@@ -764,6 +764,9 @@ const Today = () => {
           </Alert>
         )}
 
+        {/* Synergy Index Gauge */}
+        <SynergyIndex />
+
         {/* Module 1: Glassmorphism Phase Card */}
         <button
           onClick={() => setShowWeeklyPlan(true)}

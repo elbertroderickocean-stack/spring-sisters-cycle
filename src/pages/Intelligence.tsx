@@ -60,24 +60,49 @@ const Intelligence = () => {
         </div>
 
         {/* Scanner Buttons */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-3">
           <Button
             variant="outline"
             className="h-14 border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg hover:shadow-md"
             onClick={() => navigate('/meal-scanner')}
           >
-            <ScanLine className="h-4 w-4 mr-2 text-[hsl(var(--intel-glucose))]" />
-            <span className="text-xs">Scan Meal</span>
+            <ScanLine className="h-4 w-4 mr-1.5 text-[hsl(var(--intel-glucose))]" />
+            <span className="text-xs">Meal</span>
           </Button>
           <Button
             variant="outline"
             className="h-14 border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg hover:shadow-md"
             onClick={() => navigate('/skin-scanner')}
           >
-            <Camera className="h-4 w-4 mr-2 text-[hsl(var(--intel-sleep))]" />
-            <span className="text-xs">Scan Skin</span>
+            <Camera className="h-4 w-4 mr-1.5 text-[hsl(var(--intel-sleep))]" />
+            <span className="text-xs">Skin</span>
+          </Button>
+          <Button
+            variant="outline"
+            className="h-14 border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg hover:shadow-md"
+            onClick={() => navigate('/scanner')}
+          >
+            <Search className="h-4 w-4 mr-1.5 text-[hsl(var(--intel-stress))]" />
+            <span className="text-xs">Analyze</span>
           </Button>
         </div>
+
+        {/* Truth Lens CTA */}
+        <Card 
+          className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg cursor-pointer hover:shadow-md transition-shadow"
+          onClick={() => navigate('/scanner')}
+        >
+          <CardContent className="p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[hsl(var(--intel-stress))]/10 flex items-center justify-center">
+              <Search className="h-5 w-5 text-[hsl(var(--intel-stress))]" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium">Analyze External Product</p>
+              <p className="text-xs text-muted-foreground">You use your current favorite. <strong className="text-foreground">meanwhile.</strong>, m.i. is ready to provide the intelligence it lacks.</p>
+            </div>
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </CardContent>
+        </Card>
 
         {/* Causality Section */}
         <CausalityCard />
