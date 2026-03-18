@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Activity, Droplets, Moon, Cloud, Brain } from 'lucide-react';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const systemInputs = [
   {
