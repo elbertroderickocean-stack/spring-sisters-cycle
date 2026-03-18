@@ -41,6 +41,8 @@ import GlucoseDetail from "./pages/GlucoseDetail";
 import MealScanner from "./pages/MealScanner";
 import SkinScanner from "./pages/SkinScanner";
 import Encouragement from "./pages/Encouragement";
+import StrategyQuestions from "./pages/StrategyQuestions";
+import ConnectEnvironment from "./pages/ConnectEnvironment";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -63,6 +65,8 @@ const App = () => (
             <Route path="/details" element={<Details />} />
             <Route path="/skin-concerns" element={<SkinConcerns />} />
             <Route path="/encouragement" element={<Encouragement />} />
+            <Route path="/strategy-questions" element={<StrategyQuestions />} />
+            <Route path="/connect-environment" element={<ConnectEnvironment />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/push-notification" element={<PushNotification />} />
             <Route path="/integrations" element={<Integrations />} />

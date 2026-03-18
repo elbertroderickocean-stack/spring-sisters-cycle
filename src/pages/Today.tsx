@@ -14,6 +14,7 @@ import { AuraWhisper } from '@/components/AuraWhisper';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import { SymbioticCheckIn } from '@/components/SymbioticCheckIn';
 import { RitualSection } from '@/components/RitualSection';
+import { SynergyIndex } from '@/components/SynergyIndex';
 import { Sunrise, Moon, Camera } from 'lucide-react';
 import { WeeklyReflectionModal } from '@/components/WeeklyReflectionModal';
 import { WeeklyPlanModal } from '@/components/WeeklyPlanModal';
@@ -762,6 +763,9 @@ const Today = () => {
             </AlertDescription>
           </Alert>
         )}
+
+        {/* Synergy Index Gauge */}
+        <SynergyIndex />
 
         {/* Module 1: Glassmorphism Phase Card */}
         <button

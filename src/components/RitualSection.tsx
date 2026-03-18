@@ -117,8 +117,8 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                     <div
                       className={`flex-1 min-w-0 rounded-xl px-4 py-3 border transition-all ${
                         step.owned
-                          ? 'bg-background/60 border-border/40 group-hover:border-border group-hover:bg-background/80'
-                          : 'bg-muted/20 border-dashed border-border/30 opacity-60'
+                          ? 'bg-[#B2C2B2]/8 border-[#B2C2B2]/25 group-hover:border-[#B2C2B2]/40 group-hover:bg-[#B2C2B2]/12'
+                          : 'bg-muted/10 border-dashed border-border/20 opacity-50'
                       }`}
                     >
                       <div className="flex items-center gap-2 mb-0.5">
@@ -128,6 +128,11 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                         {isWellness && (
                           <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-sleep))]/30 text-[hsl(var(--intel-sleep))]">
                             Wellness
+                          </Badge>
+                        )}
+                        {step.owned && !isWellness && (
+                          <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-[#B2C2B2]/30 text-[#B2C2B2] gap-0.5">
+                            <Zap className="h-2 w-2" /> Live Data
                           </Badge>
                         )}
                         {step.isPhaseProduct && step.owned && (
@@ -143,17 +148,17 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                         <p className="text-xs text-muted-foreground leading-relaxed">{step.purpose}</p>
                       ) : (
                         <div className="flex items-center justify-between mt-1">
-                          <p className="text-xs text-muted-foreground">Not yet in portfolio.</p>
+                          <p className="text-[10px] text-muted-foreground italic">Missing from framework</p>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="h-6 text-[10px] uppercase tracking-wider px-3 border-primary/30 text-primary hover:bg-primary/10"
+                            className="h-6 text-[9px] uppercase tracking-wider px-3 border-primary/30 text-primary hover:bg-primary/10"
                             onClick={(e) => {
                               e.stopPropagation();
                               step.productId ? navigate(`/product/${step.productId}`) : navigate('/catalog');
                             }}
                           >
-                            Deploy
+                            Deploy Asset
                           </Button>
                         </div>
                       )}
