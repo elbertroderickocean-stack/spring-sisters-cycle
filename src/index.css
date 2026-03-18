@@ -154,11 +154,15 @@ All colors MUST be HSL.
 
 @layer utilities {
   .font-heading {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Lora', serif;
   }
   
   .font-body {
     font-family: 'Inter', sans-serif;
+  }
+
+  .font-mono-data {
+    font-family: 'JetBrains Mono', monospace;
   }
   
   /* Phase gradients for banners */

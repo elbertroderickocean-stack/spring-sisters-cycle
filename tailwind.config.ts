@@ -47,9 +47,10 @@ export default {
         },
       },
       fontFamily: {
-        heading: ['Playfair Display', 'serif'],
+        heading: ['Lora', 'serif'],
         body: ['Inter', 'sans-serif'],
         sans: ['Inter', 'sans-serif'],
+        'mono-data': ['JetBrains Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
