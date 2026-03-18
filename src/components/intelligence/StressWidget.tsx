@@ -24,7 +24,7 @@ export const StressWidget = () => {
             />
           </div>
           <div className="flex flex-col justify-end pb-1">
-            <span className="text-lg font-heading font-bold">{label}</span>
+            <span className="text-lg font-mono-data font-bold">{label}</span>
             <span className="text-[9px] text-muted-foreground">Cortisol</span>
           </div>
         </div>

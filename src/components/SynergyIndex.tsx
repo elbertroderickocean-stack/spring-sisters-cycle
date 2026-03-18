@@ -45,7 +45,7 @@ export const SynergyIndex: React.FC = () => {
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-lg font-heading font-bold" style={{ color }}>
+            <span className="text-lg font-mono-data font-bold" style={{ color }}>
               {percentage}%
             </span>
           </div>

@@ -39,7 +39,7 @@ All colors MUST be HSL.
     --input: 40 8% 88%;
     --ring: 120 12% 69%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     
     /* Phase-specific colors */
     --phase-calm: 200 25% 82%;
@@ -135,21 +135,34 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background text-foreground font-body text-sm leading-relaxed;
+    padding: 0;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+
+  h1 {
+    @apply text-2xl md:text-[28px] font-semibold leading-tight;
+  }
+
+  h2 {
+    @apply text-lg font-medium leading-snug;
+  }
 }
 
 @layer utilities {
   .font-heading {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Lora', serif;
   }
   
   .font-body {
     font-family: 'Inter', sans-serif;
+  }
+
+  .font-mono-data {
+    font-family: 'JetBrains Mono', monospace;
   }
   
   /* Phase gradients for banners */
