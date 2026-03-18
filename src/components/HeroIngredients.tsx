@@ -8,8 +8,8 @@ export const HeroIngredients: React.FC<HeroIngredientsProps> = ({
   ingredients = ['Niacinamide', 'Panthenol', 'Peptides'] 
 }) => {
   return (
-    <div className="rounded-2xl p-5 border border-border bg-[hsl(var(--sage-light))] shadow-[var(--shadow-soft)]">
-      <span className="text-[10px] uppercase tracking-[0.15em] text-sage-foreground mb-4 block font-body font-semibold">
+    <div className="glass-card p-5">
+      <span className="text-[10px] uppercase tracking-[0.15em] text-primary mb-4 block font-body font-semibold">
         Your hero ingredients this month
       </span>
       <div className="space-y-0">
