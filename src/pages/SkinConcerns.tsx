@@ -30,7 +30,7 @@ const SkinConcerns = () => {
 
   const handleNext = () => {
     updateUserData({ skinConcerns: selectedConcerns });
-    navigate('/inventory');
+    navigate('/encouragement');
   };
 
   return (

@@ -96,7 +96,7 @@ const Welcome = () => {
           </p>
           <Button
             size="lg"
-            onClick={() => navigate('/problem')}
+            onClick={() => navigate('/solution')}
             className="mt-10 px-10 py-6 text-lg rounded-lg tracking-wide"
           >
             Initialize Management Strategy
