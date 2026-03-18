@@ -87,7 +87,7 @@ const Register = () => {
             size="lg"
             onClick={handleCreateAccount}
             disabled={!name || !email || !password}
-            className="w-full mt-6 h-12 text-base rounded-full"
+            className="w-full mt-6 h-12 text-base rounded-lg"
           >
             Create Account
           </Button>

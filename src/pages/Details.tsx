@@ -78,7 +78,7 @@ const Details = () => {
             size="lg"
             onClick={handleNext}
             disabled={!ageRange || !skinType}
-            className="w-full mt-8 h-12 text-base rounded-full"
+            className="w-full mt-8 h-12 text-base rounded-lg"
           >
             Show My Plan!
           </Button>

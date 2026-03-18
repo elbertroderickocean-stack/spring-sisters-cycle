@@ -73,7 +73,7 @@ const SkinConcerns = () => {
         <Button
           size="lg"
           onClick={handleNext}
-          className="w-full mt-8 h-12 text-base rounded-full"
+          className="w-full mt-8 h-12 text-base rounded-lg"
         >
           Next
         </Button>
