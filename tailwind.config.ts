@@ -15,8 +15,8 @@ export default {
     extend: {
       fontFamily: {
         heading: ['Lora', 'serif'],
-        body: ['Montserrat', 'sans-serif'],
-        sans: ['Montserrat', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
         'mono-data': ['JetBrains Mono', 'monospace'],
       },
       colors: {
@@ -66,9 +66,9 @@ export default {
           balance: "hsl(var(--phase-balance))",
           'balance-foreground': "hsl(var(--phase-balance-foreground))",
         },
-        lime: {
-          DEFAULT: "hsl(75 80% 52%)",
-          foreground: "hsl(0 0% 10%)",
+        canary: {
+          DEFAULT: "hsl(72 100% 45%)",
+          foreground: "hsl(0 0% 4%)",
         },
       },
       borderRadius: {

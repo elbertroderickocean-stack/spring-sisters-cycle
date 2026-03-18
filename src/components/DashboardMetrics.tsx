@@ -17,7 +17,7 @@ interface MetricCardProps {
 const MetricCard: React.FC<MetricCardProps> = ({ label, children, sublabel, onClick }) => (
   <button
     onClick={onClick}
-    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.03] hover:border-sage/30 active:scale-[0.98] cursor-pointer"
+    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.03] hover:border-primary/20 active:scale-[0.98] cursor-pointer"
   >
     <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground leading-tight font-body">{label}</span>
     <div className="flex-1 flex items-center justify-center">
@@ -68,7 +68,7 @@ export const DashboardMetrics: React.FC = () => {
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
         <MetricCard label="Return Streak" onClick={() => setActiveMetric(metrics.streak)}>
           <div className="flex flex-col items-center">
-            <span className="text-4xl font-mono-data font-bold text-sage">{streak}</span>
+            <span className="text-4xl font-mono-data font-bold text-primary">{streak}</span>
             <span className="text-[11px] text-muted-foreground mt-1 font-body">days</span>
           </div>
         </MetricCard>
@@ -85,7 +85,7 @@ export const DashboardMetrics: React.FC = () => {
               />
               <circle
                 cx="36" cy="36" r="32"
-                stroke="hsl(var(--sage))"
+                stroke="hsl(var(--primary))"
                 strokeWidth="3"
                 fill="none"
                 strokeLinecap="round"
@@ -109,15 +109,14 @@ export const DashboardMetrics: React.FC = () => {
         </MetricCard>
       </div>
 
-      {/* Metric Detail Modal */}
       <Dialog open={!!activeMetric} onOpenChange={(open) => !open && setActiveMetric(null)}>
-        <DialogContent className="glass-card border-border bg-[hsl(var(--card))] backdrop-blur-[20px] max-w-sm">
+        <DialogContent className="glass-card border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[30px] max-w-sm">
           <DialogHeader>
             <DialogTitle className="text-lg font-heading font-bold text-foreground">
               {activeMetric?.title}
             </DialogTitle>
             <div className="flex items-center justify-center py-6">
-              <span className="text-5xl font-mono-data font-bold text-sage">
+              <span className="text-5xl font-mono-data font-bold text-primary">
                 {activeMetric?.value}
               </span>
             </div>

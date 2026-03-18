@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design System — meanwhile. Light Luxury Tech
-   Swiss laboratory aesthetic: clinical, precise, welcoming.
-   Fonts: Lora (Serif headings), Montserrat (Sans body/UI), JetBrains Mono (data)
+/* Design System — meanwhile. Deep Tech-Luxury
+   Dark, atmospheric, liquid-glass aesthetic.
+   Fonts: Lora (Serif headings), Inter (Sans body/UI), JetBrains Mono (data)
    All colors HSL.
 */
 
@@ -12,49 +12,49 @@
   :root {
     /* Typography */
     --font-primary: 'Lora', serif;
-    --font-secondary: 'Montserrat', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
     --font-data: 'JetBrains Mono', monospace;
 
-    /* Base — Warm off-white silk */
-    --background: 30 20% 98%;
-    --foreground: 0 0% 14%;
+    /* Base — Deep Midnight */
+    --background: 220 15% 4%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 14%;
+    --card: 220 15% 7%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 14%;
+    --popover: 220 15% 7%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Primary — Neon Lime (sparingly) */
-    --primary: 75 80% 52%;
-    --primary-foreground: 0 0% 10%;
+    /* Primary — Pure Neon Canary */
+    --primary: 72 100% 45%;
+    --primary-foreground: 0 0% 4%;
 
-    /* Sage Green for owned/active states */
-    --sage: 140 18% 58%;
-    --sage-light: 140 18% 92%;
-    --sage-foreground: 140 18% 25%;
+    /* Sage — muted for owned/active states */
+    --sage: 72 100% 45%;
+    --sage-light: 72 100% 45% / 0.1;
+    --sage-foreground: 72 100% 45%;
 
-    --secondary: 30 10% 94%;
-    --secondary-foreground: 0 0% 20%;
+    --secondary: 220 10% 12%;
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 30 8% 92%;
-    --muted-foreground: 0 0% 42%;
+    --muted: 220 10% 14%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 30 8% 95%;
-    --accent-foreground: 0 0% 14%;
+    --accent: 220 10% 12%;
+    --accent-foreground: 0 0% 90%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 75 80% 52%;
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.08;
+    --ring: 72 100% 45%;
 
     --radius: 0.75rem;
 
-    /* Phase colors — muted pastels for light mode */
-    --phase-calm: 200 40% 55%;
-    --phase-calm-solid: 200 40% 55%;
+    /* Phase colors */
+    --phase-calm: 200 50% 55%;
+    --phase-calm-solid: 200 50% 55%;
     --phase-calm-foreground: 0 0% 100%;
 
     --phase-glow: 32 80% 58%;
@@ -65,38 +65,38 @@
     --phase-balance-solid: 140 35% 50%;
     --phase-balance-foreground: 0 0% 100%;
 
-    /* White Glassmorphism */
-    --glass-bg: 0 0% 100% / 0.7;
-    --glass-border: 0 0% 0% / 0.05;
-    --glass-highlight: 0 0% 100% / 0.9;
+    /* Liquid Glass — dark frosted */
+    --glass-bg: 0 0% 100% / 0.05;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-highlight: 0 0% 100% / 0.08;
 
-    /* Intelligence palette — muted for light */
-    --intel-glucose: 240 30% 45%;
-    --intel-glucose-light: 240 20% 94%;
-    --intel-sleep: 210 45% 50%;
-    --intel-sleep-light: 210 30% 93%;
-    --intel-stress: 25 60% 52%;
-    --intel-stress-light: 25 40% 93%;
-    --intel-glass: 0 0% 100% / 0.7;
-    --intel-glass-border: 0 0% 0% / 0.05;
+    /* Intelligence palette */
+    --intel-glucose: 230 60% 65%;
+    --intel-glucose-light: 230 40% 15%;
+    --intel-sleep: 210 55% 60%;
+    --intel-sleep-light: 210 35% 15%;
+    --intel-stress: 25 70% 58%;
+    --intel-stress-light: 25 50% 15%;
+    --intel-glass: 0 0% 100% / 0.05;
+    --intel-glass-border: 0 0% 100% / 0.1;
 
-    /* Shadows — soft, ambient, diffused */
-    --shadow-soft: 0 2px 12px -2px hsl(0 0% 0% / 0.06);
-    --shadow-medium: 0 4px 20px -4px hsl(0 0% 0% / 0.08);
-    --shadow-glow: 0 0 20px -4px hsl(75 80% 52% / 0.15);
+    /* Shadows — glow-based for dark */
+    --shadow-soft: 0 4px 24px -4px hsl(0 0% 0% / 0.4);
+    --shadow-medium: 0 8px 32px -8px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 24px -4px hsl(72 100% 45% / 0.15);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-gentle: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    --sidebar-background: 30 15% 97%;
-    --sidebar-foreground: 0 0% 14%;
-    --sidebar-primary: 75 80% 52%;
-    --sidebar-primary-foreground: 0 0% 10%;
-    --sidebar-accent: 30 8% 94%;
-    --sidebar-accent-foreground: 0 0% 14%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 75 80% 52%;
+    --sidebar-background: 220 15% 6%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 72 100% 45%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 220 10% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 100% / 0.08;
+    --sidebar-ring: 72 100% 45%;
   }
 }
 
@@ -168,35 +168,44 @@
     font-family: var(--font-data);
   }
 
-  /* Category title with sage underline */
+  /* Category title with canary underline */
   .category-title {
     display: inline-block;
     padding-bottom: 6px;
     border-bottom: 1px solid hsl(var(--sage));
   }
 
-  /* Glass card — white frosted glass */
+  /* Mesh gradient background */
+  .mesh-gradient-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 80%, hsl(190 50% 12% / 0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 80% 20%, hsl(250 40% 15% / 0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 50%, hsl(220 30% 10% / 0.15) 0%, transparent 50%),
+      hsl(var(--background));
+  }
+
+  /* Glass card — liquid glass on dark */
   .glass-card {
     background: hsl(var(--glass-bg));
-    backdrop-filter: blur(20px) saturate(1.3);
-    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    backdrop-filter: blur(30px) saturate(1.4);
+    -webkit-backdrop-filter: blur(30px) saturate(1.4);
     border: 1px solid hsl(var(--glass-border));
     border-radius: 16px;
-    box-shadow: 0 2px 12px -2px hsl(0 0% 0% / 0.06);
+    box-shadow: var(--shadow-soft);
   }
 
   .glass-card-highlight {
     background: hsl(var(--glass-highlight));
-    backdrop-filter: blur(20px) saturate(1.3);
-    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    backdrop-filter: blur(30px) saturate(1.4);
+    -webkit-backdrop-filter: blur(30px) saturate(1.4);
     border: 1px solid hsl(var(--glass-border));
     border-radius: 16px;
-    box-shadow: 0 2px 12px -2px hsl(0 0% 0% / 0.06);
+    box-shadow: var(--shadow-soft);
   }
 
   /* Phase gradients */
   .phase-gradient-calm {
-    background: linear-gradient(135deg, hsl(200 40% 55%) 0%, hsl(210 50% 45%) 100%);
+    background: linear-gradient(135deg, hsl(200 50% 55%) 0%, hsl(210 50% 45%) 100%);
   }
 
   .phase-gradient-glow {
@@ -222,7 +231,7 @@
   /* Sage wash for owned products */
   .sage-wash {
     background: hsl(var(--sage-light));
-    border-color: hsl(var(--sage) / 0.3);
+    border-color: hsl(72 100% 45% / 0.2);
   }
 
   /* Metric card */
