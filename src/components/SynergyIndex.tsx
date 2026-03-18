@@ -10,7 +10,7 @@ export const SynergyIndex: React.FC = () => {
   const percentage = Math.round((ownedCount / FRAMEWORK_PRODUCTS.length) * 100);
 
   const getColor = () => {
-    if (percentage >= 80) return 'hsl(var(--primary))';
+    if (percentage >= 80) return 'hsl(var(--sage))';
     if (percentage >= 40) return 'hsl(var(--intel-glucose))';
     return 'hsl(var(--intel-stress))';
   };
@@ -51,11 +51,11 @@ export const SynergyIndex: React.FC = () => {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            <h3 className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">
               Protocol Intelligence
             </h3>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-muted-foreground leading-relaxed font-body">
             {percentage < 40
               ? 'Your routine is active, but disconnected from live bio-data. Complete the framework to unlock autonomous skin management.'
               : percentage < 80

@@ -12,8 +12,6 @@ const segments = [
   { number: 4, label: 'Portfolio' },
 ];
 
-// Maps currentStep to which segment is active
-// Steps 1-2 = Strategy, 3-5 = Biology, 6-7 = Lifestyle, 8 = Portfolio
 const getActiveSegment = (step: number): number => {
   if (step <= 2) return 1;
   if (step <= 5) return 2;
@@ -21,15 +19,12 @@ const getActiveSegment = (step: number): number => {
   return 4;
 };
 
-const SAGE = '#B2C2B2';
-
 const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
   const activeSegment = getActiveSegment(currentStep);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--glass-bg))] backdrop-blur-[25px] border-b border-[hsl(var(--glass-border))]">
+    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--card))]/90 backdrop-blur-xl border-b border-border">
       <div className="max-w-sm mx-auto">
-        {/* Circles + Lines */}
         <div className="flex items-center justify-between relative">
           {segments.map((seg, i) => {
             const isComplete = activeSegment > seg.number;
@@ -38,18 +33,17 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
 
             return (
               <React.Fragment key={seg.number}>
-                {/* Circle */}
                 <div className="flex flex-col items-center gap-2 relative z-10">
                   <div
                     className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-xs font-body font-semibold transition-all duration-700",
                       (isComplete || isActive) && "shadow-sm",
-                      isActive && "shadow-[0_0_12px_hsl(75_100%_75%_/_0.4)]"
+                      isActive && "shadow-[0_0_12px_hsl(var(--sage)_/_0.4)]"
                     )}
                     style={{
-                      backgroundColor: isComplete || isActive ? SAGE : 'transparent',
-                      color: isComplete || isActive ? '#FFFFFF' : 'hsl(var(--muted-foreground) / 0.4)',
-                      border: isPending ? '1.5px solid hsl(var(--border))' : `1.5px solid ${SAGE}`,
+                      backgroundColor: isComplete || isActive ? 'hsl(var(--sage))' : 'transparent',
+                      color: isComplete || isActive ? '#FFFFFF' : 'hsl(var(--muted-foreground))',
+                      border: isPending ? '1.5px solid hsl(var(--border))' : '1.5px solid hsl(var(--sage))',
                     }}
                   >
                     {isComplete ? (
@@ -70,15 +64,14 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
                   </span>
                 </div>
 
-                {/* Connecting line */}
                 {i < segments.length - 1 && (
                   <div className="flex-1 h-[1.5px] mx-1 -mt-5 relative">
-                    <div className="absolute inset-0 bg-border/40 rounded-full" />
+                    <div className="absolute inset-0 bg-border rounded-full" />
                     <div
                       className="absolute inset-y-0 left-0 rounded-full transition-all duration-700 ease-out"
                       style={{
                         width: isComplete ? '100%' : isActive ? '50%' : '0%',
-                        backgroundColor: SAGE,
+                        backgroundColor: 'hsl(var(--sage))',
                       }}
                     />
                   </div>
