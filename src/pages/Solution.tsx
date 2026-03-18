@@ -12,13 +12,18 @@ const Solution = () => {
     if (selected) {
       setShowLocked(true);
       setTimeout(() => {
-        navigate('/personalize', { state: { strategy: selected } });
-      }, 2200);
+        // Strategy → Biology: go to Details (age/skin type)
+        if (selected === 'longevity') {
+          navigate('/details', { state: { strategy: selected, selectedRhythm: 'cellular' } });
+        } else {
+          navigate('/details', { state: { strategy: selected, selectedRhythm: 'hormonal' } });
+        }
+      }, 2500);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+    <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12">
       <OnboardingProgressBar currentStep={2} />
       <div className="max-w-lg w-full text-center space-y-10 animate-slide-up">
         <div className="space-y-4">
@@ -26,7 +31,7 @@ const Solution = () => {
           <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight">
             Choose your Management Strategy
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg font-body">
             Your skin's needs depend on your biology. Select the path that fits you.
           </p>
         </div>
@@ -52,10 +57,8 @@ const Solution = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">
-                  Hormonal Management
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">Hormonal Management</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed font-body">
                   For those in their regular cycle. Adapts to your 28-day rhythm + lifestyle data.
                 </p>
               </div>
@@ -82,11 +85,9 @@ const Solution = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">
-                  Longevity Management
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Optimized for menopause or skin-cycling. A 7-day cellular training pulse + lifestyle data (glucose & sleep).
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">Longevity Management</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed font-body">
+                  Optimized for menopause or skin-cycling. A 7-day cellular training pulse + lifestyle data.
                 </p>
               </div>
             </div>
@@ -110,15 +111,15 @@ const Solution = () => {
       {/* Strategy Locked Overlay */}
       {showLocked && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-background/80 backdrop-blur-md animate-fade-in">
-          <div className="text-center space-y-4 animate-slide-up">
-            <div className="w-12 h-12 mx-auto rounded-full border-2 border-primary flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-primary">
+          <div className="text-center space-y-5 animate-slide-up px-6">
+            <div className="w-14 h-14 mx-auto rounded-full flex items-center justify-center" style={{ backgroundColor: '#B2C2B2' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h3 className="text-2xl font-heading font-semibold text-foreground">Strategy Locked.</h3>
-            <p className="text-muted-foreground text-sm max-w-xs mx-auto leading-relaxed">
-              <strong className="text-foreground">meanwhile.</strong>, we are initializing your biological baseline.
+            <h3 className="text-3xl font-heading font-semibold text-foreground">Investment Strategy Locked.</h3>
+            <p className="text-muted-foreground text-base max-w-sm mx-auto leading-relaxed font-body">
+              <strong className="text-foreground">meanwhile.</strong>, we are preparing to analyze your biological baseline.
             </p>
           </div>
         </div>
