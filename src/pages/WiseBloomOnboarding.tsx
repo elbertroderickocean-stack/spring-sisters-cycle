@@ -16,7 +16,7 @@ const WiseBloomOnboarding = () => {
       setCurrentScreen(2);
     } else {
       updateUserData({ wiseBloomMode: true });
-      navigate('/register', { state: { selectedRhythm: location.state?.selectedRhythm || 'cellular' } });
+      navigate('/inventory');
     }
   };
 

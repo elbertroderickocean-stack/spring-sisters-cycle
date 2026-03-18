@@ -1,22 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
 import { useUser } from '@/contexts/UserContext';
-import { Droplet, Circle, Eye, FlaskConical } from 'lucide-react';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import { cn } from '@/lib/utils';
 
-const products = [
-  { id: 'cleanser', name: 'The Baseline Cleanser', icon: Droplet },
-  { id: 'moisturizer', name: 'The Long-Term Moisturizer', icon: Circle },
-  { id: 'eye-cream', name: 'The Long-Term Eye Cream', icon: Eye },
-  { id: 'serum-trio', name: 'The Shifts Serum Trio', icon: FlaskConical },
-  { id: 'mask-trio', name: 'The Shifts Mask Trio', icon: FlaskConical },
-  { id: 'vitamin-c', name: 'Vitamin C Concentrate', icon: FlaskConical },
-  { id: 'ceramide', name: 'Ceramide Concentrate', icon: FlaskConical },
-  { id: 'cellular-architect', name: 'The Cellular Architect Cream', icon: FlaskConical },
+const SAGE = '#B2C2B2';
+
+const productGroups = [
+  {
+    label: 'The Constants',
+    products: [
+      { id: 'cleanser', name: 'The Baseline Cleanser' },
+      { id: 'moisturizer', name: 'The Long-Term Moisturizer' },
+      { id: 'eye-cream', name: 'The Long-Term Eye Cream' },
+    ],
+  },
+  {
+    label: 'The Shifts',
+    products: [
+      { id: 'serum-trio', name: 'The Shifts Serum Trio' },
+      { id: 'mask-trio', name: 'The Shifts Mask Trio' },
+    ],
+  },
+  {
+    label: 'The Assets',
+    products: [
+      { id: 'vitamin-c', name: 'Vitamin C Concentrate' },
+      { id: 'ceramide', name: 'Ceramide Concentrate' },
+      { id: 'cellular-architect', name: 'The Cellular Architect Cream' },
+    ],
+  },
 ];
 
 const Inventory = () => {
@@ -34,7 +49,6 @@ const Inventory = () => {
   };
 
   const handleNext = () => {
-    // Create product inventory with quantity 1 for each selected product
     const productInventory = selectedProducts.map(productId => ({
       productId,
       quantity: 1
@@ -44,8 +58,7 @@ const Inventory = () => {
       ownedProducts: selectedProducts,
       productInventory
     });
-    
-    // Trigger a pro-tip if user added precision products
+
     const precisionProductNames: Record<string, string> = {
       'vitamin-c': 'Vitamin C Concentrate',
       'ceramide': 'Ceramide Concentrate'
@@ -54,11 +67,10 @@ const Inventory = () => {
     const addedPrecisionProduct = selectedProducts.find(id => precisionProductNames[id]);
     if (addedPrecisionProduct) {
       const productName = precisionProductNames[addedPrecisionProduct];
-      // Store the pro-tip to show on the Today page after navigation
       localStorage.setItem('pending_protip', productName);
     }
     
-    navigate('/push-notification');
+    navigate('/register');
   };
 
   return (
@@ -67,38 +79,69 @@ const Inventory = () => {
       <div className="max-w-lg w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">
-            Let's check your meanwhile. arsenal.
+            Check your <span className="italic">meanwhile.</span> arsenal.
           </h2>
-          <p className="text-foreground/70 text-lg">
-            Select the products you already own so we can build your perfect ritual.
+          <p className="text-foreground/70 text-lg leading-relaxed">
+            Select the assets you already own so m.i. can construct your daily deployment.
           </p>
         </div>
 
-        <div className="space-y-4 pt-6">
-          {products.map((product) => {
-            const Icon = product.icon;
-            return (
-              <div
-                key={product.id}
-                className="flex items-center space-x-4 p-4 rounded-xl border border-border hover:bg-accent/50 transition-colors cursor-pointer"
-                onClick={() => toggleProduct(product.id)}
-              >
-                <Checkbox
-                  id={product.id}
-                  checked={selectedProducts.includes(product.id)}
-                  onCheckedChange={() => toggleProduct(product.id)}
-                  className="pointer-events-none"
-                />
-                <Icon className="h-5 w-5 text-primary/60" />
-                <Label
-                  htmlFor={product.id}
-                  className="flex-1 text-base cursor-pointer"
-                >
-                  {product.name}
-                </Label>
+        <div className="space-y-6 pt-4">
+          {productGroups.map((group) => (
+            <div key={group.label} className="space-y-2">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-body pl-1">
+                {group.label}
+              </p>
+              <div className="space-y-1.5">
+                {group.products.map((product) => {
+                  const isSelected = selectedProducts.includes(product.id);
+                  return (
+                    <button
+                      key={product.id}
+                      type="button"
+                      onClick={() => toggleProduct(product.id)}
+                      className={cn(
+                        "w-full flex items-center gap-4 px-4 py-3.5 rounded-xl border transition-all duration-300 text-left group",
+                        isSelected
+                          ? "border-transparent"
+                          : "border-border/60 hover:border-border"
+                      )}
+                      style={isSelected ? {
+                        backgroundColor: `${SAGE}12`,
+                        borderColor: `${SAGE}40`,
+                      } : undefined}
+                    >
+                      {/* Custom circle checkbox */}
+                      <div
+                        className={cn(
+                          "w-5 h-5 rounded-full border-[1.5px] flex items-center justify-center shrink-0 transition-all duration-300"
+                        )}
+                        style={{
+                          borderColor: isSelected ? SAGE : 'hsl(var(--border))',
+                          backgroundColor: isSelected ? SAGE : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        )}
+                      </div>
+
+                      <span
+                        className={cn(
+                          "text-[15px] font-body transition-colors duration-300",
+                          isSelected ? "text-foreground" : "text-foreground/60"
+                        )}
+                      >
+                        {product.name}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
 
         <Button
@@ -106,8 +149,12 @@ const Inventory = () => {
           onClick={handleNext}
           className="w-full mt-8 h-12 text-base rounded-lg"
         >
-          Build My Routine
+          Continue
         </Button>
+
+        <p className="text-center text-xs text-muted-foreground/50 pt-1">
+          Don't own any yet? Skip ahead — <span className="italic">meanwhile.</span> will show you what's missing.
+        </p>
       </div>
     </div>
   );
