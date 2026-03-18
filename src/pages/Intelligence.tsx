@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { BottomNav } from '@/components/BottomNav';
 import { HeaderBar } from '@/components/HeaderBar';
 import { useUser } from '@/contexts/UserContext';
-import { Cpu, Camera, ScanLine, TrendingUp, ChevronRight, Moon, Activity } from 'lucide-react';
+import { Cpu, Camera, ScanLine, TrendingUp, ChevronRight, Moon, Activity, Search } from 'lucide-react';
 import { GlucoseWidget } from '@/components/intelligence/GlucoseWidget';
 import { SleepWidget } from '@/components/intelligence/SleepWidget';
 import { StressWidget } from '@/components/intelligence/StressWidget';
