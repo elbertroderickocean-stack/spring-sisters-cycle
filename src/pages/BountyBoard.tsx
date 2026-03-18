@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Target, Camera, BookOpen } from 'lucide-react';
+import { ArrowLeft, Target, Camera, BookOpen, Database } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/contexts/UserContext';
@@ -18,119 +18,104 @@ const BountyBoard = () => {
 
   const phaseColor = getPhaseColor();
 
-  const bounties = [
+  const tasks = [
     {
       icon: Camera,
-      title: 'Texture Tuesday',
-      brief: 'Capture an aesthetic macro shot of your daily serum\'s texture.',
-      reward: '1,000 LP',
+      title: 'Share your Progress (UGC)',
+      brief: 'Capture your routine, your glow-up, or an aesthetic product shot.',
+      reward: '1,000 AC',
       status: 'active',
     },
     {
-      icon: Camera,
-      title: 'Selfie Sunday',
-      brief: 'Share your glow-up selfie after a full week of ritual.',
-      reward: '750 LP',
+      icon: Database,
+      title: 'Data Calibration (Log Sleep/Glucose)',
+      brief: 'Log your sleep quality and glucose data to help calibrate your protocol.',
+      reward: '500 AC',
       status: 'active',
     },
     {
       icon: BookOpen,
-      title: 'Ingredient Deep-Dive',
-      brief: 'Write a mini-review explaining your favorite ingredient and why it works for you.',
-      reward: '1,500 LP',
+      title: 'Asset Review',
+      brief: 'Write a mini-review of a meanwhile. product explaining what works for you.',
+      reward: '250 AC',
       status: 'active',
     },
     {
       icon: Target,
       title: 'Phase Transition Story',
       brief: 'Document your skin\'s journey through a full cycle phase.',
-      reward: '200 LP',
+      reward: '200 AC',
       status: 'coming-soon',
     },
   ];
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
-        {/* Header */}
+      <div className="max-w-2xl mx-auto px-5 py-8 space-y-6">
         <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/sisterhood')}
-            className="rounded-full"
-          >
+          <Button variant="ghost" size="icon" onClick={() => navigate('/sisterhood')} className="rounded-full">
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-3xl font-heading font-semibold">Content Bounties</h1>
+          <h1 className="text-2xl font-heading font-semibold">Ecosystem Tasks</h1>
         </div>
 
-        <p className="text-muted-foreground leading-relaxed">
-          Complete creative missions to earn Legacy Points. The rewards listed are the base payment for your work. Your earnings can grow with the <strong className="text-primary">'Impact Multiplier'</strong> — the more views and engagement your content gets, the more bonus LP you'll receive at the end of the month!
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Complete tasks to earn Asset Credits. The more you contribute, the stronger the <span className="italic">meanwhile.</span> ecosystem becomes.
         </p>
 
-        {/* Active Bounties */}
         <div className="space-y-4">
-          <h2 className="text-xl font-heading font-semibold">Active Bounties</h2>
-          {bounties
-            .filter((b) => b.status === 'active')
-            .map((bounty, index) => {
-              const IconComponent = bounty.icon;
-              return (
-                <Card key={index} className="shadow-lg">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                        <IconComponent className="h-6 w-6" style={{ color: phaseColor }} />
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <CardTitle className="font-heading text-lg">{bounty.title}</CardTitle>
-                        <CardDescription>{bounty.brief}</CardDescription>
-                        <p className="text-sm font-bold pt-2" style={{ color: phaseColor }}>
-                          Reward: {bounty.reward}
-                        </p>
-                      </div>
+          <h2 className="text-lg font-heading font-semibold">Active Tasks</h2>
+          {tasks.filter((t) => t.status === 'active').map((task, index) => {
+            const IconComponent = task.icon;
+            return (
+              <Card key={index} className="border border-border">
+                <CardHeader>
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <IconComponent className="h-5 w-5" style={{ color: phaseColor }} />
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <Button
-                      className="w-full rounded-full"
-                      style={{ backgroundColor: phaseColor }}
-                    >
-                      Submit Your Content
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                    <div className="flex-1 space-y-1">
+                      <CardTitle className="font-heading text-base">{task.title}</CardTitle>
+                      <CardDescription className="text-xs">{task.brief}</CardDescription>
+                      <p className="text-xs font-mono-data font-bold pt-1" style={{ color: phaseColor }}>
+                        Reward: {task.reward}
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <Button className="w-full rounded-full" style={{ backgroundColor: phaseColor }}>
+                    Submit
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
-        {/* Coming Soon */}
-        <div className="space-y-4 pt-6">
-          <h2 className="text-xl font-heading font-semibold">Coming Soon</h2>
-          {bounties
-            .filter((b) => b.status === 'coming-soon')
-            .map((bounty, index) => {
-              const IconComponent = bounty.icon;
-              return (
-                <Card key={index} className="shadow-lg opacity-60">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                        <IconComponent className="h-6 w-6" style={{ color: phaseColor }} />
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <CardTitle className="font-heading text-lg">{bounty.title}</CardTitle>
-                        <CardDescription>{bounty.brief}</CardDescription>
-                        <p className="text-sm font-bold pt-2" style={{ color: phaseColor }}>
-                          Reward: {bounty.reward}
-                        </p>
-                      </div>
+        <div className="space-y-4 pt-4">
+          <h2 className="text-lg font-heading font-semibold">Coming Soon</h2>
+          {tasks.filter((t) => t.status === 'coming-soon').map((task, index) => {
+            const IconComponent = task.icon;
+            return (
+              <Card key={index} className="border border-border opacity-60">
+                <CardHeader>
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <IconComponent className="h-5 w-5" style={{ color: phaseColor }} />
                     </div>
-                  </CardHeader>
-                </Card>
-              );
-            })}
+                    <div className="flex-1 space-y-1">
+                      <CardTitle className="font-heading text-base">{task.title}</CardTitle>
+                      <CardDescription className="text-xs">{task.brief}</CardDescription>
+                      <p className="text-xs font-mono-data font-bold pt-1" style={{ color: phaseColor }}>
+                        Reward: {task.reward}
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </div>

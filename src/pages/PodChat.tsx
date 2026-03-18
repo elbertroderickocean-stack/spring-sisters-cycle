@@ -74,7 +74,7 @@ const PodChat = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1">
-              <h1 className="text-xl font-heading font-semibold">The Glow Getters</h1>
+              <h1 className="text-xl font-heading font-semibold">The Glow Getters — Syndicate Unit</h1>
               <p className="text-xs text-muted-foreground">4 members</p>
             </div>
           </div>
@@ -164,7 +164,7 @@ const PodChat = () => {
               size="lg"
             >
               <Gift className="h-4 w-4 mr-2" />
-              Gift LP
+              Gift AC
             </Button>
             <Button
               onClick={() => setSelectedMember(null)}

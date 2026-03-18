@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Star, MessageSquare, Vote, Users } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Star, MessageSquare, Vote, Users, Database, Camera, ClipboardCheck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/contexts/UserContext';
@@ -19,49 +19,35 @@ const LegacyPoints = () => {
   const phaseIconColor = getPhaseIconColor();
 
   const earningMethods = [
-    {
-      icon: CheckCircle2,
-      title: 'Daily Check-in',
-      points: '5 LP per day',
-    },
-    {
-      icon: MessageSquare,
-      title: 'Product Reviews',
-      points: '50 LP per detailed review',
-    },
-    {
-      icon: Vote,
-      title: 'Voting in R&D Panel',
-      points: '25 LP per vote',
-    },
-    {
-      icon: Users,
-      title: 'Referring a Sister',
-      points: '200 LP per successful referral',
-    },
+    { icon: CheckCircle2, title: 'Daily Check-in', points: '5 AC per day' },
+    { icon: Camera, title: 'Share your Progress (UGC)', points: '1,000 AC per post' },
+    { icon: Database, title: 'Data Calibration (Log Sleep/Glucose)', points: '500 AC per entry' },
+    { icon: ClipboardCheck, title: 'Asset Review', points: '250 AC per review' },
+    { icon: Vote, title: 'Voting in Governance', points: '25 AC per vote' },
+    { icon: Users, title: 'Referring a Member', points: '200 AC per referral' },
   ];
 
   const statusLevels = [
     {
-      name: 'Initiate',
-      points: '0 LP',
-      reward: 'Welcome to the Circle!',
+      name: 'Community Member',
+      points: '0 AC',
+      reward: 'Welcome to The Syndicate. Credits you earn for investing your time and data.',
     },
     {
-      name: 'Guardian',
-      points: '1000 LP',
-      reward: 'Unlock a 20% lifetime discount and exclusive content.',
+      name: 'Strategic Associate',
+      points: '3,000 AC',
+      reward: 'Unlock a 20% lifetime discount, exclusive content, and early access to new assets.',
     },
     {
-      name: 'Matriarch',
-      points: '5000 LP',
-      reward: 'Receive our annual Founder\'s Gift Box with limited edition products and unlock Vesting Accelerators for your stock options.',
+      name: 'Network Partner',
+      points: '10,000 AC',
+      reward: 'Receive our annual Founder\'s Gift Box with limited edition products and unlock Vesting Accelerators.',
     },
   ];
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
+      <div className="max-w-2xl mx-auto px-5 py-8 space-y-6">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <Button
@@ -72,68 +58,64 @@ const LegacyPoints = () => {
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-3xl font-heading font-semibold">Your Path to Legacy</h1>
+          <h1 className="text-2xl font-heading font-semibold">The Growth Path</h1>
         </div>
 
-        {/* Section 1: How to Earn */}
-        <Card className="shadow-lg">
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Credits you earn for investing your time and data into the <span className="italic">meanwhile.</span> ecosystem.
+        </p>
+
+        {/* How to Earn */}
+        <Card className="border border-border">
           <CardHeader>
-            <CardTitle className="font-heading">How to Earn Legacy Points (LP)</CardTitle>
-            <CardDescription>Every action you take builds your legacy</CardDescription>
+            <CardTitle className="font-heading text-lg">How to Earn Asset Credits (AC)</CardTitle>
+            <CardDescription>Every action you take builds your contribution</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3">
             {earningMethods.map((method, index) => {
               const IconComponent = method.icon;
               return (
-                <div key={index} className="flex items-center gap-4 p-3 rounded-lg border border-border">
-                  <div className="flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <IconComponent className="h-5 w-5" style={{ color: phaseIconColor }} />
-                    </div>
+                <div key={index} className="flex items-center gap-3 p-3 rounded-[12px] border border-border">
+                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <IconComponent className="h-4 w-4" style={{ color: phaseIconColor }} />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground">{method.title}</h4>
+                    <h4 className="text-sm font-semibold text-foreground">{method.title}</h4>
                   </div>
-                  <div className="text-right">
-                    <span className="text-sm font-bold" style={{ color: phaseIconColor }}>
-                      {method.points}
-                    </span>
-                  </div>
+                  <span className="text-xs font-mono-data font-bold" style={{ color: phaseIconColor }}>
+                    {method.points}
+                  </span>
                 </div>
               );
             })}
           </CardContent>
         </Card>
 
-        {/* Section 2: Rewards & Status Levels */}
-        <Card className="shadow-lg">
+        {/* Growth Path */}
+        <Card className="border border-border">
           <CardHeader>
-            <CardTitle className="font-heading">Rewards & Status Levels</CardTitle>
-            <CardDescription>Your journey from Initiate to Matriarch</CardDescription>
+            <CardTitle className="font-heading text-lg">Membership Tiers</CardTitle>
+            <CardDescription>Your journey from Member to Network Partner</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {statusLevels.map((level, index) => (
               <div key={index} className="relative pl-8">
-                {/* Timeline line */}
                 {index < statusLevels.length - 1 && (
-                  <div 
-                    className="absolute left-3 top-8 w-0.5 h-full bg-border"
+                  <div
+                    className="absolute left-3 top-8 w-0.5 h-full"
                     style={{ background: `linear-gradient(to bottom, ${phaseIconColor}, transparent)` }}
                   />
                 )}
-                
-                {/* Timeline dot */}
-                <div 
+                <div
                   className="absolute left-0 top-2 w-6 h-6 rounded-full border-4 border-background"
                   style={{ backgroundColor: phaseIconColor }}
                 />
-                
                 <div className="space-y-1">
                   <div className="flex items-baseline gap-2">
-                    <h4 className="font-bold text-lg" style={{ color: phaseIconColor }}>
+                    <h4 className="font-bold text-base" style={{ color: phaseIconColor }}>
                       {level.name}
                     </h4>
-                    <span className="text-sm text-muted-foreground">({level.points})</span>
+                    <span className="text-xs font-mono-data text-muted-foreground">({level.points})</span>
                   </div>
                   <p className="text-sm text-muted-foreground">{level.reward}</p>
                 </div>
