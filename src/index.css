@@ -176,11 +176,12 @@
   /* Mesh gradient background */
   .mesh-gradient {
     background: 
-      radial-gradient(ellipse at 20% 50%, hsl(210 80% 35% / 0.4) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, hsl(175 60% 30% / 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 60% 80%, hsl(30 30% 25% / 0.3) 0%, transparent 50%),
-      radial-gradient(ellipse at 40% 30%, hsl(240 30% 15% / 0.4) 0%, transparent 60%),
-      hsl(220 15% 8%);
+      radial-gradient(ellipse at 15% 30%, hsl(230 35% 18% / 0.7) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 15%, hsl(260 20% 22% / 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, hsl(220 15% 12% / 0.6) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 50%, hsl(250 25% 16% / 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 70%, hsl(215 30% 14% / 0.5) 0%, transparent 50%),
+      hsl(225 20% 7%);
   }
 
   /* Glass card */
