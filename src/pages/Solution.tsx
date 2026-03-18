@@ -12,11 +12,11 @@ const Solution = () => {
     if (selected) {
       setShowLocked(true);
       setTimeout(() => {
-        // Strategy → Biology: go to Details (age/skin type)
+        // Strategy → Strategy Questions (path-specific)
         if (selected === 'longevity') {
-          navigate('/details', { state: { strategy: selected, selectedRhythm: 'cellular' } });
+          navigate('/strategy-questions', { state: { strategy: selected, selectedRhythm: 'cellular' } });
         } else {
-          navigate('/details', { state: { strategy: selected, selectedRhythm: 'hormonal' } });
+          navigate('/strategy-questions', { state: { strategy: selected, selectedRhythm: 'hormonal' } });
         }
       }, 2500);
     }

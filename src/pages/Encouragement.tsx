@@ -40,7 +40,7 @@ const Encouragement = () => {
           </p>
 
           <button
-            onClick={() => navigate('/personalize', { state: { strategy, selectedRhythm } })}
+            onClick={() => navigate('/connect-environment', { state: { strategy, selectedRhythm } })}
             className="w-full py-4 rounded-lg text-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
           >
             Continue to Lifestyle
