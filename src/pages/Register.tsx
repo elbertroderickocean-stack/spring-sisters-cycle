@@ -15,11 +15,15 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showDemoModal, setShowDemoModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateAccount = () => {
-    if (name && email && password) {
+    if (name && email && password && !isLoading) {
+      setIsLoading(true);
       updateUserData({ name, email });
-      navigate('/details', { state: { selectedRhythm: location.state?.selectedRhythm || 'hormonal' } });
+      setTimeout(() => {
+        navigate('/today');
+      }, 1000);
     }
   };
 
@@ -86,10 +90,10 @@ const Register = () => {
           <Button
             size="lg"
             onClick={handleCreateAccount}
-            disabled={!name || !email || !password}
+            disabled={!name || !email || !password || isLoading}
             className="w-full mt-6 h-12 text-base rounded-lg"
           >
-            Create Account
+            {isLoading ? 'Creating Account...' : 'Create Account'}
           </Button>
 
           <div className="relative my-6">
