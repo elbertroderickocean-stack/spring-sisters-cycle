@@ -10,8 +10,8 @@ export const HeaderBar = ({ children }: HeaderBarProps) => {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-10 bg-background/60 backdrop-blur-xl border-b border-[hsl(var(--glass-border))]">
+      <div className="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
         <div className="flex-1">{children}</div>
         <button
           onClick={() => navigate('/profile')}
