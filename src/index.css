@@ -61,10 +61,10 @@
     --phase-balance-solid: 75 100% 75%;
     --phase-balance-foreground: 220 15% 8%;
 
-    /* Glassmorphism */
-    --glass-bg: 220 15% 15% / 0.6;
-    --glass-border: 0 0% 100% / 0.08;
-    --glass-highlight: 0 0% 100% / 0.04;
+    /* Glassmorphism — Apple-tier liquid glass */
+    --glass-bg: 0 0% 100% / 0.03;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-highlight: 0 0% 100% / 0.05;
 
     /* Mesh gradient palette */
     --mesh-blue: 210 80% 35%;
