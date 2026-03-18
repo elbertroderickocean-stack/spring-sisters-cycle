@@ -23,102 +23,77 @@ const Intelligence = () => {
           <Cpu className="h-5 w-5 text-[hsl(var(--intel-glucose))]" />
           <div>
             <h1 className="text-xl font-heading font-semibold tracking-tight">meanwhile.intelligence</h1>
-            <p className="text-xs text-muted-foreground tracking-wide uppercase">Strategic Skin Analytics</p>
+            <p className="text-xs text-muted-foreground tracking-wide uppercase font-body">Strategic Skin Analytics</p>
           </div>
         </div>
       </HeaderBar>
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-5">
-        {/* Skin Audit Widget */}
         <SkinAuditWidget />
 
-        {/* Glucose Hero Widget — clickable */}
         <div className="cursor-pointer" onClick={() => navigate('/intelligence/glucose')}>
           <GlucoseWidget />
           <div className="flex items-center justify-end gap-1 mt-1 pr-1">
-            <span className="text-[10px] text-muted-foreground">View details</span>
+            <span className="text-[10px] text-muted-foreground font-body">View details</span>
             <ChevronRight className="h-3 w-3 text-muted-foreground" />
           </div>
         </div>
 
-        {/* Sleep & Stress Row — clickable */}
         <div className="grid grid-cols-2 gap-4">
           <div className="cursor-pointer" onClick={() => navigate('/intelligence/sleep')}>
             <SleepWidget />
             <div className="flex items-center justify-end gap-1 mt-1 pr-1">
-              <span className="text-[10px] text-muted-foreground">Details</span>
+              <span className="text-[10px] text-muted-foreground font-body">Details</span>
               <ChevronRight className="h-3 w-3 text-muted-foreground" />
             </div>
           </div>
           <div className="cursor-pointer" onClick={() => navigate('/intelligence/stress')}>
             <StressWidget />
             <div className="flex items-center justify-end gap-1 mt-1 pr-1">
-              <span className="text-[10px] text-muted-foreground">Details</span>
+              <span className="text-[10px] text-muted-foreground font-body">Details</span>
               <ChevronRight className="h-3 w-3 text-muted-foreground" />
             </div>
           </div>
         </div>
 
-        {/* Scanner Buttons */}
         <div className="grid grid-cols-3 gap-3">
-          <Button
-            variant="outline"
-            className="h-14 border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg hover:shadow-md"
-            onClick={() => navigate('/meal-scanner')}
-          >
+          <Button variant="outline" className="h-14" onClick={() => navigate('/meal-scanner')}>
             <ScanLine className="h-4 w-4 mr-1.5 text-[hsl(var(--intel-glucose))]" />
-            <span className="text-xs">Meal</span>
+            <span className="text-xs font-body">Meal</span>
           </Button>
-          <Button
-            variant="outline"
-            className="h-14 border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg hover:shadow-md"
-            onClick={() => navigate('/skin-scanner')}
-          >
+          <Button variant="outline" className="h-14" onClick={() => navigate('/skin-scanner')}>
             <Camera className="h-4 w-4 mr-1.5 text-[hsl(var(--intel-sleep))]" />
-            <span className="text-xs">Skin</span>
+            <span className="text-xs font-body">Skin</span>
           </Button>
-          <Button
-            variant="outline"
-            className="h-14 border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg hover:shadow-md"
-            onClick={() => navigate('/scanner')}
-          >
+          <Button variant="outline" className="h-14" onClick={() => navigate('/scanner')}>
             <Search className="h-4 w-4 mr-1.5 text-[hsl(var(--intel-stress))]" />
-            <span className="text-xs">Analyze</span>
+            <span className="text-xs font-body">Analyze</span>
           </Button>
         </div>
 
-        {/* Truth Lens CTA */}
-        <Card 
-          className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg cursor-pointer hover:shadow-md transition-shadow"
-          onClick={() => navigate('/scanner')}
-        >
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/scanner')}>
           <CardContent className="p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[hsl(var(--intel-stress))]/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-[hsl(var(--intel-stress-light))] flex items-center justify-center">
               <Search className="h-5 w-5 text-[hsl(var(--intel-stress))]" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-medium">Analyze External Product</p>
-              <p className="text-xs text-muted-foreground">You use your current favorite. <strong className="text-foreground">meanwhile.</strong>, m.i. is ready to provide the intelligence it lacks.</p>
+              <p className="text-sm font-heading font-medium">Analyze External Product</p>
+              <p className="text-xs text-muted-foreground font-body">You use your current favorite. <strong className="text-foreground">meanwhile.</strong>, m.i. is ready to provide the intelligence it lacks.</p>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </CardContent>
         </Card>
 
-        {/* Causality Section */}
         <CausalityCard />
 
-        {/* CTA to m.i. chat */}
-        <Card 
-          className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg cursor-pointer hover:shadow-md transition-shadow"
-          onClick={() => navigate('/mi-chat')}
-        >
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/mi-chat')}>
           <CardContent className="p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[hsl(var(--intel-glucose))]/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-[hsl(var(--intel-glucose-light))] flex items-center justify-center">
               <Cpu className="h-5 w-5 text-[hsl(var(--intel-glucose))]" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-medium">Ask m.i.</p>
-              <p className="text-xs text-muted-foreground">Your strategic partner in skin longevity</p>
+              <p className="text-sm font-heading font-medium">Ask m.i.</p>
+              <p className="text-xs text-muted-foreground font-body">Your strategic partner in skin longevity</p>
             </div>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardContent>

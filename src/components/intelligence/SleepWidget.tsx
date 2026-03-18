@@ -9,11 +9,11 @@ export const SleepWidget = () => {
   const filled = (quality / 100) * circumference;
 
   return (
-    <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
+    <Card>
       <CardContent className="p-4 flex flex-col items-center gap-3">
         <div className="flex items-center gap-1.5 self-start">
           <Moon className="h-3.5 w-3.5 text-[hsl(var(--intel-sleep))]" />
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Recovery & Sleep</span>
+          <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-body">Recovery & Sleep</span>
         </div>
         
         <div className="relative w-24 h-24">
@@ -31,14 +31,14 @@ export const SleepWidget = () => {
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-lg font-mono-data font-bold">{quality}%</span>
-            <span className="text-[9px] text-muted-foreground">Quality</span>
+            <span className="text-lg font-mono-data font-bold text-foreground">{quality}%</span>
+            <span className="text-[9px] text-muted-foreground font-body">Quality</span>
           </div>
         </div>
 
         <div className="text-center space-y-0.5">
-          <p className="text-xs font-medium">{restHours}h restorative</p>
-          <p className="text-[10px] text-muted-foreground">Circadian rhythm synchronized</p>
+          <p className="text-xs font-body font-medium">{restHours}h restorative</p>
+          <p className="text-[10px] text-muted-foreground font-body">Circadian rhythm synchronized</p>
         </div>
       </CardContent>
     </Card>

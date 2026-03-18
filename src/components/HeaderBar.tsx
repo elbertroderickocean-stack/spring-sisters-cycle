@@ -10,7 +10,7 @@ export const HeaderBar = ({ children }: HeaderBarProps) => {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 z-10 bg-[hsl(var(--glass-bg))] backdrop-blur-[25px] backdrop-saturate-[1.4] border-b border-[hsl(var(--glass-border))]">
+    <header className="sticky top-0 z-10 bg-[hsl(var(--card))]/90 backdrop-blur-xl border-b border-border">
       <div className="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
         <div className="flex-1">{children}</div>
         <button

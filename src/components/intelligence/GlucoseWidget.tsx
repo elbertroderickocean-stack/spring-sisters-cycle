@@ -15,8 +15,8 @@ const generateGlucoseData = () => {
   const hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm'];
   return hours.map((h, i) => {
     let base = 85;
-    if (i >= 2 && i <= 4) base = 95 + Math.random() * 20; // post breakfast
-    if (i >= 6 && i <= 8) base = 100 + Math.random() * 25; // post lunch
+    if (i >= 2 && i <= 4) base = 95 + Math.random() * 20;
+    if (i >= 6 && i <= 8) base = 100 + Math.random() * 25;
     return { time: h, glucose: Math.round(base + Math.random() * 10) };
   });
 };
@@ -24,7 +24,7 @@ const generateGlucoseData = () => {
 const chartConfig: ChartConfig = {
   glucose: {
     label: 'Glucose mg/dL',
-    color: 'hsl(270 40% 45%)',
+    color: 'hsl(var(--intel-glucose))',
   },
 };
 
@@ -53,11 +53,11 @@ export const GlucoseWidget = () => {
   };
 
   return (
-    <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg overflow-hidden">
+    <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base font-heading">Glucose Management</CardTitle>
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Live</span>
+          <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-body">Live</span>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -65,18 +65,18 @@ export const GlucoseWidget = () => {
           <AreaChart data={data} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
             <defs>
               <linearGradient id="glucoseGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="hsl(270 40% 45%)" stopOpacity={0.3} />
-                <stop offset="100%" stopColor="hsl(270 40% 45%)" stopOpacity={0.02} />
+                <stop offset="0%" stopColor="hsl(var(--intel-glucose))" stopOpacity={0.15} />
+                <stop offset="100%" stopColor="hsl(var(--intel-glucose))" stopOpacity={0.02} />
               </linearGradient>
             </defs>
             <XAxis dataKey="time" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
             <YAxis domain={[70, 140]} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-            <ReferenceLine y={120} stroke="hsl(35 50% 60%)" strokeDasharray="4 4" strokeOpacity={0.6} />
+            <ReferenceLine y={120} stroke="hsl(var(--intel-stress))" strokeDasharray="4 4" strokeOpacity={0.4} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Area
               type="monotone"
               dataKey="glucose"
-              stroke="hsl(270 40% 45%)"
+              stroke="hsl(var(--intel-glucose))"
               strokeWidth={2}
               fill="url(#glucoseGradient)"
             />
@@ -86,14 +86,14 @@ export const GlucoseWidget = () => {
         {spikeDetected && (
           <div className="flex items-center gap-2 p-3 rounded-lg bg-[hsl(var(--intel-stress-light))] border border-[hsl(var(--intel-stress))]/20">
             <AlertTriangle className="h-4 w-4 text-[hsl(var(--intel-stress))]" />
-            <p className="text-xs">Glycation Risk Detected. Evening protocol will be adjusted.</p>
+            <p className="text-xs font-body">Glycation Risk Detected. Evening protocol will be adjusted.</p>
           </div>
         )}
 
         <Button
           onClick={handleScan}
           disabled={scanning}
-          className="w-full bg-[hsl(var(--intel-glucose))] hover:bg-[hsl(var(--intel-glucose))]/90 text-white"
+          className="w-full"
         >
           <ScanLine className="h-4 w-4 mr-2" />
           {scanning ? 'Analyzing...' : 'Scan Meal / Insight'}

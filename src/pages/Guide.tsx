@@ -57,34 +57,34 @@ const Guide = () => {
   ];
 
   return (
-    <div className="min-h-screen mesh-gradient pb-24">
+    <div className="min-h-screen bg-background pb-24">
       <HeaderBar>
         <div>
-          <p className="text-xs font-medium text-primary tracking-wide">meanwhile.</p>
-          <h1 className="text-2xl font-bold">Insights</h1>
+          <p className="text-xs font-body font-medium text-sage tracking-wide">meanwhile.</p>
+          <h1 className="text-2xl font-heading font-bold text-foreground">Insights</h1>
         </div>
       </HeaderBar>
 
-      <div className="max-w-3xl mx-auto px-5 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-5 py-8 space-y-10">
 
         {dynamicGuideContent.map((section, sectionIndex) => {
           const Icon = section.icon;
           return (
             <div key={section.section} className="space-y-4 animate-slide-up" style={{ animationDelay: `${sectionIndex * 0.1}s` }}>
               <div className="flex items-center gap-2 mb-4">
-                <Icon className="h-5 w-5 text-primary" />
-                <h2 className="text-xl font-bold">{section.section}</h2>
+                <Icon className="h-5 w-5 text-sage" />
+                <h2 className="text-xl font-heading font-bold category-title">{section.section}</h2>
               </div>
 
               <div className="grid gap-3">
                 {section.items.map((item, itemIndex) => (
                   <Card 
                     key={itemIndex} 
-                    className="cursor-pointer hover:border-primary/20 transition-all hover:scale-[1.01]"
+                    className="cursor-pointer hover:border-sage/30 transition-all hover:scale-[1.01]"
                     onClick={() => navigate(`/article/${item.articleId}`)}
                   >
                     <CardHeader>
-                      <CardTitle className="text-base font-bold">{item.title}</CardTitle>
+                      <CardTitle className="text-base font-heading font-bold">{item.title}</CardTitle>
                       <CardDescription>{item.description}</CardDescription>
                     </CardHeader>
                   </Card>

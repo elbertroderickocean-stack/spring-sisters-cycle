@@ -12,15 +12,15 @@ export const CausalityCard = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed font-body">
           <span className="font-semibold text-[hsl(var(--intel-glucose))]">High Glucose</span>
           {' + '}
           <span className="font-semibold text-[hsl(var(--intel-sleep))]">Low Sleep</span>
           {' = '}
           <span className="font-semibold text-[hsl(var(--intel-stress))]">Inflammation Risk</span>
         </p>
-        <div className="p-3 rounded-lg bg-[hsl(var(--glass-highlight))] border border-[hsl(var(--glass-border))]">
-          <p className="text-sm text-muted-foreground leading-relaxed">
+        <div className="p-3 rounded-lg bg-accent border border-border">
+          <p className="text-sm text-muted-foreground leading-relaxed font-body">
             System is prioritizing <span className="font-semibold text-foreground">Shift 01 (Recovery)</span> for 
             the next 24 hours. Anti-glycation protocol activated. Evening deployment adjusted.
           </p>

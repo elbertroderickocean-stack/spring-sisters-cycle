@@ -12,7 +12,7 @@ export const StressWidget = () => {
       <CardContent className="p-4 flex flex-col items-center gap-3">
         <div className="flex items-center gap-1.5 self-start">
           <Activity className="h-3.5 w-3.5 text-[hsl(var(--intel-stress))]" />
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Stress Index</span>
+          <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-body">Stress Index</span>
         </div>
 
         <div className="flex items-end justify-center gap-2 h-24 w-full">
@@ -23,12 +23,12 @@ export const StressWidget = () => {
             />
           </div>
           <div className="flex flex-col justify-end pb-1">
-            <span className="text-xl font-mono-data font-bold">{label}</span>
-            <span className="text-[9px] text-muted-foreground">Cortisol</span>
+            <span className="text-xl font-mono-data font-bold text-foreground">{label}</span>
+            <span className="text-[9px] text-muted-foreground font-body">Cortisol</span>
           </div>
         </div>
 
-        <p className="text-[10px] text-muted-foreground text-center">
+        <p className="text-[10px] text-muted-foreground text-center font-body">
           Linked to skin sensitivity analysis
         </p>
       </CardContent>
