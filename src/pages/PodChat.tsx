@@ -164,7 +164,7 @@ const PodChat = () => {
               size="lg"
             >
               <Gift className="h-4 w-4 mr-2" />
-              Gift LP
+              Gift AC
             </Button>
             <Button
               onClick={() => setSelectedMember(null)}
