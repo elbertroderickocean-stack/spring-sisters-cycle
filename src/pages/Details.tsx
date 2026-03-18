@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useUser } from '@/contexts/UserContext';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const Details = () => {
   const navigate = useNavigate();
