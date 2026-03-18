@@ -19,7 +19,7 @@ const Details = () => {
   const handleNext = () => {
     if (ageRange && skinType) {
       updateUserData({ ageRange, skinType });
-      navigate('/skin-concerns');
+      navigate('/skin-concerns', { state: { strategy: location.state?.strategy, selectedRhythm: location.state?.selectedRhythm } });
     }
   };
 
