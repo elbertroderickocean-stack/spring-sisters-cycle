@@ -57,35 +57,35 @@ const Guide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen mesh-gradient pb-24">
       <HeaderBar>
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">meanwhile.</p>
-          <h1 className="text-2xl font-heading font-semibold text-primary">Insights</h1>
+          <p className="text-xs font-medium text-primary tracking-wide">meanwhile.</p>
+          <h1 className="text-2xl font-bold">Insights</h1>
         </div>
       </HeaderBar>
 
-      <div className="max-w-3xl mx-auto px-6 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-5 py-8 space-y-8">
 
         {dynamicGuideContent.map((section, sectionIndex) => {
           const Icon = section.icon;
           return (
             <div key={section.section} className="space-y-4 animate-slide-up" style={{ animationDelay: `${sectionIndex * 0.1}s` }}>
               <div className="flex items-center gap-2 mb-4">
-                <Icon className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-heading font-semibold">{section.section}</h2>
+                <Icon className="h-5 w-5 text-primary" />
+                <h2 className="text-xl font-bold">{section.section}</h2>
               </div>
 
-              <div className="grid gap-4">
+              <div className="grid gap-3">
                 {section.items.map((item, itemIndex) => (
                   <Card 
                     key={itemIndex} 
-                    className="cursor-pointer hover:shadow-lg transition-all hover:scale-[1.02]"
+                    className="cursor-pointer hover:border-primary/20 transition-all hover:scale-[1.01]"
                     onClick={() => navigate(`/article/${item.articleId}`)}
                   >
                     <CardHeader>
-                      <CardTitle className="font-heading text-xl">{item.title}</CardTitle>
-                      <CardDescription className="text-base">{item.description}</CardDescription>
+                      <CardTitle className="text-base font-bold">{item.title}</CardTitle>
+                      <CardDescription>{item.description}</CardDescription>
                     </CardHeader>
                   </Card>
                 ))}
