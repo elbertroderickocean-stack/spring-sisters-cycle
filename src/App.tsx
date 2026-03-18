@@ -40,6 +40,7 @@ import StressDetail from "./pages/StressDetail";
 import GlucoseDetail from "./pages/GlucoseDetail";
 import MealScanner from "./pages/MealScanner";
 import SkinScanner from "./pages/SkinScanner";
+import Encouragement from "./pages/Encouragement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
