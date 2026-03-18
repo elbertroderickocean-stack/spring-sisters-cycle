@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const Solution = () => {
   const navigate = useNavigate();
