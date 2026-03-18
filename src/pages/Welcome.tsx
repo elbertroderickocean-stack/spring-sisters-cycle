@@ -77,7 +77,7 @@ const Welcome = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6 overflow-hidden">
+    <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12 overflow-hidden">
       <OnboardingProgressBar currentStep={1} />
       <div className="max-w-3xl w-full text-center space-y-8">
         {/* Data Alignment Visualization */}
