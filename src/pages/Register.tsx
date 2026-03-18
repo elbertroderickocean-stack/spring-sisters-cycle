@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useUser } from '@/contexts/UserContext';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const Register = () => {
   const navigate = useNavigate();
