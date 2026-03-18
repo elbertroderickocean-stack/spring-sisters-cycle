@@ -39,8 +39,8 @@ const Personalize = () => {
   const canProceed = cgmChoice && (isHormonal ? (lastPeriodDate && cycleLength) : true);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
-      <OnboardingProgressBar currentStep={3} />
+    <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12">
+      <OnboardingProgressBar currentStep={6} />
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground font-body">

@@ -3,56 +3,89 @@ import { cn } from '@/lib/utils';
 
 interface OnboardingProgressBarProps {
   currentStep: number;
-  totalSteps?: number;
 }
 
 const segments = [
-  { label: 'Strategy', steps: [1, 2] },
-  { label: 'Biology', steps: [3, 4, 5, 6] },
-  { label: 'Lifestyle', steps: [7, 8] },
-  { label: 'Portfolio', steps: [9] },
+  { number: 1, label: 'Strategy' },
+  { number: 2, label: 'Biology' },
+  { number: 3, label: 'Lifestyle' },
+  { number: 4, label: 'Portfolio' },
 ];
 
+// Maps currentStep to which segment is active
+// Steps 1-2 = Strategy, 3-5 = Biology, 6-7 = Lifestyle, 8 = Portfolio
+const getActiveSegment = (step: number): number => {
+  if (step <= 2) return 1;
+  if (step <= 5) return 2;
+  if (step <= 7) return 3;
+  return 4;
+};
+
+const SAGE = '#B2C2B2';
+
 const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
-  const getSegmentState = (segment: typeof segments[0]) => {
-    const maxStep = Math.max(...segment.steps);
-    const minStep = Math.min(...segment.steps);
-    if (currentStep > maxStep) return 'complete';
-    if (currentStep >= minStep) return 'active';
-    return 'pending';
-  };
+  const activeSegment = getActiveSegment(currentStep);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 px-6 pt-4 pb-2">
-      <div className="max-w-lg mx-auto flex gap-2">
-        {segments.map((segment, i) => {
-          const state = getSegmentState(segment);
-          return (
-            <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
-              <div className="w-full h-[3px] rounded-full overflow-hidden bg-border/30">
-                <div
-                  className={cn(
-                    "h-full rounded-full transition-all duration-700 ease-out",
-                    state === 'complete' && "w-full",
-                    state === 'active' && "w-1/2",
-                    state === 'pending' && "w-0"
-                  )}
-                  style={{
-                    backgroundColor: state !== 'pending' ? '#B2C2B2' : 'transparent',
-                  }}
-                />
-              </div>
-              <span
-                className={cn(
-                  "text-[9px] uppercase tracking-[0.2em] font-body transition-colors duration-500",
-                  state === 'pending' ? "text-muted-foreground/40" : "text-muted-foreground"
+    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-background/80 backdrop-blur-sm">
+      <div className="max-w-sm mx-auto">
+        {/* Circles + Lines */}
+        <div className="flex items-center justify-between relative">
+          {segments.map((seg, i) => {
+            const isComplete = activeSegment > seg.number;
+            const isActive = activeSegment === seg.number;
+            const isPending = activeSegment < seg.number;
+
+            return (
+              <React.Fragment key={seg.number}>
+                {/* Circle */}
+                <div className="flex flex-col items-center gap-2 relative z-10">
+                  <div
+                    className={cn(
+                      "w-8 h-8 rounded-full flex items-center justify-center text-xs font-body font-semibold transition-all duration-700",
+                      (isComplete || isActive) && "shadow-sm"
+                    )}
+                    style={{
+                      backgroundColor: isComplete || isActive ? SAGE : 'transparent',
+                      color: isComplete || isActive ? '#FFFFFF' : 'hsl(var(--muted-foreground) / 0.4)',
+                      border: isPending ? '1.5px solid hsl(var(--border))' : `1.5px solid ${SAGE}`,
+                    }}
+                  >
+                    {isComplete ? (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    ) : (
+                      seg.number
+                    )}
+                  </div>
+                  <span
+                    className={cn(
+                      "text-[9px] uppercase tracking-[0.15em] font-body transition-colors duration-500 whitespace-nowrap",
+                      isPending ? "text-muted-foreground/30" : "text-muted-foreground"
+                    )}
+                  >
+                    {seg.label}
+                  </span>
+                </div>
+
+                {/* Connecting line */}
+                {i < segments.length - 1 && (
+                  <div className="flex-1 h-[1.5px] mx-1 -mt-5 relative">
+                    <div className="absolute inset-0 bg-border/40 rounded-full" />
+                    <div
+                      className="absolute inset-y-0 left-0 rounded-full transition-all duration-700 ease-out"
+                      style={{
+                        width: isComplete ? '100%' : isActive ? '50%' : '0%',
+                        backgroundColor: SAGE,
+                      }}
+                    />
+                  </div>
                 )}
-              >
-                {segment.label}
-              </span>
-            </div>
-          );
-        })}
+              </React.Fragment>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

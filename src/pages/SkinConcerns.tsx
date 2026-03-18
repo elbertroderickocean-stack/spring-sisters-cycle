@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -17,6 +17,7 @@ const skinConcernsList = [
 
 const SkinConcerns = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { updateUserData } = useUser();
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
 
@@ -30,12 +31,12 @@ const SkinConcerns = () => {
 
   const handleNext = () => {
     updateUserData({ skinConcerns: selectedConcerns });
-    navigate('/encouragement');
+    navigate('/encouragement', { state: location.state });
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
-      <OnboardingProgressBar currentStep={7} />
+    <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12">
+      <OnboardingProgressBar currentStep={4} />
       <div className="max-w-lg w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h1 className="text-4xl font-heading font-semibold text-primary">
