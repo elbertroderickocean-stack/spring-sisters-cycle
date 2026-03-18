@@ -30,7 +30,7 @@ const Personalize = () => {
         cycleLength: parseInt(cycleLength),
         wiseBloomMode: false,
       });
-      navigate('/register', { state: { selectedRhythm: 'hormonal' } });
+      navigate('/inventory');
     } else if (!isHormonal && cgmChoice) {
       navigate('/wise-bloom', { state: { selectedRhythm: 'cellular' } });
     }
