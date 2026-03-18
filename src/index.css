@@ -39,7 +39,7 @@ All colors MUST be HSL.
     --input: 40 8% 88%;
     --ring: 120 12% 69%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     
     /* Phase-specific colors */
     --phase-calm: 200 25% 82%;
