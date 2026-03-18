@@ -41,6 +41,8 @@ import GlucoseDetail from "./pages/GlucoseDetail";
 import MealScanner from "./pages/MealScanner";
 import SkinScanner from "./pages/SkinScanner";
 import Encouragement from "./pages/Encouragement";
+import StrategyQuestions from "./pages/StrategyQuestions";
+import ConnectEnvironment from "./pages/ConnectEnvironment";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
