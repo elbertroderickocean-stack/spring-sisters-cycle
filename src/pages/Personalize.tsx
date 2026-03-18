@@ -9,6 +9,7 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
+import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const Personalize = () => {
   const navigate = useNavigate();
