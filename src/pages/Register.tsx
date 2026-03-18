@@ -35,6 +35,7 @@ const Register = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+      <OnboardingProgressBar currentStep={5} />
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">

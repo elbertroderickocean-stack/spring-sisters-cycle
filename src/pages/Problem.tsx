@@ -44,6 +44,7 @@ const Problem = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
+      <OnboardingProgressBar currentStep={2} />
       <div className="max-w-3xl text-center space-y-10 animate-slide-up">
         {/* The Hook */}
         <div className="space-y-6">
