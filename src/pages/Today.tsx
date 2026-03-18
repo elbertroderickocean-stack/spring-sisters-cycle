@@ -732,7 +732,7 @@ const Today = () => {
     <div className="min-h-screen mesh-gradient-bg pb-24">
       <HeaderBar>
         <div>
-          <p className="text-xs font-medium text-primary tracking-wide">meanwhile</p>
+          <p className="text-xs font-bold text-primary tracking-wider uppercase">meanwhile</p>
           <p className="text-sm text-muted-foreground mt-0.5">Hello, {userData.name || 'Investor'}</p>
         </div>
       </HeaderBar>

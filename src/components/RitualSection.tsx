@@ -47,7 +47,7 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
   const [selectedStep, setSelectedStep] = React.useState<RitualStep | null>(null);
 
   return (
-    <div className="rounded-2xl border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg overflow-hidden">
+    <div className="rounded-[20px] border-[0.5px] border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] backdrop-saturate-[1.3] overflow-hidden">
       {/* Header */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -55,8 +55,8 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
       >
         <div className="flex items-center gap-3">
           {icon}
-          <h3 className="font-heading font-semibold text-base tracking-wide">{title}</h3>
-          <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-border/50 text-muted-foreground">
+          <h3 className="font-bold text-base tracking-tight">{title}</h3>
+          <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-[hsl(var(--glass-border))] text-muted-foreground">
             {steps.filter(s => s.owned).length}/{steps.length} active
           </Badge>
         </div>
@@ -73,7 +73,7 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
       {isOpen && (
         <div className="px-5 pb-5 pt-1">
           {auraNote && (
-            <div className="mb-4 p-3 rounded-lg bg-[hsl(var(--intel-sleep))]/8 border border-[hsl(var(--intel-sleep))]/15">
+            <div className="mb-4 p-3 rounded-xl bg-[hsl(var(--intel-sleep))]/8 border-[0.5px] border-[hsl(var(--intel-sleep))]/15">
               <p className="text-xs text-muted-foreground italic">
                 <span className="font-semibold text-[hsl(var(--intel-sleep))]">m.i.:</span> {auraNote}
               </p>
@@ -82,8 +82,7 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
 
           {/* Vertical timeline */}
           <div className="relative">
-            {/* The vertical line */}
-            <div className="absolute left-[15px] top-3 bottom-3 w-px bg-border" />
+            <div className="absolute left-[15px] top-3 bottom-3 w-px bg-[hsl(var(--glass-border))]" />
 
             <div className="space-y-0">
               {steps.map((step, idx) => {
@@ -99,7 +98,6 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                       if (hasHowTo && step.owned) setSelectedStep(step);
                     }}
                   >
-                    {/* Node on the timeline */}
                     <div className="relative z-10 flex-shrink-0 w-[31px] flex justify-center">
                       {isWellness ? (
                         <div className="w-[10px] h-[10px] mt-[6px] rounded-full bg-gradient-to-br from-[hsl(var(--intel-sleep))] to-[hsl(var(--intel-glucose))]" />
@@ -113,16 +111,15 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                       )}
                     </div>
 
-                    {/* Content card */}
                     <div
-                      className={`flex-1 min-w-0 rounded-xl px-4 py-3 border transition-all ${
+                      className={`flex-1 min-w-0 rounded-xl px-4 py-3 border-[0.5px] transition-all ${
                         step.owned
-                          ? 'bg-[#B2C2B2]/8 border-[#B2C2B2]/25 group-hover:border-[#B2C2B2]/40 group-hover:bg-[#B2C2B2]/12'
-                          : 'bg-muted/10 border-dashed border-border/20 opacity-50'
+                          ? 'bg-[hsl(var(--sage-light))] border-[hsl(var(--sage)/0.15)] group-hover:border-[hsl(var(--sage)/0.3)]'
+                          : 'bg-muted/10 border-dashed border-[hsl(var(--glass-border))] opacity-50'
                       }`}
                     >
                       <div className="flex items-center gap-2 mb-0.5">
-                        <h4 className={`font-heading text-sm font-medium ${step.owned ? 'text-foreground' : 'text-muted-foreground'}`}>
+                        <h4 className={`text-sm font-medium ${step.owned ? 'text-foreground' : 'text-muted-foreground'}`}>
                           {step.name}
                         </h4>
                         {isWellness && (
@@ -131,7 +128,7 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                           </Badge>
                         )}
                         {step.owned && !isWellness && (
-                          <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-[#B2C2B2]/30 text-[#B2C2B2] gap-0.5">
+                          <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-[hsl(var(--sage)/0.2)] text-[hsl(var(--sage))] gap-0.5">
                             <Zap className="h-2 w-2" /> Live Data
                           </Badge>
                         )}
@@ -162,9 +159,8 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                           </Button>
                         </div>
                       )}
-                      {/* m.i. Insight for phase products */}
                       {step.isPhaseProduct && step.owned && (
-                        <div className="mt-2 pt-2 border-t border-border/30">
+                        <div className="mt-2 pt-2 border-t border-[hsl(var(--glass-border))]">
                           <p className="text-[10px] text-[hsl(var(--intel-glucose))] font-medium">
                             ↑ Phase-matched formula active — adapting to your cycle data
                           </p>

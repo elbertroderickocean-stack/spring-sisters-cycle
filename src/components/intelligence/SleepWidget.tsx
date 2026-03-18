@@ -13,17 +13,17 @@ export const SleepWidget = () => {
       <CardContent className="p-4 flex flex-col items-center gap-3">
         <div className="flex items-center gap-1.5 self-start">
           <Moon className="h-3.5 w-3.5 text-[hsl(var(--intel-sleep))]" />
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-body">Recovery & Sleep</span>
+          <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Recovery & Sleep</span>
         </div>
         
         <div className="relative w-24 h-24">
           <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--intel-sleep-light))" strokeWidth="6" />
+            <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--intel-sleep-light))" strokeWidth="5" />
             <circle
               cx="50" cy="50" r="40"
               fill="none"
               stroke="hsl(var(--intel-sleep))"
-              strokeWidth="6"
+              strokeWidth="5"
               strokeLinecap="round"
               strokeDasharray={circumference}
               strokeDashoffset={circumference - filled}
@@ -32,13 +32,13 @@ export const SleepWidget = () => {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-lg font-mono-data font-bold text-foreground">{quality}%</span>
-            <span className="text-[9px] text-muted-foreground font-body">Quality</span>
+            <span className="text-[9px] text-muted-foreground">Quality</span>
           </div>
         </div>
 
         <div className="text-center space-y-0.5">
-          <p className="text-xs font-body font-medium">{restHours}h restorative</p>
-          <p className="text-[10px] text-muted-foreground font-body">Circadian rhythm synchronized</p>
+          <p className="text-xs font-medium">{restHours}h restorative</p>
+          <p className="text-[10px] text-muted-foreground">Circadian rhythm synchronized</p>
         </div>
       </CardContent>
     </Card>

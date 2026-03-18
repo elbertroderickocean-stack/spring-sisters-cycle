@@ -27,14 +27,14 @@ export const SynergyIndex: React.FC = () => {
             <circle
               cx="40" cy="40" r="38"
               stroke="hsl(var(--border))"
-              strokeWidth="3"
+              strokeWidth="2.5"
               fill="none"
               opacity="0.2"
             />
             <circle
               cx="40" cy="40" r="38"
               stroke={color}
-              strokeWidth="3"
+              strokeWidth="2.5"
               fill="none"
               strokeLinecap="round"
               strokeDasharray={circumference}
@@ -51,11 +51,11 @@ export const SynergyIndex: React.FC = () => {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">
+            <h3 className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
               Protocol Intelligence
             </h3>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed font-body">
+          <p className="text-sm text-muted-foreground leading-relaxed">
             {percentage < 40
               ? 'Your routine is active, but disconnected from live bio-data. Complete the framework to unlock autonomous skin management.'
               : percentage < 80
