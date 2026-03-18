@@ -90,10 +90,10 @@ const Register = () => {
           <Button
             size="lg"
             onClick={handleCreateAccount}
-            disabled={!name || !email || !password}
+            disabled={!name || !email || !password || isLoading}
             className="w-full mt-6 h-12 text-base rounded-lg"
           >
-            Create Account
+            {isLoading ? 'Creating Account...' : 'Create Account'}
           </Button>
 
           <div className="relative my-6">
