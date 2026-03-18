@@ -36,8 +36,8 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
                 <div className="flex flex-col items-center gap-2 relative z-10">
                   <div
                     className={cn(
-                      "w-8 h-8 rounded-full flex items-center justify-center text-xs font-body font-semibold transition-all duration-700",
-                      isActive && "shadow-[0_0_16px_hsl(72_100%_45%_/_0.5)]"
+                      "w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-700",
+                      isActive && "shadow-[0_0_16px_hsl(var(--primary)/0.4)]"
                     )}
                     style={{
                       backgroundColor: isComplete || isActive ? 'hsl(var(--primary))' : 'transparent',
