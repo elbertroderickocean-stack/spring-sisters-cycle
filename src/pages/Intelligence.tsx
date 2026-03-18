@@ -22,8 +22,8 @@ const Intelligence = () => {
         <div className="flex items-center gap-3">
           <Cpu className="h-5 w-5 text-[hsl(var(--intel-glucose))]" />
           <div>
-            <h1 className="text-xl font-heading font-semibold tracking-tight">meanwhile.intelligence</h1>
-            <p className="text-xs text-muted-foreground tracking-wide uppercase font-body">Strategic Skin Analytics</p>
+            <h1 className="text-xl font-bold tracking-tight">meanwhile.intelligence</h1>
+            <p className="text-[10px] text-muted-foreground tracking-[0.15em] uppercase">Strategic Skin Analytics</p>
           </div>
         </div>
       </HeaderBar>

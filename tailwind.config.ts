@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Lora', 'serif'],
+        heading: ['Inter', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
         sans: ['Inter', 'sans-serif'],
         'mono-data': ['JetBrains Mono', 'monospace'],
@@ -67,7 +67,7 @@ export default {
           'balance-foreground': "hsl(var(--phase-balance-foreground))",
         },
         canary: {
-          DEFAULT: "hsl(72 100% 45%)",
+          DEFAULT: "hsl(72 100% 65%)",
           foreground: "hsl(0 0% 4%)",
         },
       },

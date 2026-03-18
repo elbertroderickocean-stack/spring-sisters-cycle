@@ -17,14 +17,14 @@ interface MetricCardProps {
 const MetricCard: React.FC<MetricCardProps> = ({ label, children, sublabel, onClick }) => (
   <button
     onClick={onClick}
-    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.03] hover:border-primary/20 active:scale-[0.98] cursor-pointer"
+    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:border-[hsl(var(--primary)/0.15)] active:scale-[0.98] cursor-pointer"
   >
-    <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground leading-tight font-body">{label}</span>
+    <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground leading-tight">{label}</span>
     <div className="flex-1 flex items-center justify-center">
       {children}
     </div>
     {sublabel && (
-      <span className="text-[10px] text-muted-foreground text-center font-body">{sublabel}</span>
+      <span className="text-[10px] text-muted-foreground text-center">{sublabel}</span>
     )}
   </button>
 );
@@ -69,7 +69,7 @@ export const DashboardMetrics: React.FC = () => {
         <MetricCard label="Return Streak" onClick={() => setActiveMetric(metrics.streak)}>
           <div className="flex flex-col items-center">
             <span className="text-4xl font-mono-data font-bold text-primary">{streak}</span>
-            <span className="text-[11px] text-muted-foreground mt-1 font-body">days</span>
+            <span className="text-[11px] text-muted-foreground mt-1">days</span>
           </div>
         </MetricCard>
 
@@ -79,14 +79,14 @@ export const DashboardMetrics: React.FC = () => {
               <circle
                 cx="36" cy="36" r="32"
                 stroke="hsl(var(--border))"
-                strokeWidth="3"
+                strokeWidth="2.5"
                 fill="none"
                 opacity="0.3"
               />
               <circle
                 cx="36" cy="36" r="32"
                 stroke="hsl(var(--primary))"
-                strokeWidth="3"
+                strokeWidth="2.5"
                 fill="none"
                 strokeLinecap="round"
                 strokeDasharray={circumference}
@@ -110,9 +110,9 @@ export const DashboardMetrics: React.FC = () => {
       </div>
 
       <Dialog open={!!activeMetric} onOpenChange={(open) => !open && setActiveMetric(null)}>
-        <DialogContent className="glass-card border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[30px] max-w-sm">
+        <DialogContent className="glass-card border-[0.5px] border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] max-w-sm">
           <DialogHeader>
-            <DialogTitle className="text-lg font-heading font-bold text-foreground">
+            <DialogTitle className="text-lg font-bold text-foreground">
               {activeMetric?.title}
             </DialogTitle>
             <div className="flex items-center justify-center py-6">
@@ -120,7 +120,7 @@ export const DashboardMetrics: React.FC = () => {
                 {activeMetric?.value}
               </span>
             </div>
-            <DialogDescription className="text-sm text-muted-foreground leading-relaxed font-body">
+            <DialogDescription className="text-sm text-muted-foreground leading-relaxed">
               {activeMetric?.description}
             </DialogDescription>
           </DialogHeader>

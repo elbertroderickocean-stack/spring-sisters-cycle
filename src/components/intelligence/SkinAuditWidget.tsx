@@ -97,20 +97,19 @@ const RadarChart = ({ metrics, onLabelClick }: { metrics: SkinMetric[]; onLabelC
   return (
     <svg viewBox={`0 0 ${size} ${size}`} className="w-full max-w-[260px] mx-auto">
       {gridPolygons.map((pts, i) => (
-        <polygon key={i} points={pts} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" opacity={0.5} />
+        <polygon key={i} points={pts} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" opacity={0.4} />
       ))}
       {Array.from({ length: n }, (_, i) => {
         const p = point(i, maxR);
-        return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="hsl(var(--border))" strokeWidth="0.5" opacity={0.3} />;
+        return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="hsl(var(--border))" strokeWidth="0.5" opacity={0.2} />;
       })}
-      <polygon points={dataPolygon} fill="hsl(var(--primary) / 0.15)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+      <polygon points={dataPolygon} fill="hsl(var(--primary) / 0.12)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
       {dataPoints.map((p, i) => (
         <g key={i}>
-          <circle cx={p.x} cy={p.y} r="5" fill="hsl(var(--primary) / 0.2)" />
+          <circle cx={p.x} cy={p.y} r="5" fill="hsl(var(--primary) / 0.15)" />
           <circle cx={p.x} cy={p.y} r="2.5" fill="hsl(var(--primary))" />
         </g>
       ))}
-      {/* Clickable label areas */}
       {labelPoints.map((p, i) => (
         <g key={i} className="cursor-pointer" onClick={() => onLabelClick(metrics[i].label)}>
           <rect x={p.x - 28} y={p.y - 8} width="56" height="16" fill="transparent" rx="4" />
@@ -120,7 +119,7 @@ const RadarChart = ({ metrics, onLabelClick }: { metrics: SkinMetric[]; onLabelC
             textAnchor="middle"
             dominantBaseline="middle"
             className="fill-muted-foreground hover:fill-primary transition-colors"
-            style={{ fontSize: '7px', letterSpacing: '0.05em' }}
+            style={{ fontSize: '7px', letterSpacing: '0.08em', textTransform: 'uppercase' }}
           >
             {metrics[i].label}
           </text>
@@ -142,43 +141,38 @@ const MetricInsightModal = ({ open, onOpenChange, metricLabel, metricValue }: {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-sm border border-[hsl(var(--intel-glass-border))] bg-background/80 backdrop-blur-xl p-0 gap-0 rounded-2xl overflow-hidden">
+      <DialogContent className="max-w-sm border-[0.5px] border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] p-0 gap-0 rounded-[20px] overflow-hidden">
         <DialogTitle className="sr-only">{insight.headline}</DialogTitle>
 
-        {/* Header */}
-        <div className="p-5 pb-4 border-b border-border/50">
+        <div className="p-5 pb-4 border-b border-[hsl(var(--glass-border))]">
           <div className="flex items-center justify-between mb-3">
-            <span className={`text-2xl font-heading font-bold tabular-nums ${getBarTextColor(metricValue)}`}>
+            <span className={`text-2xl font-bold tabular-nums ${getBarTextColor(metricValue)}`}>
               {metricValue}%
             </span>
             <button onClick={() => onOpenChange(false)} className="p-1.5 rounded-lg hover:bg-accent transition-colors">
               <X className="h-4 w-4 text-muted-foreground" />
             </button>
           </div>
-          <h2 className="text-sm font-heading font-semibold text-foreground leading-snug">{insight.headline}</h2>
+          <h2 className="text-sm font-semibold text-foreground leading-snug">{insight.headline}</h2>
         </div>
 
-        {/* Content */}
         <div className="p-5 space-y-4">
-          {/* Factors */}
           <div className="space-y-2">
             <h4 className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-medium">Influencing Factors</h4>
             <div className="flex flex-wrap gap-1.5">
               {insight.factors.map((f) => (
-                <span key={f} className="text-[10px] text-foreground/70 bg-muted/60 border border-border/50 rounded-full px-2.5 py-1">
+                <span key={f} className="text-[10px] text-foreground/70 bg-muted/60 border-[0.5px] border-[hsl(var(--glass-border))] rounded-full px-2.5 py-1">
                   {f}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* m.i. Logic */}
           <div className="space-y-2">
             <h4 className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-medium">m.i. Strategic Logic</h4>
             <p className="text-[11px] leading-relaxed text-foreground/80">{insight.logic}</p>
           </div>
 
-          {/* Gauge */}
           <div className="space-y-1.5">
             <h4 className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-medium">Current Level</h4>
             <div className="h-1.5 rounded-full bg-muted/60 overflow-hidden">
@@ -195,10 +189,9 @@ const MetricInsightModal = ({ open, onOpenChange, metricLabel, metricValue }: {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="px-5 pb-5">
           <p className="text-[9px] text-muted-foreground/60 italic text-center leading-relaxed">
-            You focus on your performance. <span className="font-heading not-italic">meanwhile.</span>, m.i. protects your biological assets.
+            You focus on your performance. <span className="font-bold not-italic">meanwhile.</span>, m.i. protects your biological assets.
           </p>
         </div>
       </DialogContent>
@@ -221,12 +214,12 @@ export const SkinAuditWidget = () => {
 
   return (
     <>
-      <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg overflow-hidden">
+      <Card className="border-[0.5px] border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] overflow-hidden">
         <CardContent className="p-5 space-y-5">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">m.i. Skin Audit</h3>
-              <p className="text-xs font-heading font-semibold text-foreground mt-0.5">Asset Performance Report</p>
+              <p className="text-xs font-semibold text-foreground mt-0.5">Asset Performance Report</p>
             </div>
             {hasScan && (
               <span className="text-[8px] uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded-full">Live</span>
@@ -251,10 +244,10 @@ export const SkinAuditWidget = () => {
               {metrics.map((m) => (
                 <button key={m.label} onClick={() => openInsight(m.label)} className="w-full text-left space-y-1 group">
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] text-muted-foreground tracking-wide group-hover:text-foreground transition-colors">
+                    <span className="text-[9px] text-muted-foreground tracking-wide uppercase group-hover:text-foreground transition-colors">
                       {m.label} <span className="opacity-50">· {m.sublabel}</span>
                     </span>
-                    <span className={`text-[9px] font-heading font-bold tabular-nums ${getBarTextColor(m.value)}`}>{m.value}%</span>
+                    <span className={`text-[9px] font-bold tabular-nums ${getBarTextColor(m.value)}`}>{m.value}%</span>
                   </div>
                   <div className="h-1 rounded-full bg-muted/60 overflow-hidden">
                     <div className={`h-full rounded-full transition-all duration-700 ${getBarColor(m.value)}`} style={{ width: `${m.value}%` }} />
@@ -265,7 +258,7 @@ export const SkinAuditWidget = () => {
           )}
 
           {hasScan && (
-            <div className="p-3 rounded-lg bg-muted/40 border border-border space-y-1.5">
+            <div className="p-3 rounded-xl bg-muted/40 border-[0.5px] border-[hsl(var(--glass-border))] space-y-1.5">
               <p className="text-[9px] uppercase tracking-[0.15em] text-muted-foreground font-medium">Analyst Note</p>
               <p className="text-[11px] leading-relaxed text-foreground/80">
                 Your Barrier Resilience has dropped by 5% due to high stress levels. m.i. is rebalancing your Evening Deployment with 2× Ceramide Asset to recover the loss.
@@ -274,7 +267,7 @@ export const SkinAuditWidget = () => {
           )}
 
           <p className="text-[9px] text-muted-foreground/60 italic text-center leading-relaxed pt-1">
-            m.i. is auditing your assets. <span className="font-heading not-italic">meanwhile.</span>, you stay focused on your goals.
+            m.i. is auditing your assets. <span className="font-bold not-italic">meanwhile.</span>, you stay focused on your goals.
           </p>
         </CardContent>
       </Card>

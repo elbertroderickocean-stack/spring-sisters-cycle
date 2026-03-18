@@ -23,7 +23,7 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
   const activeSegment = getActiveSegment(currentStep);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--glass-bg))] backdrop-blur-[30px] backdrop-saturate-[1.4] border-b border-[hsl(var(--glass-border))]">
+    <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] backdrop-saturate-[1.3] border-b border-[0.5px] border-[hsl(var(--glass-border))]">
       <div className="max-w-sm mx-auto">
         <div className="flex items-center justify-between relative">
           {segments.map((seg, i) => {
@@ -36,8 +36,8 @@ const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
                 <div className="flex flex-col items-center gap-2 relative z-10">
                   <div
                     className={cn(
-                      "w-8 h-8 rounded-full flex items-center justify-center text-xs font-body font-semibold transition-all duration-700",
-                      isActive && "shadow-[0_0_16px_hsl(72_100%_45%_/_0.5)]"
+                      "w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-700",
+                      isActive && "shadow-[0_0_16px_hsl(var(--primary)/0.4)]"
                     )}
                     style={{
                       backgroundColor: isComplete || isActive ? 'hsl(var(--primary))' : 'transparent',

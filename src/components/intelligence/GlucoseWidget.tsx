@@ -56,8 +56,8 @@ export const GlucoseWidget = () => {
     <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-heading">Glucose Management</CardTitle>
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-body">Live</span>
+          <CardTitle className="text-sm font-bold">Glucose Management</CardTitle>
+          <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Live</span>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -65,13 +65,13 @@ export const GlucoseWidget = () => {
           <AreaChart data={data} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
             <defs>
               <linearGradient id="glucoseGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="hsl(var(--intel-glucose))" stopOpacity={0.15} />
-                <stop offset="100%" stopColor="hsl(var(--intel-glucose))" stopOpacity={0.02} />
+                <stop offset="0%" stopColor="hsl(var(--intel-glucose))" stopOpacity={0.12} />
+                <stop offset="100%" stopColor="hsl(var(--intel-glucose))" stopOpacity={0.01} />
               </linearGradient>
             </defs>
             <XAxis dataKey="time" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
             <YAxis domain={[70, 140]} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-            <ReferenceLine y={120} stroke="hsl(var(--intel-stress))" strokeDasharray="4 4" strokeOpacity={0.4} />
+            <ReferenceLine y={120} stroke="hsl(var(--intel-stress))" strokeDasharray="4 4" strokeOpacity={0.3} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Area
               type="monotone"
@@ -84,9 +84,9 @@ export const GlucoseWidget = () => {
         </ChartContainer>
 
         {spikeDetected && (
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-[hsl(var(--intel-stress-light))] border border-[hsl(var(--intel-stress))]/20">
+          <div className="flex items-center gap-2 p-3 rounded-xl bg-[hsl(var(--intel-stress-light))] border-[0.5px] border-[hsl(var(--intel-stress))]/20">
             <AlertTriangle className="h-4 w-4 text-[hsl(var(--intel-stress))]" />
-            <p className="text-xs font-body">Glycation Risk Detected. Evening protocol will be adjusted.</p>
+            <p className="text-xs">Glycation Risk Detected. Evening protocol will be adjusted.</p>
           </div>
         )}
 
