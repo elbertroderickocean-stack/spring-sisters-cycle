@@ -17,7 +17,7 @@ const Intelligence = () => {
   const { userData } = useUser();
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen mesh-gradient-bg pb-24">
       <HeaderBar>
         <div className="flex items-center gap-3">
           <Cpu className="h-5 w-5 text-[hsl(var(--intel-glucose))]" />
