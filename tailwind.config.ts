@@ -66,9 +66,9 @@ export default {
           balance: "hsl(var(--phase-balance))",
           'balance-foreground': "hsl(var(--phase-balance-foreground))",
         },
-        canary: {
-          DEFAULT: "hsl(72 100% 65%)",
-          foreground: "hsl(0 0% 4%)",
+        primrose: {
+          DEFAULT: "hsl(65 72% 86%)",
+          foreground: "hsl(220 33% 3%)",
         },
       },
       borderRadius: {
