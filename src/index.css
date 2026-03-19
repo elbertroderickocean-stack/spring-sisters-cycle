@@ -2,22 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design System — meanwhile. Light Atmospheric Spa
-   Ethereal mesh gradient, white glassmorphism, soft canary accent.
+/* Design System — meanwhile. Dual Theme
+   Light: Atmospheric Spa | Dark: High-Tech Midnight
    Font: Inter (all UI), JetBrains Mono (data)
-   Accent: Soft Canary #EBF48B
    All colors HSL.
 */
 
 @layer base {
+  /* ═══════════════════════════════════════
+     LIGHT MODE — Swiss Laboratory Spa
+     ═══════════════════════════════════════ */
   :root {
-    /* Typography — NO serifs */
     --font-primary: 'Inter', sans-serif;
     --font-secondary: 'Inter', sans-serif;
     --font-data: 'JetBrains Mono', monospace;
 
-    /* Base — Light Cream */
-    --background: 220 20% 97%;
+    /* Base — Creamy Off-white */
+    --background: 30 20% 99%;
     --foreground: 0 0% 18%;
 
     --card: 0 0% 100%;
@@ -26,30 +27,30 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 18%;
 
-    /* Primary — Soft Canary #EBF48B → hsl(64 84% 75%) */
-    --primary: 64 84% 75%;
+    /* Primary — Sage Green */
+    --primary: 120 15% 70%;
     --primary-foreground: 0 0% 15%;
 
-    /* Sage — muted accent matching canary */
-    --sage: 64 84% 75%;
-    --sage-light: 64 60% 85% / 0.35;
-    --sage-foreground: 64 50% 35%;
+    /* Sage */
+    --sage: 120 15% 70%;
+    --sage-light: 120 12% 85% / 0.35;
+    --sage-foreground: 120 20% 35%;
 
-    --secondary: 220 15% 93%;
+    --secondary: 30 10% 93%;
     --secondary-foreground: 0 0% 25%;
 
-    --muted: 220 12% 92%;
+    --muted: 30 8% 92%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 220 15% 94%;
+    --accent: 30 10% 94%;
     --accent-foreground: 0 0% 25%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 0% / 0.08;
-    --input: 0 0% 0% / 0.06;
-    --ring: 64 84% 65%;
+    --border: 0 0% 0% / 0.05;
+    --input: 0 0% 0% / 0.04;
+    --ring: 120 15% 60%;
 
     --radius: 0.75rem;
 
@@ -66,10 +67,11 @@
     --phase-balance-solid: 140 30% 45%;
     --phase-balance-foreground: 0 0% 100%;
 
-    /* Frosted Glass — White glass on light mesh */
-    --glass-bg: 0 0% 100% / 0.4;
-    --glass-border: 0 0% 100% / 0.6;
-    --glass-highlight: 0 0% 100% / 0.55;
+    /* Frosted Glass — Light Mode */
+    --glass-bg: 0 0% 100% / 0.6;
+    --glass-border: 0 0% 0% / 0.05;
+    --glass-highlight: 0 0% 100% / 0.7;
+    --glass-blur: 25px;
     --glass-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.8);
 
     /* Intelligence palette */
@@ -79,26 +81,118 @@
     --intel-sleep-light: 210 35% 94%;
     --intel-stress: 25 60% 50%;
     --intel-stress-light: 25 50% 95%;
-    --intel-glass: 0 0% 100% / 0.4;
-    --intel-glass-border: 0 0% 100% / 0.6;
+    --intel-glass: 0 0% 100% / 0.5;
+    --intel-glass-border: 0 0% 0% / 0.05;
 
-    /* Shadows — soft, luminous */
-    --shadow-soft: 0 4px 30px -6px hsl(220 30% 70% / 0.15);
-    --shadow-medium: 0 8px 40px -8px hsl(220 30% 60% / 0.18);
-    --shadow-glow: 0 0 30px -6px hsl(64 84% 75% / 0.2);
+    /* Shadows — light, soft */
+    --shadow-soft: 0 4px 30px -6px hsl(220 30% 70% / 0.1);
+    --shadow-medium: 0 8px 40px -8px hsl(220 30% 60% / 0.12);
+    --shadow-glow: 0 0 20px -6px hsl(120 15% 70% / 0.15);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-gentle: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    --sidebar-background: 220 20% 96%;
+    /* Nav surfaces */
+    --nav-bg: 0 0% 100% / 0.5;
+    --nav-border: 0 0% 0% / 0.06;
+
+    --sidebar-background: 30 20% 97%;
     --sidebar-foreground: 0 0% 18%;
-    --sidebar-primary: 64 84% 75%;
+    --sidebar-primary: 120 15% 70%;
     --sidebar-primary-foreground: 0 0% 15%;
-    --sidebar-accent: 220 15% 94%;
+    --sidebar-accent: 30 10% 94%;
     --sidebar-accent-foreground: 0 0% 25%;
-    --sidebar-border: 0 0% 0% / 0.06;
-    --sidebar-ring: 64 84% 65%;
+    --sidebar-border: 0 0% 0% / 0.05;
+    --sidebar-ring: 120 15% 60%;
+  }
+
+  /* ═══════════════════════════════════════
+     DARK MODE — High-Tech Midnight
+     ═══════════════════════════════════════ */
+  .dark {
+    /* Base — Deep Midnight */
+    --background: 220 30% 3%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 20% 8%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 20% 8%;
+    --popover-foreground: 0 0% 95%;
+
+    /* Primary — Calm Canary #DFFF4F → hsl(72 100% 65%) */
+    --primary: 72 100% 65%;
+    --primary-foreground: 0 0% 8%;
+
+    /* Sage → Canary in dark */
+    --sage: 72 100% 65%;
+    --sage-light: 72 80% 50% / 0.15;
+    --sage-foreground: 72 100% 65%;
+
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 0 0% 85%;
+
+    --muted: 220 10% 15%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 220 12% 14%;
+    --accent-foreground: 0 0% 85%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.06;
+    --ring: 72 100% 55%;
+
+    /* Phase colors — luminous on dark */
+    --phase-calm: 200 55% 55%;
+    --phase-calm-solid: 200 55% 55%;
+    --phase-calm-foreground: 0 0% 100%;
+
+    --phase-glow: 32 80% 58%;
+    --phase-glow-solid: 32 80% 58%;
+    --phase-glow-foreground: 0 0% 100%;
+
+    --phase-balance: 140 40% 50%;
+    --phase-balance-solid: 140 40% 50%;
+    --phase-balance-foreground: 0 0% 100%;
+
+    /* Dark Liquid Glass */
+    --glass-bg: 0 0% 100% / 0.04;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-highlight: 0 0% 100% / 0.06;
+    --glass-blur: 40px;
+    --glass-inner-glow: inset 0 0 15px hsl(0 0% 100% / 0.03);
+
+    /* Intelligence palette — dark */
+    --intel-glucose: 225 60% 65%;
+    --intel-glucose-light: 225 30% 15%;
+    --intel-sleep: 210 55% 60%;
+    --intel-sleep-light: 210 25% 15%;
+    --intel-stress: 25 70% 55%;
+    --intel-stress-light: 25 40% 15%;
+    --intel-glass: 0 0% 100% / 0.04;
+    --intel-glass-border: 0 0% 100% / 0.1;
+
+    /* Shadows — dark, luminous */
+    --shadow-soft: 0 4px 30px -6px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 8px 40px -8px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 30px -6px hsl(72 100% 65% / 0.1);
+
+    /* Nav surfaces — dark glass */
+    --nav-bg: 0 0% 100% / 0.03;
+    --nav-border: 0 0% 100% / 0.08;
+
+    --sidebar-background: 220 25% 5%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 72 100% 65%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 220 12% 14%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 0 0% 100% / 0.08;
+    --sidebar-ring: 72 100% 55%;
   }
 }
 
@@ -108,25 +202,26 @@
   }
 
   html {
-    background: #F8F9FB;
+    background: hsl(var(--background));
+    transition: background-color 0.3s ease;
   }
 
   body {
     font-family: var(--font-primary);
     font-size: 14px;
     line-height: 1.6;
-    color: #2D2D2D;
+    color: hsl(var(--foreground));
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Light atmospheric base */
-    background: #F8F9FB;
+    background: hsl(var(--background));
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
-    color: #2D2D2D;
+    color: hsl(var(--foreground));
     font-weight: 700;
   }
 
@@ -160,7 +255,7 @@
   p {
     font-size: 14px;
     line-height: 1.6;
-    color: #4A4A4A;
+    color: hsl(var(--muted-foreground));
   }
 }
 
@@ -178,41 +273,61 @@
     font-family: var(--font-data);
   }
 
-  /* Category title with canary underline */
+  /* Category title with accent underline */
   .category-title {
     display: inline-block;
     padding-bottom: 6px;
     border-bottom: 1px solid hsl(var(--sage));
   }
 
-  /* Light Atmospheric Mesh Gradient */
+  /* ═══ Light Atmospheric Mesh ═══ */
   .mesh-gradient-bg {
     background:
       radial-gradient(ellipse 60% 50% at 80% 10%, hsl(168 40% 85% / 0.6) 0%, transparent 60%),
       radial-gradient(ellipse 70% 55% at 50% 50%, hsl(210 45% 90% / 0.5) 0%, transparent 55%),
       radial-gradient(ellipse 55% 50% at 15% 85%, hsl(270 35% 88% / 0.5) 0%, transparent 55%),
       radial-gradient(ellipse 80% 40% at 40% 30%, hsl(190 30% 92% / 0.3) 0%, transparent 50%),
-      #F8F9FB;
+      hsl(30 20% 99%);
     background-attachment: fixed;
   }
 
-  /* Glass card — White frosted glass */
+  /* ═══ Dark Midnight Mesh ═══ */
+  .dark .mesh-gradient-bg {
+    background:
+      radial-gradient(ellipse 65% 55% at 75% 15%, hsl(180 50% 25% / 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 50% 50%, hsl(240 50% 18% / 0.4) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 50% at 20% 80%, hsl(25 40% 15% / 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 40% at 60% 70%, hsl(260 30% 12% / 0.25) 0%, transparent 50%),
+      linear-gradient(135deg, #050505 0%, #0A0F1E 50%, #150E25 100%);
+    background-attachment: fixed;
+  }
+
+  /* Glass card — theme-aware */
   .glass-card {
     background: hsl(var(--glass-bg));
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid hsl(var(--glass-border));
     border-radius: 20px;
     box-shadow: var(--shadow-soft), var(--glass-inner-glow);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .dark .glass-card {
+    border-width: 0.5px;
   }
 
   .glass-card-highlight {
     background: hsl(var(--glass-highlight));
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid hsl(var(--glass-border));
     border-radius: 20px;
     box-shadow: var(--shadow-soft), var(--glass-inner-glow);
+  }
+
+  .dark .glass-card-highlight {
+    border-width: 0.5px;
   }
 
   /* Phase gradients */
@@ -239,7 +354,7 @@
   /* Sage wash for owned products */
   .sage-wash {
     background: hsl(var(--sage-light));
-    border-color: hsl(64 60% 70% / 0.3);
+    border-color: hsl(var(--sage) / 0.3);
   }
 
   /* Metric card */
