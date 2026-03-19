@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design System — meanwhile. Deep Tech-Luxury
-   Architectural depth, liquid glass, luxe canary accent.
+/* Design System — meanwhile. Light Atmospheric Spa
+   Ethereal mesh gradient, white glassmorphism, soft canary accent.
    Font: Inter (all UI), JetBrains Mono (data)
-   Accent: Luxe Canary #EBF48B
+   Accent: Soft Canary #EBF48B
    All colors HSL.
 */
 
@@ -16,40 +16,40 @@
     --font-secondary: 'Inter', sans-serif;
     --font-data: 'JetBrains Mono', monospace;
 
-    /* Base — Deep Midnight */
-    --background: 225 50% 2%;
-    --foreground: 0 0% 100%;
+    /* Base — Light Cream */
+    --background: 220 20% 97%;
+    --foreground: 0 0% 18%;
 
-    --card: 225 30% 4%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 18%;
 
-    --popover: 225 30% 4%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 18%;
 
-    /* Primary — Luxe Canary #EBF48B → hsl(64 84% 75%) */
+    /* Primary — Soft Canary #EBF48B → hsl(64 84% 75%) */
     --primary: 64 84% 75%;
-    --primary-foreground: 225 30% 8%;
+    --primary-foreground: 0 0% 15%;
 
     /* Sage — muted accent matching canary */
     --sage: 64 84% 75%;
-    --sage-light: 64 84% 75% / 0.08;
-    --sage-foreground: 64 84% 75%;
+    --sage-light: 64 60% 85% / 0.35;
+    --sage-foreground: 64 50% 35%;
 
-    --secondary: 225 15% 8%;
-    --secondary-foreground: 0 0% 88%;
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 0 0% 25%;
 
-    --muted: 225 12% 10%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 220 12% 92%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 225 15% 10%;
-    --accent-foreground: 0 0% 88%;
+    --accent: 220 15% 94%;
+    --accent-foreground: 0 0% 25%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 100% / 0.12;
-    --input: 0 0% 100% / 0.08;
-    --ring: 64 84% 75%;
+    --border: 0 0% 0% / 0.08;
+    --input: 0 0% 0% / 0.06;
+    --ring: 64 84% 65%;
 
     --radius: 0.75rem;
 
@@ -66,39 +66,39 @@
     --phase-balance-solid: 140 30% 45%;
     --phase-balance-foreground: 0 0% 100%;
 
-    /* Frosted Glass — HD liquid glass */
-    --glass-bg: 0 0% 100% / 0.03;
-    --glass-border: 0 0% 100% / 0.12;
-    --glass-highlight: 0 0% 100% / 0.05;
-    --glass-inner-glow: inset 0 0 15px hsl(0 0% 100% / 0.05);
+    /* Frosted Glass — White glass on light mesh */
+    --glass-bg: 0 0% 100% / 0.4;
+    --glass-border: 0 0% 100% / 0.6;
+    --glass-highlight: 0 0% 100% / 0.55;
+    --glass-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.8);
 
     /* Intelligence palette */
-    --intel-glucose: 225 50% 60%;
-    --intel-glucose-light: 225 30% 10%;
-    --intel-sleep: 210 45% 55%;
-    --intel-sleep-light: 210 25% 10%;
-    --intel-stress: 25 60% 55%;
-    --intel-stress-light: 25 40% 10%;
-    --intel-glass: 0 0% 100% / 0.03;
-    --intel-glass-border: 0 0% 100% / 0.12;
+    --intel-glucose: 225 50% 55%;
+    --intel-glucose-light: 225 40% 94%;
+    --intel-sleep: 210 45% 50%;
+    --intel-sleep-light: 210 35% 94%;
+    --intel-stress: 25 60% 50%;
+    --intel-stress-light: 25 50% 95%;
+    --intel-glass: 0 0% 100% / 0.4;
+    --intel-glass-border: 0 0% 100% / 0.6;
 
-    /* Shadows — ambient, NO harsh */
-    --shadow-soft: 0 4px 40px -8px hsl(0 0% 0% / 0.5);
-    --shadow-medium: 0 8px 60px -12px hsl(0 0% 0% / 0.6);
-    --shadow-glow: 0 0 40px -8px hsl(64 84% 75% / 0.08);
+    /* Shadows — soft, luminous */
+    --shadow-soft: 0 4px 30px -6px hsl(220 30% 70% / 0.15);
+    --shadow-medium: 0 8px 40px -8px hsl(220 30% 60% / 0.18);
+    --shadow-glow: 0 0 30px -6px hsl(64 84% 75% / 0.2);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-gentle: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    --sidebar-background: 225 25% 4%;
-    --sidebar-foreground: 0 0% 100%;
+    --sidebar-background: 220 20% 96%;
+    --sidebar-foreground: 0 0% 18%;
     --sidebar-primary: 64 84% 75%;
-    --sidebar-primary-foreground: 225 30% 8%;
-    --sidebar-accent: 225 15% 10%;
-    --sidebar-accent-foreground: 0 0% 88%;
-    --sidebar-border: 0 0% 100% / 0.08;
-    --sidebar-ring: 64 84% 75%;
+    --sidebar-primary-foreground: 0 0% 15%;
+    --sidebar-accent: 220 15% 94%;
+    --sidebar-accent-foreground: 0 0% 25%;
+    --sidebar-border: 0 0% 0% / 0.06;
+    --sidebar-ring: 64 84% 65%;
   }
 }
 
@@ -108,26 +108,25 @@
   }
 
   html {
-    background: #020408;
+    background: #F8F9FB;
   }
 
   body {
     font-family: var(--font-primary);
     font-size: 14px;
     line-height: 1.6;
-    color: hsl(var(--foreground));
+    color: #2D2D2D;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Deep atmospheric linear gradient */
-    background: linear-gradient(135deg, #020408 0%, #0A0F1E 50%, #150E25 100%);
-    background-attachment: fixed;
+    /* Light atmospheric base */
+    background: #F8F9FB;
     min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
-    color: hsl(var(--foreground));
+    color: #2D2D2D;
     font-weight: 700;
   }
 
@@ -161,7 +160,7 @@
   p {
     font-size: 14px;
     line-height: 1.6;
-    color: #E0E0E0;
+    color: #4A4A4A;
   }
 }
 
@@ -186,22 +185,22 @@
     border-bottom: 1px solid hsl(var(--sage));
   }
 
-  /* Deep Mesh Gradient — atmospheric overlay */
+  /* Light Atmospheric Mesh Gradient */
   .mesh-gradient-bg {
     background:
-      radial-gradient(ellipse 70% 55% at 80% 15%, hsl(239 48% 20% / 0.35) 0%, transparent 55%),
-      radial-gradient(ellipse 65% 50% at 15% 80%, hsl(23 45% 11% / 0.3) 0%, transparent 55%),
-      radial-gradient(ellipse 80% 60% at 50% 50%, hsl(270 30% 12% / 0.2) 0%, transparent 50%),
-      radial-gradient(ellipse 90% 45% at 30% 25%, hsl(240 30% 10% / 0.15) 0%, transparent 60%),
-      linear-gradient(135deg, #020408 0%, #0A0F1E 50%, #150E25 100%);
+      radial-gradient(ellipse 60% 50% at 80% 10%, hsl(168 40% 85% / 0.6) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 55% at 50% 50%, hsl(210 45% 90% / 0.5) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 50% at 15% 85%, hsl(270 35% 88% / 0.5) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 40% at 40% 30%, hsl(190 30% 92% / 0.3) 0%, transparent 50%),
+      #F8F9FB;
     background-attachment: fixed;
   }
 
-  /* Glass card — HD liquid glass */
+  /* Glass card — White frosted glass */
   .glass-card {
     background: hsl(var(--glass-bg));
-    backdrop-filter: blur(40px) brightness(1.2);
-    -webkit-backdrop-filter: blur(40px) brightness(1.2);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
     border: 1px solid hsl(var(--glass-border));
     border-radius: 20px;
     box-shadow: var(--shadow-soft), var(--glass-inner-glow);
@@ -209,8 +208,8 @@
 
   .glass-card-highlight {
     background: hsl(var(--glass-highlight));
-    backdrop-filter: blur(40px) brightness(1.2);
-    -webkit-backdrop-filter: blur(40px) brightness(1.2);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
     border: 1px solid hsl(var(--glass-border));
     border-radius: 20px;
     box-shadow: var(--shadow-soft), var(--glass-inner-glow);
@@ -240,7 +239,7 @@
   /* Sage wash for owned products */
   .sage-wash {
     background: hsl(var(--sage-light));
-    border-color: hsl(64 84% 75% / 0.12);
+    border-color: hsl(64 60% 70% / 0.3);
   }
 
   /* Metric card */

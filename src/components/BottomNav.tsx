@@ -16,7 +16,7 @@ export const BottomNav = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-[hsl(0_0%_100%/0.02)] backdrop-blur-[50px] backdrop-saturate-150 border-t border-[0.5px] border-[hsl(0_0%_100%/0.08)] z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-[hsl(0_0%_100%/0.5)] backdrop-blur-[40px] border-t border-[hsl(0_0%_0%/0.06)] z-50">
       <div className="max-w-2xl mx-auto px-2">
         <div className="flex items-center justify-around h-16">
           {navItems.map((item) => {
@@ -30,11 +30,11 @@ export const BottomNav = () => {
                 className={cn(
                   'flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-colors',
                   isActive 
-                    ? 'text-primary' 
+                    ? 'text-foreground' 
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className={cn("h-5 w-5", isActive && "text-[hsl(var(--sage-foreground))]")} />
                 <span className="text-[10px] font-semibold uppercase tracking-[0.12em]">
                   {item.label}
                 </span>
