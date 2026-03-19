@@ -13,7 +13,7 @@ const Splash = () => {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background gap-8">
+    <div className="flex min-h-screen flex-col items-center justify-center mesh-gradient-bg gap-8">
       <h1 className="text-6xl md:text-8xl font-heading font-light text-foreground animate-fade-in-slow lowercase" style={{ letterSpacing: '0.15em' }}>
         meanwhile<span className="text-primary">.</span>
       </h1>

@@ -47,7 +47,7 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
   const [selectedStep, setSelectedStep] = React.useState<RitualStep | null>(null);
 
   return (
-    <div className="rounded-[20px] border-[0.5px] border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] backdrop-saturate-[1.3] overflow-hidden">
+    <div className="glass-card overflow-hidden">
       {/* Header */}
       <button
         onClick={() => setIsOpen(!isOpen)}

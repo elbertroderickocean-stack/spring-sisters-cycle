@@ -68,7 +68,7 @@ export default {
         },
         canary: {
           DEFAULT: "hsl(64 84% 75%)",
-          foreground: "hsl(225 30% 8%)",
+          foreground: "hsl(0 0% 15%)",
         },
       },
       borderRadius: {

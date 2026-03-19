@@ -17,7 +17,7 @@ interface MetricCardProps {
 const MetricCard: React.FC<MetricCardProps> = ({ label, children, sublabel, onClick }) => (
   <button
     onClick={onClick}
-    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:border-[hsl(var(--primary)/0.2)] active:scale-[0.98] cursor-pointer"
+    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:shadow-[var(--shadow-medium)] active:scale-[0.98] cursor-pointer"
   >
     <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground leading-tight">{label}</span>
     <div className="flex-1 flex items-center justify-center">
@@ -116,11 +116,11 @@ export const DashboardMetrics: React.FC = () => {
               {activeMetric?.title}
             </DialogTitle>
             <div className="flex items-center justify-center py-6">
-              <span className="text-5xl font-mono-data font-bold text-primary">
+              <span className="text-5xl font-mono-data font-bold text-[hsl(var(--sage-foreground))]">
                 {activeMetric?.value}
               </span>
             </div>
-            <DialogDescription className="text-sm leading-relaxed" style={{ color: '#E0E0E0' }}>
+            <DialogDescription className="text-sm leading-relaxed">
               {activeMetric?.description}
             </DialogDescription>
           </DialogHeader>
