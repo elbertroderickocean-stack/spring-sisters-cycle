@@ -17,7 +17,7 @@ interface MetricCardProps {
 const MetricCard: React.FC<MetricCardProps> = ({ label, children, sublabel, onClick }) => (
   <button
     onClick={onClick}
-    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:border-[hsl(var(--primary)/0.15)] active:scale-[0.98] cursor-pointer"
+    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:border-[hsl(var(--primary)/0.2)] active:scale-[0.98] cursor-pointer"
   >
     <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground leading-tight">{label}</span>
     <div className="flex-1 flex items-center justify-center">
@@ -68,7 +68,7 @@ export const DashboardMetrics: React.FC = () => {
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
         <MetricCard label="Return Streak" onClick={() => setActiveMetric(metrics.streak)}>
           <div className="flex flex-col items-center">
-            <span className="text-4xl font-mono-data font-bold text-primary">{streak}</span>
+            <span className="text-4xl font-mono-data font-bold text-foreground">{streak}</span>
             <span className="text-[11px] text-muted-foreground mt-1">days</span>
           </div>
         </MetricCard>
@@ -110,7 +110,7 @@ export const DashboardMetrics: React.FC = () => {
       </div>
 
       <Dialog open={!!activeMetric} onOpenChange={(open) => !open && setActiveMetric(null)}>
-        <DialogContent className="rounded-[20px] border-[0.5px] border-[hsl(0_0%_100%/0.08)] bg-[hsl(0_0%_100%/0.02)] backdrop-blur-[50px] backdrop-saturate-150 max-w-sm shadow-[var(--shadow-soft)]">
+        <DialogContent className="max-w-sm">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold text-foreground">
               {activeMetric?.title}
@@ -120,7 +120,7 @@ export const DashboardMetrics: React.FC = () => {
                 {activeMetric?.value}
               </span>
             </div>
-            <DialogDescription className="text-sm text-muted-foreground leading-relaxed">
+            <DialogDescription className="text-sm leading-relaxed" style={{ color: '#E0E0E0' }}>
               {activeMetric?.description}
             </DialogDescription>
           </DialogHeader>
