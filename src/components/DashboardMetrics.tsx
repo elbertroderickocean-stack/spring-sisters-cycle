@@ -110,7 +110,7 @@ export const DashboardMetrics: React.FC = () => {
       </div>
 
       <Dialog open={!!activeMetric} onOpenChange={(open) => !open && setActiveMetric(null)}>
-        <DialogContent className="glass-card border-[0.5px] border-[hsl(var(--glass-border))] bg-[hsl(var(--glass-bg))] backdrop-blur-[40px] max-w-sm">
+        <DialogContent className="rounded-[20px] border-[0.5px] border-[hsl(0_0%_100%/0.08)] bg-[hsl(0_0%_100%/0.02)] backdrop-blur-[50px] backdrop-saturate-150 max-w-sm shadow-[var(--shadow-soft)]">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold text-foreground">
               {activeMetric?.title}
