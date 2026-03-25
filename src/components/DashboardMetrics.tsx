@@ -17,7 +17,7 @@ interface MetricCardProps {
 const MetricCard: React.FC<MetricCardProps> = ({ label, children, sublabel, onClick }) => (
   <button
     onClick={onClick}
-    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:shadow-[var(--shadow-medium)] active:scale-[0.98] cursor-pointer"
+    className="glass-card p-5 flex-1 min-w-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:shadow-[var(--shadow-medium)] active:scale-[0.98] cursor-pointer"
   >
     <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground leading-tight">{label}</span>
     <div className="flex-1 flex items-center justify-center">
