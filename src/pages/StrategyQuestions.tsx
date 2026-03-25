@@ -190,6 +190,7 @@ const StrategyQuestions = () => {
         >
           Continue
         </button>
+        <OnboardingBackButton to="/solution" />
       </div>
     </div>
   );
