@@ -93,6 +93,8 @@ const demoUserData: UserData = {
   scannedProducts: [],
   isDemoMode: true,
   wiseBloomMode: false,
+  takesHormonalMedication: false,
+  hormonalMedicationName: '',
 };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
