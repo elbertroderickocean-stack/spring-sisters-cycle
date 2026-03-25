@@ -92,7 +92,7 @@ const Welcome = () => {
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-body" style={{ letterSpacing: '0.01em', lineHeight: '1.8' }}>
             Your skin is biological capital that reacts to glucose, hormones, and stress.{' '}
-            <strong className="text-foreground">meanwhile.</strong>, our system manages the complexity in the background while you focus on your life.
+            <strong className="text-foreground font-extrabold">meanwhile</strong>, our system manages the complexity in the background while you focus on your life.
           </p>
           <Button
             size="lg"
