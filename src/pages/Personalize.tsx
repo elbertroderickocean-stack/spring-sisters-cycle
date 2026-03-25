@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Pill } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
@@ -20,23 +20,32 @@ const Personalize = () => {
   const [lastPeriodDate, setLastPeriodDate] = useState<Date>();
   const [cycleLength, setCycleLength] = useState<string>('28');
   const [cgmChoice, setCgmChoice] = useState<'apple-health' | 'manual' | null>(null);
+  const [takesHormones, setTakesHormones] = useState<boolean | null>(null);
+  const [hormoneName, setHormoneName] = useState('');
 
   const isHormonal = strategy === 'hormonal';
 
   const handleNext = () => {
-    if (isHormonal && lastPeriodDate && cycleLength && cgmChoice) {
+    const medicationData = {
+      takesHormonalMedication: takesHormones === true,
+      hormonalMedicationName: takesHormones ? hormoneName.trim() : '',
+    };
+
+    if (isHormonal && lastPeriodDate && cycleLength && cgmChoice && takesHormones !== null) {
       updateUserData({
         lastPeriodDate,
         cycleLength: parseInt(cycleLength),
         wiseBloomMode: false,
+        ...medicationData,
       });
       navigate('/inventory');
-    } else if (!isHormonal && cgmChoice) {
+    } else if (!isHormonal && cgmChoice && takesHormones !== null) {
+      updateUserData(medicationData);
       navigate('/wise-bloom', { state: { selectedRhythm: 'cellular' } });
     }
   };
 
-  const canProceed = cgmChoice && (isHormonal ? (lastPeriodDate && cycleLength) : true);
+  const canProceed = cgmChoice && takesHormones !== null && (takesHormones === false || hormoneName.trim().length > 0) && (isHormonal ? (lastPeriodDate && cycleLength) : true);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12">
@@ -83,6 +92,63 @@ const Personalize = () => {
                 <p className="text-xs text-muted-foreground mt-1">Quick daily check-ins to track your levels.</p>
               </button>
             </div>
+          </div>
+
+          {/* Hormonal Medication Question */}
+          <div className="space-y-3">
+            <Label className="text-base font-medium text-foreground flex items-center gap-2">
+              <Pill className="h-4 w-4 text-primary" />
+              Are you taking any hormonal medications?
+            </Label>
+            <p className="text-xs text-muted-foreground -mt-1">
+              e.g. birth control, HRT, thyroid medication, corticosteroids
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => setTakesHormones(true)}
+                className={cn(
+                  "p-4 rounded-xl border-2 text-left transition-all",
+                  takesHormones === true
+                    ? "border-primary bg-primary/5"
+                    : "border-border bg-card hover:border-primary/40"
+                )}
+              >
+                <p className="font-medium text-foreground">Yes</p>
+                <p className="text-xs text-muted-foreground mt-0.5">I take hormonal medication</p>
+              </button>
+              <button
+                onClick={() => { setTakesHormones(false); setHormoneName(''); }}
+                className={cn(
+                  "p-4 rounded-xl border-2 text-left transition-all",
+                  takesHormones === false
+                    ? "border-primary bg-primary/5"
+                    : "border-border bg-card hover:border-primary/40"
+                )}
+              >
+                <p className="font-medium text-foreground">No</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Not currently</p>
+              </button>
+            </div>
+
+            {takesHormones && (
+              <div className="animate-fade-in space-y-2 pt-2">
+                <Label htmlFor="hormone-name" className="text-sm text-foreground">
+                  Medication name
+                </Label>
+                <Input
+                  id="hormone-name"
+                  type="text"
+                  placeholder="e.g. Levothyroxine, Yaz, Estradiol..."
+                  value={hormoneName}
+                  onChange={(e) => setHormoneName(e.target.value)}
+                  className="h-12 text-base"
+                  maxLength={100}
+                />
+                <p className="text-[10px] text-muted-foreground">
+                  m.i. will analyze how this affects your skin and adjust your protocol accordingly.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Cycle Input Fields - Only for Hormonal */}

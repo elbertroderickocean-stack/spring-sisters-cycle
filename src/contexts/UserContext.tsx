@@ -26,6 +26,8 @@ export interface UserData {
   scannedProducts: ScannedProduct[];
   isDemoMode: boolean;
   wiseBloomMode: boolean; // True for menopause/no cycle users
+  takesHormonalMedication: boolean;
+  hormonalMedicationName: string;
   checkIn?: {
     energy: string;
     skin: string;
@@ -71,6 +73,8 @@ const defaultUserData: UserData = {
   scannedProducts: [],
   isDemoMode: false,
   wiseBloomMode: false,
+  takesHormonalMedication: false,
+  hormonalMedicationName: '',
 };
 
 const demoUserData: UserData = {
@@ -89,6 +93,8 @@ const demoUserData: UserData = {
   scannedProducts: [],
   isDemoMode: true,
   wiseBloomMode: false,
+  takesHormonalMedication: false,
+  hormonalMedicationName: '',
 };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
