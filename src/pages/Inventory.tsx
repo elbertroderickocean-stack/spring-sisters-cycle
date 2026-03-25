@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useUser } from '@/contexts/UserContext';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 import { cn } from '@/lib/utils';
 
 const SAGE = '#B2C2B2';
