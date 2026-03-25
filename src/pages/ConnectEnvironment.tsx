@@ -105,6 +105,7 @@ const ConnectEnvironment = () => {
         >
           Continue
         </button>
+        <OnboardingBackButton to="/encouragement" state={{ strategy, selectedRhythm }} />
       </div>
     </div>
   );
