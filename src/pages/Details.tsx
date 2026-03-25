@@ -83,6 +83,7 @@ const Details = () => {
           >
             Show My Plan!
           </Button>
+          <OnboardingBackButton to="/strategy-questions" state={{ strategy: location.state?.strategy, selectedRhythm: location.state?.selectedRhythm }} />
         </div>
       </div>
     </div>
