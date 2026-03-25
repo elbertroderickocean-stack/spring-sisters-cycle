@@ -156,6 +156,7 @@ const Inventory = () => {
         <p className="text-center text-xs text-muted-foreground/50 pt-1">
           Don't own any yet? Skip ahead — <span className="italic">meanwhile.</span> will show you what's missing.
         </p>
+        <OnboardingBackButton to="/personalize" />
       </div>
     </div>
   );

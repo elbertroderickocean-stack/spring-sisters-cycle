@@ -214,6 +214,7 @@ const Personalize = () => {
           >
             Next
           </Button>
+          <OnboardingBackButton to="/connect-environment" />
         </div>
       </div>
     </div>
