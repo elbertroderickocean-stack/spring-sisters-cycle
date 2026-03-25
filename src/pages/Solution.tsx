@@ -107,6 +107,7 @@ const Solution = () => {
         >
           Continue
         </button>
+        <OnboardingBackButton to="/welcome" />
       </div>
 
       {/* Strategy Locked Overlay */}
