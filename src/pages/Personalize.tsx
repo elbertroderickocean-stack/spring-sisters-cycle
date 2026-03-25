@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon, Pill } from 'lucide-react';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
