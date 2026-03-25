@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const DataAlignmentVisual = () => {
   const [aligned, setAligned] = useState(false);
