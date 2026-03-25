@@ -73,6 +73,8 @@ const defaultUserData: UserData = {
   scannedProducts: [],
   isDemoMode: false,
   wiseBloomMode: false,
+  takesHormonalMedication: false,
+  hormonalMedicationName: '',
 };
 
 const demoUserData: UserData = {
