@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 import { Cloud, Sun, Thermometer, Droplets } from 'lucide-react';
 
 const ConnectEnvironment = () => {
@@ -104,6 +105,7 @@ const ConnectEnvironment = () => {
         >
           Continue
         </button>
+        <OnboardingBackButton to="/encouragement" state={{ strategy, selectedRhythm }} />
       </div>
     </div>
   );

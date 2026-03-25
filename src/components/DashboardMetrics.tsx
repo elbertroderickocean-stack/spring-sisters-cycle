@@ -17,7 +17,7 @@ interface MetricCardProps {
 const MetricCard: React.FC<MetricCardProps> = ({ label, children, sublabel, onClick }) => (
   <button
     onClick={onClick}
-    className="glass-card p-5 min-w-[150px] w-[150px] flex-shrink-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:shadow-[var(--shadow-medium)] active:scale-[0.98] cursor-pointer"
+    className="glass-card p-5 flex-1 min-w-0 flex flex-col gap-3 text-left transition-all hover:scale-[1.02] hover:shadow-[var(--shadow-medium)] active:scale-[0.98] cursor-pointer"
   >
     <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground leading-tight">{label}</span>
     <div className="flex-1 flex items-center justify-center">
@@ -65,7 +65,7 @@ export const DashboardMetrics: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
+      <div className="grid grid-cols-3 gap-3">
         <MetricCard label="Return Streak" onClick={() => setActiveMetric(metrics.streak)}>
           <div className="flex flex-col items-center">
             <span className="text-4xl font-mono-data font-bold text-foreground">{streak}</span>

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const StrategyQuestions = () => {
   const navigate = useNavigate();
@@ -189,6 +190,7 @@ const StrategyQuestions = () => {
         >
           Continue
         </button>
+        <OnboardingBackButton to="/solution" />
       </div>
     </div>
   );

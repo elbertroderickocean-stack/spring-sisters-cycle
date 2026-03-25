@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '@/contexts/UserContext';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const Encouragement = () => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const Encouragement = () => {
           >
             Continue to Lifestyle
           </button>
+          <OnboardingBackButton to="/skin-concerns" state={{ strategy, selectedRhythm }} />
         </div>
       </div>
     </div>

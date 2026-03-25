@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const Solution = () => {
   const navigate = useNavigate();
@@ -106,6 +107,7 @@ const Solution = () => {
         >
           Continue
         </button>
+        <OnboardingBackButton to="/welcome" />
       </div>
 
       {/* Strategy Locked Overlay */}
