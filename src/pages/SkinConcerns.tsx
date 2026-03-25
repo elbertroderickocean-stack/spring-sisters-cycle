@@ -5,6 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useUser } from '@/contexts/UserContext';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
+import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const skinConcernsList = [
   { id: 'breakouts', label: 'Breakouts & Blemishes' },
