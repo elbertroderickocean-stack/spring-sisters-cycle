@@ -102,6 +102,7 @@ const Welcome = () => {
           >
             Initialize Management Strategy
           </Button>
+          <OnboardingBackButton to="/" />
         </div>
       </div>
     </div>
