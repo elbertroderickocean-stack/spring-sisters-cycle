@@ -46,6 +46,7 @@ const Encouragement = () => {
           >
             Continue to Lifestyle
           </button>
+          <OnboardingBackButton to="/skin-concerns" state={{ strategy, selectedRhythm }} />
         </div>
       </div>
     </div>
