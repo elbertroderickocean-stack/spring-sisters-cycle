@@ -26,6 +26,8 @@ export interface UserData {
   scannedProducts: ScannedProduct[];
   isDemoMode: boolean;
   wiseBloomMode: boolean; // True for menopause/no cycle users
+  takesHormonalMedication: boolean;
+  hormonalMedicationName: string;
   checkIn?: {
     energy: string;
     skin: string;
