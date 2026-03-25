@@ -65,7 +65,7 @@ export const DashboardMetrics: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
+      <div className="grid grid-cols-3 gap-3">
         <MetricCard label="Return Streak" onClick={() => setActiveMetric(metrics.streak)}>
           <div className="flex flex-col items-center">
             <span className="text-4xl font-mono-data font-bold text-foreground">{streak}</span>
