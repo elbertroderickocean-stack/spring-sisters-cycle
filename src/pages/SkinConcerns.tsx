@@ -79,6 +79,7 @@ const SkinConcerns = () => {
         >
           Next
         </Button>
+        <OnboardingBackButton to="/details" state={{ strategy: location.state?.strategy, selectedRhythm: location.state?.selectedRhythm }} />
       </div>
     </div>
   );
