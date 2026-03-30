@@ -111,7 +111,7 @@ export const products: Product[] = [
     howToUse: 'Apply a pearl-sized amount to clean skin in the evening, after serums and before moisturizer. Focus on areas where firmness and renewal are most needed.',
     keyIngredients: ['PDRN (Polydeoxyribonucleotide)', 'Peptide Complex', 'Adenosine', 'Niacinamide'],
     price: '$128.00',
-    image: '/images/products/ceramide.jpg',
+    image: '/images/products/cellular-architect.jpg',
     line: 'precision',
   },
 ];
