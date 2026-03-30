@@ -132,8 +132,8 @@ const ConnectEnvironment = () => {
           </div>
 
           {detecting && (
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#B2C2B2] animate-pulse" />
+              <div className="flex items-center justify-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               <p className="text-xs text-muted-foreground">Detecting local conditions...</p>
             </div>
           )}
