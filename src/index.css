@@ -264,6 +264,11 @@
 }
 
 @layer utilities {
+  /* Override text-primary to use readable ink color instead of bright yellow */
+  .text-primary {
+    color: hsl(var(--primary-ink)) !important;
+  }
+
   .font-heading {
     font-family: var(--font-primary);
     font-weight: 800;
