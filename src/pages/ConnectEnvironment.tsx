@@ -111,7 +111,7 @@ const ConnectEnvironment = () => {
                 className={cn(
                   'p-4 rounded-xl border transition-all duration-700',
                   detected
-                    ? 'border-[#B2C2B2]/50 bg-[#B2C2B2]/5'
+                    ? 'border-primary/50 bg-primary/5'
                     : 'border-border/30 bg-muted/20'
                 )}
                 style={{ transitionDelay: `${item.delay}s` }}
