@@ -27,14 +27,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 16%;
 
-    /* Primary — Meanwhile Yellow #F8FFA1 */
+    /* Primary — Meanwhile Yellow #F8FFA1 (for fills/backgrounds) */
     --primary: 64 100% 82%;
     --primary-foreground: 0 0% 16%;
+    /* Primary Ink — Dark olive-gold for readable text on light bg */
+    --primary-ink: 56 55% 35%;
 
     /* Sage → Meanwhile Yellow in new brand */
     --sage: 64 100% 82%;
     --sage-light: 64 80% 90% / 0.5;
-    --sage-foreground: 0 0% 16%;
+    --sage-foreground: 56 55% 35%;
 
     --secondary: 50 17% 88%;
     --secondary-foreground: 0 0% 16%;
@@ -124,6 +126,8 @@
     /* Primary — Meanwhile Yellow */
     --primary: 64 100% 82%;
     --primary-foreground: 0 0% 8%;
+    /* Primary Ink — bright yellow is fine on dark bg */
+    --primary-ink: 64 100% 82%;
 
     /* Sage → Yellow in dark */
     --sage: 64 100% 82%;
@@ -260,6 +264,11 @@
 }
 
 @layer utilities {
+  /* Override text-primary to use readable ink color instead of bright yellow */
+  .text-primary {
+    color: hsl(var(--primary-ink)) !important;
+  }
+
   .font-heading {
     font-family: var(--font-primary);
     font-weight: 800;

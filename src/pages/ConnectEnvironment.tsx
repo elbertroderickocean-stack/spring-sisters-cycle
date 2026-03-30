@@ -111,14 +111,14 @@ const ConnectEnvironment = () => {
                 className={cn(
                   'p-4 rounded-xl border transition-all duration-700',
                   detected
-                    ? 'border-[#B2C2B2]/50 bg-[#B2C2B2]/5'
+                    ? 'border-primary/50 bg-primary/5'
                     : 'border-border/30 bg-muted/20'
                 )}
                 style={{ transitionDelay: `${item.delay}s` }}
               >
                 <item.icon className={cn(
                   'h-5 w-5 mx-auto mb-2 transition-colors duration-700',
-                  detected ? 'text-[#B2C2B2]' : 'text-muted-foreground/40'
+                  detected ? 'text-primary' : 'text-muted-foreground/40'
                 )} style={{ transitionDelay: `${item.delay}s` }} />
                 <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">{item.label}</p>
                 <p className={cn(
@@ -132,15 +132,15 @@ const ConnectEnvironment = () => {
           </div>
 
           {detecting && (
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#B2C2B2] animate-pulse" />
+              <div className="flex items-center justify-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               <p className="text-xs text-muted-foreground">Detecting local conditions...</p>
             </div>
           )}
 
           {detected && (
             <div className="animate-fade-in space-y-1">
-              <p className="text-xs text-[#B2C2B2] font-medium">✓ Environment linked</p>
+              <p className="text-xs text-primary font-medium">✓ Environment linked</p>
               <p className="text-[10px] text-muted-foreground">
                 Your protocol will adapt to weather and UV exposure. meanwhile., m.i. is calibrating.
               </p>
