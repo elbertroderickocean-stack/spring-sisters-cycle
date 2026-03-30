@@ -13,13 +13,13 @@ const Splash = () => {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center mesh-gradient-bg gap-8">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-primary gap-10">
       <div className="animate-fade-in-slow">
-        <MeanwhileLogo size="xl" className="text-foreground" />
+        <MeanwhileLogo size="xl" className="text-primary-foreground" />
       </div>
-      <div className="w-16 h-px bg-foreground/20 animate-fade-in" style={{ animationDelay: '0.8s' }} />
-      <p className="text-xs md:text-sm text-muted-foreground font-body tracking-[0.35em] uppercase animate-fade-in" style={{ animationDelay: '1.2s' }}>
-        Skincare is an investment. We manage the interest.
+      <div className="w-16 h-px bg-primary-foreground/20 animate-fade-in" style={{ animationDelay: '0.8s' }} />
+      <p className="text-xs md:text-sm text-primary-foreground/60 font-body tracking-[0.35em] uppercase animate-fade-in" style={{ animationDelay: '1.2s' }}>
+        Your Skin, Managed
       </p>
     </div>
   );
