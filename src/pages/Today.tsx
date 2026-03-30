@@ -20,6 +20,7 @@ import { HeroIngredients } from '@/components/HeroIngredients';
 import { Sunrise, Moon, Camera } from 'lucide-react';
 import { WeeklyReflectionModal } from '@/components/WeeklyReflectionModal';
 import { WeeklyPlanModal } from '@/components/WeeklyPlanModal';
+import { MiInsightCard } from '@/components/MiInsightCard';
 
 
 const Today = () => {
