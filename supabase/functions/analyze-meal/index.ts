@@ -20,9 +20,11 @@ serve(async (req) => {
 
 Identify the food in this photo and estimate its Glycemic Index as Low, Medium, or High.
 
-If High, explain specifically how this sugar spike will cause glycation in the skin — collagen cross-linking, AGE formation, and elasticity loss.
+Also estimate the approximate nutritional content of the meal (calories, protein, carbs, fat, fiber, sugar in grams).
 
-If Low, explain why this meal supports skin longevity.
+If High GI, explain specifically how this sugar spike will cause glycation in the skin — collagen cross-linking, AGE formation, and elasticity loss.
+
+If Low GI, explain why this meal supports skin longevity.
 
 Always end with the meanwhile. connector: "You enjoyed your meal. meanwhile., [protocol adjustment]."
 
@@ -31,7 +33,15 @@ CRITICAL: Respond in VALID JSON only:
   "foodName": "Identified food name",
   "glycemicIndex": "Low" | "Medium" | "High",
   "skinImpact": "2-3 sentences on how this food affects skin at the cellular level",
-  "recommendation": "1-2 sentences on protocol adjustment. Reference specific meanwhile. products: The Constants, The Shifts, The Assets, or The Cellular Architect Cream."
+  "recommendation": "1-2 sentences on protocol adjustment. Reference specific meanwhile. products: The Constants, The Shifts, The Assets, or The Cellular Architect Cream.",
+  "nutrients": {
+    "calories": 350,
+    "protein": 25,
+    "carbs": 40,
+    "fat": 12,
+    "fiber": 5,
+    "sugar": 8
+  }
 }`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
@@ -47,7 +57,7 @@ CRITICAL: Respond in VALID JSON only:
           {
             role: 'user',
             content: [
-              { type: 'text', text: 'Analyze this meal for glycemic impact on skin.' },
+              { type: 'text', text: 'Analyze this meal for glycemic impact on skin and estimate nutritional content.' },
               { type: 'image_url', image_url: { url: imageData } },
             ],
           },
@@ -84,7 +94,13 @@ CRITICAL: Respond in VALID JSON only:
         glycemicIndex: 'Medium',
         skinImpact: 'This meal has a moderate glycemic impact. m.i. will monitor for post-meal glucose elevation.',
         recommendation: 'Evening protocol adjusted to include anti-glycation support via The Cellular Architect Cream.',
+        nutrients: { calories: 300, protein: 15, carbs: 35, fat: 10, fiber: 4, sugar: 6 },
       };
+    }
+
+    // Ensure nutrients exist
+    if (!analysis.nutrients) {
+      analysis.nutrients = { calories: 300, protein: 15, carbs: 35, fat: 10, fiber: 4, sugar: 6 };
     }
 
     return new Response(JSON.stringify({ analysis }), {
