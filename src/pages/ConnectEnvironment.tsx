@@ -101,10 +101,10 @@ const ConnectEnvironment = () => {
         <div className="relative rounded-2xl border border-border/50 bg-card/60 backdrop-blur-xl p-8 space-y-6 shadow-lg">
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: Thermometer, label: 'Temperature', value: '22°C', delay: 0 },
-              { icon: Droplets, label: 'Humidity', value: '58%', delay: 0.3 },
-              { icon: Sun, label: 'UV Index', value: 'Moderate (4)', delay: 0.6 },
-              { icon: Cloud, label: 'Air Quality', value: 'Good (AQI 42)', delay: 0.9 },
+              { icon: Thermometer, label: 'Temperature', value: envData.temperature, delay: 0 },
+              { icon: Droplets, label: 'Humidity', value: envData.humidity, delay: 0.3 },
+              { icon: Sun, label: 'UV Index', value: envData.uvIndex, delay: 0.6 },
+              { icon: Cloud, label: 'Air Quality', value: envData.airQuality, delay: 0.9 },
             ].map((item) => (
               <div
                 key={item.label}
