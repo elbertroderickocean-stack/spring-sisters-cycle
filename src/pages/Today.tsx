@@ -779,6 +779,9 @@ const Today = () => {
           </p>
         </div>
 
+        {/* m.i. Daily Insight */}
+        <MiInsightCard />
+
         {/* Dashboard Metric Cards — Horizontal Scroll */}
         <DashboardMetrics />
 
