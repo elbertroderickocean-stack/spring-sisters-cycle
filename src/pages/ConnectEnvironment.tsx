@@ -118,7 +118,7 @@ const ConnectEnvironment = () => {
               >
                 <item.icon className={cn(
                   'h-5 w-5 mx-auto mb-2 transition-colors duration-700',
-                  detected ? 'text-[#B2C2B2]' : 'text-muted-foreground/40'
+                  detected ? 'text-primary' : 'text-muted-foreground/40'
                 )} style={{ transitionDelay: `${item.delay}s` }} />
                 <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">{item.label}</p>
                 <p className={cn(
