@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Camera, Upload, RefreshCw, Check, Loader2 } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, RefreshCw, Check, Loader2, TrendingUp, TrendingDown, Minus, History } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useCameraManager } from '@/hooks/useCameraManager';
@@ -15,12 +15,59 @@ interface SkinAnalysis {
   recommendation: string;
 }
 
+interface ScanRecord {
+  id: string;
+  date: string;
+  analysis: SkinAnalysis;
+}
+
+const STORAGE_KEY = 'meanwhile_skin_scans';
+
+const getScanHistory = (): ScanRecord[] => {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch {
+    return [];
+  }
+};
+
+const saveScan = (analysis: SkinAnalysis): ScanRecord => {
+  const history = getScanHistory();
+  const record: ScanRecord = {
+    id: crypto.randomUUID(),
+    date: new Date().toISOString(),
+    analysis,
+  };
+  history.unshift(record);
+  // Keep last 50 scans
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(0, 50)));
+  return record;
+};
+
+const extractNumeric = (value: string): number | null => {
+  const match = value.match(/(\d+)/);
+  return match ? parseInt(match[1], 10) : null;
+};
+
 const CHECKPOINTS = [
   { label: 'Hydration Mapping', status: 'READY' },
   { label: 'Dermal Texture Analysis', status: 'ACTIVE' },
   { label: 'Luminance Index', status: 'CAPTURING' },
   { label: 'm.i. Intelligence', status: 'CONNECTED' },
 ];
+
+const DeltaIndicator = ({ current, previous, suffix = '' }: { current: number | null; previous: number | null; suffix?: string }) => {
+  if (current === null || previous === null) return null;
+  const delta = current - previous;
+  if (delta === 0) return <span className="text-[9px] text-muted-foreground flex items-center gap-0.5"><Minus className="h-3 w-3" /> No change</span>;
+  const isPositive = delta > 0;
+  return (
+    <span className={`text-[9px] flex items-center gap-0.5 ${isPositive ? 'text-green-500' : 'text-destructive'}`}>
+      {isPositive ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+      {isPositive ? '+' : ''}{delta}{suffix} vs last scan
+    </span>
+  );
+};
 
 const SkinScanner = () => {
   const navigate = useNavigate();
@@ -35,7 +82,17 @@ const SkinScanner = () => {
   const [showResults, setShowResults] = useState(false);
   const [faceLocked, setFaceLocked] = useState(false);
   const [activeCheckpoints, setActiveCheckpoints] = useState<number>(-1);
+  const [previousScan, setPreviousScan] = useState<ScanRecord | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Load previous scan on mount
+  useEffect(() => {
+    const history = getScanHistory();
+    if (history.length > 0) {
+      setPreviousScan(history[0]);
+    }
+  }, []);
 
   // Simulate face detection after 2s of camera active
   useEffect(() => {
@@ -76,7 +133,15 @@ const SkinScanner = () => {
       clearInterval(progressInterval);
       setScanProgress(100);
       await new Promise((r) => setTimeout(r, 400));
-      setResult(data.analysis);
+      
+      const analysis = data.analysis;
+      
+      // Save to localStorage and update previous
+      const oldPrevious = previousScan;
+      const saved = saveScan(analysis);
+      setPreviousScan(oldPrevious || null); // Keep the one BEFORE this scan for comparison
+      
+      setResult(analysis);
       setScanning(false);
       setTimeout(() => setShowResults(true), 50);
     } catch (e) {
@@ -111,6 +176,9 @@ const SkinScanner = () => {
   };
 
   const handleScanAgain = () => {
+    // Before rescanning, set previous to latest saved scan
+    const history = getScanHistory();
+    if (history.length > 0) setPreviousScan(history[0]);
     setResult(null);
     setShowResults(false);
     setFaceLocked(false);
@@ -123,19 +191,60 @@ const SkinScanner = () => {
     return 'text-destructive';
   };
 
+  const scanHistory = getScanHistory();
+  const prevAnalysis = previousScan?.analysis;
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border px-4 py-4 flex items-center gap-3">
         <button onClick={() => navigate('/intelligence')} className="p-2 hover:bg-accent rounded-lg transition-colors">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <div>
+        <div className="flex-1">
           <h1 className="text-lg font-heading font-semibold">m.i. Skin Scanner</h1>
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Dermatological Intelligence</p>
         </div>
+        {scanHistory.length > 0 && (
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="p-2 hover:bg-accent rounded-lg transition-colors relative"
+          >
+            <History className="h-5 w-5" />
+            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary text-primary-foreground text-[8px] flex items-center justify-center font-bold">
+              {scanHistory.length}
+            </span>
+          </button>
+        )}
       </header>
 
       <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
+
+      {/* Scan History Panel */}
+      {showHistory && (
+        <div className="px-4 py-3 border-b border-border bg-muted/30 space-y-2 max-h-60 overflow-y-auto animate-fade-in">
+          <p className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-medium">Scan History</p>
+          {scanHistory.map((scan, i) => {
+            const prev = scanHistory[i + 1];
+            const delta = prev ? scan.analysis.skinCapitalScore - prev.analysis.skinCapitalScore : null;
+            return (
+              <div key={scan.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
+                <div>
+                  <p className="text-xs font-medium">Score: {scan.analysis.skinCapitalScore}/100</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    {new Date(scan.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+                {delta !== null && (
+                  <span className={`text-xs font-medium flex items-center gap-1 ${delta > 0 ? 'text-green-500' : delta < 0 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                    {delta > 0 ? <TrendingUp className="h-3 w-3" /> : delta < 0 ? <TrendingDown className="h-3 w-3" /> : <Minus className="h-3 w-3" />}
+                    {delta > 0 ? '+' : ''}{delta}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {result ? (
         <div className={`flex-1 px-4 py-6 space-y-4 overflow-auto transition-all duration-700 ${showResults ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
@@ -145,22 +254,53 @@ const SkinScanner = () => {
               <span className={`text-6xl font-heading font-bold ${getScoreColor(result.skinCapitalScore)}`}>{result.skinCapitalScore}</span>
               <div className="w-16 h-px bg-border" />
               <span className="text-[10px] text-muted-foreground tracking-widest">/ 100</span>
+              {prevAnalysis && (
+                <DeltaIndicator
+                  current={result.skinCapitalScore}
+                  previous={prevAnalysis.skinCapitalScore}
+                  suffix=" pts"
+                />
+              )}
             </CardContent>
           </Card>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: 'Radiance', value: result.radiance },
-              { label: 'Hydration', value: result.hydration },
-              { label: 'Texture', value: result.texture },
+              { label: 'Radiance', value: result.radiance, prevValue: prevAnalysis?.radiance },
+              { label: 'Hydration', value: result.hydration, prevValue: prevAnalysis?.hydration },
+              { label: 'Texture', value: result.texture, prevValue: prevAnalysis?.texture },
             ].map((m) => (
               <Card key={m.label} className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
                 <CardContent className="p-3 flex flex-col items-center gap-1">
                   <span className="text-[8px] text-muted-foreground uppercase tracking-[0.15em]">{m.label}</span>
                   <span className="text-xs font-heading font-bold text-foreground">{m.value}</span>
+                  <DeltaIndicator
+                    current={extractNumeric(m.value)}
+                    previous={m.prevValue ? extractNumeric(m.prevValue) : null}
+                    suffix="%"
+                  />
                 </CardContent>
               </Card>
             ))}
           </div>
+
+          {prevAnalysis && (
+            <Card className="border border-primary/20 bg-primary/5">
+              <CardContent className="p-4 space-y-2">
+                <p className="text-[9px] uppercase tracking-[0.2em] text-primary font-medium">⟨m⟩ Comparison with last scan</p>
+                <p className="text-xs text-foreground/80 leading-relaxed">
+                  {result.skinCapitalScore > prevAnalysis.skinCapitalScore
+                    ? `Your Skin Capital improved by ${result.skinCapitalScore - prevAnalysis.skinCapitalScore} points. Your protocol is working — meanwhile., m.i. continues optimizing.`
+                    : result.skinCapitalScore < prevAnalysis.skinCapitalScore
+                    ? `Your Skin Capital decreased by ${prevAnalysis.skinCapitalScore - result.skinCapitalScore} points. m.i. is adjusting your protocol to address the change.`
+                    : 'Your Skin Capital is stable. meanwhile., m.i. maintains your current trajectory.'}
+                </p>
+                <p className="text-[10px] text-muted-foreground">
+                  Last scan: {new Date(previousScan!.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
           <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
             <CardContent className="p-5 space-y-3">
               <h3 className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">m.i. Recommendation</h3>
