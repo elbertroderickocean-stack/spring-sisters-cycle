@@ -2,16 +2,25 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Camera, Upload, RefreshCw, Loader2, AlertTriangle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, RefreshCw, Loader2, AlertTriangle, CheckCircle, Check } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useCameraManager } from '@/hooks/useCameraManager';
+import { useMealLog } from '@/hooks/useMealLog';
 
 interface MealAnalysis {
   foodName: string;
   glycemicIndex: string;
   skinImpact: string;
   recommendation: string;
+  nutrients?: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber: number;
+    sugar: number;
+  };
 }
 
 const MealScanner = () => {
@@ -20,20 +29,35 @@ const MealScanner = () => {
     facingMode: 'environment',
     autoStart: true,
   });
+  const { addEntry } = useMealLog();
 
   const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState<MealAnalysis | null>(null);
+  const [saved, setSaved] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const analyzeImage = async (imageData: string) => {
     setScanning(true);
     setResult(null);
+    setSaved(false);
     try {
       const { data, error } = await supabase.functions.invoke('analyze-meal', {
         body: { imageData },
       });
       if (error) throw error;
-      setResult(data.analysis);
+      const analysis = data.analysis;
+      setResult(analysis);
+
+      // Auto-save to log
+      addEntry({
+        foodName: analysis.foodName,
+        glycemicIndex: analysis.glycemicIndex as 'Low' | 'Medium' | 'High',
+        skinImpact: analysis.skinImpact,
+        recommendation: analysis.recommendation,
+        nutrients: analysis.nutrients || { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0, sugar: 0 },
+      });
+      setSaved(true);
+      toast.success('Meal logged', { description: `${analysis.foodName} added to your food log.` });
     } catch (e) {
       console.error('Meal scan error:', e);
       toast.error('Analysis failed. Please try again.');
@@ -86,8 +110,6 @@ const MealScanner = () => {
             {!cameraError ? (
               <>
                 <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" />
-
-                {/* High-tech square framing guide */}
                 {!scanning && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none p-8">
                     <div className="relative w-full max-w-sm aspect-square">
@@ -102,7 +124,6 @@ const MealScanner = () => {
                     </div>
                   </div>
                 )}
-
                 {scanning && (
                   <div className="absolute inset-0 bg-foreground/60 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center space-y-3">
@@ -175,6 +196,26 @@ const MealScanner = () => {
                   GI: {result.glycemicIndex}
                 </span>
               </div>
+
+              {/* Nutrient breakdown */}
+              {result.nutrients && (
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { label: 'Calories', value: `${result.nutrients.calories}`, unit: 'kcal' },
+                    { label: 'Protein', value: `${result.nutrients.protein}`, unit: 'g' },
+                    { label: 'Carbs', value: `${result.nutrients.carbs}`, unit: 'g' },
+                    { label: 'Fat', value: `${result.nutrients.fat}`, unit: 'g' },
+                    { label: 'Fiber', value: `${result.nutrients.fiber}`, unit: 'g' },
+                    { label: 'Sugar', value: `${result.nutrients.sugar}`, unit: 'g' },
+                  ].map((n) => (
+                    <div key={n.label} className="p-2 rounded-lg bg-muted/50 text-center">
+                      <p className="text-base font-heading font-bold">{n.value}<span className="text-[10px] text-muted-foreground ml-0.5">{n.unit}</span></p>
+                      <p className="text-[9px] text-muted-foreground uppercase tracking-wider">{n.label}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <div className="space-y-3">
                 <div>
                   <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Skin Impact</h3>
@@ -184,19 +225,20 @@ const MealScanner = () => {
                   <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Protocol Adjustment</h3>
                   <p className="text-sm leading-relaxed">{result.recommendation}</p>
                 </div>
-                <div className="p-3 rounded-lg bg-muted/50 border border-border">
+                <div className="p-3 rounded-lg bg-muted/50 border border-border flex items-start gap-2">
+                  {saved && <Check className="h-4 w-4 text-[hsl(var(--intel-sleep))] mt-0.5 shrink-0" />}
                   <p className="text-xs text-muted-foreground italic">
-                    You enjoyed your meal. <span className="font-heading">meanwhile.</span>, we are managing the glycation consequences.
+                    {saved ? 'Logged & saved.' : ''} You enjoyed your meal. <span className="font-heading">meanwhile.</span>, we are managing the glycation consequences.
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Button onClick={() => setResult(null)} variant="outline" className="w-full text-xs tracking-wider uppercase">
+          <Button onClick={() => { setResult(null); setSaved(false); }} variant="outline" className="w-full text-xs tracking-wider uppercase">
             Scan Another Meal
           </Button>
-          <Button onClick={() => navigate('/today')} className="w-full text-xs tracking-wider uppercase">
-            View Updated Protocol
+          <Button onClick={() => navigate('/intelligence/glucose')} className="w-full text-xs tracking-wider uppercase">
+            View Food Log
           </Button>
         </div>
       )}
