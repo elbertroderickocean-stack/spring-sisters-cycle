@@ -126,6 +126,8 @@
     /* Primary — Meanwhile Yellow */
     --primary: 64 100% 82%;
     --primary-foreground: 0 0% 8%;
+    /* Primary Ink — bright yellow is fine on dark bg */
+    --primary-ink: 64 100% 82%;
 
     /* Sage → Yellow in dark */
     --sage: 64 100% 82%;
