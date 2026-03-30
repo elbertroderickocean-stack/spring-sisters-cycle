@@ -8,6 +8,7 @@ import { useUser } from '@/contexts/UserContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { TypingText } from '@/components/TypingText';
+import { useMealLog } from '@/hooks/useMealLog';
 
 interface Message {
   role: 'user' | 'assistant';
