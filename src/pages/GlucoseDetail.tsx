@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, AlertTriangle, TrendingDown, Zap, Camera } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, TrendingDown, Zap, Camera, Utensils, Trash2 } from 'lucide-react';
 import {
   ChartContainer,
   ChartTooltip,
@@ -10,6 +10,7 @@ import {
   type ChartConfig,
 } from '@/components/ui/chart';
 import { Area, AreaChart, XAxis, YAxis, ReferenceLine } from 'recharts';
+import { useMealLog, type MealLogEntry } from '@/hooks/useMealLog';
 
 const generateFullDayGlucose = () => {
   const data = [];
@@ -17,11 +18,8 @@ const generateFullDayGlucose = () => {
     for (let m = 0; m < 60; m += 15) {
       const t = h + m / 60;
       let base = 82;
-      // Breakfast spike
       if (t >= 7.5 && t <= 9) base = 85 + 40 * Math.exp(-0.5 * Math.pow(t - 8, 2));
-      // Lunch spike
       else if (t >= 12 && t <= 14) base = 85 + 50 * Math.exp(-0.5 * Math.pow(t - 12.8, 2));
-      // Dinner spike
       else if (t >= 18.5 && t <= 21) base = 85 + 35 * Math.exp(-0.5 * Math.pow(t - 19.2, 2));
       data.push({
         time: `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`,
@@ -36,10 +34,75 @@ const chartConfig: ChartConfig = {
   glucose: { label: 'Glucose mg/dL', color: 'hsl(270 40% 45%)' },
 };
 
+const giColors: Record<string, string> = {
+  Low: 'bg-[hsl(var(--intel-sleep))]/15 text-[hsl(var(--intel-sleep))]',
+  Medium: 'bg-[hsl(var(--intel-glucose))]/15 text-[hsl(var(--intel-glucose))]',
+  High: 'bg-[hsl(var(--intel-stress))]/15 text-[hsl(var(--intel-stress))]',
+};
+
+const NutrientBar = ({ label, value, max, unit, color }: { label: string; value: number; max: number; unit: string; color: string }) => (
+  <div className="space-y-1">
+    <div className="flex justify-between items-baseline">
+      <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="text-xs font-heading font-bold">{value}<span className="text-[9px] text-muted-foreground ml-0.5">{unit}</span></span>
+    </div>
+    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+      <div
+        className={`h-full rounded-full transition-all duration-500 ${color}`}
+        style={{ width: `${Math.min((value / max) * 100, 100)}%` }}
+      />
+    </div>
+  </div>
+);
+
+const MealLogCard = ({ entry, onRemove }: { entry: MealLogEntry; onRemove: (id: string) => void }) => {
+  const time = new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+  return (
+    <div className="p-3 rounded-xl border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg space-y-2.5">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Utensils className="h-3.5 w-3.5 text-muted-foreground" />
+          <span className="text-sm font-heading font-semibold">{entry.foodName}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${giColors[entry.glycemicIndex] || ''}`}>
+            GI: {entry.glycemicIndex}
+          </span>
+          <button onClick={() => onRemove(entry.id)} className="p-1 hover:bg-muted rounded-md transition-colors">
+            <Trash2 className="h-3 w-3 text-muted-foreground" />
+          </button>
+        </div>
+      </div>
+      
+      {entry.nutrients && (
+        <div className="grid grid-cols-6 gap-1.5">
+          {[
+            { l: 'Cal', v: entry.nutrients.calories, u: '' },
+            { l: 'Prot', v: entry.nutrients.protein, u: 'g' },
+            { l: 'Carbs', v: entry.nutrients.carbs, u: 'g' },
+            { l: 'Fat', v: entry.nutrients.fat, u: 'g' },
+            { l: 'Fiber', v: entry.nutrients.fiber, u: 'g' },
+            { l: 'Sugar', v: entry.nutrients.sugar, u: 'g' },
+          ].map((n) => (
+            <div key={n.l} className="text-center p-1 rounded-md bg-muted/40">
+              <p className="text-[11px] font-heading font-bold">{n.v}<span className="text-[8px] text-muted-foreground">{n.u}</span></p>
+              <p className="text-[8px] text-muted-foreground uppercase">{n.l}</p>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      <p className="text-[10px] text-muted-foreground">{time} · {entry.skinImpact?.slice(0, 80)}...</p>
+    </div>
+  );
+};
+
 const GlucoseDetail = () => {
   const navigate = useNavigate();
   const data = useMemo(generateFullDayGlucose, []);
   const peakValue = Math.max(...data.map((d) => d.glucose));
+  const { entries, todayEntries, todayNutrients, removeEntry } = useMealLog();
 
   return (
     <div className="min-h-screen bg-background">
@@ -99,6 +162,51 @@ const GlucoseDetail = () => {
             </Card>
           ))}
         </div>
+
+        {/* Today's Nutrition Summary (Bevel-style) */}
+        <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-heading">Today's Nutrition</CardTitle>
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                {todayEntries.length} meal{todayEntries.length !== 1 ? 's' : ''} logged
+              </span>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {todayEntries.length > 0 ? (
+              <>
+                <div className="text-center p-3 rounded-xl bg-muted/30">
+                  <p className="text-3xl font-heading font-bold">{todayNutrients.calories}</p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Total Calories</p>
+                </div>
+                <div className="space-y-2.5">
+                  <NutrientBar label="Protein" value={todayNutrients.protein} max={120} unit="g" color="bg-[hsl(var(--intel-sleep))]" />
+                  <NutrientBar label="Carbs" value={todayNutrients.carbs} max={250} unit="g" color="bg-[hsl(var(--intel-glucose))]" />
+                  <NutrientBar label="Fat" value={todayNutrients.fat} max={80} unit="g" color="bg-[hsl(var(--intel-stress))]" />
+                  <NutrientBar label="Fiber" value={todayNutrients.fiber} max={30} unit="g" color="bg-accent" />
+                  <NutrientBar label="Sugar" value={todayNutrients.sugar} max={50} unit="g" color="bg-destructive/60" />
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-6 space-y-2">
+                <Utensils className="h-8 w-8 text-muted-foreground/30 mx-auto" />
+                <p className="text-sm text-muted-foreground">No meals logged today</p>
+                <p className="text-[10px] text-muted-foreground">Scan your first meal to start tracking</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Food Log */}
+        {entries.length > 0 && (
+          <div className="space-y-3">
+            <h2 className="text-sm font-heading font-semibold uppercase tracking-widest text-muted-foreground px-1">Food Log</h2>
+            {entries.map((entry) => (
+              <MealLogCard key={entry.id} entry={entry} onRemove={removeEntry} />
+            ))}
+          </div>
+        )}
 
         {/* Biological Impact */}
         <Card className="border border-[hsl(var(--intel-glass-border))] bg-[hsl(var(--intel-glass))] backdrop-blur-lg">
