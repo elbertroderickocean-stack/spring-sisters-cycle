@@ -20,6 +20,7 @@ import { HeroIngredients } from '@/components/HeroIngredients';
 import { Sunrise, Moon, Camera } from 'lucide-react';
 import { WeeklyReflectionModal } from '@/components/WeeklyReflectionModal';
 import { WeeklyPlanModal } from '@/components/WeeklyPlanModal';
+import { MiInsightCard } from '@/components/MiInsightCard';
 
 
 const Today = () => {
@@ -777,6 +778,9 @@ const Today = () => {
             While you lived your <span className="text-foreground font-semibold">{getDayOfWeek()}</span> — here is what <span className="text-primary font-semibold">meanwhile.</span> happened to your skin.
           </p>
         </div>
+
+        {/* m.i. Daily Insight */}
+        <MiInsightCard />
 
         {/* Dashboard Metric Cards — Horizontal Scroll */}
         <DashboardMetrics />
