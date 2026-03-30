@@ -20,6 +20,41 @@ const MiChat = () => {
   const navigate = useNavigate();
   const { userData, getCurrentPhase, getCurrentDay, updateCustomRituals } = useUser();
   const { toast } = useToast();
+  const { todayEntries, todayNutrients } = useMealLog();
+
+  const getLatestScanData = () => {
+    try {
+      const stored = localStorage.getItem('skin_scan_history');
+      if (!stored) return null;
+      const history = JSON.parse(stored);
+      if (!history.length) return null;
+      const latest = history[0];
+      return {
+        score: latest.skinCapitalScore,
+        date: latest.timestamp,
+        details: latest.details || {},
+      };
+    } catch { return null; }
+  };
+
+  const buildTelemetryContext = () => {
+    const scan = getLatestScanData();
+    const parts: string[] = [];
+
+    if (scan) {
+      const scanDate = new Date(scan.date);
+      const hoursAgo = Math.round((Date.now() - scanDate.getTime()) / (1000 * 60 * 60));
+      parts.push(`SKIN SCAN (${hoursAgo}h ago): Skin Capital Score ${scan.score}/100. Details: ${JSON.stringify(scan.details)}`);
+    }
+
+    if (todayEntries.length > 0) {
+      const meals = todayEntries.map(e => `${e.foodName} (GI: ${e.glycemicIndex}, ${e.nutrients?.calories || 0} kcal)`).join('; ');
+      parts.push(`TODAY'S MEALS (${todayEntries.length} logged): ${meals}`);
+      parts.push(`DAILY NUTRITION TOTALS: ${todayNutrients.calories} kcal, ${todayNutrients.protein}g protein, ${todayNutrients.carbs}g carbs, ${todayNutrients.fat}g fat, ${todayNutrients.sugar}g sugar, ${todayNutrients.fiber}g fiber`);
+    }
+
+    return parts.length > 0 ? parts.join('\n') : null;
+  };
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
