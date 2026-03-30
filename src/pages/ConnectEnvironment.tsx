@@ -140,7 +140,7 @@ const ConnectEnvironment = () => {
 
           {detected && (
             <div className="animate-fade-in space-y-1">
-              <p className="text-xs text-[#B2C2B2] font-medium">✓ Environment linked</p>
+              <p className="text-xs text-primary font-medium">✓ Environment linked</p>
               <p className="text-[10px] text-muted-foreground">
                 Your protocol will adapt to weather and UV exposure. meanwhile., m.i. is calibrating.
               </p>
