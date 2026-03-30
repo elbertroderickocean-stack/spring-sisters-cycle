@@ -80,6 +80,19 @@ Protocol Override Rules:
 4. Only return JSON when modifying protocols. Otherwise use plain text analysis.`;
     }
 
+    if (telemetry) {
+      contextualPrompt += `\n\nREAL-TIME TELEMETRY DATA (use this to inform ALL responses — reference specific data points when relevant):
+${telemetry}
+
+CRITICAL INTEGRATION RULES:
+1. When user asks about products/protocols, cross-reference their skin scan data AND meal data to give holistic recommendations.
+2. If high-GI meals were logged, flag glycation risk and recommend appropriate countermeasures (Vitamin C Concentrate, Shift 02).
+3. If skin scan shows dryness/dehydration, factor in sodium/sugar intake from meals as potential contributors.
+4. If skin scan shows inflammation, check meal log for inflammatory triggers (high sugar, processed foods).
+5. Always cite the specific data: "Your scan from X hours ago showed..." or "Your lunch contained Xg of sugar which..."
+6. Frame dietary impacts on skin in terms of biological capital: glycation = collagen depreciation, antioxidants = portfolio protection.`;
+    }
+
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
