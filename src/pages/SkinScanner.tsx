@@ -115,11 +115,43 @@ const SkinScanner = () => {
     return () => clearInterval(interval);
   }, [faceLocked, scanning]);
 
+  const MIN_SCAN_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
   const analyzeImage = async (imageData: string) => {
     setScanning(true);
     setScanProgress(0);
     setResult(null);
     setShowResults(false);
+
+    // Check if last scan was less than 24h ago
+    const history = getScanHistory();
+    const lastScan = history[0];
+    if (lastScan) {
+      const elapsed = Date.now() - new Date(lastScan.date).getTime();
+      if (elapsed < MIN_SCAN_INTERVAL_MS) {
+        // Return previous result with a cooldown note
+        const hoursLeft = Math.ceil((MIN_SCAN_INTERVAL_MS - elapsed) / (60 * 60 * 1000));
+        const cooldownAnalysis: SkinAnalysis = {
+          ...lastScan.analysis,
+          recommendation: `Your Skin Capital Score remains ${lastScan.analysis.skinCapitalScore}. Biological changes require time to manifest — for accurate delta tracking, m.i. recommends scanning once every 24 hours. Next meaningful scan available in ~${hoursLeft}h. meanwhile., your current protocol continues to compound.`,
+        };
+
+        // Brief animation
+        const progressInterval = setInterval(() => {
+          setScanProgress((p) => (p >= 95 ? 95 : p + 15));
+        }, 60);
+        await new Promise((r) => setTimeout(r, 800));
+        clearInterval(progressInterval);
+        setScanProgress(100);
+        await new Promise((r) => setTimeout(r, 300));
+
+        setPreviousScan(lastScan);
+        setResult(cooldownAnalysis);
+        setScanning(false);
+        setTimeout(() => setShowResults(true), 50);
+        return;
+      }
+    }
 
     const progressInterval = setInterval(() => {
       setScanProgress((p) => (p >= 95 ? 95 : p + Math.random() * 8 + 2));
@@ -139,7 +171,7 @@ const SkinScanner = () => {
       // Save to localStorage and update previous
       const oldPrevious = previousScan;
       const saved = saveScan(analysis);
-      setPreviousScan(oldPrevious || null); // Keep the one BEFORE this scan for comparison
+      setPreviousScan(oldPrevious || null);
       
       setResult(analysis);
       setScanning(false);
