@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Inter', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        heading: ['Plus Jakarta Sans', 'sans-serif'],
+        body: ['Plus Jakarta Sans', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
         'mono-data': ['JetBrains Mono', 'monospace'],
       },
       colors: {

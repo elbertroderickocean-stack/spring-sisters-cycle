@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 interface MeanwhileLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
+  showIcon?: boolean;
 }
 
 const sizeClasses = {
@@ -13,13 +14,30 @@ const sizeClasses = {
   xl: 'text-6xl md:text-8xl',
 };
 
-export const MeanwhileLogo = ({ size = 'md', className }: MeanwhileLogoProps) => {
-  const dotSize = size === 'xl' ? 'w-3 h-3' : size === 'lg' ? 'w-2.5 h-2.5' : size === 'md' ? 'w-1.5 h-1.5' : 'w-1 h-1';
+export const MeanwhileLogo = ({ size = 'md', className, showIcon = false }: MeanwhileLogoProps) => {
+  if (showIcon) {
+    const iconSize = size === 'xl' ? 'text-5xl md:text-7xl' : size === 'lg' ? 'text-4xl md:text-5xl' : size === 'md' ? 'text-xl' : 'text-base';
+    return (
+      <span className={cn('font-heading font-extrabold inline-flex items-baseline', iconSize, className)}>
+        <span className="text-primary">[</span>
+        <span>m</span>
+        <span className="text-primary">]</span>
+      </span>
+    );
+  }
 
   return (
     <span className={cn('font-heading font-extrabold lowercase tracking-tight inline-flex items-baseline', sizeClasses[size], className)}>
       meanwhile
-      <span className={cn('inline-block bg-primary rounded-[1px] ml-[0.05em] self-end mb-[0.15em]', dotSize)} />
     </span>
   );
 };
+
+/** Standalone bracket icon mark */
+export const MeanwhileIcon = ({ className }: { className?: string }) => (
+  <span className={cn('font-heading font-extrabold inline-flex items-baseline', className)}>
+    <span className="text-primary">[</span>
+    <span>m</span>
+    <span className="text-primary">]</span>
+  </span>
+);

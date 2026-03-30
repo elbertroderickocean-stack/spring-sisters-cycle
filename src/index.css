@@ -2,55 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design System — meanwhile. Dual Theme
-   Light: Atmospheric Spa | Dark: High-Tech Midnight
-   Font: Inter (all UI), JetBrains Mono (data)
+/* Design System — meanwhile. Brand Refresh
+   Font: Plus Jakarta Sans (headings + body), JetBrains Mono (data)
+   Palette: Meanwhile Yellow #F8FFA1, Warm Grey, Meanwhile Dark #282828
    All colors HSL.
 */
 
 @layer base {
   /* ═══════════════════════════════════════
-     LIGHT MODE — Swiss Laboratory Spa
+     LIGHT MODE — Clean Warm Minimal
      ═══════════════════════════════════════ */
   :root {
-    --font-primary: 'Inter', sans-serif;
-    --font-secondary: 'Inter', sans-serif;
+    --font-primary: 'Plus Jakarta Sans', sans-serif;
+    --font-secondary: 'Plus Jakarta Sans', sans-serif;
     --font-data: 'JetBrains Mono', monospace;
 
-    /* Base — Creamy Off-white */
-    --background: 30 20% 99%;
-    --foreground: 0 0% 18%;
+    /* Base — Warm Grey 01 */
+    --background: 0 0% 95%;
+    --foreground: 0 0% 16%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 18%;
+    --card-foreground: 0 0% 16%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 18%;
+    --popover-foreground: 0 0% 16%;
 
-    /* Primary — Sage Green */
-    --primary: 120 15% 70%;
-    --primary-foreground: 0 0% 15%;
+    /* Primary — Meanwhile Yellow #F8FFA1 */
+    --primary: 64 100% 82%;
+    --primary-foreground: 0 0% 16%;
 
-    /* Sage */
-    --sage: 120 15% 70%;
-    --sage-light: 120 12% 85% / 0.35;
-    --sage-foreground: 120 20% 35%;
+    /* Sage → Meanwhile Yellow in new brand */
+    --sage: 64 100% 82%;
+    --sage-light: 64 80% 90% / 0.5;
+    --sage-foreground: 0 0% 16%;
 
-    --secondary: 30 10% 93%;
-    --secondary-foreground: 0 0% 25%;
+    --secondary: 50 17% 88%;
+    --secondary-foreground: 0 0% 16%;
 
-    --muted: 30 8% 92%;
+    --muted: 50 10% 90%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 30 10% 94%;
-    --accent-foreground: 0 0% 25%;
+    --accent: 50 17% 88%;
+    --accent-foreground: 0 0% 16%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 0% / 0.05;
-    --input: 0 0% 0% / 0.04;
-    --ring: 120 15% 60%;
+    --border: 0 0% 0% / 0.08;
+    --input: 0 0% 0% / 0.05;
+    --ring: 64 100% 72%;
 
     --radius: 0.75rem;
 
@@ -67,12 +67,12 @@
     --phase-balance-solid: 140 30% 45%;
     --phase-balance-foreground: 0 0% 100%;
 
-    /* Frosted Glass — Light Mode */
-    --glass-bg: 0 0% 100% / 0.6;
-    --glass-border: 0 0% 0% / 0.05;
-    --glass-highlight: 0 0% 100% / 0.7;
+    /* Glass — Light Mode */
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 0 0% 0% / 0.06;
+    --glass-highlight: 0 0% 100% / 0.8;
     --glass-blur: 25px;
-    --glass-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.8);
+    --glass-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.9);
 
     /* Intelligence palette */
     --intel-glucose: 225 50% 55%;
@@ -84,67 +84,67 @@
     --intel-glass: 0 0% 100% / 0.5;
     --intel-glass-border: 0 0% 0% / 0.05;
 
-    /* Shadows — light, soft */
-    --shadow-soft: 0 4px 30px -6px hsl(220 30% 70% / 0.1);
-    --shadow-medium: 0 8px 40px -8px hsl(220 30% 60% / 0.12);
-    --shadow-glow: 0 0 20px -6px hsl(120 15% 70% / 0.15);
+    /* Shadows */
+    --shadow-soft: 0 4px 24px -6px hsl(0 0% 0% / 0.06);
+    --shadow-medium: 0 8px 40px -8px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 20px -6px hsl(64 100% 82% / 0.2);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-gentle: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     /* Nav surfaces */
-    --nav-bg: 0 0% 100% / 0.5;
+    --nav-bg: 0 0% 100% / 0.6;
     --nav-border: 0 0% 0% / 0.06;
 
-    --sidebar-background: 30 20% 97%;
-    --sidebar-foreground: 0 0% 18%;
-    --sidebar-primary: 120 15% 70%;
-    --sidebar-primary-foreground: 0 0% 15%;
-    --sidebar-accent: 30 10% 94%;
-    --sidebar-accent-foreground: 0 0% 25%;
-    --sidebar-border: 0 0% 0% / 0.05;
-    --sidebar-ring: 120 15% 60%;
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 0 0% 16%;
+    --sidebar-primary: 64 100% 82%;
+    --sidebar-primary-foreground: 0 0% 16%;
+    --sidebar-accent: 50 17% 88%;
+    --sidebar-accent-foreground: 0 0% 16%;
+    --sidebar-border: 0 0% 0% / 0.06;
+    --sidebar-ring: 64 100% 72%;
   }
 
   /* ═══════════════════════════════════════
-     DARK MODE — High-Tech Midnight
+     DARK MODE — Meanwhile Dark
      ═══════════════════════════════════════ */
   .dark {
-    /* Base — Deep Midnight */
-    --background: 220 30% 3%;
+    /* Base — Meanwhile Dark #282828 */
+    --background: 0 0% 8%;
     --foreground: 0 0% 95%;
 
-    --card: 220 20% 8%;
+    --card: 0 0% 12%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 220 20% 8%;
+    --popover: 0 0% 12%;
     --popover-foreground: 0 0% 95%;
 
-    /* Primary — Calm Canary #DFFF4F → hsl(72 100% 65%) */
-    --primary: 72 100% 65%;
+    /* Primary — Meanwhile Yellow */
+    --primary: 64 100% 82%;
     --primary-foreground: 0 0% 8%;
 
-    /* Sage → Canary in dark */
-    --sage: 72 100% 65%;
-    --sage-light: 72 80% 50% / 0.15;
-    --sage-foreground: 72 100% 65%;
+    /* Sage → Yellow in dark */
+    --sage: 64 100% 82%;
+    --sage-light: 64 80% 50% / 0.12;
+    --sage-foreground: 64 100% 82%;
 
-    --secondary: 220 15% 12%;
+    --secondary: 0 0% 14%;
     --secondary-foreground: 0 0% 85%;
 
-    --muted: 220 10% 15%;
+    --muted: 0 0% 16%;
     --muted-foreground: 0 0% 55%;
 
-    --accent: 220 12% 14%;
+    --accent: 0 0% 14%;
     --accent-foreground: 0 0% 85%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 100% / 0.1;
-    --input: 0 0% 100% / 0.06;
-    --ring: 72 100% 55%;
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.05;
+    --ring: 64 100% 72%;
 
     /* Phase colors — luminous on dark */
     --phase-calm: 200 55% 55%;
@@ -159,12 +159,12 @@
     --phase-balance-solid: 140 40% 50%;
     --phase-balance-foreground: 0 0% 100%;
 
-    /* Dark Liquid Glass */
+    /* Dark Glass */
     --glass-bg: 0 0% 100% / 0.04;
-    --glass-border: 0 0% 100% / 0.1;
+    --glass-border: 0 0% 100% / 0.08;
     --glass-highlight: 0 0% 100% / 0.06;
     --glass-blur: 40px;
-    --glass-inner-glow: inset 0 0 15px hsl(0 0% 100% / 0.03);
+    --glass-inner-glow: inset 0 0 15px hsl(0 0% 100% / 0.02);
 
     /* Intelligence palette — dark */
     --intel-glucose: 225 60% 65%;
@@ -174,25 +174,25 @@
     --intel-stress: 25 70% 55%;
     --intel-stress-light: 25 40% 15%;
     --intel-glass: 0 0% 100% / 0.04;
-    --intel-glass-border: 0 0% 100% / 0.1;
+    --intel-glass-border: 0 0% 100% / 0.08;
 
-    /* Shadows — dark, luminous */
+    /* Shadows — dark */
     --shadow-soft: 0 4px 30px -6px hsl(0 0% 0% / 0.3);
     --shadow-medium: 0 8px 40px -8px hsl(0 0% 0% / 0.4);
-    --shadow-glow: 0 0 30px -6px hsl(72 100% 65% / 0.1);
+    --shadow-glow: 0 0 30px -6px hsl(64 100% 82% / 0.08);
 
     /* Nav surfaces — dark glass */
     --nav-bg: 0 0% 100% / 0.03;
-    --nav-border: 0 0% 100% / 0.08;
+    --nav-border: 0 0% 100% / 0.06;
 
-    --sidebar-background: 220 25% 5%;
+    --sidebar-background: 0 0% 6%;
     --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 72 100% 65%;
+    --sidebar-primary: 64 100% 82%;
     --sidebar-primary-foreground: 0 0% 8%;
-    --sidebar-accent: 220 12% 14%;
+    --sidebar-accent: 0 0% 14%;
     --sidebar-accent-foreground: 0 0% 85%;
-    --sidebar-border: 0 0% 100% / 0.08;
-    --sidebar-ring: 72 100% 55%;
+    --sidebar-border: 0 0% 100% / 0.06;
+    --sidebar-ring: 64 100% 72%;
   }
 }
 
@@ -227,7 +227,7 @@
 
   h1 {
     font-size: 28px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.1;
     margin-top: 24px;
@@ -235,7 +235,7 @@
 
   h2 {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
   }
@@ -262,7 +262,7 @@
 @layer utilities {
   .font-heading {
     font-family: var(--font-primary);
-    font-weight: 700;
+    font-weight: 800;
   }
 
   .font-body {
@@ -280,25 +280,23 @@
     border-bottom: 1px solid hsl(var(--sage));
   }
 
-  /* ═══ Light Atmospheric Mesh ═══ */
+  /* ═══ Light Mesh ═══ */
   .mesh-gradient-bg {
     background:
-      radial-gradient(ellipse 60% 50% at 80% 10%, hsl(168 40% 85% / 0.6) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 55% at 50% 50%, hsl(210 45% 90% / 0.5) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 50% at 15% 85%, hsl(270 35% 88% / 0.5) 0%, transparent 55%),
-      radial-gradient(ellipse 80% 40% at 40% 30%, hsl(190 30% 92% / 0.3) 0%, transparent 50%),
-      hsl(30 20% 99%);
+      radial-gradient(ellipse 60% 50% at 80% 10%, hsl(64 100% 90% / 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 55% at 50% 50%, hsl(50 20% 92% / 0.5) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 50% at 15% 85%, hsl(64 60% 92% / 0.3) 0%, transparent 55%),
+      hsl(0 0% 95%);
     background-attachment: fixed;
   }
 
-  /* ═══ Dark Midnight Mesh ═══ */
+  /* ═══ Dark Mesh ═══ */
   .dark .mesh-gradient-bg {
     background:
-      radial-gradient(ellipse 65% 55% at 75% 15%, hsl(180 50% 25% / 0.35) 0%, transparent 55%),
-      radial-gradient(ellipse 70% 60% at 50% 50%, hsl(240 50% 18% / 0.4) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 50% at 20% 80%, hsl(25 40% 15% / 0.35) 0%, transparent 55%),
-      radial-gradient(ellipse 80% 40% at 60% 70%, hsl(260 30% 12% / 0.25) 0%, transparent 50%),
-      linear-gradient(135deg, #050505 0%, #0A0F1E 50%, #150E25 100%);
+      radial-gradient(ellipse 65% 55% at 75% 15%, hsl(64 40% 20% / 0.2) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 50% 50%, hsl(0 0% 10% / 0.5) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 50% at 20% 80%, hsl(64 20% 10% / 0.2) 0%, transparent 55%),
+      linear-gradient(135deg, #141414 0%, #1a1a1a 50%, #0f0f0f 100%);
     background-attachment: fixed;
   }
 
@@ -351,7 +349,7 @@
     @apply bg-[hsl(var(--phase-balance-solid))] text-[hsl(var(--phase-balance-foreground))];
   }
 
-  /* Sage wash for owned products */
+  /* Sage wash */
   .sage-wash {
     background: hsl(var(--sage-light));
     border-color: hsl(var(--sage) / 0.3);
