@@ -97,6 +97,10 @@ const defaultUserData: UserData = {
   wiseBloomMode: false,
   takesHormonalMedication: false,
   hormonalMedicationName: '',
+  lifeStage: 'cycle',
+  pregnancyMode: false,
+  trimester: null,
+  dueDate: null,
 };
 
 const demoUserData: UserData = {
