@@ -124,26 +124,27 @@ const Inventory = () => {
         </div>
 
         {/* Tab Switch */}
-        <div className="flex gap-1 p-1 rounded-xl bg-muted/30 border border-border/40">
+        <div className="flex gap-0 rounded-2xl border-2 border-border overflow-hidden">
           <button
             onClick={() => setActiveTab('shelf')}
             className={cn(
-              "flex-1 py-2.5 rounded-lg text-sm font-medium transition-all",
+              "flex-1 py-4 text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2",
               activeTab === 'shelf'
-                ? "bg-background shadow-sm text-foreground"
-                : "text-muted-foreground hover:text-foreground/70"
+                ? "bg-primary text-primary-foreground"
+                : "bg-background text-muted-foreground hover:bg-muted/30"
             )}
           >
-            <Package className="h-4 w-4 inline mr-1.5 -mt-0.5" />
+            <Package className="h-4.5 w-4.5" />
             My Shelf
           </button>
+          <div className="w-[2px] bg-border" />
           <button
             onClick={() => setActiveTab('meanwhile')}
             className={cn(
-              "flex-1 py-2.5 rounded-lg text-sm font-medium transition-all",
+              "flex-1 py-4 text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2",
               activeTab === 'meanwhile'
-                ? "bg-background shadow-sm text-foreground"
-                : "text-muted-foreground hover:text-foreground/70"
+                ? "bg-primary text-primary-foreground"
+                : "bg-background text-muted-foreground hover:bg-muted/30"
             )}
           >
             <span className="italic">meanwhile.</span> Products
