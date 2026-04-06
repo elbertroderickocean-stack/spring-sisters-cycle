@@ -69,6 +69,7 @@ const App = () => (
             <Route path="/strategy-questions" element={<StrategyQuestions />} />
             <Route path="/connect-environment" element={<ConnectEnvironment />} />
             <Route path="/inventory" element={<Inventory />} />
+            <Route path="/pregnancy-onboarding" element={<PregnancyOnboarding />} />
             <Route path="/push-notification" element={<PushNotification />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/today" element={<Today />} />

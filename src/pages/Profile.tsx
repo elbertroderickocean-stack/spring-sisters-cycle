@@ -93,6 +93,9 @@ const Profile = () => {
           </CardContent>
         </Card>
 
+        {/* Life Stage Card */}
+        <LifeStageCard />
+
         {userData.wiseBloomMode ? (
           <Card className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
             <CardHeader>
