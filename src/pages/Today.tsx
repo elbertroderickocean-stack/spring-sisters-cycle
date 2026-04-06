@@ -895,7 +895,7 @@ const Today = () => {
                 <Package className="h-4 w-4 text-muted-foreground" />
                 <h3 className="font-bold text-sm">Your Shelf</h3>
                 <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-border/40 text-muted-foreground gap-1">
-                  {userData.externalProducts.length} products
+                  {userData.externalProducts?.length || 0} products
                 </Badge>
               </div>
               <p className="text-xs text-muted-foreground mb-3">
