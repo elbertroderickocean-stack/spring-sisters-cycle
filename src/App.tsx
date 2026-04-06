@@ -14,6 +14,7 @@ import Register from "./pages/Register";
 import Details from "./pages/Details";
 import SkinConcerns from "./pages/SkinConcerns";
 import Inventory from "./pages/Inventory";
+import PregnancyOnboarding from "./pages/PregnancyOnboarding";
 import PushNotification from "./pages/PushNotification";
 import Integrations from "./pages/Integrations";
 import Today from "./pages/Today";
