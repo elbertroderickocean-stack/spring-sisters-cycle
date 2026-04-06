@@ -16,7 +16,7 @@ const Personalize = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { updateUserData } = useUser();
-  const strategy = (location.state as any)?.strategy as 'hormonal' | 'longevity' | undefined;
+  const strategy = (location.state as any)?.strategy as 'hormonal' | 'longevity' | 'pregnancy' | undefined;
 
   const [lastPeriodDate, setLastPeriodDate] = useState<Date>();
   const [cycleLength, setCycleLength] = useState<string>('28');
@@ -25,6 +25,7 @@ const Personalize = () => {
   const [hormoneName, setHormoneName] = useState('');
 
   const isHormonal = strategy === 'hormonal';
+  const isPregnancy = strategy === 'pregnancy';
 
   const handleNext = () => {
     const medicationData = {
@@ -32,7 +33,11 @@ const Personalize = () => {
       hormonalMedicationName: takesHormones ? hormoneName.trim() : '',
     };
 
-    if (isHormonal && lastPeriodDate && cycleLength && cgmChoice && takesHormones !== null) {
+    if (isPregnancy && cgmChoice && takesHormones !== null) {
+      // Pregnancy path — skip cycle date, go to inventory
+      updateUserData(medicationData);
+      navigate('/inventory');
+    } else if (isHormonal && lastPeriodDate && cycleLength && cgmChoice && takesHormones !== null) {
       updateUserData({
         lastPeriodDate,
         cycleLength: parseInt(cycleLength),
@@ -40,7 +45,7 @@ const Personalize = () => {
         ...medicationData,
       });
       navigate('/inventory');
-    } else if (!isHormonal && cgmChoice && takesHormones !== null) {
+    } else if (!isHormonal && !isPregnancy && cgmChoice && takesHormones !== null) {
       updateUserData(medicationData);
       navigate('/wise-bloom', { state: { selectedRhythm: 'cellular' } });
     }
@@ -54,7 +59,7 @@ const Personalize = () => {
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground font-body">
-            {isHormonal ? 'Hormonal Management' : 'Longevity Management'}
+            {isPregnancy ? 'Pregnancy Mode' : isHormonal ? 'Hormonal Management' : 'Longevity Management'}
           </p>
           <h2 className="text-3xl md:text-4xl font-heading font-semibold text-foreground">
             Let's personalize your strategy.
