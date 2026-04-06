@@ -124,6 +124,7 @@ const Solution = () => {
               </div>
             </div>
           </button>
+        </div>
 
         <button
           onClick={handleContinue}
