@@ -889,7 +889,7 @@ const Today = () => {
           />
 
           {/* External Products on Shelf */}
-          {userData.externalProducts.length > 0 && (
+          {(userData.externalProducts?.length || 0) > 0 && (
             <div className="glass-card p-5">
               <div className="flex items-center gap-2 mb-3">
                 <Package className="h-4 w-4 text-muted-foreground" />
