@@ -34,7 +34,8 @@ const Today = () => {
     return dayOfWeek === 0 ? 7 : dayOfWeek; // Convert Sunday to 7, keep others as-is
   };
   
-  const phase = userData.wiseBloomMode ? 'calm' : getCurrentPhase(); // Wise Bloom users always get 'calm' phase styling
+  const isPregnancy = userData.pregnancyMode;
+  const phase = userData.wiseBloomMode ? 'calm' : isPregnancy ? 'glow' : getCurrentPhase();
   const day = userData.wiseBloomMode ? getMicroCycleDay() : getCurrentDay();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
