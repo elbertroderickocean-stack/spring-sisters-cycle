@@ -9,6 +9,7 @@ import { useUser } from '@/contexts/UserContext';
 import { BottomNav } from '@/components/BottomNav';
 import { User as UserIcon, Calendar, Droplet, RotateCcw, Plus, Minus, Trash2 } from 'lucide-react';
 import { products } from '@/data/productData';
+import { LifeStageCard } from '@/components/LifeStageCard';
 
 const Profile = () => {
   const { 
