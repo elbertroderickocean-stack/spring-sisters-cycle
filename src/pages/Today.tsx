@@ -824,7 +824,7 @@ const Today = () => {
                 <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Live Data Linked</span>
               </div>
               <div className="text-3xl font-bold mb-1" style={{ color: phaseIconColor }}>
-                {userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
+                {isPregnancy ? `Trimester ${userData.trimester || 1}` : userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-[280px]">
                 {dailyWhisper}
