@@ -59,7 +59,7 @@ const Personalize = () => {
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground font-body">
-            {isHormonal ? 'Hormonal Management' : 'Longevity Management'}
+            {isPregnancy ? 'Pregnancy Mode' : isHormonal ? 'Hormonal Management' : 'Longevity Management'}
           </p>
           <h2 className="text-3xl md:text-4xl font-heading font-semibold text-foreground">
             Let's personalize your strategy.
