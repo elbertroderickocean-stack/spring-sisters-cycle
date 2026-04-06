@@ -59,6 +59,8 @@ interface UserContextType {
   getCurrentPhase: () => PhaseType;
   getCurrentDay: () => number;
   addScannedProduct: (product: ScannedProduct) => void;
+  addExternalProduct: (product: Omit<ExternalProduct, 'id' | 'addedAt'>) => void;
+  removeExternalProduct: (id: string) => void;
   enableDemoMode: () => void;
   exitDemoMode: () => void;
   updateCheckIn: (energy: string, skin: string) => void;
