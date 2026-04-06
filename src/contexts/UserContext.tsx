@@ -86,6 +86,7 @@ const defaultUserData: UserData = {
   ownedProducts: [],
   productInventory: [],
   scannedProducts: [],
+  externalProducts: [],
   isDemoMode: false,
   wiseBloomMode: false,
   takesHormonalMedication: false,
