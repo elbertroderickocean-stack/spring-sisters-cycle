@@ -8,6 +8,18 @@ export interface ScannedProduct {
   analysis: string;
 }
 
+export type ProductCategory = 'cleanser' | 'toner' | 'serum' | 'eye-cream' | 'moisturizer' | 'sunscreen' | 'mask' | 'oil' | 'exfoliant' | 'other';
+
+export interface ExternalProduct {
+  id: string;
+  name: string;
+  brand: string;
+  category: ProductCategory;
+  addedAt: string;
+  analysis?: string;
+  imageUrl?: string;
+}
+
 export interface ProductInventory {
   productId: string;
   quantity: number;
@@ -24,6 +36,7 @@ export interface UserData {
   ownedProducts: string[]; // Legacy - kept for backward compatibility
   productInventory: ProductInventory[]; // New inventory with quantities
   scannedProducts: ScannedProduct[];
+  externalProducts: ExternalProduct[]; // Products from other brands
   isDemoMode: boolean;
   wiseBloomMode: boolean; // True for menopause/no cycle users
   takesHormonalMedication: boolean;
@@ -46,6 +59,8 @@ interface UserContextType {
   getCurrentPhase: () => PhaseType;
   getCurrentDay: () => number;
   addScannedProduct: (product: ScannedProduct) => void;
+  addExternalProduct: (product: Omit<ExternalProduct, 'id' | 'addedAt'>) => void;
+  removeExternalProduct: (id: string) => void;
   enableDemoMode: () => void;
   exitDemoMode: () => void;
   updateCheckIn: (energy: string, skin: string) => void;
@@ -71,6 +86,7 @@ const defaultUserData: UserData = {
   ownedProducts: [],
   productInventory: [],
   scannedProducts: [],
+  externalProducts: [],
   isDemoMode: false,
   wiseBloomMode: false,
   takesHormonalMedication: false,
@@ -91,6 +107,10 @@ const demoUserData: UserData = {
     { productId: 'cleanser', quantity: 2 }
   ],
   scannedProducts: [],
+  externalProducts: [
+    { id: 'ext-1', name: 'Hydra Beauty Cream', brand: 'Chanel', category: 'moisturizer', addedAt: new Date().toISOString() },
+    { id: 'ext-2', name: 'Advanced Night Repair', brand: 'Estée Lauder', category: 'serum', addedAt: new Date().toISOString() },
+  ],
   isDemoMode: true,
   wiseBloomMode: false,
   takesHormonalMedication: false,
@@ -221,6 +241,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
   };
 
+  const addExternalProduct = (product: Omit<ExternalProduct, 'id' | 'addedAt'>) => {
+    const newProduct: ExternalProduct = {
+      ...product,
+      id: `ext-${Date.now()}`,
+      addedAt: new Date().toISOString(),
+    };
+    setUserData((prev) => ({
+      ...prev,
+      externalProducts: [...prev.externalProducts, newProduct],
+    }));
+  };
+
+  const removeExternalProduct = (id: string) => {
+    setUserData((prev) => ({
+      ...prev,
+      externalProducts: prev.externalProducts.filter(p => p.id !== id),
+    }));
+  };
+
   return (
     <UserContext.Provider value={{ 
       userData, 
@@ -228,6 +267,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       getCurrentPhase, 
       getCurrentDay, 
       addScannedProduct,
+      addExternalProduct,
+      removeExternalProduct,
       enableDemoMode,
       exitDemoMode,
       updateCheckIn,
