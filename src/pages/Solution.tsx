@@ -6,15 +6,16 @@ import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const Solution = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState<'hormonal' | 'longevity' | null>(null);
+  const [selected, setSelected] = useState<'hormonal' | 'longevity' | 'pregnancy' | null>(null);
   const [showLocked, setShowLocked] = useState(false);
 
   const handleContinue = () => {
     if (selected) {
       setShowLocked(true);
       setTimeout(() => {
-        // Strategy → Strategy Questions (path-specific)
-        if (selected === 'longevity') {
+        if (selected === 'pregnancy') {
+          navigate('/pregnancy-onboarding');
+        } else if (selected === 'longevity') {
           navigate('/strategy-questions', { state: { strategy: selected, selectedRhythm: 'cellular' } });
         } else {
           navigate('/strategy-questions', { state: { strategy: selected, selectedRhythm: 'hormonal' } });
@@ -89,6 +90,36 @@ const Solution = () => {
                 <h3 className="text-xl font-heading font-semibold text-foreground mb-2">Longevity Management</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed font-body">
                   Optimized for menopause or skin-cycling. A 7-day cellular training pulse + lifestyle data.
+                </p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => setSelected('pregnancy')}
+            className={cn(
+              "group relative p-8 rounded-xl border-2 text-left transition-all duration-300",
+              selected === 'pregnancy'
+                ? "border-primary bg-primary/5 shadow-md"
+                : "border-border bg-card hover:border-primary/40 hover:shadow-sm"
+            )}
+          >
+            <div className="flex items-start gap-5">
+              <div className={cn(
+                "w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-colors",
+                selected === 'pregnancy' ? "bg-phase-glow" : "bg-muted"
+              )}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white">
+                  <path d="M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+                  <path d="M12 8c-2 0-3 1-3 3v4c0 2 1 4 3 5s3-1 3-3V11c0-2-1-3-3-3Z" />
+                </svg>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="text-xl font-heading font-semibold text-foreground">Pregnancy Mode</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed font-body">
+                  Expecting? Trimester-based protocols with ingredient safety filters + specialized care.
                 </p>
               </div>
             </div>

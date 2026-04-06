@@ -34,7 +34,8 @@ const Today = () => {
     return dayOfWeek === 0 ? 7 : dayOfWeek; // Convert Sunday to 7, keep others as-is
   };
   
-  const phase = userData.wiseBloomMode ? 'calm' : getCurrentPhase(); // Wise Bloom users always get 'calm' phase styling
+  const isPregnancy = userData.pregnancyMode;
+  const phase = userData.wiseBloomMode ? 'calm' : isPregnancy ? 'glow' : getCurrentPhase();
   const day = userData.wiseBloomMode ? getMicroCycleDay() : getCurrentDay();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
@@ -62,7 +63,9 @@ const Today = () => {
     }
   }, [checkWhispers, triggerProTip, needsCheckIn, checkInDismissed]);
 
-  const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
+  const phaseName = isPregnancy 
+    ? `Trimester ${userData.trimester || 1}` 
+    : phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
   
   const getMicroCycleDayName = (day: number): string => {
     const dayNames = [
@@ -78,6 +81,27 @@ const Today = () => {
   };
 
   const getDailyWhisper = () => {
+    if (isPregnancy) {
+      const trimesterWhispers: Record<number, string[]> = {
+        1: [
+          "You nurture new life. meanwhile., gentle barrier support is protecting your skin.",
+          "You rest. meanwhile., pregnancy-safe protocols are keeping your glow.",
+          "You grow. meanwhile., hydration is being reinforced for two.",
+        ],
+        2: [
+          "You glow. meanwhile., your skin is at its pregnancy peak — we're protecting it.",
+          "You bloom. meanwhile., pigmentation defense is active.",
+          "You shine. meanwhile., elasticity protocols are running.",
+        ],
+        3: [
+          "You prepare. meanwhile., deep hydration is supporting your skin's stretch.",
+          "You nest. meanwhile., calming protocols are soothing your skin.",
+          "You breathe. meanwhile., barrier repair runs at full capacity.",
+        ],
+      };
+      const whispers = trimesterWhispers[userData.trimester || 1];
+      return whispers[new Date().getDay() % whispers.length];
+    }
     if (userData.wiseBloomMode) {
       const whispers = [
         "You rest. meanwhile., your barrier is being reinforced.",
@@ -800,13 +824,21 @@ const Today = () => {
                 <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Live Data Linked</span>
               </div>
               <div className="text-3xl font-bold mb-1" style={{ color: phaseIconColor }}>
-                {userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
+                {isPregnancy ? `Trimester ${userData.trimester || 1}` : userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-[280px]">
                 {dailyWhisper}
               </p>
             </div>
-            {!userData.wiseBloomMode && (
+            {isPregnancy && (
+              <div className="text-right">
+                <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
+                  Pregnancy Mode
+                </span>
+                <p className="text-[10px] text-muted-foreground mt-0.5">Safety filters active</p>
+              </div>
+            )}
+            {!isPregnancy && !userData.wiseBloomMode && (
               <div className="text-right">
                 <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
                   {phaseName}
@@ -814,7 +846,7 @@ const Today = () => {
                 <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto mt-1" />
               </div>
             )}
-            {userData.wiseBloomMode && (
+            {!isPregnancy && userData.wiseBloomMode && (
               <div className="text-right">
                 <div className="text-base font-bold" style={{ color: phaseIconColor }}>
                   {getMicroCycleDayName(day).split(':')[1]}

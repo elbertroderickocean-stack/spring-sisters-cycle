@@ -14,6 +14,7 @@ import Register from "./pages/Register";
 import Details from "./pages/Details";
 import SkinConcerns from "./pages/SkinConcerns";
 import Inventory from "./pages/Inventory";
+import PregnancyOnboarding from "./pages/PregnancyOnboarding";
 import PushNotification from "./pages/PushNotification";
 import Integrations from "./pages/Integrations";
 import Today from "./pages/Today";
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="/strategy-questions" element={<StrategyQuestions />} />
             <Route path="/connect-environment" element={<ConnectEnvironment />} />
             <Route path="/inventory" element={<Inventory />} />
+            <Route path="/pregnancy-onboarding" element={<PregnancyOnboarding />} />
             <Route path="/push-notification" element={<PushNotification />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/today" element={<Today />} />

@@ -25,6 +25,8 @@ export interface ProductInventory {
   quantity: number;
 }
 
+export type LifeStage = 'cycle' | 'pregnancy' | 'postpartum' | 'menopause';
+
 export interface UserData {
   name: string;
   email: string;
@@ -33,14 +35,18 @@ export interface UserData {
   ageRange: string;
   skinType: string;
   skinConcerns: string[];
-  ownedProducts: string[]; // Legacy - kept for backward compatibility
-  productInventory: ProductInventory[]; // New inventory with quantities
+  ownedProducts: string[];
+  productInventory: ProductInventory[];
   scannedProducts: ScannedProduct[];
-  externalProducts: ExternalProduct[]; // Products from other brands
+  externalProducts: ExternalProduct[];
   isDemoMode: boolean;
-  wiseBloomMode: boolean; // True for menopause/no cycle users
+  wiseBloomMode: boolean;
   takesHormonalMedication: boolean;
   hormonalMedicationName: string;
+  lifeStage: LifeStage;
+  pregnancyMode: boolean;
+  trimester: 1 | 2 | 3 | null;
+  dueDate: Date | null;
   checkIn?: {
     energy: string;
     skin: string;
@@ -91,6 +97,10 @@ const defaultUserData: UserData = {
   wiseBloomMode: false,
   takesHormonalMedication: false,
   hormonalMedicationName: '',
+  lifeStage: 'cycle',
+  pregnancyMode: false,
+  trimester: null,
+  dueDate: null,
 };
 
 const demoUserData: UserData = {
@@ -115,6 +125,10 @@ const demoUserData: UserData = {
   wiseBloomMode: false,
   takesHormonalMedication: false,
   hormonalMedicationName: '',
+  lifeStage: 'cycle',
+  pregnancyMode: false,
+  trimester: null,
+  dueDate: null,
 };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
