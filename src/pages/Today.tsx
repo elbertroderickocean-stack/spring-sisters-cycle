@@ -63,7 +63,9 @@ const Today = () => {
     }
   }, [checkWhispers, triggerProTip, needsCheckIn, checkInDismissed]);
 
-  const phaseName = phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
+  const phaseName = isPregnancy 
+    ? `Trimester ${userData.trimester || 1}` 
+    : phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
   
   const getMicroCycleDayName = (day: number): string => {
     const dayNames = [
