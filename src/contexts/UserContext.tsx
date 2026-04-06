@@ -8,6 +8,18 @@ export interface ScannedProduct {
   analysis: string;
 }
 
+export type ProductCategory = 'cleanser' | 'toner' | 'serum' | 'eye-cream' | 'moisturizer' | 'sunscreen' | 'mask' | 'oil' | 'exfoliant' | 'other';
+
+export interface ExternalProduct {
+  id: string;
+  name: string;
+  brand: string;
+  category: ProductCategory;
+  addedAt: string;
+  analysis?: string;
+  imageUrl?: string;
+}
+
 export interface ProductInventory {
   productId: string;
   quantity: number;
