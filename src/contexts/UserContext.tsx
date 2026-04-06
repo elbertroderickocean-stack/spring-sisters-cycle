@@ -107,6 +107,10 @@ const demoUserData: UserData = {
     { productId: 'cleanser', quantity: 2 }
   ],
   scannedProducts: [],
+  externalProducts: [
+    { id: 'ext-1', name: 'Hydra Beauty Cream', brand: 'Chanel', category: 'moisturizer', addedAt: new Date().toISOString() },
+    { id: 'ext-2', name: 'Advanced Night Repair', brand: 'Estée Lauder', category: 'serum', addedAt: new Date().toISOString() },
+  ],
   isDemoMode: true,
   wiseBloomMode: false,
   takesHormonalMedication: false,
