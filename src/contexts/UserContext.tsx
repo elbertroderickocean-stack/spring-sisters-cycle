@@ -241,6 +241,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
   };
 
+  const addExternalProduct = (product: Omit<ExternalProduct, 'id' | 'addedAt'>) => {
+    const newProduct: ExternalProduct = {
+      ...product,
+      id: `ext-${Date.now()}`,
+      addedAt: new Date().toISOString(),
+    };
+    setUserData((prev) => ({
+      ...prev,
+      externalProducts: [...prev.externalProducts, newProduct],
+    }));
+  };
+
+  const removeExternalProduct = (id: string) => {
+    setUserData((prev) => ({
+      ...prev,
+      externalProducts: prev.externalProducts.filter(p => p.id !== id),
+    }));
+  };
+
   return (
     <UserContext.Provider value={{ 
       userData, 
@@ -248,6 +267,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       getCurrentPhase, 
       getCurrentDay, 
       addScannedProduct,
+      addExternalProduct,
+      removeExternalProduct,
       enableDemoMode,
       exitDemoMode,
       updateCheckIn,
