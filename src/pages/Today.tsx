@@ -830,7 +830,15 @@ const Today = () => {
                 {dailyWhisper}
               </p>
             </div>
-            {!userData.wiseBloomMode && (
+            {isPregnancy && (
+              <div className="text-right">
+                <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
+                  Pregnancy Mode
+                </span>
+                <p className="text-[10px] text-muted-foreground mt-0.5">Safety filters active</p>
+              </div>
+            )}
+            {!isPregnancy && !userData.wiseBloomMode && (
               <div className="text-right">
                 <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
                   {phaseName}
@@ -838,7 +846,7 @@ const Today = () => {
                 <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto mt-1" />
               </div>
             )}
-            {userData.wiseBloomMode && (
+            {!isPregnancy && userData.wiseBloomMode && (
               <div className="text-right">
                 <div className="text-base font-bold" style={{ color: phaseIconColor }}>
                   {getMicroCycleDayName(day).split(':')[1]}
