@@ -855,7 +855,7 @@ const Today = () => {
             )}
           </div>
           
-          {!userData.wiseBloomMode && (
+          {!userData.wiseBloomMode && !isPregnancy && (
             <div className="h-[3px] rounded-full bg-[hsl(var(--glass-border))] overflow-hidden">
               <div 
                 className="h-full rounded-full transition-all duration-500 ease-out"
