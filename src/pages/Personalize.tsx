@@ -16,7 +16,7 @@ const Personalize = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { updateUserData } = useUser();
-  const strategy = (location.state as any)?.strategy as 'hormonal' | 'longevity' | undefined;
+  const strategy = (location.state as any)?.strategy as 'hormonal' | 'longevity' | 'pregnancy' | undefined;
 
   const [lastPeriodDate, setLastPeriodDate] = useState<Date>();
   const [cycleLength, setCycleLength] = useState<string>('28');
@@ -25,6 +25,7 @@ const Personalize = () => {
   const [hormoneName, setHormoneName] = useState('');
 
   const isHormonal = strategy === 'hormonal';
+  const isPregnancy = strategy === 'pregnancy';
 
   const handleNext = () => {
     const medicationData = {
