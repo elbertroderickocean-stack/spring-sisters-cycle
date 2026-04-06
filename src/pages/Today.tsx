@@ -81,6 +81,27 @@ const Today = () => {
   };
 
   const getDailyWhisper = () => {
+    if (isPregnancy) {
+      const trimesterWhispers: Record<number, string[]> = {
+        1: [
+          "You nurture new life. meanwhile., gentle barrier support is protecting your skin.",
+          "You rest. meanwhile., pregnancy-safe protocols are keeping your glow.",
+          "You grow. meanwhile., hydration is being reinforced for two.",
+        ],
+        2: [
+          "You glow. meanwhile., your skin is at its pregnancy peak — we're protecting it.",
+          "You bloom. meanwhile., pigmentation defense is active.",
+          "You shine. meanwhile., elasticity protocols are running.",
+        ],
+        3: [
+          "You prepare. meanwhile., deep hydration is supporting your skin's stretch.",
+          "You nest. meanwhile., calming protocols are soothing your skin.",
+          "You breathe. meanwhile., barrier repair runs at full capacity.",
+        ],
+      };
+      const whispers = trimesterWhispers[userData.trimester || 1];
+      return whispers[new Date().getDay() % whispers.length];
+    }
     if (userData.wiseBloomMode) {
       const whispers = [
         "You rest. meanwhile., your barrier is being reinforced.",
