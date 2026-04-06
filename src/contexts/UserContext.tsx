@@ -125,6 +125,10 @@ const demoUserData: UserData = {
   wiseBloomMode: false,
   takesHormonalMedication: false,
   hormonalMedicationName: '',
+  lifeStage: 'cycle',
+  pregnancyMode: false,
+  trimester: null,
+  dueDate: null,
 };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
