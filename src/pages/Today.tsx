@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Circle, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon } from 'lucide-react';
+import { Circle, Star, ChevronRight, Zap, FlaskConical, Plane, AlertCircle, LucideIcon, Package } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 import { HeaderBar } from '@/components/HeaderBar';
 import { AuraWhisper } from '@/components/AuraWhisper';
