@@ -36,6 +36,7 @@ export interface UserData {
   ownedProducts: string[]; // Legacy - kept for backward compatibility
   productInventory: ProductInventory[]; // New inventory with quantities
   scannedProducts: ScannedProduct[];
+  externalProducts: ExternalProduct[]; // Products from other brands
   isDemoMode: boolean;
   wiseBloomMode: boolean; // True for menopause/no cycle users
   takesHormonalMedication: boolean;
