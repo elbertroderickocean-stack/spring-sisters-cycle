@@ -33,7 +33,11 @@ const Personalize = () => {
       hormonalMedicationName: takesHormones ? hormoneName.trim() : '',
     };
 
-    if (isHormonal && lastPeriodDate && cycleLength && cgmChoice && takesHormones !== null) {
+    if (isPregnancy && cgmChoice && takesHormones !== null) {
+      // Pregnancy path — skip cycle date, go to inventory
+      updateUserData(medicationData);
+      navigate('/inventory');
+    } else if (isHormonal && lastPeriodDate && cycleLength && cgmChoice && takesHormones !== null) {
       updateUserData({
         lastPeriodDate,
         cycleLength: parseInt(cycleLength),
@@ -41,7 +45,7 @@ const Personalize = () => {
         ...medicationData,
       });
       navigate('/inventory');
-    } else if (!isHormonal && cgmChoice && takesHormones !== null) {
+    } else if (!isHormonal && !isPregnancy && cgmChoice && takesHormones !== null) {
       updateUserData(medicationData);
       navigate('/wise-bloom', { state: { selectedRhythm: 'cellular' } });
     }
