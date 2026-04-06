@@ -6,15 +6,16 @@ import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const Solution = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState<'hormonal' | 'longevity' | null>(null);
+  const [selected, setSelected] = useState<'hormonal' | 'longevity' | 'pregnancy' | null>(null);
   const [showLocked, setShowLocked] = useState(false);
 
   const handleContinue = () => {
     if (selected) {
       setShowLocked(true);
       setTimeout(() => {
-        // Strategy → Strategy Questions (path-specific)
-        if (selected === 'longevity') {
+        if (selected === 'pregnancy') {
+          navigate('/pregnancy-onboarding');
+        } else if (selected === 'longevity') {
           navigate('/strategy-questions', { state: { strategy: selected, selectedRhythm: 'cellular' } });
         } else {
           navigate('/strategy-questions', { state: { strategy: selected, selectedRhythm: 'hormonal' } });
