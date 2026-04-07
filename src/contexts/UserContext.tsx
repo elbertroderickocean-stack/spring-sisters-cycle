@@ -136,8 +136,9 @@ const demoUserData: UserData = {
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userData, setUserData] = useState<UserData>(defaultUserData);
 
-  const updateUserData = (data: Partial<UserData>) => {
+  const updateUserData = useCallback((data: Partial<UserData>) => {
     setUserData((prev) => ({ ...prev, ...data }));
+  }, []);
   };
 
   const addScannedProduct = (product: ScannedProduct) => {
