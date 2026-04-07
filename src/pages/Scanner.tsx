@@ -207,7 +207,7 @@ const Scanner = () => {
         analysisResult={analysisResult}
         onAddToProducts={() => {
           setShowResult(false);
-          navigate('/products');
+          navigate(returnTo);
         }}
       />
     </div>
