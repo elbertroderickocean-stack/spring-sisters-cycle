@@ -268,8 +268,6 @@ const Today = () => {
   };
 
   const getEveningRitualSteps = () => {
-    const { isProductOwned } = useUser();
-    
     // Wise Bloom 7-Day Micro-Cycle
     if (userData.wiseBloomMode) {
       return getWiseBloomEveningSteps();
@@ -280,137 +278,55 @@ const Today = () => {
       return userData.customRituals.evening.map((productId, index) => {
         const product = getProductInfo(productId);
         return {
-          number: index + 1,
-          name: product.name,
-          purpose: product.purpose,
-          owned: isProductOwned(productId),
-          productId,
-          isPhaseProduct: productId === 'serum-trio'
+          number: index + 1, name: product.name, purpose: product.purpose,
+          owned: isProductOwned(productId), productId, isPhaseProduct: productId === 'serum-trio',
         };
       });
     }
 
-    // Evening ritual: Cleansing & Repair
-    const hasSerumTrio = isProductOwned('serum-trio');
-    const hasCleanser = isProductOwned('cleanser');
-    const hasEyeCream = isProductOwned('eye-cream');
-    const hasMoisturizer = isProductOwned('moisturizer');
+    const serumName = phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum';
     const hasCeramide = isProductOwned('ceramide');
 
     const steps: any[] = [
+      buildStep(1, 'cleanser', 'cleanser', 'The Baseline Cleanser (First Cleanse)',
+        'Removes makeup, SPF, and surface impurities.', {
+          howTo: { quantity: 'A nickel-sized amount', preparation: 'Apply to dry skin first',
+            application: 'Massage in circular motions for 60 seconds, then emulsify with warm water and rinse.',
+            proTips: ['Evening cleansing should be more thorough', 'Focus on areas with makeup or SPF'] }
+        }),
+      buildStep(2, 'cleanser', 'cleanser', 'The Baseline Cleanser (Second Cleanse)',
+        'Deep cleans pores and prepares skin for treatment.', {
+          howTo: { quantity: 'A dime-sized amount', preparation: 'Apply to damp skin',
+            application: 'Massage for 30 seconds focusing on T-zone, rinse with lukewarm water.',
+            proTips: ['Double cleansing is essential at night', 'Your skin should feel clean but not tight'] }
+        }),
+      buildStep(3, 'serum', 'serum-trio', serumName,
+        'Delivers phase-specific active ingredients to match your hormonal needs.', {
+          isPhaseProduct: true, altName: serumName,
+          howTo: { quantity: '3-4 drops', preparation: 'Apply to damp skin immediately after cleansing',
+            application: 'Press and smooth into skin using upward motions.',
+            proTips: ['Evening application focuses on repair', 'Your skin is most receptive to actives at night'] }
+        }),
+      buildStep(4, 'eye-cream', 'eye-cream', 'The Long-Term Eye Cream',
+        'Reduces puffiness and fine lines around your eyes.', {
+          howTo: { quantity: 'A rice grain-sized amount per eye', preparation: 'Dot around the orbital bone',
+            application: 'Gently massage from inner to outer corner, then tap lightly.',
+            proTips: ['Evening focus: repair with gentle massage', 'Can use slightly more product at night'] }
+        }),
+      buildStep(5, 'moisturizer', hasCeramide ? 'ceramide' : 'moisturizer',
+        hasCeramide ? 'Ceramide Concentrate' : 'The Long-Term Moisturizer',
+        hasCeramide ? 'Intensive barrier repair and deep nourishment.' : 'Seals in hydration and protects your skin barrier all night long.', {
+          howTo: { quantity: hasCeramide ? '2-3 drops' : 'A generous pump', preparation: 'Warm between palms',
+            application: hasCeramide 
+              ? 'Press into skin with gentle upward strokes. Follow with moisturizer if needed.'
+              : 'Apply generously with upward and outward massage strokes.',
+            proTips: ['Evening is ideal for richer formulas', 'Don\'t skimp—nighttime is repair time'] }
+        }),
       {
-        number: 1,
-        type: 'product',
-        name: 'The Baseline Cleanser (First Cleanse)',
-        purpose: 'Removes makeup, SPF, and surface impurities.',
-        owned: hasCleanser,
-        productId: 'cleanser',
-        howTo: {
-          quantity: 'A nickel-sized amount',
-          preparation: 'Apply to dry skin first to break down makeup and SPF',
-          application: 'Massage in circular motions for 60 seconds, then emulsify with warm water and rinse thoroughly.',
-          proTips: [
-            'Evening cleansing should be more thorough',
-            'Focus on areas with makeup or SPF',
-            'This is your "oil cleanse" step'
-          ]
-        }
-      },
-      {
-        number: 2,
-        type: 'product',
-        name: 'The Baseline Cleanser (Second Cleanse)',
-        purpose: 'Deep cleans pores and prepares skin for treatment.',
-        owned: hasCleanser,
-        productId: 'cleanser',
-        howTo: {
-          quantity: 'A dime-sized amount',
-          preparation: 'Apply to damp skin',
-          application: 'Massage for 30 seconds focusing on T-zone, rinse with lukewarm water.',
-          proTips: [
-            'Double cleansing is essential at night',
-            'Second cleanse ensures complete purity',
-            'Your skin should feel clean but not tight'
-          ]
-        }
-      },
-      {
-        number: 3,
-        type: 'product',
-        name: phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum',
-        purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
-        owned: hasSerumTrio,
-        productId: 'serum-trio',
-        isPhaseProduct: true,
-        howTo: {
-          quantity: '3-4 drops (more than morning)',
-          preparation: 'Apply to damp skin immediately after cleansing',
-          application: 'Press and smooth into skin using upward motions. Take your time—nighttime is for deeper penetration.',
-          proTips: [
-            'Evening application focuses on repair',
-            'Use smoothing massage strokes',
-            'Your skin is most receptive to actives at night'
-          ]
-        }
-      },
-      {
-        number: 4,
-        type: 'product',
-        name: 'The Long-Term Eye Cream',
-        purpose: 'Reduces puffiness and fine lines around your eyes.',
-        owned: hasEyeCream,
-        productId: 'eye-cream',
-        howTo: {
-          quantity: 'A rice grain-sized amount per eye',
-          preparation: 'Dot around the orbital bone',
-          application: 'Gently massage from inner to outer corner, then tap lightly to boost absorption.',
-          proTips: [
-            'Evening focus: repair with gentle massage',
-            'Can use slightly more product at night',
-            'Finish with acupressure points for relaxation'
-          ]
-        }
-      },
-      {
-        number: 5,
-        type: 'product',
-        name: hasCeramide ? 'Ceramide Concentrate' : 'The Long-Term Moisturizer',
-        purpose: hasCeramide ? 'Intensive barrier repair and deep nourishment.' : 'Seals in hydration and protects your skin barrier all night long.',
-        owned: hasCeramide || hasMoisturizer,
-        productId: hasCeramide ? 'ceramide' : 'moisturizer',
-        howTo: {
-          quantity: hasCeramide ? '2-3 drops' : 'A generous pump',
-          preparation: 'Warm between palms',
-          application: hasCeramide 
-            ? 'Press into skin with gentle upward strokes. Follow with moisturizer if needed for extra richness.'
-            : 'Apply generously with upward and outward massage strokes. Your skin repairs itself at night—give it fuel.',
-          proTips: hasCeramide 
-            ? [
-                'Evening is ideal for richer, more concentrated formulas',
-                'Layer under moisturizer for maximum repair',
-                'Perfect for calm phase intensive care'
-              ]
-            : [
-                'Evening moisturizer can be richer than morning',
-                'Don\'t skimp—nighttime is repair time',
-                'Apply to neck and chest too'
-              ]
-        }
-      },
-      {
-        number: 6,
-        type: 'wellness',
-        name: 'Relaxing Facial Massage',
-        purpose: 'Releases tension, boosts circulation, and promotes lymphatic drainage.',
-        owned: true,
-        howTo: {
-          application: 'Using gentle pressure, massage from the center of your face outward. Focus on jaw tension, temples, and forehead. End with downward strokes along your neck.',
-          proTips: [
-            'Do this for 2-3 minutes while your products absorb',
-            'Use slow, deliberate movements',
-            'This is your meditation moment'
-          ]
-        }
+        number: 6, type: 'wellness', name: 'Relaxing Facial Massage',
+        purpose: 'Releases tension, boosts circulation, and promotes lymphatic drainage.', owned: true,
+        howTo: { application: 'Using gentle pressure, massage from the center of your face outward. Focus on jaw tension, temples, and forehead.',
+          proTips: ['Do this for 2-3 minutes while your products absorb', 'Use slow, deliberate movements', 'This is your meditation moment'] }
       }
     ];
 
