@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ScanLine } from 'lucide-react';
 import { ScanAnalysisModal } from '@/components/ScanAnalysisModal';
@@ -15,6 +15,8 @@ interface AnalysisResult {
 
 const Scanner = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo = (location.state as any)?.returnTo || '/products';
   const [isScanning, setIsScanning] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
@@ -118,7 +120,7 @@ const Scanner = () => {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate('/products')}
+          onClick={() => navigate(returnTo)}
           className="rounded-full"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -145,7 +147,7 @@ const Scanner = () => {
           <div className="absolute inset-0 flex items-center justify-center bg-background/90 p-6">
             <div className="text-center space-y-4">
               <p className="text-foreground/80">{cameraError}</p>
-              <Button onClick={() => navigate('/products')}>
+              <Button onClick={() => navigate(returnTo)}>
                 Go Back
               </Button>
             </div>
@@ -205,7 +207,7 @@ const Scanner = () => {
         analysisResult={analysisResult}
         onAddToProducts={() => {
           setShowResult(false);
-          navigate('/products');
+          navigate(returnTo);
         }}
       />
     </div>

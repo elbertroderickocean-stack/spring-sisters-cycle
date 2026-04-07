@@ -173,128 +173,101 @@ const Today = () => {
     return 'hsl(120 40% 50%)';
   };
 
+  // Helper: find external product by category
+  const getExternalByCategory = (category: string) => {
+    return (userData.externalProducts || []).find(p => p.category === category);
+  };
+
+  // Build a unified routine step - prefers user's product, falls back to meanwhile. suggestion
+  const buildStep = (
+    number: number,
+    category: string,
+    meanwhileId: string,
+    meanwhileName: string,
+    purpose: string,
+    opts?: { isPhaseProduct?: boolean; type?: 'product' | 'wellness'; howTo?: any; altName?: string }
+  ) => {
+    const ownsMeanwhile = isProductOwned(meanwhileId);
+    const externalProduct = getExternalByCategory(category);
+    const hasProduct = ownsMeanwhile || !!externalProduct;
+
+    if (ownsMeanwhile) {
+      return {
+        number, name: opts?.altName || meanwhileName, purpose, owned: true,
+        productId: meanwhileId, isPhaseProduct: opts?.isPhaseProduct, type: opts?.type || 'product',
+        howTo: opts?.howTo, isMeanwhile: true,
+      };
+    }
+    if (externalProduct) {
+      return {
+        number, name: externalProduct.name, purpose,
+        owned: true, productId: undefined, isPhaseProduct: false, type: 'product' as const,
+        brandNote: externalProduct.brand, isMeanwhile: false,
+        meanwhileSuggestion: { name: meanwhileName, id: meanwhileId },
+      };
+    }
+    // Ghosted meanwhile. suggestion
+    return {
+      number, name: meanwhileName, purpose, owned: false,
+      productId: meanwhileId, isPhaseProduct: opts?.isPhaseProduct, type: opts?.type || 'product',
+      isMeanwhile: true,
+    };
+  };
+
   const getMorningRitualSteps = () => {
-    const { isProductOwned } = useUser();
-    
-     // Check if there are custom rituals from m.i.
+    // Check if there are custom rituals from m.i.
     if (userData.customRituals?.morning) {
       return userData.customRituals.morning.map((productId, index) => {
         const product = getProductInfo(productId);
         return {
-          number: index + 1,
-          name: product.name,
-          purpose: product.purpose,
-          owned: isProductOwned(productId),
-          productId,
-          isPhaseProduct: productId === 'serum-trio'
+          number: index + 1, name: product.name, purpose: product.purpose,
+          owned: isProductOwned(productId), productId, isPhaseProduct: productId === 'serum-trio',
         };
       });
     }
 
-    // Morning Deployment: Protection & Awakening
-    const hasSerumTrio = isProductOwned('serum-trio');
-    const hasCleanser = isProductOwned('cleanser');
-    const hasEyeCream = isProductOwned('eye-cream');
-    const hasMoisturizer = isProductOwned('moisturizer');
-    const hasVitaminC = isProductOwned('vitamin-c');
+    const serumName = phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum';
 
     const steps: any[] = [
       {
-        number: 1,
-        type: 'wellness',
-        name: 'Awakening Lymphatic Tapping',
-        purpose: 'Stimulates circulation and reduces morning puffiness.',
-        owned: true,
+        number: 1, type: 'wellness', name: 'Awakening Lymphatic Tapping',
+        purpose: 'Stimulates circulation and reduces morning puffiness.', owned: true,
         howTo: {
-          application: 'Using your fingertips, gently tap along your jawline, cheekbones, and temples in upward motions. Start from the center of your face and move outward.',
-          proTips: [
-            'Do this for 30-60 seconds before cleansing',
-            'Focus on areas that tend to hold puffiness',
-            'Keep the pressure light and rhythmic'
-          ]
+          application: 'Using your fingertips, gently tap along your jawline, cheekbones, and temples in upward motions.',
+          proTips: ['Do this for 30-60 seconds before cleansing', 'Focus on areas that tend to hold puffiness', 'Keep the pressure light and rhythmic']
         }
       },
-      {
-        number: 2,
-        type: 'product',
-        name: 'The Baseline Cleanser',
-        purpose: 'Creates a clean, balanced canvas for your treatment products.',
-        owned: hasCleanser,
-        productId: 'cleanser',
-        howTo: {
-          quantity: 'A nickel-sized amount',
-          preparation: 'Dampen face with lukewarm water',
-          application: 'Massage gently in circular motions for 30 seconds, then rinse thoroughly with cool water to close pores.',
-          proTips: [
-            'Morning cleansing should be gentler than evening',
-            'Cool water helps wake up the skin',
-            'Pat dry, never rub'
-          ]
-        }
-      },
-      {
-        number: 3,
-        type: 'product',
-        name: phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum',
-        purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
-        owned: hasSerumTrio,
-        productId: 'serum-trio',
-        isPhaseProduct: true,
-        howTo: {
-          quantity: '2-3 drops',
-          preparation: 'Apply to slightly damp skin for better absorption',
-          application: 'Press gently into skin using upward and outward motions. Let absorb for 30 seconds.',
-          proTips: [
-            'Morning application focuses on protection',
-            'Use light tapping motions to boost circulation',
-            'Wait before applying moisturizer for full absorption'
-          ]
-        }
-      },
-      {
-        number: 4,
-        type: 'product',
-        name: 'The Long-Term Eye Cream',
-        purpose: 'Reduces puffiness and fine lines around your eyes.',
-        owned: hasEyeCream,
-        productId: 'eye-cream',
-        howTo: {
-          quantity: 'A rice grain-sized amount per eye',
-          preparation: 'Dot around the orbital bone',
-          application: 'Gently pat (never rub) from inner to outer corner. Use your ring finger for the lightest touch.',
-          proTips: [
-            'Morning focus: de-puffing with gentle tapping',
-            'Keep product away from lash line',
-            'Store in fridge for extra de-puffing power'
-          ]
-        }
-      },
-      {
-        number: 5,
-        type: 'product',
-        name: 'The Long-Term Moisturizer',
-        purpose: 'Seals in hydration and protects your skin barrier all day long.',
-        owned: hasMoisturizer,
-        productId: 'moisturizer',
-        howTo: {
-          quantity: 'A small pump',
-          preparation: 'Warm between palms',
-          application: 'Press into skin using upward strokes. Allow to absorb before makeup or SPF.',
-          proTips: [
-            'Morning moisturizer should be lighter in texture',
-            'Creates a smooth base for SPF and makeup',
-            'Don\'t forget neck and décolletage'
-          ]
-        }
-      }
+      buildStep(2, 'cleanser', 'cleanser', 'The Baseline Cleanser',
+        'Creates a clean, balanced canvas for your treatment products.', {
+          howTo: { quantity: 'A nickel-sized amount', preparation: 'Dampen face with lukewarm water',
+            application: 'Massage gently in circular motions for 30 seconds, then rinse thoroughly with cool water.',
+            proTips: ['Morning cleansing should be gentler than evening', 'Cool water helps wake up the skin', 'Pat dry, never rub'] }
+        }),
+      buildStep(3, 'serum', 'serum-trio', serumName,
+        'Delivers phase-specific active ingredients to match your hormonal needs.', {
+          isPhaseProduct: true, altName: serumName,
+          howTo: { quantity: '2-3 drops', preparation: 'Apply to slightly damp skin',
+            application: 'Press gently into skin using upward and outward motions. Let absorb for 30 seconds.',
+            proTips: ['Morning application focuses on protection', 'Use light tapping motions', 'Wait before applying moisturizer'] }
+        }),
+      buildStep(4, 'eye-cream', 'eye-cream', 'The Long-Term Eye Cream',
+        'Reduces puffiness and fine lines around your eyes.', {
+          howTo: { quantity: 'A rice grain-sized amount per eye', preparation: 'Dot around the orbital bone',
+            application: 'Gently pat from inner to outer corner. Use your ring finger for the lightest touch.',
+            proTips: ['Morning focus: de-puffing with gentle tapping', 'Keep product away from lash line'] }
+        }),
+      buildStep(5, 'moisturizer', 'moisturizer', 'The Long-Term Moisturizer',
+        'Seals in hydration and protects your skin barrier all day long.', {
+          howTo: { quantity: 'A small pump', preparation: 'Warm between palms',
+            application: 'Press into skin using upward strokes. Allow to absorb before makeup or SPF.',
+            proTips: ['Morning moisturizer should be lighter', 'Creates a smooth base for SPF and makeup'] }
+        }),
     ];
 
     return steps;
   };
 
   const getEveningRitualSteps = () => {
-    const { isProductOwned } = useUser();
-    
     // Wise Bloom 7-Day Micro-Cycle
     if (userData.wiseBloomMode) {
       return getWiseBloomEveningSteps();
@@ -305,137 +278,55 @@ const Today = () => {
       return userData.customRituals.evening.map((productId, index) => {
         const product = getProductInfo(productId);
         return {
-          number: index + 1,
-          name: product.name,
-          purpose: product.purpose,
-          owned: isProductOwned(productId),
-          productId,
-          isPhaseProduct: productId === 'serum-trio'
+          number: index + 1, name: product.name, purpose: product.purpose,
+          owned: isProductOwned(productId), productId, isPhaseProduct: productId === 'serum-trio',
         };
       });
     }
 
-    // Evening ritual: Cleansing & Repair
-    const hasSerumTrio = isProductOwned('serum-trio');
-    const hasCleanser = isProductOwned('cleanser');
-    const hasEyeCream = isProductOwned('eye-cream');
-    const hasMoisturizer = isProductOwned('moisturizer');
+    const serumName = phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum';
     const hasCeramide = isProductOwned('ceramide');
 
     const steps: any[] = [
+      buildStep(1, 'cleanser', 'cleanser', 'The Baseline Cleanser (First Cleanse)',
+        'Removes makeup, SPF, and surface impurities.', {
+          howTo: { quantity: 'A nickel-sized amount', preparation: 'Apply to dry skin first',
+            application: 'Massage in circular motions for 60 seconds, then emulsify with warm water and rinse.',
+            proTips: ['Evening cleansing should be more thorough', 'Focus on areas with makeup or SPF'] }
+        }),
+      buildStep(2, 'cleanser', 'cleanser', 'The Baseline Cleanser (Second Cleanse)',
+        'Deep cleans pores and prepares skin for treatment.', {
+          howTo: { quantity: 'A dime-sized amount', preparation: 'Apply to damp skin',
+            application: 'Massage for 30 seconds focusing on T-zone, rinse with lukewarm water.',
+            proTips: ['Double cleansing is essential at night', 'Your skin should feel clean but not tight'] }
+        }),
+      buildStep(3, 'serum', 'serum-trio', serumName,
+        'Delivers phase-specific active ingredients to match your hormonal needs.', {
+          isPhaseProduct: true, altName: serumName,
+          howTo: { quantity: '3-4 drops', preparation: 'Apply to damp skin immediately after cleansing',
+            application: 'Press and smooth into skin using upward motions.',
+            proTips: ['Evening application focuses on repair', 'Your skin is most receptive to actives at night'] }
+        }),
+      buildStep(4, 'eye-cream', 'eye-cream', 'The Long-Term Eye Cream',
+        'Reduces puffiness and fine lines around your eyes.', {
+          howTo: { quantity: 'A rice grain-sized amount per eye', preparation: 'Dot around the orbital bone',
+            application: 'Gently massage from inner to outer corner, then tap lightly.',
+            proTips: ['Evening focus: repair with gentle massage', 'Can use slightly more product at night'] }
+        }),
+      buildStep(5, 'moisturizer', hasCeramide ? 'ceramide' : 'moisturizer',
+        hasCeramide ? 'Ceramide Concentrate' : 'The Long-Term Moisturizer',
+        hasCeramide ? 'Intensive barrier repair and deep nourishment.' : 'Seals in hydration and protects your skin barrier all night long.', {
+          howTo: { quantity: hasCeramide ? '2-3 drops' : 'A generous pump', preparation: 'Warm between palms',
+            application: hasCeramide 
+              ? 'Press into skin with gentle upward strokes. Follow with moisturizer if needed.'
+              : 'Apply generously with upward and outward massage strokes.',
+            proTips: ['Evening is ideal for richer formulas', 'Don\'t skimp—nighttime is repair time'] }
+        }),
       {
-        number: 1,
-        type: 'product',
-        name: 'The Baseline Cleanser (First Cleanse)',
-        purpose: 'Removes makeup, SPF, and surface impurities.',
-        owned: hasCleanser,
-        productId: 'cleanser',
-        howTo: {
-          quantity: 'A nickel-sized amount',
-          preparation: 'Apply to dry skin first to break down makeup and SPF',
-          application: 'Massage in circular motions for 60 seconds, then emulsify with warm water and rinse thoroughly.',
-          proTips: [
-            'Evening cleansing should be more thorough',
-            'Focus on areas with makeup or SPF',
-            'This is your "oil cleanse" step'
-          ]
-        }
-      },
-      {
-        number: 2,
-        type: 'product',
-        name: 'The Baseline Cleanser (Second Cleanse)',
-        purpose: 'Deep cleans pores and prepares skin for treatment.',
-        owned: hasCleanser,
-        productId: 'cleanser',
-        howTo: {
-          quantity: 'A dime-sized amount',
-          preparation: 'Apply to damp skin',
-          application: 'Massage for 30 seconds focusing on T-zone, rinse with lukewarm water.',
-          proTips: [
-            'Double cleansing is essential at night',
-            'Second cleanse ensures complete purity',
-            'Your skin should feel clean but not tight'
-          ]
-        }
-      },
-      {
-        number: 3,
-        type: 'product',
-        name: phase === 'calm' ? 'Calm & Renew Serum' : phase === 'glow' ? 'Glow & Energize Serum' : 'Balance & Clarify Serum',
-        purpose: 'Delivers phase-specific active ingredients to match your hormonal needs.',
-        owned: hasSerumTrio,
-        productId: 'serum-trio',
-        isPhaseProduct: true,
-        howTo: {
-          quantity: '3-4 drops (more than morning)',
-          preparation: 'Apply to damp skin immediately after cleansing',
-          application: 'Press and smooth into skin using upward motions. Take your time—nighttime is for deeper penetration.',
-          proTips: [
-            'Evening application focuses on repair',
-            'Use smoothing massage strokes',
-            'Your skin is most receptive to actives at night'
-          ]
-        }
-      },
-      {
-        number: 4,
-        type: 'product',
-        name: 'The Long-Term Eye Cream',
-        purpose: 'Reduces puffiness and fine lines around your eyes.',
-        owned: hasEyeCream,
-        productId: 'eye-cream',
-        howTo: {
-          quantity: 'A rice grain-sized amount per eye',
-          preparation: 'Dot around the orbital bone',
-          application: 'Gently massage from inner to outer corner, then tap lightly to boost absorption.',
-          proTips: [
-            'Evening focus: repair with gentle massage',
-            'Can use slightly more product at night',
-            'Finish with acupressure points for relaxation'
-          ]
-        }
-      },
-      {
-        number: 5,
-        type: 'product',
-        name: hasCeramide ? 'Ceramide Concentrate' : 'The Long-Term Moisturizer',
-        purpose: hasCeramide ? 'Intensive barrier repair and deep nourishment.' : 'Seals in hydration and protects your skin barrier all night long.',
-        owned: hasCeramide || hasMoisturizer,
-        productId: hasCeramide ? 'ceramide' : 'moisturizer',
-        howTo: {
-          quantity: hasCeramide ? '2-3 drops' : 'A generous pump',
-          preparation: 'Warm between palms',
-          application: hasCeramide 
-            ? 'Press into skin with gentle upward strokes. Follow with moisturizer if needed for extra richness.'
-            : 'Apply generously with upward and outward massage strokes. Your skin repairs itself at night—give it fuel.',
-          proTips: hasCeramide 
-            ? [
-                'Evening is ideal for richer, more concentrated formulas',
-                'Layer under moisturizer for maximum repair',
-                'Perfect for calm phase intensive care'
-              ]
-            : [
-                'Evening moisturizer can be richer than morning',
-                'Don\'t skimp—nighttime is repair time',
-                'Apply to neck and chest too'
-              ]
-        }
-      },
-      {
-        number: 6,
-        type: 'wellness',
-        name: 'Relaxing Facial Massage',
-        purpose: 'Releases tension, boosts circulation, and promotes lymphatic drainage.',
-        owned: true,
-        howTo: {
-          application: 'Using gentle pressure, massage from the center of your face outward. Focus on jaw tension, temples, and forehead. End with downward strokes along your neck.',
-          proTips: [
-            'Do this for 2-3 minutes while your products absorb',
-            'Use slow, deliberate movements',
-            'This is your meditation moment'
-          ]
-        }
+        number: 6, type: 'wellness', name: 'Relaxing Facial Massage',
+        purpose: 'Releases tension, boosts circulation, and promotes lymphatic drainage.', owned: true,
+        howTo: { application: 'Using gentle pressure, massage from the center of your face outward. Focus on jaw tension, temples, and forehead.',
+          proTips: ['Do this for 2-3 minutes while your products absorb', 'Use slow, deliberate movements', 'This is your meditation moment'] }
       }
     ];
 
@@ -888,37 +779,6 @@ const Today = () => {
             timeOfDay="evening"
           />
 
-          {/* External Products on Shelf */}
-          {(userData.externalProducts?.length || 0) > 0 && (
-            <div className="glass-card p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <Package className="h-4 w-4 text-muted-foreground" />
-                <h3 className="font-bold text-sm">Your Shelf</h3>
-                <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-border/40 text-muted-foreground gap-1">
-                  {userData.externalProducts?.length || 0} products
-                </Badge>
-              </div>
-              <p className="text-xs text-muted-foreground mb-3">
-                Products from other brands integrated by m.i. into your routine.
-              </p>
-              <div className="space-y-2">
-                {(userData.externalProducts || []).map((product) => (
-                  <div key={product.id} className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[hsl(var(--glass-highlight))] border-[0.5px] border-[hsl(var(--glass-border))]">
-                    <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                      <Package className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{product.name}</p>
-                      <p className="text-[11px] text-muted-foreground">{product.brand} · {product.category}</p>
-                    </div>
-                    <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-primary/20 text-primary shrink-0">
-                      Active
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Hero Ingredients */}
