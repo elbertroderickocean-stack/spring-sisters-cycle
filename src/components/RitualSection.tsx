@@ -121,18 +121,28 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                           : 'bg-muted/10 border-dashed border-[hsl(var(--glass-border))] opacity-50'
                       }`}
                     >
-                      <div className="flex items-center gap-2 mb-0.5">
+                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                         <h4 className={`text-sm font-medium ${step.owned ? 'text-foreground' : 'text-muted-foreground'}`}>
                           {step.name}
                         </h4>
+                        {step.brandNote && (
+                          <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-accent-foreground/15 text-muted-foreground">
+                            {step.brandNote}
+                          </Badge>
+                        )}
                         {isWellness && (
                           <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-sleep))]/30 text-[hsl(var(--intel-sleep))]">
                             Wellness
                           </Badge>
                         )}
-                        {step.owned && !isWellness && (
+                        {step.owned && !isWellness && step.isMeanwhile !== false && (
                           <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-[hsl(var(--sage)/0.2)] text-[hsl(var(--sage))] gap-0.5">
                             <Zap className="h-2 w-2" /> Live Data
+                          </Badge>
+                        )}
+                        {step.owned && !isWellness && step.isMeanwhile === false && (
+                          <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-primary/15 text-primary/70 gap-0.5">
+                            Integrated
                           </Badge>
                         )}
                         {step.isPhaseProduct && step.owned && (
@@ -145,7 +155,22 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                         )}
                       </div>
                       {step.owned ? (
-                        <p className="text-xs text-muted-foreground leading-relaxed">{step.purpose}</p>
+                        <>
+                          <p className="text-xs text-muted-foreground leading-relaxed">{step.purpose}</p>
+                          {/* meanwhile. upgrade suggestion for external products */}
+                          {step.meanwhileSuggestion && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/product/${step.meanwhileSuggestion!.id}`);
+                              }}
+                              className="mt-2 flex items-center gap-1.5 text-[10px] text-primary/70 hover:text-primary transition-colors"
+                            >
+                              <Sparkles className="h-3 w-3" />
+                              <span>Upgrade to <span className="italic">meanwhile.</span> {step.meanwhileSuggestion.name} →</span>
+                            </button>
+                          )}
+                        </>
                       ) : (
                         <div className="flex items-center justify-between mt-1">
                           <p className="text-[10px] text-muted-foreground italic">Missing from framework</p>
