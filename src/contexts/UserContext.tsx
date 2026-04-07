@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { useProfileSync } from '@/hooks/useProfileSync';
 
 export type PhaseType = 'calm' | 'glow' | 'balance';
 
