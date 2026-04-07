@@ -40,7 +40,11 @@ const Register = () => {
     });
     if (result.error) {
       toast.error('Google sign-in failed');
+      return;
     }
+
+    if (result.redirected) return;
+    navigate('/today');
   };
 
   const handleAppleSignup = async () => {
@@ -49,7 +53,11 @@ const Register = () => {
     });
     if (result.error) {
       toast.error('Apple sign-in failed');
+      return;
     }
+
+    if (result.redirected) return;
+    navigate('/today');
   };
 
   const handleDemoMode = () => setShowDemoModal(true);
