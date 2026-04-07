@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { PhaseType } from '@/contexts/UserContext';
 import { HowToModal } from './HowToModal';
-import { Heart, Zap, ChevronRight } from 'lucide-react';
+import { Heart, Zap, ChevronRight, Sparkles } from 'lucide-react';
 
 interface RitualStep {
   number: number;
