@@ -276,6 +276,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }));
   };
 
+  const { saveProfile } = useProfileSync(userData, updateUserData);
+
   return (
     <UserContext.Provider value={{ 
       userData, 
@@ -294,7 +296,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       updateProductQuantity,
       getProductQuantity,
       isProductOwned,
-      updateCustomRituals
+      updateCustomRituals,
+      saveProfile
     }}>
       {children}
     </UserContext.Provider>
