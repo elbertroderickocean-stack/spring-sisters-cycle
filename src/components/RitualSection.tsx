@@ -14,6 +14,9 @@ interface RitualStep {
   productId?: string;
   isPhaseProduct?: boolean;
   type?: 'product' | 'wellness';
+  isMeanwhile?: boolean;
+  brandNote?: string;
+  meanwhileSuggestion?: { name: string; id: string };
   howTo?: {
     quantity?: string;
     preparation?: string;
