@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useUser, ProductCategory } from '@/contexts/UserContext';
 import { useAuraWhispers } from '@/hooks/useAuraWhispers';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 import OnboardingBackButton from '@/components/OnboardingBackButton';
 import { cn } from '@/lib/utils';
-import { Plus, ScanLine, Package, X, ChevronDown, Sparkles } from 'lucide-react';
+import { ScanLine, X, Sparkles, Shield, AlertTriangle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
 
 const SAGE = '#B2C2B2';
 
@@ -28,34 +29,49 @@ const categoryLabels: Record<ProductCategory, string> = {
   exfoliant: 'Exfoliant', other: 'Other',
 };
 
-type ShelfItem = 
+type ShelfItem =
   | { type: 'meanwhile'; id: string; name: string; category: ProductCategory }
-  | { type: 'external'; name: string; brand: string; category: ProductCategory; tempId: string };
+  | { type: 'scanned'; name: string; brand: string; category: ProductCategory; tempId: string; inci_full?: string; key_actives?: any[]; conflicts?: any[]; synergies?: any[]; pregnancy_safe?: boolean; overallScore?: number };
 
 const Inventory = () => {
   const navigate = useNavigate();
-  const { updateUserData, addExternalProduct } = useUser();
+  const location = useLocation();
+  const { updateUserData, addExternalProduct, userData } = useUser();
   const { triggerProTip } = useAuraWhispers();
   const [shelf, setShelf] = useState<ShelfItem[]>([]);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [showMeanwhileModal, setShowMeanwhileModal] = useState(false);
-  const [newProduct, setNewProduct] = useState({ name: '', brand: '', category: 'moisturizer' as ProductCategory });
+
+  // Receive scanned product from Scanner
+  useEffect(() => {
+    const state = location.state as any;
+    if (state?.scannedProduct) {
+      const sp = state.scannedProduct;
+      const categoryMap: Record<string, ProductCategory> = {
+        cleanser: 'cleanser', toner: 'toner', serum: 'serum', moisturizer: 'moisturizer',
+        eye_cream: 'eye-cream', sunscreen: 'sunscreen', mask: 'mask', exfoliant: 'exfoliant',
+        oil: 'oil', treatment: 'other', other: 'other',
+      };
+      setShelf(prev => [...prev, {
+        type: 'scanned',
+        name: sp.productName,
+        brand: sp.brand,
+        category: categoryMap[sp.category] || 'other',
+        tempId: `scan-${Date.now()}`,
+        inci_full: sp.inci_full,
+        key_actives: sp.key_actives,
+        conflicts: sp.conflicts,
+        synergies: sp.synergies,
+        pregnancy_safe: sp.pregnancy_safe,
+        overallScore: sp.overallScore,
+      }]);
+      // Clear the state
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   const addMeanwhileProduct = (product: typeof meanwhileProducts[0]) => {
     if (shelf.some(s => s.type === 'meanwhile' && s.id === product.id)) return;
     setShelf(prev => [...prev, { type: 'meanwhile', ...product }]);
-  };
-
-  const handleAddExternal = () => {
-    if (newProduct.name.trim() && newProduct.brand.trim()) {
-      setShelf(prev => [...prev, { 
-        type: 'external', 
-        ...newProduct, 
-        tempId: `temp-${Date.now()}` 
-      }]);
-      setNewProduct({ name: '', brand: '', category: 'moisturizer' });
-      setShowAddModal(false);
-    }
   };
 
   const removeFromShelf = (index: number) => {
@@ -63,19 +79,23 @@ const Inventory = () => {
   };
 
   const handleNext = () => {
-    // Extract meanwhile products
     const selectedMeanwhile = shelf.filter(s => s.type === 'meanwhile').map(s => (s as any).id as string);
     const productInventory = selectedMeanwhile.map(productId => ({ productId, quantity: 1 }));
-    
-    updateUserData({ 
+
+    updateUserData({
       ownedProducts: selectedMeanwhile,
       productInventory
     });
 
-    // Add external products
-    shelf.filter(s => s.type === 'external').forEach(s => {
-      const ext = s as Extract<ShelfItem, { type: 'external' }>;
-      addExternalProduct({ name: ext.name, brand: ext.brand, category: ext.category });
+    // Add scanned external products with ingredient data
+    shelf.filter(s => s.type === 'scanned').forEach(s => {
+      const ext = s as Extract<ShelfItem, { type: 'scanned' }>;
+      addExternalProduct({
+        name: ext.name,
+        brand: ext.brand,
+        category: ext.category,
+        analysis: ext.inci_full ? `INCI: ${ext.inci_full}` : undefined,
+      });
     });
 
     const precisionProductNames: Record<string, string> = {
@@ -86,11 +106,12 @@ const Inventory = () => {
     if (addedPrecisionProduct) {
       localStorage.setItem('pending_protip', precisionProductNames[addedPrecisionProduct]);
     }
-    
+
     navigate('/register');
   };
 
   const meanwhileOnShelf = shelf.filter(s => s.type === 'meanwhile').map(s => (s as any).id);
+  const isPregnancy = userData.pregnancyMode;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12">
@@ -101,7 +122,7 @@ const Inventory = () => {
             Build your skincare shelf.
           </h2>
           <p className="text-foreground/70 text-lg leading-relaxed">
-            Add everything you use — our products and yours. m.i. will build one unified routine from your real shelf.
+            Scan your products so m.i. can verify ingredients and build a safe, optimized routine. No guesswork.
           </p>
         </div>
 
@@ -112,10 +133,7 @@ const Inventory = () => {
               Your Shelf · {shelf.length} product{shelf.length !== 1 ? 's' : ''}
             </p>
             {shelf.map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border/60 bg-background"
-              >
+              <div key={idx} className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border/60 bg-background">
                 <div className={cn(
                   "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
                   item.type === 'meanwhile' ? "bg-primary/10" : "bg-accent"
@@ -123,18 +141,34 @@ const Inventory = () => {
                   {item.type === 'meanwhile' ? (
                     <Sparkles className="h-4 w-4 text-primary" />
                   ) : (
-                    <Package className="h-4 w-4 text-muted-foreground" />
+                    <ScanLine className="h-4 w-4 text-muted-foreground" />
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">{item.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {item.type === 'meanwhile' ? (
-                      <><span className="italic">meanwhile.</span> · {categoryLabels[item.category]}</>
-                    ) : (
-                      <>{(item as any).brand} · {categoryLabels[item.category]}</>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium text-foreground truncate">{item.name}</p>
+                    {item.type === 'scanned' && (item as any).overallScore && (
+                      <Badge variant="secondary" className="text-[10px] shrink-0">
+                        {(item as any).overallScore}/10
+                      </Badge>
                     )}
-                  </p>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-xs text-muted-foreground">
+                      {item.type === 'meanwhile' ? (
+                        <><span className="italic">meanwhile.</span> · {categoryLabels[item.category]}</>
+                      ) : (
+                        <>{(item as any).brand} · {categoryLabels[item.category]}</>
+                      )}
+                    </p>
+                    {item.type === 'scanned' && isPregnancy && (
+                      (item as any).pregnancy_safe ? (
+                        <Shield className="h-3 w-3 text-green-500" />
+                      ) : (
+                        <AlertTriangle className="h-3 w-3 text-destructive" />
+                      )
+                    )}
+                  </div>
                 </div>
                 <button onClick={() => removeFromShelf(idx)} className="p-1 rounded-full hover:bg-muted/50 transition-colors">
                   <X className="h-3.5 w-3.5 text-muted-foreground" />
@@ -144,18 +178,18 @@ const Inventory = () => {
           </div>
         )}
 
-        {/* Action buttons */}
+        {/* Action buttons — scan only for external, no manual add */}
         <div className="space-y-2">
           <button
-            onClick={() => setShowAddModal(true)}
+            onClick={() => navigate('/scanner', { state: { returnTo: '/inventory' } })}
             className="w-full flex items-center gap-3 px-4 py-4 rounded-xl border-2 border-dashed border-border/60 hover:border-primary/30 hover:bg-accent/20 transition-all text-left group"
           >
             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-              <Plus className="h-5 w-5 text-primary" />
+              <ScanLine className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground">Add any product</p>
-              <p className="text-xs text-muted-foreground">Any brand, any product type</p>
+              <p className="text-sm font-medium text-foreground">Scan a product to add</p>
+              <p className="text-xs text-muted-foreground">m.i. verifies ingredients before adding to your shelf</p>
             </div>
           </button>
 
@@ -168,29 +202,12 @@ const Inventory = () => {
             </div>
             <div>
               <p className="text-sm font-medium text-foreground">Add <span className="italic">meanwhile.</span> product</p>
-              <p className="text-xs text-muted-foreground">Phase-synced with m.i. intelligence</p>
-            </div>
-          </button>
-
-          <button
-            onClick={() => navigate('/scanner', { state: { returnTo: '/inventory' } })}
-            className="w-full flex items-center gap-3 px-4 py-4 rounded-xl border-2 border-dashed border-border/60 hover:border-primary/30 hover:bg-accent/20 transition-all text-left group"
-          >
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-              <ScanLine className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-foreground">Scan your shelf</p>
-              <p className="text-xs text-muted-foreground">Point your camera at products to add them</p>
+              <p className="text-xs text-muted-foreground">Pre-verified, phase-synced with m.i.</p>
             </div>
           </button>
         </div>
 
-        <Button
-          size="lg"
-          onClick={handleNext}
-          className="w-full mt-4 h-12 text-base rounded-lg"
-        >
+        <Button size="lg" onClick={handleNext} className="w-full mt-4 h-12 text-base rounded-lg">
           Continue
         </Button>
 
@@ -199,53 +216,6 @@ const Inventory = () => {
         </p>
         <OnboardingBackButton to="/personalize" />
       </div>
-
-      {/* Add External Product Modal */}
-      <Dialog open={showAddModal} onOpenChange={setShowAddModal}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle className="font-heading text-xl">Add a product</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 pt-2">
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Product Name</label>
-              <input
-                type="text" value={newProduct.name}
-                onChange={e => setNewProduct(p => ({ ...p, name: e.target.value }))}
-                placeholder="e.g. Advanced Night Repair"
-                className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Brand</label>
-              <input
-                type="text" value={newProduct.brand}
-                onChange={e => setNewProduct(p => ({ ...p, brand: e.target.value }))}
-                placeholder="e.g. Estée Lauder"
-                className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Category</label>
-              <div className="relative">
-                <select
-                  value={newProduct.category}
-                  onChange={e => setNewProduct(p => ({ ...p, category: e.target.value as ProductCategory }))}
-                  className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 appearance-none"
-                >
-                  {Object.entries(categoryLabels).map(([key, label]) => (
-                    <option key={key} value={key}>{label}</option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-              </div>
-            </div>
-            <Button onClick={handleAddExternal} disabled={!newProduct.name.trim() || !newProduct.brand.trim()} className="w-full rounded-lg">
-              Add to My Shelf
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
 
       {/* meanwhile. Products Modal */}
       <Dialog open={showMeanwhileModal} onOpenChange={setShowMeanwhileModal}>
@@ -261,15 +231,11 @@ const Inventory = () => {
               return (
                 <button
                   key={product.id}
-                  onClick={() => {
-                    if (!isAdded) addMeanwhileProduct(product);
-                  }}
+                  onClick={() => { if (!isAdded) addMeanwhileProduct(product); }}
                   disabled={isAdded}
                   className={cn(
                     "w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all text-left",
-                    isAdded
-                      ? "border-primary/30 bg-primary/5 opacity-60"
-                      : "border-border/60 hover:border-primary/30 hover:bg-accent/20"
+                    isAdded ? "border-primary/30 bg-primary/5 opacity-60" : "border-border/60 hover:border-primary/30 hover:bg-accent/20"
                   )}
                 >
                   <div
@@ -289,9 +255,7 @@ const Inventory = () => {
                     <p className="text-[15px] font-body text-foreground">{product.name}</p>
                     <p className="text-xs text-muted-foreground">{categoryLabels[product.category]}</p>
                   </div>
-                  {isAdded && (
-                    <span className="text-[10px] uppercase tracking-wider text-primary font-medium">Added</span>
-                  )}
+                  {isAdded && <span className="text-[10px] uppercase tracking-wider text-primary font-medium">Added</span>}
                 </button>
               );
             })}
