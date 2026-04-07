@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MeanwhileLogo } from '@/components/MeanwhileLogo';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Splash = () => {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
+    if (loading) return;
+
     const timer = setTimeout(() => {
-      navigate('/welcome');
+      if (user) {
+        navigate('/today');
+      } else {
+        navigate('/welcome');
+      }
     }, 3500);
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, user, loading]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-primary gap-10">

@@ -68,6 +68,81 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          age_range: string | null
+          check_in_data: Json | null
+          created_at: string
+          custom_rituals: Json | null
+          cycle_length: number | null
+          due_date: string | null
+          email: string | null
+          hormonal_medication_name: string | null
+          id: string
+          last_period_date: string | null
+          life_stage: string | null
+          name: string | null
+          onboarding_completed: boolean | null
+          owned_products: string[] | null
+          pregnancy_mode: boolean | null
+          skin_concerns: string[] | null
+          skin_type: string | null
+          takes_hormonal_medication: boolean | null
+          trimester: number | null
+          updated_at: string
+          user_id: string
+          wise_bloom_mode: boolean | null
+        }
+        Insert: {
+          age_range?: string | null
+          check_in_data?: Json | null
+          created_at?: string
+          custom_rituals?: Json | null
+          cycle_length?: number | null
+          due_date?: string | null
+          email?: string | null
+          hormonal_medication_name?: string | null
+          id?: string
+          last_period_date?: string | null
+          life_stage?: string | null
+          name?: string | null
+          onboarding_completed?: boolean | null
+          owned_products?: string[] | null
+          pregnancy_mode?: boolean | null
+          skin_concerns?: string[] | null
+          skin_type?: string | null
+          takes_hormonal_medication?: boolean | null
+          trimester?: number | null
+          updated_at?: string
+          user_id: string
+          wise_bloom_mode?: boolean | null
+        }
+        Update: {
+          age_range?: string | null
+          check_in_data?: Json | null
+          created_at?: string
+          custom_rituals?: Json | null
+          cycle_length?: number | null
+          due_date?: string | null
+          email?: string | null
+          hormonal_medication_name?: string | null
+          id?: string
+          last_period_date?: string | null
+          life_stage?: string | null
+          name?: string | null
+          onboarding_completed?: boolean | null
+          owned_products?: string[] | null
+          pregnancy_mode?: boolean | null
+          skin_concerns?: string[] | null
+          skin_type?: string | null
+          takes_hormonal_medication?: boolean | null
+          trimester?: number | null
+          updated_at?: string
+          user_id?: string
+          wise_bloom_mode?: boolean | null
+        }
+        Relationships: []
+      }
       skin_scans: {
         Row: {
           created_at: string

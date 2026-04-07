@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { useProfileSync } from '@/hooks/useProfileSync';
 
 export type PhaseType = 'calm' | 'glow' | 'balance';
 
@@ -77,6 +78,7 @@ interface UserContextType {
   getProductQuantity: (productId: string) => number;
   isProductOwned: (productId: string) => boolean;
   updateCustomRituals: (morning: string[], evening: string[], auraNote?: string) => void;
+  saveProfile: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -134,9 +136,9 @@ const demoUserData: UserData = {
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userData, setUserData] = useState<UserData>(defaultUserData);
 
-  const updateUserData = (data: Partial<UserData>) => {
+  const updateUserData = useCallback((data: Partial<UserData>) => {
     setUserData((prev) => ({ ...prev, ...data }));
-  };
+  }, []);
 
   const addScannedProduct = (product: ScannedProduct) => {
     setUserData((prev) => ({
@@ -274,6 +276,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }));
   };
 
+  const { saveProfile } = useProfileSync(userData, updateUserData);
+
   return (
     <UserContext.Provider value={{ 
       userData, 
@@ -292,7 +296,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       updateProductQuantity,
       getProductQuantity,
       isProductOwned,
-      updateCustomRituals
+      updateCustomRituals,
+      saveProfile
     }}>
       {children}
     </UserContext.Provider>

@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "@/contexts/UserContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Splash from "./pages/Splash";
 import Welcome from "./pages/Welcome";
 import Problem from "./pages/Problem";
@@ -11,6 +12,7 @@ import Solution from "./pages/Solution";
 import Personalize from "./pages/Personalize";
 import WiseBloomOnboarding from "./pages/WiseBloomOnboarding";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 import Details from "./pages/Details";
 import SkinConcerns from "./pages/SkinConcerns";
 import Inventory from "./pages/Inventory";
@@ -50,57 +52,60 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <UserProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Splash />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/problem" element={<Problem />} />
-            <Route path="/solution" element={<Solution />} />
-            <Route path="/personalize" element={<Personalize />} />
-            <Route path="/wise-bloom" element={<WiseBloomOnboarding />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/details" element={<Details />} />
-            <Route path="/skin-concerns" element={<SkinConcerns />} />
-            <Route path="/encouragement" element={<Encouragement />} />
-            <Route path="/strategy-questions" element={<StrategyQuestions />} />
-            <Route path="/connect-environment" element={<ConnectEnvironment />} />
-            <Route path="/inventory" element={<Inventory />} />
-            <Route path="/pregnancy-onboarding" element={<PregnancyOnboarding />} />
-            <Route path="/push-notification" element={<PushNotification />} />
-            <Route path="/integrations" element={<Integrations />} />
-            <Route path="/today" element={<Today />} />
-            <Route path="/guide" element={<Guide />} />
-            <Route path="/article/:id" element={<Article />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/catalog" element={<ProductCatalog />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/scanner" element={<Scanner />} />
-            <Route path="/sisterhood" element={<Sisterhood />} />
-            <Route path="/legacy-points" element={<LegacyPoints />} />
-            <Route path="/legacy-treasury" element={<LegacyTreasury />} />
-            <Route path="/product-rating" element={<ProductRating />} />
-            <Route path="/rd-panel" element={<RDPanel />} />
-            <Route path="/legacy-fund-vote" element={<LegacyFundVote />} />
-            <Route path="/pod-chat" element={<PodChat />} />
-            <Route path="/bounty-board" element={<BountyBoard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/aura" element={<Aura />} />
-            <Route path="/intelligence" element={<Intelligence />} />
-            <Route path="/intelligence/sleep" element={<SleepDetail />} />
-            <Route path="/intelligence/stress" element={<StressDetail />} />
-            <Route path="/intelligence/glucose" element={<GlucoseDetail />} />
-            <Route path="/meal-scanner" element={<MealScanner />} />
-            <Route path="/skin-scanner" element={<SkinScanner />} />
-            <Route path="/mi-chat" element={<MiChat />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </UserProvider>
+    <AuthProvider>
+      <UserProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Splash />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/problem" element={<Problem />} />
+              <Route path="/solution" element={<Solution />} />
+              <Route path="/personalize" element={<Personalize />} />
+              <Route path="/wise-bloom" element={<WiseBloomOnboarding />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/details" element={<Details />} />
+              <Route path="/skin-concerns" element={<SkinConcerns />} />
+              <Route path="/encouragement" element={<Encouragement />} />
+              <Route path="/strategy-questions" element={<StrategyQuestions />} />
+              <Route path="/connect-environment" element={<ConnectEnvironment />} />
+              <Route path="/inventory" element={<Inventory />} />
+              <Route path="/pregnancy-onboarding" element={<PregnancyOnboarding />} />
+              <Route path="/push-notification" element={<PushNotification />} />
+              <Route path="/integrations" element={<Integrations />} />
+              <Route path="/today" element={<Today />} />
+              <Route path="/guide" element={<Guide />} />
+              <Route path="/article/:id" element={<Article />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/catalog" element={<ProductCatalog />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/scanner" element={<Scanner />} />
+              <Route path="/sisterhood" element={<Sisterhood />} />
+              <Route path="/legacy-points" element={<LegacyPoints />} />
+              <Route path="/legacy-treasury" element={<LegacyTreasury />} />
+              <Route path="/product-rating" element={<ProductRating />} />
+              <Route path="/rd-panel" element={<RDPanel />} />
+              <Route path="/legacy-fund-vote" element={<LegacyFundVote />} />
+              <Route path="/pod-chat" element={<PodChat />} />
+              <Route path="/bounty-board" element={<BountyBoard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/aura" element={<Aura />} />
+              <Route path="/intelligence" element={<Intelligence />} />
+              <Route path="/intelligence/sleep" element={<SleepDetail />} />
+              <Route path="/intelligence/stress" element={<StressDetail />} />
+              <Route path="/intelligence/glucose" element={<GlucoseDetail />} />
+              <Route path="/meal-scanner" element={<MealScanner />} />
+              <Route path="/skin-scanner" element={<SkinScanner />} />
+              <Route path="/mi-chat" element={<MiChat />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </UserProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

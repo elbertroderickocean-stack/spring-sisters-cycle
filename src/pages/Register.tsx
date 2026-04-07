@@ -1,35 +1,58 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useUser } from '@/contexts/UserContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { lovable } from '@/integrations/lovable/index';
+import { toast } from 'sonner';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 
 const Register = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { updateUserData, enableDemoMode } = useUser();
+  const { signUp } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCreateAccount = () => {
-    if (name && email && password && !isLoading) {
-      setIsLoading(true);
+  const handleCreateAccount = async () => {
+    if (!name || !email || !password || isLoading) return;
+    setIsLoading(true);
+    const { error } = await signUp(email, password, name);
+    setIsLoading(false);
+    if (error) {
+      toast.error(error.message);
+    } else {
       updateUserData({ name, email });
-      setTimeout(() => {
-        navigate('/today');
-      }, 1000);
+      toast.success('Account created! Please check your email to verify.');
+      navigate('/today');
     }
   };
 
-  const handleDemoMode = () => {
-    setShowDemoModal(true);
+  const handleGoogleSignup = async () => {
+    const result = await lovable.auth.signInWithOAuth('google', {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      toast.error('Google sign-in failed');
+    }
   };
+
+  const handleAppleSignup = async () => {
+    const result = await lovable.auth.signInWithOAuth('apple', {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      toast.error('Apple sign-in failed');
+    }
+  };
+
+  const handleDemoMode = () => setShowDemoModal(true);
 
   const confirmDemoMode = () => {
     enableDemoMode();
@@ -53,72 +76,42 @@ const Register = () => {
         <div className="space-y-5 pt-6">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-base">Your Name</Label>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="h-12 text-base"
-              placeholder="Jane Smith"
-            />
+            <Input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="h-12 text-base" placeholder="Jane Smith" />
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="email" className="text-base">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="h-12 text-base"
-              placeholder="jane@example.com"
-            />
+            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="h-12 text-base" placeholder="jane@example.com" />
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="password" className="text-base">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-12 text-base"
-              placeholder="••••••••"
-            />
+            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="h-12 text-base" placeholder="••••••••" />
           </div>
 
-          <Button
-            size="lg"
-            onClick={handleCreateAccount}
-            disabled={!name || !email || !password || isLoading}
-            className="w-full mt-6 h-12 text-base rounded-lg"
-          >
+          <Button size="lg" onClick={handleCreateAccount} disabled={!name || !email || !password || isLoading} className="w-full mt-6 h-12 text-base rounded-lg">
             {isLoading ? 'Creating Account...' : 'Create Account'}
           </Button>
 
           <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
+            <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Button variant="outline" className="h-12 rounded-full">
-              Google
-            </Button>
-            <Button variant="outline" className="h-12 rounded-full">
-              Apple
-            </Button>
+            <Button variant="outline" className="h-12 rounded-full" onClick={handleGoogleSignup}>Google</Button>
+            <Button variant="outline" className="h-12 rounded-full" onClick={handleAppleSignup}>Apple</Button>
           </div>
 
-          <div className="text-center mt-6">
-            <button
-              onClick={handleDemoMode}
-              className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
-            >
+          <div className="text-center mt-4">
+            <p className="text-sm text-muted-foreground">
+              Already have an account?{' '}
+              <button onClick={() => navigate('/login')} className="text-primary hover:underline font-medium">Sign in</button>
+            </p>
+          </div>
+
+          <div className="text-center mt-2">
+            <button onClick={handleDemoMode} className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors">
               Explore in Discovery Mode
             </button>
           </div>
@@ -128,21 +121,12 @@ const Register = () => {
       <Dialog open={showDemoModal} onOpenChange={setShowDemoModal}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-heading text-center">
-              Welcome to Discovery Mode!
-            </DialogTitle>
+            <DialogTitle className="text-2xl font-heading text-center">Welcome to Discovery Mode!</DialogTitle>
             <DialogDescription className="text-center text-base pt-4">
-              You are now viewing the app as our demo user, "Kate." 
-              To unlock your <span className="font-semibold italic">personal</span> rhythm 
-              and recommendations, please create an account at any time.
+              You are now viewing the app as our demo user, "Kate." To unlock your <span className="font-semibold italic">personal</span> rhythm and recommendations, please create an account at any time.
             </DialogDescription>
           </DialogHeader>
-          <Button
-            onClick={confirmDemoMode}
-            className="w-full h-12 rounded-full mt-4"
-          >
-            I Understand
-          </Button>
+          <Button onClick={confirmDemoMode} className="w-full h-12 rounded-full mt-4">I Understand</Button>
         </DialogContent>
       </Dialog>
     </div>
