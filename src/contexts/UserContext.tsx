@@ -139,7 +139,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const updateUserData = useCallback((data: Partial<UserData>) => {
     setUserData((prev) => ({ ...prev, ...data }));
   }, []);
-  };
 
   const addScannedProduct = (product: ScannedProduct) => {
     setUserData((prev) => ({
