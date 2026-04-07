@@ -68,6 +68,51 @@ export type Database = {
         }
         Relationships: []
       }
+      skin_scans: {
+        Row: {
+          created_at: string
+          day: number | null
+          environmental_context: Json | null
+          id: string
+          metrics: Json | null
+          phase: string | null
+          photo_url: string | null
+          recommendations: Json | null
+          skin_capital_score: number | null
+          user_id: string
+          weak_zones: string[] | null
+          zones: Json | null
+        }
+        Insert: {
+          created_at?: string
+          day?: number | null
+          environmental_context?: Json | null
+          id?: string
+          metrics?: Json | null
+          phase?: string | null
+          photo_url?: string | null
+          recommendations?: Json | null
+          skin_capital_score?: number | null
+          user_id: string
+          weak_zones?: string[] | null
+          zones?: Json | null
+        }
+        Update: {
+          created_at?: string
+          day?: number | null
+          environmental_context?: Json | null
+          id?: string
+          metrics?: Json | null
+          phase?: string | null
+          photo_url?: string | null
+          recommendations?: Json | null
+          skin_capital_score?: number | null
+          user_id?: string
+          weak_zones?: string[] | null
+          zones?: Json | null
+        }
+        Relationships: []
+      }
       user_product_shelf: {
         Row: {
           added_via: string | null
