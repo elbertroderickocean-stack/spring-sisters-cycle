@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.74.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,9 +13,62 @@ serve(async (req) => {
   }
 
   try {
-    const { shelfProducts, phase, day, cycleLength, isPregnancy, trimester, wiseBloomMode, environmentData, healthData } = await req.json();
+    const { shelfProducts, phase, day, cycleLength, isPregnancy, trimester, wiseBloomMode, environmentData, healthData, userId } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
+
+    // Fetch latest skin scan if userId provided
+    let skinScanData = null;
+    if (userId) {
+      try {
+        const supabase = createClient(
+          Deno.env.get('SUPABASE_URL')!,
+          Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+        );
+        const { data: scans } = await supabase
+          .from('skin_scans')
+          .select('skin_capital_score, zones, metrics, weak_zones, recommendations, environmental_context, created_at')
+          .eq('user_id', userId)
+          .order('created_at', { ascending: false })
+          .limit(1);
+        
+        if (scans && scans.length > 0) {
+          skinScanData = scans[0];
+        }
+      } catch (e) {
+        console.error('Failed to fetch skin scan:', e);
+      }
+    }
+
+    const skinScanSection = skinScanData ? `
+## LATEST SKIN SCAN DATA (${skinScanData.created_at}):
+- Skin Capital Score: ${skinScanData.skin_capital_score}/100
+- Weak Zones: ${(skinScanData.weak_zones || []).join(', ') || 'None detected'}
+- Zone Analysis: ${JSON.stringify(skinScanData.zones, null, 2)}
+- Metrics: ${JSON.stringify(skinScanData.metrics, null, 2)}
+- AI Recommendations from scan: ${JSON.stringify(skinScanData.recommendations, null, 2)}
+
+## SCAN-BASED ADAPTATION RULES:
+- If Skin Capital Score < 40: barrier-repair priority — ceramides, centella, panthenol. Skip actives.
+- If Skin Capital Score 40-60: balanced approach — gentle actives + repair.
+- If Skin Capital Score > 80: can use stronger actives, focus on optimization.
+- Weak zone "forehead" + oily metrics: niacinamide, zinc, mattifying focus on T-zone.
+- Weak zone "cheeks" + low hydration: HA layering, ceramide cream, heavier moisturizer.
+- Weak zone "periorbital" + dark circles: caffeine, vitamin K, peptide eye cream priority.
+- Weak zone "chin_jawline" + texture issues: gentle BHA (if not pregnancy), anti-inflammatory.
+- Weak zone "nasolabial" + dehydration lines: deep hydration, plumping peptides.
+- Low luminance/radiance metrics: vitamin C AM priority, gentle exfoliation PM.
+- Low hydration metrics: double HA application, occlusive layer PM.
+- High sensitivity metrics: remove all actives except calming ingredients.
+- CROSS-REFERENCE scan data with environmental + health data for compound effects:
+  - Low hydration + low humidity environment = CRITICAL hydration protocol
+  - High sensitivity + high stress = ultra-gentle barrier-only routine
+  - Poor texture + poor sleep = prioritize overnight repair (retinol if safe, peptides)
+  - Low radiance + high UV = maximum antioxidant AM stack
+` : `
+## SKIN SCAN DATA:
+No recent scan available — use balanced defaults based on other signals.
+`;
 
     const routinePrompt = `You are m.i. (meanwhile.intelligence), the strategic AI skincare concierge. Your task is to build the OPTIMAL morning and evening routine from the user's actual product shelf, factoring in all available data signals.
 
@@ -24,7 +78,7 @@ ${JSON.stringify(shelfProducts, null, 2)}
 ## BIOLOGICAL CONTEXT:
 - Life stage: ${isPregnancy ? `Pregnancy, Trimester ${trimester}` : wiseBloomMode ? 'Post-menopause (Wise Bloom mode)' : `Active cycle, Phase: ${phase}, Day ${day}/${cycleLength}`}
 ${isPregnancy ? '- CRITICAL: Exclude ALL pregnancy-unsafe ingredients (retinoids, salicylic acid >2%, hydroquinone, chemical sunscreens)' : ''}
-
+${skinScanSection}
 ## ENVIRONMENTAL DATA:
 ${environmentData ? JSON.stringify(environmentData, null, 2) : 'Not available — use defaults for temperate climate'}
 
@@ -111,7 +165,8 @@ CRITICAL: Respond ONLY in valid JSON:
         "waitTime": "seconds to wait before next step (0 if none)",
         "isMeanwhile": true/false,
         "isGhosted": false,
-        "applicationTip": "Brief how-to"
+        "applicationTip": "Brief how-to",
+        "scanDriven": "If this step was influenced by skin scan data, explain how"
       }
     ],
     "strategicUpgrade": {
@@ -123,11 +178,12 @@ CRITICAL: Respond ONLY in valid JSON:
     "steps": [...same format...],
     "strategicUpgrade": {...}
   },
-  "dailyInsight": "One-sentence personalized insight connecting data to skin strategy",
+  "dailyInsight": "One-sentence personalized insight connecting ALL data signals (scan + environment + health + phase) to skin strategy",
   "conflictsDetected": [
     {"products": ["A", "B"], "resolution": "How we resolved it in the routine"}
   ],
-  "adaptations": ["List of adaptations made based on environmental/health data"]
+  "adaptations": ["List of adaptations made based on environmental/health/scan data"],
+  "skinScanInfluence": "Summary of how the latest skin scan shaped this routine"
 }`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
@@ -155,7 +211,7 @@ CRITICAL: Respond ONLY in valid JSON:
 
     try {
       const routine = JSON.parse(cleaned);
-      return new Response(JSON.stringify({ routine }), {
+      return new Response(JSON.stringify({ routine, skinScanUsed: !!skinScanData }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     } catch {
