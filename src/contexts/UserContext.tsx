@@ -78,6 +78,7 @@ interface UserContextType {
   getProductQuantity: (productId: string) => number;
   isProductOwned: (productId: string) => boolean;
   updateCustomRituals: (morning: string[], evening: string[], auraNote?: string) => void;
+  saveProfile: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
