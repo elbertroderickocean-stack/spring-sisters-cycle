@@ -14,7 +14,101 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cosmetic_products: {
+        Row: {
+          barcode: string | null
+          brand: string
+          category: Database["public"]["Enums"]["product_category"]
+          conflicts: Json | null
+          created_at: string
+          id: string
+          inci_ingredients: string | null
+          key_actives: Json | null
+          ph_profile: string | null
+          photo_url: string | null
+          pregnancy_safe: boolean | null
+          product_name: string
+          scan_count: number | null
+          synergies: Json | null
+          updated_at: string
+        }
+        Insert: {
+          barcode?: string | null
+          brand: string
+          category?: Database["public"]["Enums"]["product_category"]
+          conflicts?: Json | null
+          created_at?: string
+          id?: string
+          inci_ingredients?: string | null
+          key_actives?: Json | null
+          ph_profile?: string | null
+          photo_url?: string | null
+          pregnancy_safe?: boolean | null
+          product_name: string
+          scan_count?: number | null
+          synergies?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          barcode?: string | null
+          brand?: string
+          category?: Database["public"]["Enums"]["product_category"]
+          conflicts?: Json | null
+          created_at?: string
+          id?: string
+          inci_ingredients?: string | null
+          key_actives?: Json | null
+          ph_profile?: string | null
+          photo_url?: string | null
+          pregnancy_safe?: boolean | null
+          product_name?: string
+          scan_count?: number | null
+          synergies?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_product_shelf: {
+        Row: {
+          added_via: string | null
+          created_at: string
+          id: string
+          is_meanwhile: boolean | null
+          notes: string | null
+          product_id: string
+          slot: string | null
+          user_id: string
+        }
+        Insert: {
+          added_via?: string | null
+          created_at?: string
+          id?: string
+          is_meanwhile?: boolean | null
+          notes?: string | null
+          product_id: string
+          slot?: string | null
+          user_id: string
+        }
+        Update: {
+          added_via?: string | null
+          created_at?: string
+          id?: string
+          is_meanwhile?: boolean | null
+          notes?: string | null
+          product_id?: string
+          slot?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_product_shelf_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "cosmetic_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +117,18 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      product_category:
+        | "cleanser"
+        | "toner"
+        | "serum"
+        | "moisturizer"
+        | "eye_cream"
+        | "sunscreen"
+        | "mask"
+        | "exfoliant"
+        | "oil"
+        | "treatment"
+        | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +255,20 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      product_category: [
+        "cleanser",
+        "toner",
+        "serum",
+        "moisturizer",
+        "eye_cream",
+        "sunscreen",
+        "mask",
+        "exfoliant",
+        "oil",
+        "treatment",
+        "other",
+      ],
+    },
   },
 } as const
