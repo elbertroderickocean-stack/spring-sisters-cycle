@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { lovable } from '@/integrations/lovable/index';
 import { toast } from 'sonner';
-import MeanwhileLogo from '@/components/MeanwhileLogo';
+import { MeanwhileLogo } from '@/components/MeanwhileLogo';
 
 const Login = () => {
   const navigate = useNavigate();
