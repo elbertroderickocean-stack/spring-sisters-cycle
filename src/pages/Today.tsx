@@ -779,37 +779,6 @@ const Today = () => {
             timeOfDay="evening"
           />
 
-          {/* External Products on Shelf */}
-          {(userData.externalProducts?.length || 0) > 0 && (
-            <div className="glass-card p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <Package className="h-4 w-4 text-muted-foreground" />
-                <h3 className="font-bold text-sm">Your Shelf</h3>
-                <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-border/40 text-muted-foreground gap-1">
-                  {userData.externalProducts?.length || 0} products
-                </Badge>
-              </div>
-              <p className="text-xs text-muted-foreground mb-3">
-                Products from other brands integrated by m.i. into your routine.
-              </p>
-              <div className="space-y-2">
-                {(userData.externalProducts || []).map((product) => (
-                  <div key={product.id} className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[hsl(var(--glass-highlight))] border-[0.5px] border-[hsl(var(--glass-border))]">
-                    <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                      <Package className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{product.name}</p>
-                      <p className="text-[11px] text-muted-foreground">{product.brand} · {product.category}</p>
-                    </div>
-                    <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-primary/20 text-primary shrink-0">
-                      Active
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Hero Ingredients */}
