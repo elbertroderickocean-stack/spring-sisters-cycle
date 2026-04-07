@@ -33,7 +33,11 @@ const Login = () => {
     });
     if (result.error) {
       toast.error('Google sign-in failed');
+      return;
     }
+
+    if (result.redirected) return;
+    navigate('/today');
   };
 
   const handleAppleLogin = async () => {
@@ -42,7 +46,11 @@ const Login = () => {
     });
     if (result.error) {
       toast.error('Apple sign-in failed');
+      return;
     }
+
+    if (result.redirected) return;
+    navigate('/today');
   };
 
   return (
