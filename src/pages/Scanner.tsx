@@ -147,7 +147,7 @@ const Scanner = () => {
           <div className="absolute inset-0 flex items-center justify-center bg-background/90 p-6">
             <div className="text-center space-y-4">
               <p className="text-foreground/80">{cameraError}</p>
-              <Button onClick={() => navigate('/products')}>
+              <Button onClick={() => navigate(returnTo)}>
                 Go Back
               </Button>
             </div>

@@ -173,7 +173,7 @@ const Inventory = () => {
           </button>
 
           <button
-            onClick={() => navigate('/scanner')}
+            onClick={() => navigate('/scanner', { state: { returnTo: '/inventory' } })}
             className="w-full flex items-center gap-3 px-4 py-4 rounded-xl border-2 border-dashed border-border/60 hover:border-primary/30 hover:bg-accent/20 transition-all text-left group"
           >
             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
