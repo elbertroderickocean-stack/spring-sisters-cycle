@@ -12,9 +12,12 @@ serve(async (req) => {
   }
 
   try {
-    const { frontImage, backImage, step } = await req.json();
+    const { frontImage, backImage, step, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
+    const langDirective = language === 'ru'
+      ? '\n\nIMPORTANT: All free-text JSON string values (frontClaims, theGood, thingsToWatch, miRecommendation, conflict reasons, synergy benefits, pregnancy risks, ingredient functions) must be in Russian (русский язык). Keep brand names, product names, INCI ingredient names, "meanwhile.", "m.i.", category enum values (cleanser/toner/serum/etc.), severity values (high/medium/low), confidence values, and pH profile enum values in English.'
+      : '';
 
     if (step === 'identify') {
       // Step 1: Identify product from front photo
