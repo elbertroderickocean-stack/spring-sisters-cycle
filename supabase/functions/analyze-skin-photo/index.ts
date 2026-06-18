@@ -12,7 +12,11 @@ serve(async (req) => {
   }
 
   try {
-    const { imageData, userName, currentPhase, ageRange, skinType, primaryConcern, recentProducts, isPregnancy, trimester } = await req.json();
+    const { imageData, userName, currentPhase, ageRange, skinType, primaryConcern, recentProducts, isPregnancy, trimester, language } = await req.json();
+    const isRu = language === 'ru';
+    const langDirective = isRu
+      ? '\n\nIMPORTANT: Write the entire report in Russian (русский язык). Keep brand names "meanwhile.", "m.i.", and product names in English. The meanwhile. connector pattern in Russian: "Вы занимаетесь [своим делом]. meanwhile., m.i. защищает ваши биологические активы."'
+      : '';
     
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
