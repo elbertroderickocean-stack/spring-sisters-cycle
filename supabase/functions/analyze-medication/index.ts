@@ -12,7 +12,10 @@ serve(async (req) => {
   }
 
   try {
-    const { medicationName, strategy, skinConcerns } = await req.json();
+    const { medicationName, strategy, skinConcerns, language } = await req.json();
+    const langDirective = language === 'ru'
+      ? '\n\nIMPORTANT: All string values in the returned JSON (effects, adjustments, summary) must be written in Russian (русский язык). Keep brand names "meanwhile.", "m.i." in English.'
+      : '';
 
     if (!medicationName || typeof medicationName !== 'string' || medicationName.trim().length === 0) {
       return new Response(JSON.stringify({ error: 'Medication name is required' }), {
