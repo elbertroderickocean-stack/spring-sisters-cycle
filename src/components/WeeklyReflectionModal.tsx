@@ -122,7 +122,8 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           ageRange,
           skinType,
           primaryConcern,
-          recentProducts
+          recentProducts,
+          language: i18n.language
         }
       });
 
