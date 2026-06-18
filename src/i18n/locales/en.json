@@ -866,6 +866,73 @@
     "footnote": "Your voice matters. We review all votes monthly and the winning product goes into development. You're not just a customer — you're a co-creator.",
     "select_err": "Please select an option",
     "cast_success": "Vote cast! +25 AC earned"
+  },
+  "dashboard": {
+    "streak_label": "Return Streak",
+    "consistency_label": "Routine Consistency This Cycle",
+    "drift_label": "Skin Baseline Tone Drift This Cycle",
+    "days": "days",
+    "streak_title": "Return Streak",
+    "streak_value": "{{n}} days",
+    "streak_desc": "Consistency is the engine of compound beauty. Your {{n}}-day streak has improved cellular uptake by 12%. Every consecutive day amplifies absorption efficiency, compounding your skin's long-term ROI.",
+    "consistency_title": "Routine Consistency",
+    "consistency_desc": "Protocol Adherence. You are following {{n}}% of m.i. recommendations. Unlocking the remaining {{rest}}% will optimize your anti-glycation shield and accelerate barrier recovery.",
+    "drift_title": "Skin Baseline Tone Drift",
+    "drift_desc": "Visual ROI. Your skin luminance has drifted +{{n}}% towards optimal radiance since your baseline scan. This correlates with improved hydration retention and melanin regulation."
+  },
+  "mi_insight": {
+    "daily_briefing": "Daily Briefing",
+    "continue_in_chat": "Continue in chat",
+    "insights": [
+      "Ambient humidity below 40% detected in most indoor environments today. Ceramide deployment recommended to prevent transepidermal water loss.",
+      "UV index elevated. Your Vitamin C Concentrate will provide 8-hour photoprotection when applied before sun exposure.",
+      "Cortisol levels typically peak mid-week. Evening recovery protocol with Overnight Mask will counteract stress-induced barrier degradation.",
+      "Your skin's circadian rhythm favors collagen synthesis between 11 PM–2 AM. Ensure recovery assets are deployed before sleep.",
+      "Post-meal glucose spikes accelerate glycation. Consider pairing high-GI foods with fiber to protect collagen capital.",
+      "Seasonal transition detected. Barrier reinforcement with Ceramide Concentrate prevents moisture depreciation during climate shifts.",
+      "Hydration intake directly correlates with skin elasticity metrics. Target 2L minimum to maintain optimal turgor pressure.",
+      "Blue light exposure from screens triggers oxidative stress. Antioxidant deployment via Vitamin C provides digital defense.",
+      "Sleep quality impacts cellular turnover rate by up to 30%. Prioritize 7+ hours for maximum overnight recovery ROI.",
+      "Wind and temperature fluctuations stress the lipid barrier. Double-layering moisturizer on exposed areas is a strategic hedge.",
+      "Weekend recovery protocols show 23% higher efficacy when combined with reduced screen time and adequate hydration.",
+      "Your skin barrier repairs most efficiently in low-stress states. Evening breathwork before skincare enhances product absorption.",
+      "Omega-3 intake supports ceramide production from within. Consider adding fatty fish or supplements to your nutritional portfolio.",
+      "Morning skin is typically more receptive to active ingredients. Deploy serums within 60 seconds of cleansing for maximum uptake."
+    ]
+  },
+  "synergy": {
+    "protocol_intelligence": "Protocol Intelligence",
+    "assets_deployed": "{{n}}/{{total}} assets deployed",
+    "desc_low": "Your routine is active, but disconnected from live bio-data. Complete the framework to unlock autonomous skin management.",
+    "desc_mid": "Your framework is building momentum. A few more assets will unlock full synergy across all protocols.",
+    "desc_high": "Your portfolio is operating at near-full intelligence. meanwhile., all systems are optimizing autonomously."
+  },
+  "ritual": {
+    "active_count": "{{n}}/{{total}} active",
+    "wellness": "Wellness",
+    "live_data": "Live Data",
+    "integrated": "Integrated",
+    "mi_insight": "m.i. Insight",
+    "missing": "Missing from framework",
+    "deploy_asset": "Deploy Asset",
+    "phase_active": "↑ Phase-matched formula active — adapting to your cycle data",
+    "upgrade_to": "Upgrade to",
+    "purposes": {
+      "lymphatic": "Stimulates circulation and reduces morning puffiness.",
+      "cleanser_canvas": "Creates a clean, balanced canvas for your treatment products.",
+      "serum_phase": "Delivers phase-specific active ingredients to match your hormonal needs.",
+      "eye_cream": "Reduces puffiness and fine lines around your eyes.",
+      "moisturizer_day": "Seals in hydration and protects your skin barrier all day long.",
+      "cleanser_first": "Removes makeup, SPF, and surface impurities.",
+      "cleanser_second": "Deep cleans pores and prepares skin for treatment.",
+      "ceramide": "Intensive barrier repair and deep nourishment.",
+      "moisturizer_night": "Seals in hydration and protects your skin barrier all night long.",
+      "massage": "Releases tension, boosts circulation, and promotes lymphatic drainage.",
+      "vitamin_c": "Delivers an extra dose of radiance exactly when your skin is primed to shine.",
+      "ceramide_emergency": "Provides emergency relief and barrier repair for stressed skin.",
+      "bakuchiol": "Reduces inflammation without causing irritation.",
+      "mask_phase": "Intensive weekly treatment matched to your current phase."
+    }
   }
 }
 
