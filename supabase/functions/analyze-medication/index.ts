@@ -37,7 +37,7 @@ You must return a JSON object (via tool call) with these fields:
 - riskLevel: "low" | "moderate" | "high" — how significantly this medication impacts skin
 - summary: a single sentence summarizing the overall impact
 
-Be precise, clinical, and evidence-based. Do not give medical advice about stopping medication. Focus only on skincare protocol adjustments.`;
+Be precise, clinical, and evidence-based. Do not give medical advice about stopping medication. Focus only on skincare protocol adjustments.${langDirective}`;
 
     const userPrompt = `Analyze the hormonal medication "${medicationName.trim()}" for a user on the "${strategy || 'hormonal'}" management strategy.
 ${skinConcerns?.length ? `Their skin concerns: ${skinConcerns.join(', ')}.` : ''}
