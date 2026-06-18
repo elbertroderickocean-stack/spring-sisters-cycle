@@ -173,13 +173,13 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                               className="mt-2 flex items-center gap-1.5 text-[10px] text-primary/70 hover:text-primary transition-colors"
                             >
                               <Sparkles className="h-3 w-3" />
-                              <span>Upgrade to <span className="italic">meanwhile.</span> {step.meanwhileSuggestion.name} →</span>
+                              <span>{t('ritual.upgrade_to')} <span className="italic">meanwhile.</span> {step.meanwhileSuggestion.name} →</span>
                             </button>
                           )}
                         </>
                       ) : (
                         <div className="flex items-center justify-between mt-1">
-                          <p className="text-[10px] text-muted-foreground italic">Missing from framework</p>
+                          <p className="text-[10px] text-muted-foreground italic">{t('ritual.missing')}</p>
                           <Button
                             size="sm"
                             variant="outline"
@@ -189,17 +189,18 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                               step.productId ? navigate(`/product/${step.productId}`) : navigate('/catalog');
                             }}
                           >
-                            Deploy Asset
+                            {t('ritual.deploy_asset')}
                           </Button>
                         </div>
                       )}
                       {step.isPhaseProduct && step.owned && (
                         <div className="mt-2 pt-2 border-t border-[hsl(var(--glass-border))]">
                           <p className="text-[10px] text-[hsl(var(--intel-glucose))] font-medium">
-                            ↑ Phase-matched formula active — adapting to your cycle data
+                            {t('ritual.phase_active')}
                           </p>
                         </div>
                       )}
+
                     </div>
                   </div>
                 );
