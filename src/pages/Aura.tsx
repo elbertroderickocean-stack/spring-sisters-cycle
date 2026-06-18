@@ -20,7 +20,7 @@ const Aura = () => {
   const navigate = useNavigate();
   const { userData, getCurrentPhase, getCurrentDay, updateCustomRituals } = useUser();
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
