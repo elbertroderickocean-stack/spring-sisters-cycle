@@ -12,11 +12,15 @@ serve(async (req) => {
   }
 
   try {
-    const { imageData } = await req.json();
+    const { imageData, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
 
-    const systemPrompt = `You are a metabolic nutritionist and skin longevity expert for the brand "meanwhile." 
+    const langDirective = language === 'ru'
+      ? '\n\nIMPORTANT: Respond entirely in Russian (русский язык) — all JSON string values must be in Russian. Keep brand names "meanwhile.", "m.i.", "The Constants", "The Shifts", "The Assets", "The Cellular Architect Cream" in English. The meanwhile. connector pattern in Russian: "[Действие пользователя]. meanwhile., [действие приложения]."'
+      : '';
+
+    const systemPrompt = `You are a metabolic nutritionist and skin longevity expert for the brand "meanwhile." ${langDirective}
 
 Identify the food in this photo and estimate its Glycemic Index as Low, Medium, or High.
 
