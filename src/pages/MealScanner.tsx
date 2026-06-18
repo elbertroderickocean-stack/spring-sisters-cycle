@@ -33,7 +33,7 @@ const MealScanner = () => {
     setResult(null);
     setSaved(false);
     try {
-      const { data, error } = await supabase.functions.invoke('analyze-meal', { body: { imageData } });
+      const { data, error } = await supabase.functions.invoke('analyze-meal', { body: { imageData, language: i18n.language } });
       if (error) throw error;
       const analysis = data.analysis;
       setResult(analysis);
