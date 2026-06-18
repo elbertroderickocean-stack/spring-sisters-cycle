@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import { useUser } from '@/contexts/UserContext';
 import { PhaseDeepDiveModal } from '@/components/PhaseDeepDiveModal';
 import { DailyPlanModal } from '@/components/DailyPlanModal';
@@ -26,6 +28,8 @@ import { MiInsightCard } from '@/components/MiInsightCard';
 const Today = () => {
   const { userData, getCurrentPhase, getCurrentDay, exitDemoMode, updateCheckIn, needsCheckIn, isProductOwned } = useUser();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   
   // Get the current day in the 7-day micro-cycle for Wise Bloom users
   const getMicroCycleDay = (): number => {
@@ -64,21 +68,14 @@ const Today = () => {
   }, [checkWhispers, triggerProTip, needsCheckIn, checkInDismissed]);
 
   const phaseName = isPregnancy 
-    ? `Trimester ${userData.trimester || 1}` 
-    : phase === 'calm' ? 'Calm & Renew' : phase === 'glow' ? 'Glow & Energize' : 'Balance & Clarify';
+    ? `${t('today.trimester')} ${userData.trimester || 1}` 
+    : phase === 'calm' ? t('today.phase_calm') : phase === 'glow' ? t('today.phase_glow') : t('today.phase_balance');
   
   const getMicroCycleDayName = (day: number): string => {
-    const dayNames = [
-      'Monday: Recovery Night',
-      'Tuesday: Recovery Night',
-      'Wednesday: Exfoliation Night',
-      'Thursday: Activation Night',
-      'Friday: Recovery Night',
-      'Saturday: Recovery Night',
-      'Sunday: Flex Night'
-    ];
-    return dayNames[day - 1] || 'Recovery Night';
+    const keys = ['mon','tue','wed','thu','fri','sat','sun'];
+    return t(`today.micro_cycle.${keys[day - 1] || 'mon'}`);
   };
+
 
   const getDailyWhisper = () => {
     if (isPregnancy) {
@@ -640,18 +637,20 @@ const Today = () => {
   };
 
   const getDayOfWeek = () => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return days[new Date().getDay()];
+    const keys = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    return t(`today.weekday.${keys[new Date().getDay()]}`);
   };
+
 
   return (
     <div className="min-h-screen mesh-gradient-bg pb-24">
       <HeaderBar>
         <div>
           <p className="text-xs font-bold text-primary tracking-wider uppercase">meanwhile</p>
-          <p className="text-sm text-muted-foreground mt-0.5">Hello, {userData.name || 'Investor'}</p>
+          <p className="text-sm text-muted-foreground mt-0.5">{t('today.hello')}, {userData.name || t('today.investor')}</p>
         </div>
       </HeaderBar>
+
 
       {showCheckIn && (
         <SymbioticCheckIn 
@@ -674,25 +673,27 @@ const Today = () => {
           <Alert className="border-primary/30 bg-primary/5 animate-fade-in backdrop-blur-lg">
             <AlertCircle className="h-4 w-4 text-primary" />
             <AlertDescription className="flex items-center justify-between gap-3">
-              <span className="text-sm">You are in Discovery Mode.</span>
+              <span className="text-sm">{t('today.discovery_mode')}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleExitDemoMode}
                 className="h-7 text-xs underline underline-offset-4 hover:no-underline shrink-0"
               >
-                Create an account
+                {t('today.create_account')}
               </Button>
             </AlertDescription>
           </Alert>
         )}
 
+
         {/* Meanwhile Connector Header */}
         <div className="glass-card p-6 animate-fade-in">
           <p className="text-sm text-muted-foreground leading-relaxed">
-            While you lived your <span className="text-foreground font-semibold">{getDayOfWeek()}</span> — here is what <span className="text-primary font-semibold">meanwhile.</span> happened to your skin.
+            {t('today.connector_prefix')}<span className="text-foreground font-semibold">{getDayOfWeek()}</span>{t('today.connector_suffix')}<span className="text-primary font-semibold">{t('today.connector_brand')}</span>{t('today.connector_after_brand')}
           </p>
         </div>
+
 
         {/* m.i. Daily Insight */}
         <MiInsightCard />
@@ -712,10 +713,11 @@ const Today = () => {
             <div className="text-left flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: phaseIconColor }} />
-                <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Live Data Linked</span>
+                <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{t('today.live_data')}</span>
               </div>
               <div className="text-3xl font-bold mb-1" style={{ color: phaseIconColor }}>
-                {isPregnancy ? `Trimester ${userData.trimester || 1}` : userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `Day ${day}`}
+                {isPregnancy ? `${t('today.trimester')} ${userData.trimester || 1}` : userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `${t('today.day')} ${day}`}
+
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-[280px]">
                 {dailyWhisper}
@@ -724,10 +726,11 @@ const Today = () => {
             {isPregnancy && (
               <div className="text-right">
                 <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
-                  Pregnancy Mode
+                  {t('today.pregnancy_mode')}
                 </span>
-                <p className="text-[10px] text-muted-foreground mt-0.5">Safety filters active</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">{t('today.safety_filters')}</p>
               </div>
+
             )}
             {!isPregnancy && !userData.wiseBloomMode && (
               <div className="text-right">
@@ -762,7 +765,7 @@ const Today = () => {
         {/* Ritual Sections */}
         <div className="space-y-4 animate-slide-up">
           <RitualSection
-            title="Morning Deployment"
+            title={t('today.morning_deployment')}
             icon={<Sunrise className="h-4 w-4" style={{ color: phaseIconColor }} />}
             steps={getMorningRitualSteps()}
             phaseIconColor={phaseIconColor}
@@ -771,13 +774,14 @@ const Today = () => {
             timeOfDay="morning"
           />
           <RitualSection
-            title="Evening Deployment"
+            title={t('today.evening_deployment')}
             icon={<Moon className="h-4 w-4" style={{ color: phaseIconColor }} />}
             steps={getEveningRitualSteps()}
             phaseIconColor={phaseIconColor}
             defaultOpen={true}
             timeOfDay="evening"
           />
+
 
         </div>
 
@@ -798,14 +802,15 @@ const Today = () => {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-bold text-sm">m.i. Vision</h3>
+                  <h3 className="font-bold text-sm">{t('today.mi_vision')}</h3>
                   <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-sleep))]/20 text-[hsl(var(--intel-sleep))]">
-                    Analyze
+                    {t('today.analyze_badge')}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  You take a photo. meanwhile., m.i. deploys personalized skin intelligence.
+                  {t('today.mi_vision_body')}
                 </p>
+
               </div>
               <ChevronRight className="h-4 w-4 text-muted-foreground/40 mt-1" />
             </div>
@@ -817,8 +822,9 @@ const Today = () => {
           <div className="glass-card p-5 animate-slide-up" style={{ animationDelay: '0.15s' }}>
             <div className="flex items-center gap-2 mb-4">
               <Zap className="h-4 w-4" style={{ color: phaseIconColor }} />
-              <h3 className="font-bold text-sm">Your Assets Toolkit</h3>
-              <span className="text-[9px] uppercase tracking-widest text-muted-foreground">Targeted</span>
+              <h3 className="font-bold text-sm">{t('today.assets_toolkit')}</h3>
+              <span className="text-[9px] uppercase tracking-widest text-muted-foreground">{t('today.targeted')}</span>
+
             </div>
             <div className="space-y-3">
               {precisionProducts.map((product) => {
@@ -849,7 +855,7 @@ const Today = () => {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-primary" />
-                <h3 className="font-bold text-sm">m.i. Daily Protocol</h3>
+                <h3 className="font-bold text-sm">{t('today.mi_daily_protocol')}</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {phase === 'calm' 
@@ -878,16 +884,18 @@ const Today = () => {
               size="sm"
               className="h-9 text-xs"
             >
-              {suggestion.buttonText === 'Discover Product' || suggestion.buttonText === 'Discover the Serum Trio' ? 'Integrate' : suggestion.buttonText}
+              {suggestion.buttonText === 'Discover Product' || suggestion.buttonText === 'Discover the Serum Trio' ? t('today.integrate') : suggestion.buttonText}
             </Button>
+
           )}
         </div>
 
         {/* meanwhile. footer whisper */}
         <div className="text-center py-4">
           <p className="text-[10px] text-muted-foreground/40 tracking-widest uppercase">
-            You focus on your day. meanwhile., your long-term assets are growing.
+            {t('today.footer_whisper')}
           </p>
+
         </div>
       </div>
 
