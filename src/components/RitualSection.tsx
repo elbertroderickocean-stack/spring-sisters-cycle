@@ -64,8 +64,9 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
           {icon}
           <h3 className="font-bold text-base tracking-tight">{title}</h3>
           <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-[hsl(var(--glass-border))] text-muted-foreground">
-            {steps.filter(s => s.owned).length}/{steps.length} active
+            {t('ritual.active_count', { n: steps.filter(s => s.owned).length, total: steps.length })}
           </Badge>
+
         </div>
         <svg
           className={`w-4 h-4 text-muted-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`}
