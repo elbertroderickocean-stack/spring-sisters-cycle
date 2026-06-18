@@ -1,29 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { BottomNav } from '@/components/BottomNav';
-import { useUser, ProductCategory, ExternalProduct } from '@/contexts/UserContext';
+import { useUser, ProductCategory } from '@/contexts/UserContext';
 import { products } from '@/data/productData';
 import { useProductTracking } from '@/hooks/useProductTracking';
 import { ScanLine, Package, Play, Plus, X, ChevronDown, Sparkles } from 'lucide-react';
 
-const categoryLabels: Record<ProductCategory, string> = {
-  cleanser: 'Cleanser', toner: 'Toner', serum: 'Serum', 'eye-cream': 'Eye Cream',
-  moisturizer: 'Moisturizer', sunscreen: 'Sunscreen', mask: 'Mask', oil: 'Face Oil',
-  exfoliant: 'Exfoliant', other: 'Other',
-};
-
 const Products = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { userData, addExternalProduct, removeExternalProduct } = useUser();
   const { startTracking, isTracking, getDaysUntilRunOut } = useProductTracking();
   const [showStartModal, setShowStartModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newProduct, setNewProduct] = useState({ name: '', brand: '', category: 'moisturizer' as ProductCategory });
+
+  const categoryLabels: Record<ProductCategory, string> = {
+    cleanser: t('categories.cleanser'),
+    toner: t('categories.toner'),
+    serum: t('categories.serum'),
+    'eye-cream': t('categories.eye-cream'),
+    moisturizer: t('categories.moisturizer'),
+    sunscreen: t('categories.sunscreen'),
+    mask: t('categories.mask'),
+    oil: t('categories.oil'),
+    exfoliant: t('categories.exfoliant'),
+    other: t('categories.other'),
+  };
 
   const harmonyProducts = products.filter((p) => p.line === 'harmony');
   const bloomProducts = products.filter((p) => p.line === 'bloom');
@@ -42,11 +51,7 @@ const Products = () => {
   };
 
   const confirmStartUsing = () => {
-    if (selectedProduct) {
-      startTracking(selectedProduct.id);
-      setShowStartModal(false);
-      setSelectedProduct(null);
-    }
+    if (selectedProduct) { startTracking(selectedProduct.id); setShowStartModal(false); setSelectedProduct(null); }
   };
 
   const handleAddExternal = () => {
@@ -73,11 +78,11 @@ const Products = () => {
           tracking && daysRemaining !== null ? (
             <div className="flex items-center gap-2 text-xs bg-accent/50 rounded-full px-3 py-2">
               <div className="text-primary">⏳</div>
-              <span className="font-medium">Est. remaining: {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'}</span>
+              <span className="font-medium">{t('products.est_remaining', { count: daysRemaining })}</span>
             </div>
           ) : (
             <Button size="sm" variant="default" className="w-full rounded-full text-xs" onClick={(e) => handleStartUsing(product, e)}>
-              <Play className="h-3 w-3 mr-1" /> Deploy Asset
+              <Play className="h-3 w-3 mr-1" /> {t('products.deploy_asset')}
             </Button>
           )
         )}
@@ -95,23 +100,16 @@ const Products = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-10">
-        <h1 className="text-4xl font-heading font-semibold text-primary animate-fade-in">
-          My Shelf
-        </h1>
+        <h1 className="text-4xl font-heading font-semibold text-primary animate-fade-in">{t('products.title')}</h1>
 
-        {/* MY SHELF — External Products Section */}
         <section className="space-y-4 animate-slide-up">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-heading font-medium text-foreground">
-                Your Products
-              </h2>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Products from any brand — all managed by m.i.
-              </p>
+              <h2 className="text-2xl font-heading font-medium text-foreground">{t('products.your_products')}</h2>
+              <p className="text-sm text-muted-foreground mt-0.5">{t('products.managed_by_mi')}</p>
             </div>
             <Badge variant="outline" className="text-[9px] uppercase tracking-wider gap-1">
-              <Sparkles className="h-2.5 w-2.5" /> Open Platform
+              <Sparkles className="h-2.5 w-2.5" /> {t('products.open_platform')}
             </Badge>
           </div>
 
@@ -126,10 +124,7 @@ const Products = () => {
                     <h3 className="font-heading font-medium text-sm">{product.name}</h3>
                     <p className="text-xs text-muted-foreground">{product.brand} · {categoryLabels[product.category]}</p>
                   </div>
-                  <button
-                    onClick={() => removeExternalProduct(product.id)}
-                    className="p-2 rounded-full hover:bg-muted/50 transition-colors"
-                  >
+                  <button onClick={() => removeExternalProduct(product.id)} className="p-2 rounded-full hover:bg-muted/50 transition-colors">
                     <X className="h-3.5 w-3.5 text-muted-foreground" />
                   </button>
                 </Card>
@@ -137,7 +132,6 @@ const Products = () => {
             </div>
           )}
 
-          {/* Scanned products */}
           {userData.scannedProducts.length > 0 && (
             <div className="space-y-2">
               {userData.scannedProducts.map((product, index) => (
@@ -155,117 +149,85 @@ const Products = () => {
           )}
 
           <div className="flex gap-2">
-            <Button
-              size="lg"
-              onClick={() => setShowAddModal(true)}
-              variant="outline"
-              className="flex-1 h-12 rounded-full"
-            >
-              <Plus className="h-4 w-4 mr-2" /> Add Product
+            <Button size="lg" onClick={() => setShowAddModal(true)} variant="outline" className="flex-1 h-12 rounded-full">
+              <Plus className="h-4 w-4 mr-2" /> {t('products.add_product')}
             </Button>
-            <Button
-              size="lg"
-              onClick={() => navigate('/scanner')}
-              className="flex-1 h-12 rounded-full bg-gradient-to-r from-primary to-primary/80"
-            >
-              <ScanLine className="h-4 w-4 mr-2" /> Scan Product
+            <Button size="lg" onClick={() => navigate('/scanner')} className="flex-1 h-12 rounded-full bg-gradient-to-r from-primary to-primary/80">
+              <ScanLine className="h-4 w-4 mr-2" /> {t('products.scan_product')}
             </Button>
           </div>
         </section>
 
-        {/* meanwhile. Products */}
         <section className="space-y-4 animate-slide-up pt-4" style={{ animationDelay: '0.1s' }}>
           <div className="space-y-1">
             <h2 className="text-2xl font-heading font-medium text-foreground">
-              <span className="italic">meanwhile.</span> Collection
+              <span className="italic">meanwhile.</span>{t('products.collection')}
             </h2>
-            <p className="text-sm text-muted-foreground">
-              Phase-synced products with live m.i. intelligence
-            </p>
+            <p className="text-sm text-muted-foreground">{t('products.phase_synced')}</p>
           </div>
 
-          {/* The Constants */}
           <div className="space-y-2">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-body pl-1">The Constants™</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-body pl-1">{t('products.constants')}</p>
             {ownedHarmony.length > 0 ? (
               <div className="grid grid-cols-2 gap-4">{ownedHarmony.map(renderProductCard)}</div>
-            ) : renderEmptyState('Your foundational index fund is waiting.', 'Discover Constants')}
+            ) : renderEmptyState(t('products.empty_constants'), t('products.discover_constants'))}
           </div>
 
-          {/* The Shifts */}
           <div className="space-y-2 pt-4">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-body pl-1">The Shifts™</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-body pl-1">{t('products.shifts')}</p>
             {ownedBloom.length > 0 ? (
               <div className="grid grid-cols-2 gap-4">{ownedBloom.map(renderProductCard)}</div>
-            ) : renderEmptyState('Dynamic management products that adapt to your cycle.', 'Discover Shifts')}
+            ) : renderEmptyState(t('products.empty_shifts'), t('products.discover_shifts'))}
           </div>
 
-          {/* The Assets */}
           <div className="space-y-2 pt-4">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-body pl-1">The Assets™</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-body pl-1">{t('products.assets')}</p>
             {ownedPrecision.length > 0 ? (
               <div className="grid grid-cols-2 gap-4">{ownedPrecision.map(renderProductCard)}</div>
-            ) : renderEmptyState('High-conviction targeted solutions.', 'Discover Assets')}
+            ) : renderEmptyState(t('products.empty_assets'), t('products.discover_assets'))}
           </div>
         </section>
 
-        {/* Discover More */}
         <section className="space-y-4 animate-slide-up pt-6" style={{ animationDelay: '0.3s' }}>
           <div className="text-center space-y-3">
-            <h2 className="text-2xl font-heading font-medium text-foreground">Explore Catalog</h2>
+            <h2 className="text-2xl font-heading font-medium text-foreground">{t('products.explore_catalog')}</h2>
             <Button size="lg" onClick={() => navigate('/catalog')} className="rounded-full w-full max-w-md mx-auto">
-              Go to Catalog
+              {t('products.go_to_catalog')}
             </Button>
           </div>
         </section>
       </div>
 
-      {/* Start Using Modal */}
       <Dialog open={showStartModal} onOpenChange={setShowStartModal}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-heading text-2xl">Activate m.i. Tracking</DialogTitle>
+            <DialogTitle className="font-heading text-2xl">{t('products.activate_tracking')}</DialogTitle>
             <DialogDescription className="text-base leading-relaxed pt-2">
-              m.i. will now track this asset's usage and predict depletion.
+              {t('products.activate_desc')}
             </DialogDescription>
           </DialogHeader>
-          <Button onClick={confirmStartUsing} className="w-full rounded-full mt-4" size="lg">Got It!</Button>
+          <Button onClick={confirmStartUsing} className="w-full rounded-full mt-4" size="lg">{t('products.got_it')}</Button>
         </DialogContent>
       </Dialog>
 
-      {/* Add Product Modal */}
       <Dialog open={showAddModal} onOpenChange={setShowAddModal}>
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle className="font-heading text-xl">Add a product</DialogTitle>
+            <DialogTitle className="font-heading text-xl">{t('products.add_dialog')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 pt-2">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Product Name</label>
-              <input
-                type="text" value={newProduct.name}
-                onChange={e => setNewProduct(p => ({ ...p, name: e.target.value }))}
-                placeholder="e.g. Advanced Night Repair"
-                className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40"
-              />
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('products.product_name')}</label>
+              <input type="text" value={newProduct.name} onChange={e => setNewProduct(p => ({ ...p, name: e.target.value }))} placeholder={t('products.product_name_ph')} className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40" />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Brand</label>
-              <input
-                type="text" value={newProduct.brand}
-                onChange={e => setNewProduct(p => ({ ...p, brand: e.target.value }))}
-                placeholder="e.g. Estée Lauder"
-                className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40"
-              />
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('products.brand')}</label>
+              <input type="text" value={newProduct.brand} onChange={e => setNewProduct(p => ({ ...p, brand: e.target.value }))} placeholder={t('products.brand_ph')} className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40" />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Category</label>
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('products.category')}</label>
               <div className="relative">
-                <select
-                  value={newProduct.category}
-                  onChange={e => setNewProduct(p => ({ ...p, category: e.target.value as ProductCategory }))}
-                  className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 appearance-none"
-                >
+                <select value={newProduct.category} onChange={e => setNewProduct(p => ({ ...p, category: e.target.value as ProductCategory }))} className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 appearance-none">
                   {Object.entries(categoryLabels).map(([key, label]) => (
                     <option key={key} value={key}>{label}</option>
                   ))}
@@ -274,7 +236,7 @@ const Products = () => {
               </div>
             </div>
             <Button onClick={handleAddExternal} disabled={!newProduct.name.trim() || !newProduct.brand.trim()} className="w-full rounded-lg">
-              Add to My Shelf
+              {t('products.add_to_shelf')}
             </Button>
           </div>
         </DialogContent>
@@ -286,4 +248,3 @@ const Products = () => {
 };
 
 export default Products;
-
