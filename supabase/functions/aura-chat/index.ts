@@ -18,7 +18,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, checkIn, currentPhase, currentDay, telemetry } = await req.json();
+    const { message, checkIn, currentPhase, currentDay, telemetry, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
     if (!LOVABLE_API_KEY) {
