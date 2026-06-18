@@ -21,7 +21,7 @@ serve(async (req) => {
 
     if (step === 'identify') {
       // Step 1: Identify product from front photo
-      const identifyPrompt = `You are an expert cosmetic product identifier. Analyze this photo of a cosmetic product's front/label side.
+      const identifyPrompt = `You are an expert cosmetic product identifier. Analyze this photo of a cosmetic product's front/label side.${langDirective}
 
 YOUR TASK:
 1. Identify the BRAND name exactly as written on the packaging
