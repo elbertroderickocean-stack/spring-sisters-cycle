@@ -57,7 +57,7 @@ const Aura = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('aura-chat', {
-        body: { message: input, checkIn: userData.checkIn, currentPhase: getCurrentPhase(), currentDay: getCurrentDay() }
+        body: { message: input, checkIn: userData.checkIn, currentPhase: getCurrentPhase(), currentDay: getCurrentDay(), language: i18n.language }
       });
 
       if (error) {
