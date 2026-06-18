@@ -184,7 +184,7 @@ CRITICAL: Respond ONLY in valid JSON:
   ],
   "adaptations": ["List of adaptations made based on environmental/health/scan data"],
   "skinScanInfluence": "Summary of how the latest skin scan shaped this routine"
-}`;
+}${language === 'ru' ? '\n\nIMPORTANT: All free-text JSON string values (purpose, applicationTip, scanDriven, reason, dailyInsight, resolution, adaptations, skinScanInfluence) must be in Russian (русский язык). Keep brand names, product names, "meanwhile.", "m.i.", and category enum values (cleanser/serum/etc.) in English.' : ''}`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
