@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { shelfProducts, phase, day, cycleLength, isPregnancy, trimester, wiseBloomMode, environmentData, healthData, userId } = await req.json();
+    const { shelfProducts, phase, day, cycleLength, isPregnancy, trimester, wiseBloomMode, environmentData, healthData, userId, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
 
