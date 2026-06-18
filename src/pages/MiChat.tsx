@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Send, Cpu, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,6 +21,7 @@ const MiChat = () => {
   const navigate = useNavigate();
   const { userData, getCurrentPhase, getCurrentDay, updateCustomRituals } = useUser();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { todayEntries, todayNutrients } = useMealLog();
 
   const getLatestScanData = () => {
@@ -29,30 +31,23 @@ const MiChat = () => {
       const history = JSON.parse(stored);
       if (!history.length) return null;
       const latest = history[0];
-      return {
-        score: latest.skinCapitalScore,
-        date: latest.timestamp,
-        details: latest.details || {},
-      };
+      return { score: latest.skinCapitalScore, date: latest.timestamp, details: latest.details || {} };
     } catch { return null; }
   };
 
   const buildTelemetryContext = () => {
     const scan = getLatestScanData();
     const parts: string[] = [];
-
     if (scan) {
       const scanDate = new Date(scan.date);
       const hoursAgo = Math.round((Date.now() - scanDate.getTime()) / (1000 * 60 * 60));
       parts.push(`SKIN SCAN (${hoursAgo}h ago): Skin Capital Score ${scan.score}/100. Details: ${JSON.stringify(scan.details)}`);
     }
-
     if (todayEntries.length > 0) {
       const meals = todayEntries.map(e => `${e.foodName} (GI: ${e.glycemicIndex}, ${e.nutrients?.calories || 0} kcal)`).join('; ');
       parts.push(`TODAY'S MEALS (${todayEntries.length} logged): ${meals}`);
       parts.push(`DAILY NUTRITION TOTALS: ${todayNutrients.calories} kcal, ${todayNutrients.protein}g protein, ${todayNutrients.carbs}g carbs, ${todayNutrients.fat}g fat, ${todayNutrients.sugar}g sugar, ${todayNutrients.fiber}g fiber`);
     }
-
     return parts.length > 0 ? parts.join('\n') : null;
   };
   const [messages, setMessages] = useState<Message[]>([]);
@@ -60,38 +55,32 @@ const MiChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  const scrollToBottom = () => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); };
   useEffect(() => { scrollToBottom(); }, [messages]);
 
   useEffect(() => {
     if (messages.length === 0) {
-      const userName = userData.name || 'Investor';
+      const userName = userData.name || t('today.investor');
       setMessages([{
         role: 'assistant',
-        content: `${userName}, your portfolio is active. Current analysis shows stable conditions. How can I optimize your strategy today?`,
+        content: t('mi_chat.greeting', { name: userName }),
         isTyping: true,
       }]);
     }
-  }, [userData.name, messages.length]);
+  }, [userData.name, messages.length, t]);
 
   const handleTypingComplete = (index: number) => {
-    setMessages(prev => prev.map((msg, i) =>
-      i === index ? { ...msg, isTyping: false } : msg
-    ));
+    setMessages(prev => prev.map((msg, i) => i === index ? { ...msg, isTyping: false } : msg));
   };
 
   const suggestedPrompts = [
-    "Analyze my glucose impact today",
-    "Recommend protocol for low sleep",
-    "What's the ROI on my current shifts?"
+    t('mi_chat.prompt_glucose'),
+    t('mi_chat.prompt_sleep'),
+    t('mi_chat.prompt_roi'),
   ];
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
-
     const userMessage: Message = { role: 'user', content: input };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
@@ -100,18 +89,12 @@ const MiChat = () => {
     try {
       const telemetry = buildTelemetryContext();
       const { data, error } = await supabase.functions.invoke('aura-chat', {
-        body: {
-          message: input,
-          checkIn: userData.checkIn,
-          currentPhase: getCurrentPhase(),
-          currentDay: getCurrentDay(),
-          telemetry,
-        },
+        body: { message: input, checkIn: userData.checkIn, currentPhase: getCurrentPhase(), currentDay: getCurrentDay(), telemetry },
       });
 
       if (error) {
         console.error('Error calling m.i.:', error);
-        toast({ title: "Error", description: "Failed to get response. Please try again.", variant: "destructive" });
+        toast({ title: t('mi_chat.err_title'), description: t('mi_chat.err_desc'), variant: "destructive" });
         return;
       }
 
@@ -121,14 +104,14 @@ const MiChat = () => {
         if (parsed.ritualUpdate) {
           updateCustomRituals(parsed.ritualUpdate.morning, parsed.ritualUpdate.evening, parsed.ritualUpdate.auraNote);
           responseText = parsed.message;
-          toast({ title: "Protocol Updated", description: "m.i. has adjusted your deployment based on current data." });
+          toast({ title: t('mi_chat.protocol_updated'), description: t('mi_chat.protocol_updated_desc') });
         }
       } catch { /* not JSON */ }
 
       setMessages(prev => [...prev, { role: 'assistant', content: responseText, isTyping: true }]);
     } catch (error) {
       console.error('Error:', error);
-      toast({ title: "Error", description: "Something went wrong.", variant: "destructive" });
+      toast({ title: t('mi_chat.err_title'), description: t('mi_chat.err_generic'), variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -149,7 +132,7 @@ const MiChat = () => {
             <Cpu className="h-5 w-5 text-[hsl(var(--intel-glucose))]" />
             <div>
               <h1 className="text-lg font-heading font-semibold">m.i.</h1>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Strategic Partner</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{t('mi_chat.subtitle')}</p>
             </div>
           </div>
         </div>
@@ -159,9 +142,7 @@ const MiChat = () => {
         {messages.map((message, index) => (
           <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-              message.role === 'user'
-                ? 'bg-[hsl(var(--intel-glucose))] text-white'
-                : 'bg-muted text-foreground'
+              message.role === 'user' ? 'bg-[hsl(var(--intel-glucose))] text-white' : 'bg-muted text-foreground'
             }`}>
               <p className="text-sm">
                 {message.role === 'assistant' && message.isTyping ? (
@@ -205,7 +186,7 @@ const MiChat = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Query m.i...."
+            placeholder={t('mi_chat.placeholder')}
             disabled={isLoading}
             className="flex-1"
           />
@@ -214,7 +195,7 @@ const MiChat = () => {
               <Send className="h-4 w-4" />
             </Button>
           ) : (
-            <Button variant="ghost" size="icon" onClick={() => toast({ title: "Voice mode coming soon", description: "m.i. voice interface is in development." })} className="shrink-0">
+            <Button variant="ghost" size="icon" onClick={() => toast({ title: t('mi_chat.voice_soon'), description: t('mi_chat.voice_soon_desc') })} className="shrink-0">
               <Mic className="h-5 w-5" />
             </Button>
           )}

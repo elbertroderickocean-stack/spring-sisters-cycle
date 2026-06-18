@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, FlaskConical } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,6 +11,7 @@ import { toast } from 'sonner';
 
 const RDPanel = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { getCurrentPhase } = useUser();
   const phase = getCurrentPhase();
   const [selectedOption, setSelectedOption] = useState('');
@@ -19,21 +21,13 @@ const RDPanel = () => {
     if (phase === 'glow') return 'hsl(30 90% 60%)';
     return 'hsl(120 40% 50%)';
   };
-
   const phaseIconColor = getPhaseIconColor();
 
-  const options = [
-    'A Mineral Sunscreen SPF 30',
-    'A Melting Cleansing Balm',
-    'An Ultra-Light Aqua-Gel Cream',
-  ];
+  const options = [t('rd_panel.opt_sunscreen'), t('rd_panel.opt_balm'), t('rd_panel.opt_gel')];
 
   const handleVote = () => {
-    if (!selectedOption) {
-      toast.error('Please select an option');
-      return;
-    }
-    toast.success('Vote cast! +25 AC earned');
+    if (!selectedOption) { toast.error(t('rd_panel.select_err')); return; }
+    toast.success(t('rd_panel.cast_success'));
     setTimeout(() => navigate('/sisterhood'), 1500);
   };
 
@@ -44,47 +38,37 @@ const RDPanel = () => {
           <Button variant="ghost" size="icon" onClick={() => navigate('/sisterhood')} className="rounded-full">
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-2xl font-heading font-semibold">Vote on Future Assets</h1>
+          <h1 className="text-2xl font-heading font-semibold">{t('rd_panel.title')}</h1>
         </div>
 
         <Card className="border border-border">
           <CardHeader>
             <div className="flex items-center gap-2">
               <FlaskConical className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading text-lg">Active Poll</CardTitle>
+              <CardTitle className="font-heading text-lg">{t('rd_panel.poll')}</CardTitle>
             </div>
-            <CardDescription className="text-sm mt-3">
-              What should we create next for The Constants™ line?
-            </CardDescription>
+            <CardDescription className="text-sm mt-3">{t('rd_panel.poll_desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             <RadioGroup value={selectedOption} onValueChange={setSelectedOption}>
               <div className="space-y-3">
                 {options.map((option, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center space-x-3 p-4 rounded-[12px] border border-border hover:bg-accent/50 transition-colors cursor-pointer"
-                    onClick={() => setSelectedOption(option)}
-                  >
+                  <div key={index} className="flex items-center space-x-3 p-4 rounded-[12px] border border-border hover:bg-accent/50 transition-colors cursor-pointer" onClick={() => setSelectedOption(option)}>
                     <RadioGroupItem value={option} id={`option-${index}`} />
-                    <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer text-sm font-medium">
-                      {option}
-                    </Label>
+                    <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer text-sm font-medium">{option}</Label>
                   </div>
                 ))}
               </div>
             </RadioGroup>
             <Button onClick={handleVote} className="w-full rounded-full" style={{ backgroundColor: phaseIconColor }}>
-              Cast Your Vote & Earn 25 AC
+              {t('rd_panel.cast')}
             </Button>
           </CardContent>
         </Card>
 
         <Card className="bg-accent/50 border-none">
           <CardContent className="pt-5">
-            <p className="text-xs text-muted-foreground text-center leading-relaxed">
-              Your voice matters. We review all votes monthly and the winning product goes into development. You're not just a customer — you're a co-creator.
-            </p>
+            <p className="text-xs text-muted-foreground text-center leading-relaxed">{t('rd_panel.footnote')}</p>
           </CardContent>
         </Card>
       </div>

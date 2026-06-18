@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ScanLine, Camera, CheckCircle2, RotateCcw } from 'lucide-react';
 import { ScanAnalysisModal } from '@/components/ScanAnalysisModal';
@@ -35,6 +36,7 @@ interface AnalysisResult {
 const Scanner = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const returnTo = (location.state as any)?.returnTo || '/products';
   const [scanStep, setScanStep] = useState<ScanStep>('front');
   const [isScanning, setIsScanning] = useState(false);
@@ -57,8 +59,8 @@ const Scanner = () => {
         if (videoRef.current) videoRef.current.srcObject = stream;
       } catch (error) {
         console.error('Camera access error:', error);
-        setCameraError('Unable to access camera. Please check permissions.');
-        toast({ title: 'Camera Access Required', description: 'Please allow camera access to scan products.', variant: 'destructive' });
+        setCameraError(t('scanner.camera_err'));
+        toast({ title: t('scanner.camera_err_title'), description: t('scanner.camera_err_desc'), variant: 'destructive' });
       }
     };
     startCamera();
@@ -83,7 +85,7 @@ const Scanner = () => {
   const handleScanFront = async () => {
     const imageData = captureImage();
     if (!imageData) {
-      toast({ title: 'Capture Failed', description: 'Unable to capture image.', variant: 'destructive' });
+      toast({ title: t('scanner.capture_failed'), description: t('scanner.capture_failed_desc'), variant: 'destructive' });
       return;
     }
     setIsScanning(true);
@@ -99,11 +101,11 @@ const Scanner = () => {
       setScanStep('back');
       toast({
         title: `${data.identification.brand} detected`,
-        description: `${data.identification.productName} — now scan the ingredient list`,
+        description: `${data.identification.productName} ${t('scanner.scan_for_ingredients')}`,
       });
     } catch (error) {
       console.error('Front scan error:', error);
-      toast({ title: 'Identification Failed', description: 'Unable to identify product. Try again.', variant: 'destructive' });
+      toast({ title: t('scanner.id_failed'), description: t('scanner.id_failed_desc'), variant: 'destructive' });
     } finally {
       setIsScanning(false);
     }
@@ -112,7 +114,7 @@ const Scanner = () => {
   const handleScanBack = async () => {
     const imageData = captureImage();
     if (!imageData) {
-      toast({ title: 'Capture Failed', description: 'Unable to capture image.', variant: 'destructive' });
+      toast({ title: t('scanner.capture_failed'), description: t('scanner.capture_failed_desc'), variant: 'destructive' });
       return;
     }
     setIsScanning(true);
@@ -135,7 +137,7 @@ const Scanner = () => {
       setShowResult(true);
     } catch (error) {
       console.error('Back scan error:', error);
-      toast({ title: 'Analysis Failed', description: 'Unable to analyze ingredients.', variant: 'destructive' });
+      toast({ title: t('scanner.analysis_failed'), description: t('scanner.analysis_failed_desc'), variant: 'destructive' });
       setScanStep('back');
     } finally {
       setIsScanning(false);
@@ -149,72 +151,53 @@ const Scanner = () => {
   };
 
   const stepConfig = {
-    front: {
-      title: 'Step 1: Front of Product',
-      subtitle: 'Position the front label inside the frame',
-      buttonText: 'Scan Front Label',
-      onScan: handleScanFront,
-    },
-    back: {
-      title: 'Step 2: Ingredient List',
-      subtitle: 'Now flip the product and scan the ingredient list',
-      buttonText: 'Scan Ingredients',
-      onScan: handleScanBack,
-    },
-    analyzing: {
-      title: 'Analyzing...',
-      subtitle: 'm.i. is parsing ingredients and checking compatibility',
-      buttonText: 'Analyzing...',
-      onScan: () => {},
-    },
+    front: { title: t('scanner.step_front_title'), subtitle: t('scanner.step_front_sub'), buttonText: t('scanner.step_front_btn'), onScan: handleScanFront },
+    back: { title: t('scanner.step_back_title'), subtitle: t('scanner.step_back_sub'), buttonText: t('scanner.step_back_btn'), onScan: handleScanBack },
+    analyzing: { title: t('scanner.analyzing_title'), subtitle: t('scanner.analyzing_sub'), buttonText: t('scanner.analyzing_btn'), onScan: () => {} },
   };
 
   const current = stepConfig[scanStep];
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
       <header className="px-6 py-4 flex items-center border-b border-border">
         <Button variant="ghost" size="icon" onClick={() => navigate(returnTo)} className="rounded-full">
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h1 className="flex-1 text-center text-xl font-heading font-semibold text-primary">
-          Product Scanner
+          {t('scanner.title')}
         </h1>
         <div className="w-10" />
       </header>
 
-      {/* Step indicator */}
       <div className="px-6 py-3 flex items-center gap-3 border-b border-border bg-accent/20">
         <div className={`flex items-center gap-2 ${scanStep === 'front' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
           {scanStep !== 'front' ? <CheckCircle2 className="h-4 w-4 text-green-500" /> : <Camera className="h-4 w-4" />}
-          <span className="text-xs">Front</span>
+          <span className="text-xs">{t('scanner.front')}</span>
         </div>
         <div className="flex-1 h-px bg-border" />
         <div className={`flex items-center gap-2 ${scanStep === 'back' || scanStep === 'analyzing' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
           {scanStep === 'analyzing' ? <CheckCircle2 className="h-4 w-4 text-green-500" /> : <ScanLine className="h-4 w-4" />}
-          <span className="text-xs">Ingredients</span>
+          <span className="text-xs">{t('scanner.ingredients')}</span>
         </div>
         <div className="flex-1 h-px bg-border" />
         <div className={`flex items-center gap-2 ${showResult ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
-          <span className="text-xs">Analysis</span>
+          <span className="text-xs">{t('scanner.analysis')}</span>
         </div>
       </div>
 
-      {/* Identified product bar */}
       {identification && scanStep !== 'front' && (
         <div className="px-6 py-2.5 bg-primary/5 border-b border-border flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-foreground">{identification.productName}</p>
-            <p className="text-xs text-muted-foreground">{identification.brand} · {identification.confidence} confidence</p>
+            <p className="text-xs text-muted-foreground">{identification.brand} · {identification.confidence} {t('scanner.confidence')}</p>
           </div>
           <Button variant="ghost" size="sm" onClick={handleRetake} className="text-xs gap-1">
-            <RotateCcw className="h-3 w-3" /> Retake
+            <RotateCcw className="h-3 w-3" /> {t('scanner.retake')}
           </Button>
         </div>
       )}
 
-      {/* Camera View */}
       <div className="flex-1 relative bg-black">
         <video ref={videoRef} autoPlay playsInline muted className="absolute inset-0 w-full h-full object-cover" />
 
@@ -222,7 +205,7 @@ const Scanner = () => {
           <div className="absolute inset-0 flex items-center justify-center bg-background/90 p-6">
             <div className="text-center space-y-4">
               <p className="text-foreground/80">{cameraError}</p>
-              <Button onClick={() => navigate(returnTo)}>Go Back</Button>
+              <Button onClick={() => navigate(returnTo)}>{t('scanner.go_back')}</Button>
             </div>
           </div>
         )}
@@ -243,7 +226,7 @@ const Scanner = () => {
                     <ScanLine className="absolute inset-0 m-auto h-10 w-10 text-white animate-pulse" />
                   </div>
                   <p className="text-lg font-heading font-medium text-white animate-pulse">
-                    {scanStep === 'front' ? 'Identifying product...' : 'Parsing ingredients...'}
+                    {scanStep === 'front' ? t('scanner.identifying') : t('scanner.parsing')}
                   </p>
                 </div>
               </div>
@@ -257,7 +240,6 @@ const Scanner = () => {
         </div>
       </div>
 
-      {/* Scan Button */}
       <div className="p-6 pb-8 border-t border-border bg-background">
         <Button
           size="lg"
@@ -265,11 +247,10 @@ const Scanner = () => {
           disabled={isScanning || scanStep === 'analyzing'}
           className="w-full h-14 text-base rounded-full"
         >
-          {isScanning ? 'Scanning...' : current.buttonText}
+          {isScanning ? t('scanner.scanning') : current.buttonText}
         </Button>
       </div>
 
-      {/* Analysis Result Modal */}
       <ScanAnalysisModal
         open={showResult}
         onOpenChange={setShowResult}

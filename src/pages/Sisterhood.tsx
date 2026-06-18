@@ -1,16 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useUser } from '@/contexts/UserContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Star, Vote, FlaskConical, Heart, Users, Target, Gauge, ArrowRight, Zap, BarChart3, Camera, Database, ClipboardCheck } from 'lucide-react';
+import { Vote, FlaskConical, Heart, Users, Target, Gauge, ArrowRight, Zap, Camera, Database, ClipboardCheck } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
 import { HeaderBar } from '@/components/HeaderBar';
 
 const Sisterhood = () => {
   const navigate = useNavigate();
   const { getCurrentPhase } = useUser();
+  const { t } = useTranslation();
   const phase = getCurrentPhase();
 
   const getPhaseIconColor = () => {
@@ -18,51 +20,37 @@ const Sisterhood = () => {
     if (phase === 'glow') return 'hsl(30 90% 60%)';
     return 'hsl(120 40% 50%)';
   };
-
   const phaseIconColor = getPhaseIconColor();
 
-  // Mock user status data
   const userStatus = {
-    level: 'Community Member',
+    level: t('sisterhood.level_member'),
     currentCredits: 1250,
     nextLevelCredits: 3000,
-    nextLevel: 'Strategic Associate',
+    nextLevel: t('sisterhood.level_associate'),
   };
 
-  // Mock collective unit data
   const userUnit = {
     isInUnit: true,
-    name: 'The Glow Getters',
+    name: t('sisterhood.unit_name'),
     members: [
       { name: 'Sarah K.', avatar: '👩' },
       { name: 'Emma L.', avatar: '👩‍🦰' },
       { name: 'Maya P.', avatar: '👩‍🦱' },
-      { name: 'You', avatar: '✨' },
+      { name: t('sisterhood.you'), avatar: '✨' },
     ],
-    currentMission: 'The 7-Day Hydration Sprint',
+    currentMission: t('sisterhood.mission_text'),
     daysLeft: 2,
   };
 
-  // Ecosystem tasks
   const ecosystemTasks = [
-    { icon: Camera, title: 'Share your Progress (UGC)', reward: '1,000 AC' },
-    { icon: Database, title: 'Data Calibration (Log Sleep/Glucose)', reward: '500 AC' },
-    { icon: ClipboardCheck, title: 'Asset Review', reward: '250 AC' },
+    { icon: Camera, title: t('sisterhood.task_share'), reward: '1,000 AC' },
+    { icon: Database, title: t('sisterhood.task_data'), reward: '500 AC' },
+    { icon: ClipboardCheck, title: t('sisterhood.task_review'), reward: '250 AC' },
   ];
 
   const governanceActions = [
-    {
-      icon: FlaskConical,
-      title: 'Vote on Future Assets',
-      description: 'Choosing the next serum. Your voice shapes what we create.',
-      action: () => navigate('/rd-panel'),
-    },
-    {
-      icon: Heart,
-      title: 'The meanwhile. Fund',
-      description: 'Vote on which longevity research to support this quarter.',
-      action: () => navigate('/legacy-fund-vote'),
-    },
+    { icon: FlaskConical, title: t('sisterhood.vote_assets'), description: t('sisterhood.vote_assets_desc'), action: () => navigate('/rd-panel') },
+    { icon: Heart, title: t('sisterhood.fund'), description: t('sisterhood.fund_desc'), action: () => navigate('/legacy-fund-vote') },
   ];
 
   const progressPercentage = (userStatus.currentCredits / userStatus.nextLevelCredits) * 100;
@@ -70,26 +58,20 @@ const Sisterhood = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       <HeaderBar>
-        <h1 className="text-2xl font-heading font-semibold">The Syndicate</h1>
+        <h1 className="text-2xl font-heading font-semibold">{t('sisterhood.title')}</h1>
       </HeaderBar>
       <div className="max-w-2xl mx-auto px-5 py-8 space-y-6">
-
-        {/* Subtext */}
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Your contribution strengthens the <span className="font-semibold text-foreground">meanwhile.</span> ecosystem. <span className="italic">meanwhile.</span>, your rewards grow.
+          {t('sisterhood.subtext_1')}<span className="font-semibold text-foreground">{t('sisterhood.subtext_brand')}</span>{t('sisterhood.subtext_2')}<span className="italic">{t('sisterhood.subtext_brand')}</span>{t('sisterhood.subtext_3')}
         </p>
 
-        {/* Your Contribution Score */}
-        <button
-          onClick={() => navigate('/legacy-points')}
-          className="w-full text-left"
-        >
+        <button onClick={() => navigate('/legacy-points')} className="w-full text-left">
           <Card className="border border-border hover:border-primary/40 transition-colors cursor-pointer">
             <CardContent className="pt-6 pb-5 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Gauge className="h-5 w-5" style={{ color: phaseIconColor }} />
-                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Your Contribution Score</span>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{t('sisterhood.your_score')}</span>
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted-foreground" />
               </div>
@@ -102,7 +84,7 @@ const Sisterhood = () => {
               <div className="space-y-2">
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>{userStatus.level}</span>
-                  <span>{userStatus.nextLevel} at {userStatus.nextLevelCredits.toLocaleString()} AC</span>
+                  <span>{userStatus.nextLevel} {t('sisterhood.level_at')} {userStatus.nextLevelCredits.toLocaleString()} AC</span>
                 </div>
                 <Progress value={progressPercentage} className="h-1.5" />
               </div>
@@ -110,23 +92,16 @@ const Sisterhood = () => {
           </Card>
         </button>
 
-        {/* Network Benefits */}
-        <Button
-          onClick={() => navigate('/legacy-treasury')}
-          className="w-full rounded-full"
-          size="lg"
-          variant="outline"
-        >
+        <Button onClick={() => navigate('/legacy-treasury')} className="w-full rounded-full" size="lg" variant="outline">
           <Zap className="h-4 w-4 mr-2" />
-          Network Benefits — The Asset Hub
+          {t('sisterhood.network_benefits')}
         </Button>
 
-        {/* Collective Unit */}
         <Card className="border border-border">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading text-lg">Your Syndicate Unit</CardTitle>
+              <CardTitle className="font-heading text-lg">{t('sisterhood.your_unit')}</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -146,49 +121,38 @@ const Sisterhood = () => {
                   </div>
                   <div className="p-3 rounded-[12px] bg-accent/50 border border-border">
                     <p className="text-sm font-medium text-foreground">
-                      Mission: "{userUnit.currentMission}"
+                      {t('sisterhood.mission_label')}: "{userUnit.currentMission}"
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Achieve goals together with your unit. <span className="italic">meanwhile.</span>, the collective intelligence improves for everyone.
+                      {t('sisterhood.mission_desc')}<span className="italic">meanwhile.</span>{t('sisterhood.mission_desc_2')}
                     </p>
                     <p className="text-xs font-semibold mt-2" style={{ color: phaseIconColor }}>
-                      {userUnit.daysLeft} days left
+                      {t('sisterhood.days_left', { days: userUnit.daysLeft })}
                     </p>
                   </div>
                 </div>
-                <Button
-                  onClick={() => navigate('/pod-chat')}
-                  className="w-full rounded-full"
-                  style={{ backgroundColor: phaseIconColor }}
-                >
-                  Go to Unit
+                <Button onClick={() => navigate('/pod-chat')} className="w-full rounded-full" style={{ backgroundColor: phaseIconColor }}>
+                  {t('sisterhood.go_to_unit')}
                 </Button>
               </>
             ) : (
               <div className="text-center space-y-4 py-4">
-                <p className="text-muted-foreground leading-relaxed text-sm">
-                  Find your collective. Join a Syndicate Unit to participate in missions and share your journey.
-                </p>
-                <Button
-                  onClick={() => navigate('/find-pod')}
-                  className="rounded-full"
-                  style={{ backgroundColor: phaseIconColor }}
-                >
-                  Find a Unit
+                <p className="text-muted-foreground leading-relaxed text-sm">{t('sisterhood.find_unit_text')}</p>
+                <Button onClick={() => navigate('/find-pod')} className="rounded-full" style={{ backgroundColor: phaseIconColor }}>
+                  {t('sisterhood.find_unit_btn')}
                 </Button>
               </div>
             )}
           </CardContent>
         </Card>
 
-        {/* Ecosystem Tasks */}
         <Card className="border border-border">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <Target className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading text-lg">Ecosystem Tasks</CardTitle>
+              <CardTitle className="font-heading text-lg">{t('sisterhood.ecosystem_tasks')}</CardTitle>
             </div>
-            <CardDescription>Complete tasks to earn Asset Credits</CardDescription>
+            <CardDescription>{t('sisterhood.ecosystem_desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {ecosystemTasks.map((task, idx) => {
@@ -201,40 +165,29 @@ const Sisterhood = () => {
                     </div>
                     <span className="text-sm font-medium text-foreground">{task.title}</span>
                   </div>
-                  <span className="text-xs font-mono-data font-bold" style={{ color: phaseIconColor }}>
-                    {task.reward}
-                  </span>
+                  <span className="text-xs font-mono-data font-bold" style={{ color: phaseIconColor }}>{task.reward}</span>
                 </div>
               );
             })}
-            <Button
-              onClick={() => navigate('/bounty-board')}
-              variant="outline"
-              className="w-full rounded-full mt-1"
-            >
-              View All Tasks
+            <Button onClick={() => navigate('/bounty-board')} variant="outline" className="w-full rounded-full mt-1">
+              {t('sisterhood.view_all_tasks')}
             </Button>
           </CardContent>
         </Card>
 
-        {/* Community Governance */}
         <Card className="border border-border">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <Vote className="h-5 w-5" style={{ color: phaseIconColor }} />
-              <CardTitle className="font-heading text-lg">Community Governance</CardTitle>
+              <CardTitle className="font-heading text-lg">{t('sisterhood.governance')}</CardTitle>
             </div>
-            <CardDescription>Shape the future of <span className="italic">meanwhile.</span></CardDescription>
+            <CardDescription>{t('sisterhood.governance_desc_1')}<span className="italic">meanwhile.</span></CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {governanceActions.map((item, index) => {
               const IconComponent = item.icon;
               return (
-                <button
-                  key={index}
-                  onClick={item.action}
-                  className="w-full text-left p-4 rounded-[12px] border border-border hover:bg-accent/50 transition-colors"
-                >
+                <button key={index} onClick={item.action} className="w-full text-left p-4 rounded-[12px] border border-border hover:bg-accent/50 transition-colors">
                   <div className="flex gap-3 items-start">
                     <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                       <IconComponent className="h-4 w-4" style={{ color: phaseIconColor }} />

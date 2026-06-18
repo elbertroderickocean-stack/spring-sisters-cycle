@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Camera, Upload, RefreshCw, Loader2, AlertTriangle, CheckCircle, Check } from 'lucide-react';
@@ -13,22 +14,13 @@ interface MealAnalysis {
   glycemicIndex: string;
   skinImpact: string;
   recommendation: string;
-  nutrients?: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-    fiber: number;
-    sugar: number;
-  };
+  nutrients?: { calories: number; protein: number; carbs: number; fat: number; fiber: number; sugar: number; };
 }
 
 const MealScanner = () => {
   const navigate = useNavigate();
-  const { videoRef, stream, error: cameraError, startCamera, captureImage } = useCameraManager({
-    facingMode: 'environment',
-    autoStart: true,
-  });
+  const { t } = useTranslation();
+  const { videoRef, stream, error: cameraError, startCamera, captureImage } = useCameraManager({ facingMode: 'environment', autoStart: true });
   const { addEntry } = useMealLog();
 
   const [scanning, setScanning] = useState(false);
@@ -41,14 +33,10 @@ const MealScanner = () => {
     setResult(null);
     setSaved(false);
     try {
-      const { data, error } = await supabase.functions.invoke('analyze-meal', {
-        body: { imageData },
-      });
+      const { data, error } = await supabase.functions.invoke('analyze-meal', { body: { imageData } });
       if (error) throw error;
       const analysis = data.analysis;
       setResult(analysis);
-
-      // Auto-save to log
       addEntry({
         foodName: analysis.foodName,
         glycemicIndex: analysis.glycemicIndex as 'Low' | 'Medium' | 'High',
@@ -57,10 +45,10 @@ const MealScanner = () => {
         nutrients: analysis.nutrients || { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0, sugar: 0 },
       });
       setSaved(true);
-      toast.success('Meal logged', { description: `${analysis.foodName} added to your food log.` });
+      toast.success(t('meal_scanner.meal_logged'), { description: t('meal_scanner.meal_logged_desc', { name: analysis.foodName }) });
     } catch (e) {
       console.error('Meal scan error:', e);
-      toast.error('Analysis failed. Please try again.');
+      toast.error(t('meal_scanner.analysis_failed'));
     } finally {
       setScanning(false);
     }
@@ -68,10 +56,7 @@ const MealScanner = () => {
 
   const handleScan = async () => {
     const imageData = captureImage();
-    if (!imageData) {
-      toast.error('Capture failed. Please try again.');
-      return;
-    }
+    if (!imageData) { toast.error(t('meal_scanner.capture_failed')); return; }
     await analyzeImage(imageData);
   };
 
@@ -84,11 +69,7 @@ const MealScanner = () => {
     e.target.value = '';
   };
 
-  const giColor = result?.glycemicIndex === 'High'
-    ? 'text-[hsl(var(--intel-stress))]'
-    : result?.glycemicIndex === 'Medium'
-      ? 'text-[hsl(var(--intel-stress))]'
-      : 'text-[hsl(var(--intel-sleep))]';
+  const giColor = result?.glycemicIndex === 'High' ? 'text-[hsl(var(--intel-stress))]' : result?.glycemicIndex === 'Medium' ? 'text-[hsl(var(--intel-stress))]' : 'text-[hsl(var(--intel-sleep))]';
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -97,8 +78,8 @@ const MealScanner = () => {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-lg font-heading font-semibold">Meal Scanner</h1>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Glycemic Intelligence</p>
+          <h1 className="text-lg font-heading font-semibold">{t('meal_scanner.title')}</h1>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{t('meal_scanner.subtitle')}</p>
         </div>
       </header>
 
@@ -118,9 +99,7 @@ const MealScanner = () => {
                       <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-[hsl(var(--intel-glucose))] rounded-tr-lg" />
                       <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-[hsl(var(--intel-glucose))] rounded-bl-lg" />
                       <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-[hsl(var(--intel-glucose))] rounded-br-lg" />
-                      <p className="absolute -bottom-8 left-0 right-0 text-center text-[10px] text-white/50 tracking-widest uppercase">
-                        Position meal inside the frame
-                      </p>
+                      <p className="absolute -bottom-8 left-0 right-0 text-center text-[10px] text-white/50 tracking-widest uppercase">{t('meal_scanner.position_meal')}</p>
                     </div>
                   </div>
                 )}
@@ -128,7 +107,7 @@ const MealScanner = () => {
                   <div className="absolute inset-0 bg-foreground/60 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center space-y-3">
                       <Loader2 className="h-12 w-12 text-white animate-spin mx-auto" />
-                      <p className="text-white font-heading text-sm animate-pulse">Analyzing glycemic impact...</p>
+                      <p className="text-white font-heading text-sm animate-pulse">{t('meal_scanner.analyzing')}</p>
                     </div>
                   </div>
                 )}
@@ -138,15 +117,13 @@ const MealScanner = () => {
                 <div className="w-48 h-48 border border-dashed border-muted-foreground/30 rounded-2xl flex items-center justify-center">
                   <Camera className="h-10 w-10 text-muted-foreground/40" />
                 </div>
-                <p className="text-muted-foreground text-center text-sm max-w-[260px] leading-relaxed">
-                  Point your camera at a meal for glycemic analysis.
-                </p>
+                <p className="text-muted-foreground text-center text-sm max-w-[260px] leading-relaxed">{t('meal_scanner.point_camera')}</p>
                 <div className="flex gap-3">
                   <Button onClick={() => startCamera()} variant="outline" size="sm" className="gap-2">
-                    <RefreshCw className="h-4 w-4" /> Retry Camera
+                    <RefreshCw className="h-4 w-4" /> {t('meal_scanner.retry_camera')}
                   </Button>
                   <Button onClick={() => fileInputRef.current?.click()} variant="outline" size="sm" className="gap-2">
-                    <Upload className="h-4 w-4" /> Upload Photo
+                    <Upload className="h-4 w-4" /> {t('meal_scanner.upload_photo')}
                   </Button>
                 </div>
               </div>
@@ -156,30 +133,20 @@ const MealScanner = () => {
           <div className="p-6 border-t border-border bg-background space-y-3">
             {!cameraError ? (
               <>
-                <Button
-                  onClick={handleScan}
-                  disabled={scanning}
-                  className="w-full h-14 rounded-full bg-[hsl(var(--intel-glucose))] hover:bg-[hsl(var(--intel-glucose))]/90 text-white text-xs tracking-widest uppercase"
-                >
+                <Button onClick={handleScan} disabled={scanning} className="w-full h-14 rounded-full bg-[hsl(var(--intel-glucose))] hover:bg-[hsl(var(--intel-glucose))]/90 text-white text-xs tracking-widest uppercase">
                   <Camera className="h-4 w-4 mr-2" />
-                  {scanning ? 'Analyzing...' : 'Scan Meal'}
+                  {scanning ? t('meal_scanner.scanning') : t('meal_scanner.scan_btn')}
                 </Button>
                 {!scanning && (
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full text-center text-[10px] text-muted-foreground hover:text-foreground transition-colors py-1 tracking-wider uppercase"
-                  >
-                    or upload a photo for m.i. analysis
+                  <button onClick={() => fileInputRef.current?.click()} className="w-full text-center text-[10px] text-muted-foreground hover:text-foreground transition-colors py-1 tracking-wider uppercase">
+                    {t('meal_scanner.or_upload')}
                   </button>
                 )}
               </>
             ) : (
-              <Button
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full h-14 rounded-full bg-[hsl(var(--intel-glucose))] hover:bg-[hsl(var(--intel-glucose))]/90 text-white text-xs tracking-widest uppercase"
-              >
+              <Button onClick={() => fileInputRef.current?.click()} className="w-full h-14 rounded-full bg-[hsl(var(--intel-glucose))] hover:bg-[hsl(var(--intel-glucose))]/90 text-white text-xs tracking-widest uppercase">
                 <Upload className="h-4 w-4 mr-2" />
-                Upload Photo for m.i. Analysis
+                {t('meal_scanner.upload_btn')}
               </Button>
             )}
           </div>
@@ -193,20 +160,19 @@ const MealScanner = () => {
                 <span className={`text-sm font-heading font-bold ${giColor}`}>
                   {result.glycemicIndex === 'High' && <AlertTriangle className="inline h-4 w-4 mr-1" />}
                   {result.glycemicIndex === 'Low' && <CheckCircle className="inline h-4 w-4 mr-1" />}
-                  GI: {result.glycemicIndex}
+                  {t('meal_scanner.gi')}: {result.glycemicIndex}
                 </span>
               </div>
 
-              {/* Nutrient breakdown */}
               {result.nutrients && (
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { label: 'Calories', value: `${result.nutrients.calories}`, unit: 'kcal' },
-                    { label: 'Protein', value: `${result.nutrients.protein}`, unit: 'g' },
-                    { label: 'Carbs', value: `${result.nutrients.carbs}`, unit: 'g' },
-                    { label: 'Fat', value: `${result.nutrients.fat}`, unit: 'g' },
-                    { label: 'Fiber', value: `${result.nutrients.fiber}`, unit: 'g' },
-                    { label: 'Sugar', value: `${result.nutrients.sugar}`, unit: 'g' },
+                    { label: t('meal_scanner.calories'), value: `${result.nutrients.calories}`, unit: 'kcal' },
+                    { label: t('meal_scanner.protein'), value: `${result.nutrients.protein}`, unit: 'g' },
+                    { label: t('meal_scanner.carbs'), value: `${result.nutrients.carbs}`, unit: 'g' },
+                    { label: t('meal_scanner.fat'), value: `${result.nutrients.fat}`, unit: 'g' },
+                    { label: t('meal_scanner.fiber'), value: `${result.nutrients.fiber}`, unit: 'g' },
+                    { label: t('meal_scanner.sugar'), value: `${result.nutrients.sugar}`, unit: 'g' },
                   ].map((n) => (
                     <div key={n.label} className="p-2 rounded-lg bg-muted/50 text-center">
                       <p className="text-base font-heading font-bold">{n.value}<span className="text-[10px] text-muted-foreground ml-0.5">{n.unit}</span></p>
@@ -218,27 +184,27 @@ const MealScanner = () => {
 
               <div className="space-y-3">
                 <div>
-                  <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Skin Impact</h3>
+                  <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-1">{t('meal_scanner.skin_impact')}</h3>
                   <p className="text-sm leading-relaxed">{result.skinImpact}</p>
                 </div>
                 <div>
-                  <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Protocol Adjustment</h3>
+                  <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-1">{t('meal_scanner.protocol_adjustment')}</h3>
                   <p className="text-sm leading-relaxed">{result.recommendation}</p>
                 </div>
                 <div className="p-3 rounded-lg bg-muted/50 border border-border flex items-start gap-2">
                   {saved && <Check className="h-4 w-4 text-[hsl(var(--intel-sleep))] mt-0.5 shrink-0" />}
                   <p className="text-xs text-muted-foreground italic">
-                    {saved ? 'Logged & saved.' : ''} You enjoyed your meal. <span className="font-heading">meanwhile.</span>, we are managing the glycation consequences.
+                    {saved ? t('meal_scanner.logged_prefix') : ''}{t('meal_scanner.footer_after')}<span className="font-heading">{t('meal_scanner.footer_brand')}</span>{t('meal_scanner.footer_after_brand')}
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Button onClick={() => { setResult(null); setSaved(false); }} variant="outline" className="w-full text-xs tracking-wider uppercase">
-            Scan Another Meal
+            {t('meal_scanner.scan_another')}
           </Button>
           <Button onClick={() => navigate('/intelligence/glucose')} className="w-full text-xs tracking-wider uppercase">
-            View Food Log
+            {t('meal_scanner.view_log')}
           </Button>
         </div>
       )}

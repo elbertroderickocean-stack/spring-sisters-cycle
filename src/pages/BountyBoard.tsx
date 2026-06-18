@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Target, Camera, BookOpen, Database } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import { useUser } from '@/contexts/UserContext';
 
 const BountyBoard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { getCurrentPhase } = useUser();
   const phase = getCurrentPhase();
 
@@ -15,38 +17,13 @@ const BountyBoard = () => {
     if (phase === 'glow') return 'hsl(30 90% 60%)';
     return 'hsl(120 40% 50%)';
   };
-
   const phaseColor = getPhaseColor();
 
   const tasks = [
-    {
-      icon: Camera,
-      title: 'Share your Progress (UGC)',
-      brief: 'Capture your routine, your glow-up, or an aesthetic product shot.',
-      reward: '1,000 AC',
-      status: 'active',
-    },
-    {
-      icon: Database,
-      title: 'Data Calibration (Log Sleep/Glucose)',
-      brief: 'Log your sleep quality and glucose data to help calibrate your protocol.',
-      reward: '500 AC',
-      status: 'active',
-    },
-    {
-      icon: BookOpen,
-      title: 'Asset Review',
-      brief: 'Write a mini-review of a meanwhile. product explaining what works for you.',
-      reward: '250 AC',
-      status: 'active',
-    },
-    {
-      icon: Target,
-      title: 'Phase Transition Story',
-      brief: 'Document your skin\'s journey through a full cycle phase.',
-      reward: '200 AC',
-      status: 'coming-soon',
-    },
+    { icon: Camera, title: t('bounty.share_progress'), brief: t('bounty.share_progress_brief'), reward: '1,000 AC', status: 'active' },
+    { icon: Database, title: t('bounty.data_calibration'), brief: t('bounty.data_calibration_brief'), reward: '500 AC', status: 'active' },
+    { icon: BookOpen, title: t('bounty.asset_review'), brief: t('bounty.asset_review_brief'), reward: '250 AC', status: 'active' },
+    { icon: Target, title: t('bounty.phase_story'), brief: t('bounty.phase_story_brief'), reward: '200 AC', status: 'coming-soon' },
   ];
 
   return (
@@ -56,16 +33,14 @@ const BountyBoard = () => {
           <Button variant="ghost" size="icon" onClick={() => navigate('/sisterhood')} className="rounded-full">
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-2xl font-heading font-semibold">Ecosystem Tasks</h1>
+          <h1 className="text-2xl font-heading font-semibold">{t('bounty.title')}</h1>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Complete tasks to earn Asset Credits. The more you contribute, the stronger the <span className="italic">meanwhile.</span> ecosystem becomes.
-        </p>
+        <p className="text-sm text-muted-foreground leading-relaxed">{t('bounty.intro')}</p>
 
         <div className="space-y-4">
-          <h2 className="text-lg font-heading font-semibold">Active Tasks</h2>
-          {tasks.filter((t) => t.status === 'active').map((task, index) => {
+          <h2 className="text-lg font-heading font-semibold">{t('bounty.active')}</h2>
+          {tasks.filter((t2) => t2.status === 'active').map((task, index) => {
             const IconComponent = task.icon;
             return (
               <Card key={index} className="border border-border">
@@ -78,14 +53,14 @@ const BountyBoard = () => {
                       <CardTitle className="font-heading text-base">{task.title}</CardTitle>
                       <CardDescription className="text-xs">{task.brief}</CardDescription>
                       <p className="text-xs font-mono-data font-bold pt-1" style={{ color: phaseColor }}>
-                        Reward: {task.reward}
+                        {t('bounty.reward')}: {task.reward}
                       </p>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <Button className="w-full rounded-full" style={{ backgroundColor: phaseColor }}>
-                    Submit
+                    {t('bounty.submit')}
                   </Button>
                 </CardContent>
               </Card>
@@ -94,8 +69,8 @@ const BountyBoard = () => {
         </div>
 
         <div className="space-y-4 pt-4">
-          <h2 className="text-lg font-heading font-semibold">Coming Soon</h2>
-          {tasks.filter((t) => t.status === 'coming-soon').map((task, index) => {
+          <h2 className="text-lg font-heading font-semibold">{t('bounty.coming_soon')}</h2>
+          {tasks.filter((t2) => t2.status === 'coming-soon').map((task, index) => {
             const IconComponent = task.icon;
             return (
               <Card key={index} className="border border-border opacity-60">
@@ -108,7 +83,7 @@ const BountyBoard = () => {
                       <CardTitle className="font-heading text-base">{task.title}</CardTitle>
                       <CardDescription className="text-xs">{task.brief}</CardDescription>
                       <p className="text-xs font-mono-data font-bold pt-1" style={{ color: phaseColor }}>
-                        Reward: {task.reward}
+                        {t('bounty.reward')}: {task.reward}
                       </p>
                     </div>
                   </div>
