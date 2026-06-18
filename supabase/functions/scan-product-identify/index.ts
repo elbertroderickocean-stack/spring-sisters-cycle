@@ -85,7 +85,7 @@ CRITICAL: Respond ONLY in valid JSON:
 
     if (step === 'analyze') {
       // Step 2: Parse INCI from back photo + full analysis
-      const analyzePrompt = `You are "m.i." (meanwhile.intelligence), an expert cosmetic chemist and INCI parser.
+      const analyzePrompt = `You are "m.i." (meanwhile.intelligence), an expert cosmetic chemist and INCI parser.${langDirective}
 
 CONTEXT: The user has identified this product. Now analyze the ingredient list from the back of the packaging.
 
