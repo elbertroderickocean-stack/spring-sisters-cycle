@@ -104,6 +104,9 @@ CRITICAL INTEGRATION RULES:
 6. Frame dietary impacts on skin in terms of biological capital: glycation = collagen depreciation, antioxidants = portfolio protection.`;
     }
 
+    if (language === 'ru') {
+      contextualPrompt += `\n\nLANGUAGE OVERRIDE: Respond entirely in Russian (русский язык). All analysis, recommendations, and narrative must be in Russian. Keep brand names ("meanwhile.", "m.i.", "The Constants", "The Shifts", "The Assets") and product names (e.g. "Vitamin C Concentrate", "Ceramide Concentrate", "Bakuchiol Concentrate", "The Cellular Architect Cream", "Shift 01/02/03") in English. The meanwhile. connector pattern in Russian: "[Действие пользователя]. meanwhile., [действие приложения]." For protocol override JSON, translate the "message" and "auraNote" fields to Russian but keep step keys ("cleanser", "serum-trio", "eye-cream", "moisturizer", "bakuchiol", "ceramide") in English.`;
+
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
