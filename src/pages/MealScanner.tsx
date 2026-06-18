@@ -19,7 +19,7 @@ interface MealAnalysis {
 
 const MealScanner = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { videoRef, stream, error: cameraError, startCamera, captureImage } = useCameraManager({ facingMode: 'environment', autoStart: true });
   const { addEntry } = useMealLog();
 
