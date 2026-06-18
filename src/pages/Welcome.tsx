@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 import OnboardingBackButton from '@/components/OnboardingBackButton';
+import { LanguageToggle } from '@/components/LanguageToggle';
 
 const DataAlignmentVisual = () => {
   const [aligned, setAligned] = useState(false);
@@ -76,10 +78,14 @@ const DataAlignmentVisual = () => {
 
 const Welcome = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12 overflow-hidden">
+    <div className="relative flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12 overflow-hidden">
       <OnboardingProgressBar currentStep={1} />
+      <div className="absolute top-6 right-6 z-10">
+        <LanguageToggle />
+      </div>
       <div className="max-w-3xl w-full text-center space-y-8">
         {/* Data Alignment Visualization */}
         <DataAlignmentVisual />
@@ -87,20 +93,20 @@ const Welcome = () => {
         {/* Text */}
         <div className="space-y-6 animate-fade-in" style={{ animationDelay: '1.5s' }}>
           <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight tracking-tight">
-            Stop treating your skin like a chore.
+            {t('welcome.headline_1')}
             <br />
-            Treat it like an asset.
+            {t('welcome.headline_2')}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-body" style={{ letterSpacing: '0.01em', lineHeight: '1.8' }}>
-            Your skin is biological capital that reacts to glucose, hormones, and stress.{' '}
-            <strong className="text-foreground font-extrabold">meanwhile</strong>, our system manages the complexity in the background while you focus on your life.
+            {t('welcome.body_prefix')}{' '}
+            <strong className="text-foreground font-extrabold">{t('welcome.body_brand')}</strong>{t('welcome.body_suffix')}
           </p>
           <Button
             size="lg"
             onClick={() => navigate('/solution')}
             className="mt-10 px-10 py-6 text-lg rounded-lg tracking-wide"
           >
-            Initialize Management Strategy
+            {t('welcome.cta')}
           </Button>
           <OnboardingBackButton to="/" />
         </div>
