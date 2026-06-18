@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const Solution = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<'hormonal' | 'longevity' | 'pregnancy' | null>(null);
   const [showLocked, setShowLocked] = useState(false);
 
@@ -29,12 +31,12 @@ const Solution = () => {
       <OnboardingProgressBar currentStep={2} />
       <div className="max-w-lg w-full text-center space-y-10 animate-slide-up">
         <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-body">The Strategy Pivot</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-body">{t('solution.eyebrow')}</p>
           <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground leading-tight">
-            Choose your Management Strategy
+            {t('solution.title')}
           </h1>
           <p className="text-muted-foreground text-lg font-body">
-            Your skin's needs depend on your biology. Select the path that fits you.
+            {t('solution.subtitle')}
           </p>
         </div>
 
@@ -59,9 +61,9 @@ const Solution = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">Hormonal Management</h3>
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">{t('solution.hormonal_title')}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed font-body">
-                  For those in their regular cycle. Adapts to your 28-day rhythm + lifestyle data.
+                  {t('solution.hormonal_desc')}
                 </p>
               </div>
             </div>
@@ -87,9 +89,9 @@ const Solution = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">Longevity Management</h3>
+                <h3 className="text-xl font-heading font-semibold text-foreground mb-2">{t('solution.longevity_title')}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed font-body">
-                  Optimized for menopause or skin-cycling. A 7-day cellular training pulse + lifestyle data.
+                  {t('solution.longevity_desc')}
                 </p>
               </div>
             </div>
@@ -116,10 +118,10 @@ const Solution = () => {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <h3 className="text-xl font-heading font-semibold text-foreground">Pregnancy Mode</h3>
+                  <h3 className="text-xl font-heading font-semibold text-foreground">{t('solution.pregnancy_title')}</h3>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed font-body">
-                  Expecting? Trimester-based protocols with ingredient safety filters + specialized care.
+                  {t('solution.pregnancy_desc')}
                 </p>
               </div>
             </div>
@@ -136,7 +138,7 @@ const Solution = () => {
               : "bg-muted text-muted-foreground cursor-not-allowed"
           )}
         >
-          Continue
+          {t('common.continue')}
         </button>
         <OnboardingBackButton to="/welcome" />
       </div>
@@ -150,9 +152,9 @@ const Solution = () => {
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h3 className="text-3xl font-heading font-semibold text-foreground">Investment Strategy Locked.</h3>
+            <h3 className="text-3xl font-heading font-semibold text-foreground">{t('solution.locked_title')}</h3>
             <p className="text-muted-foreground text-base max-w-sm mx-auto leading-relaxed font-body">
-              <strong className="text-foreground">meanwhile.</strong>, we are preparing to analyze your biological baseline.
+              <strong className="text-foreground">{t('solution.locked_body_brand')}</strong>{t('solution.locked_body_suffix')}
             </p>
           </div>
         </div>

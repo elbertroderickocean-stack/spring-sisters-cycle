@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MeanwhileLogo, MeanwhileIcon } from '@/components/MeanwhileLogo';
+import { LanguageToggle } from '@/components/LanguageToggle';
 
 interface HeaderBarProps {
   children?: React.ReactNode;
@@ -18,7 +19,8 @@ export const HeaderBar = ({ children }: HeaderBarProps) => {
           <MeanwhileIcon className="text-lg cursor-pointer" />
           {children}
         </div>
-        <div className="flex items-center gap-1 ml-4">
+        <div className="flex items-center gap-2 ml-4">
+          <LanguageToggle />
           <ThemeToggle />
           <button
             onClick={() => navigate('/profile')}
