@@ -12,13 +12,16 @@ serve(async (req) => {
   }
 
   try {
-    const { frontImage, backImage, step } = await req.json();
+    const { frontImage, backImage, step, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
+    const langDirective = language === 'ru'
+      ? '\n\nIMPORTANT: All free-text JSON string values (frontClaims, theGood, thingsToWatch, miRecommendation, conflict reasons, synergy benefits, pregnancy risks, ingredient functions) must be in Russian (русский язык). Keep brand names, product names, INCI ingredient names, "meanwhile.", "m.i.", category enum values (cleanser/toner/serum/etc.), severity values (high/medium/low), confidence values, and pH profile enum values in English.'
+      : '';
 
     if (step === 'identify') {
       // Step 1: Identify product from front photo
-      const identifyPrompt = `You are an expert cosmetic product identifier. Analyze this photo of a cosmetic product's front/label side.
+      const identifyPrompt = `You are an expert cosmetic product identifier. Analyze this photo of a cosmetic product's front/label side.${langDirective}
 
 YOUR TASK:
 1. Identify the BRAND name exactly as written on the packaging
@@ -82,7 +85,7 @@ CRITICAL: Respond ONLY in valid JSON:
 
     if (step === 'analyze') {
       // Step 2: Parse INCI from back photo + full analysis
-      const analyzePrompt = `You are "m.i." (meanwhile.intelligence), an expert cosmetic chemist and INCI parser.
+      const analyzePrompt = `You are "m.i." (meanwhile.intelligence), an expert cosmetic chemist and INCI parser.${langDirective}
 
 CONTEXT: The user has identified this product. Now analyze the ingredient list from the back of the packaging.
 

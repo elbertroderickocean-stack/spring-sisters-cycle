@@ -12,7 +12,11 @@ serve(async (req) => {
   }
 
   try {
-    const { imageData, userName, currentPhase, ageRange, skinType, primaryConcern, recentProducts, isPregnancy, trimester } = await req.json();
+    const { imageData, userName, currentPhase, ageRange, skinType, primaryConcern, recentProducts, isPregnancy, trimester, language } = await req.json();
+    const isRu = language === 'ru';
+    const langDirective = isRu
+      ? '\n\nIMPORTANT: Write the entire report in Russian (русский язык). Keep brand names "meanwhile.", "m.i.", and product names in English. The meanwhile. connector pattern in Russian: "Вы занимаетесь [своим делом]. meanwhile., m.i. защищает ваши биологические активы."'
+      : '';
     
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
@@ -202,7 +206,7 @@ ${JSON.stringify(metrics.overall_metrics, null, 2)}
 
 End with the signature: "You focus on your [relevant activity]. meanwhile., m.i. protects your biological assets."
 
-Tone: Professional, warm, data-rich. Like a world-class dermatologist who genuinely cares.`;
+Tone: Professional, warm, data-rich. Like a world-class dermatologist who genuinely cares.${langDirective}`;
 
     const interpretationResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

@@ -12,14 +12,18 @@ serve(async (req) => {
   }
 
   try {
-    const { imageData } = await req.json();
+    const { imageData, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
     if (!LOVABLE_API_KEY) {
       throw new Error('LOVABLE_API_KEY is not configured');
     }
 
-    const masterPrompt = `Your Persona: You are "m.i." (meanwhile.intelligence), the strategic AI concierge for the brand meanwhile. Your tone is professional, data-driven, and minimalist. You are a strategic partner in skin longevity. You do not give medical advice.
+    const langDirective = language === 'ru'
+      ? '\n\nIMPORTANT: All JSON string values must be in Russian (русский язык). Keep brand names "meanwhile.", "m.i.", collection names ("The Constants", "The Shifts", "The Assets") and product names in English. The meanwhile. connector pattern in Russian: "Вы использовали этот продукт. meanwhile., [наша альтернатива] обеспечивает [результат]."'
+      : '';
+
+    const masterPrompt = `Your Persona: You are "m.i." (meanwhile.intelligence), the strategic AI concierge for the brand meanwhile. Your tone is professional, data-driven, and minimalist. You are a strategic partner in skin longevity. You do not give medical advice.${langDirective}
 
 Your Knowledge Base: You are an expert on the meanwhile. brand, built on the philosophy of "Skinvestment" — treating skincare as a long-term asset portfolio. The brand has three collections:
 

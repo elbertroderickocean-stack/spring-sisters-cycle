@@ -20,7 +20,7 @@ const Aura = () => {
   const navigate = useNavigate();
   const { userData, getCurrentPhase, getCurrentDay, updateCustomRituals } = useUser();
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ const Aura = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('aura-chat', {
-        body: { message: input, checkIn: userData.checkIn, currentPhase: getCurrentPhase(), currentDay: getCurrentDay() }
+        body: { message: input, checkIn: userData.checkIn, currentPhase: getCurrentPhase(), currentDay: getCurrentDay(), language: i18n.language }
       });
 
       if (error) {

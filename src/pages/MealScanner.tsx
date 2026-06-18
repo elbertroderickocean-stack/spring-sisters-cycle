@@ -19,7 +19,7 @@ interface MealAnalysis {
 
 const MealScanner = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { videoRef, stream, error: cameraError, startCamera, captureImage } = useCameraManager({ facingMode: 'environment', autoStart: true });
   const { addEntry } = useMealLog();
 
@@ -33,7 +33,7 @@ const MealScanner = () => {
     setResult(null);
     setSaved(false);
     try {
-      const { data, error } = await supabase.functions.invoke('analyze-meal', { body: { imageData } });
+      const { data, error } = await supabase.functions.invoke('analyze-meal', { body: { imageData, language: i18n.language } });
       if (error) throw error;
       const analysis = data.analysis;
       setResult(analysis);

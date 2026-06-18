@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface MedicationAnalysis {
@@ -12,6 +13,7 @@ export const useMedicationAnalysis = () => {
   const [analysis, setAnalysis] = useState<MedicationAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { i18n } = useTranslation();
 
   const analyzeMedication = async (
     medicationName: string,
@@ -25,7 +27,7 @@ export const useMedicationAnalysis = () => {
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke('analyze-medication', {
-        body: { medicationName, strategy, skinConcerns },
+        body: { medicationName, strategy, skinConcerns, language: i18n.language },
       });
 
       if (fnError) throw fnError;

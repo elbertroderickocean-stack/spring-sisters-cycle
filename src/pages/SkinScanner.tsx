@@ -137,7 +137,7 @@ const SkinScanner = () => {
     }, 80);
 
     try {
-      const { data, error } = await supabase.functions.invoke('analyze-skin-health', { body: { imageData } });
+      const { data, error } = await supabase.functions.invoke('analyze-skin-health', { body: { imageData, language: i18n.language } });
       if (error) throw error;
       clearInterval(progressInterval);
       setScanProgress(100);

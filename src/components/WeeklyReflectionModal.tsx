@@ -5,6 +5,7 @@ import { Camera, Cpu, ScanLine } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { TypingText } from '@/components/TypingText';
+import i18n from '@/i18n';
 
 interface WeeklyReflectionModalProps {
   open: boolean;
@@ -121,7 +122,8 @@ export const WeeklyReflectionModal: React.FC<WeeklyReflectionModalProps> = ({
           ageRange,
           skinType,
           primaryConcern,
-          recentProducts
+          recentProducts,
+          language: i18n.language
         }
       });
 

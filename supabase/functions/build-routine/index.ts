@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { shelfProducts, phase, day, cycleLength, isPregnancy, trimester, wiseBloomMode, environmentData, healthData, userId } = await req.json();
+    const { shelfProducts, phase, day, cycleLength, isPregnancy, trimester, wiseBloomMode, environmentData, healthData, userId, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
 
@@ -184,7 +184,7 @@ CRITICAL: Respond ONLY in valid JSON:
   ],
   "adaptations": ["List of adaptations made based on environmental/health/scan data"],
   "skinScanInfluence": "Summary of how the latest skin scan shaped this routine"
-}`;
+}${language === 'ru' ? '\n\nIMPORTANT: All free-text JSON string values (purpose, applicationTip, scanDriven, reason, dailyInsight, resolution, adaptations, skinScanInfluence) must be in Russian (русский язык). Keep brand names, product names, "meanwhile.", "m.i.", and category enum values (cleanser/serum/etc.) in English.' : ''}`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

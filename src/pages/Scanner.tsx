@@ -36,7 +36,7 @@ interface AnalysisResult {
 const Scanner = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const returnTo = (location.state as any)?.returnTo || '/products';
   const [scanStep, setScanStep] = useState<ScanStep>('front');
   const [isScanning, setIsScanning] = useState(false);
@@ -93,7 +93,7 @@ const Scanner = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('scan-product-identify', {
-        body: { frontImage: imageData, step: 'identify' }
+        body: { frontImage: imageData, step: 'identify', language: i18n.language }
       });
       if (error) throw error;
 
@@ -122,7 +122,7 @@ const Scanner = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('scan-product-identify', {
-        body: { backImage: imageData, frontImage: frontImageData, step: 'analyze' }
+        body: { backImage: imageData, frontImage: frontImageData, step: 'analyze', language: i18n.language }
       });
       if (error) throw error;
 

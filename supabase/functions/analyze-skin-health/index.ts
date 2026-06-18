@@ -12,11 +12,15 @@ serve(async (req) => {
   }
 
   try {
-    const { imageData } = await req.json();
+    const { imageData, language } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY is not configured');
 
-    const systemPrompt = `You are m.i. (meanwhile.intelligence), a high-end dermatological AI for the premium skincare brand "meanwhile."
+    const langDirective = language === 'ru'
+      ? '\n\nIMPORTANT: Respond entirely in Russian (русский язык) — all JSON string values (radiance, hydration, texture, recommendation) must be in Russian. Keep brand names "meanwhile.", "m.i.", "The Constants", "The Shifts", "The Assets", product names like "Ceramide Concentrate", "Vitamin C Concentrate", "The Cellular Architect Cream", "The Long-Term Moisturizer" in English. The meanwhile. connector pattern: "[Действие пользователя]. meanwhile., [действие приложения]."'
+      : '';
+
+    const systemPrompt = `You are m.i. (meanwhile.intelligence), a high-end dermatological AI for the premium skincare brand "meanwhile."${langDirective}
 
 Analyze this face photo and evaluate:
 1. Radiance — rate as a percentage (e.g. 82%) and a word: Glowing / Moderate / Dull
