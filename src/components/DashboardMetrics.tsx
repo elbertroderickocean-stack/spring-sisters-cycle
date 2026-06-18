@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -36,6 +37,7 @@ interface MetricDetail {
 }
 
 export const DashboardMetrics: React.FC = () => {
+  const { t } = useTranslation();
   const streak = 9;
   const consistency = 82;
   const toneDrift = 3;
@@ -47,33 +49,33 @@ export const DashboardMetrics: React.FC = () => {
 
   const metrics: Record<string, MetricDetail> = {
     streak: {
-      title: 'Return Streak',
-      value: `${streak} days`,
-      description: 'Consistency is the engine of compound beauty. Your 9-day streak has improved cellular uptake by 12%. Every consecutive day amplifies absorption efficiency, compounding your skin\'s long-term ROI.',
+      title: t('dashboard.streak_title'),
+      value: t('dashboard.streak_value', { n: streak }),
+      description: t('dashboard.streak_desc', { n: streak }),
     },
     consistency: {
-      title: 'Routine Consistency',
+      title: t('dashboard.consistency_title'),
       value: `${consistency}%`,
-      description: 'Protocol Adherence. You are following 82% of m.i. recommendations. Unlocking the remaining 18% will optimize your anti-glycation shield and accelerate barrier recovery.',
+      description: t('dashboard.consistency_desc', { n: consistency, rest: 100 - consistency }),
     },
     toneDrift: {
-      title: 'Skin Baseline Tone Drift',
+      title: t('dashboard.drift_title'),
       value: `+${toneDrift}%`,
-      description: 'Visual ROI. Your skin luminance has drifted +3% towards optimal radiance since your baseline scan. This correlates with improved hydration retention and melanin regulation.',
+      description: t('dashboard.drift_desc', { n: toneDrift }),
     },
   };
 
   return (
     <>
       <div className="grid grid-cols-3 gap-3">
-        <MetricCard label="Return Streak" onClick={() => setActiveMetric(metrics.streak)}>
+        <MetricCard label={t('dashboard.streak_label')} onClick={() => setActiveMetric(metrics.streak)}>
           <div className="flex flex-col items-center">
             <span className="text-4xl font-mono-data font-bold text-foreground">{streak}</span>
-            <span className="text-[11px] text-muted-foreground mt-1">days</span>
+            <span className="text-[11px] text-muted-foreground mt-1">{t('dashboard.days')}</span>
           </div>
         </MetricCard>
 
-        <MetricCard label="Routine Consistency This Cycle" onClick={() => setActiveMetric(metrics.consistency)}>
+        <MetricCard label={t('dashboard.consistency_label')} onClick={() => setActiveMetric(metrics.consistency)}>
           <div className="relative w-[72px] h-[72px]">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 72 72">
               <circle
@@ -100,7 +102,7 @@ export const DashboardMetrics: React.FC = () => {
           </div>
         </MetricCard>
 
-        <MetricCard label="Skin Baseline Tone Drift This Cycle" onClick={() => setActiveMetric(metrics.toneDrift)}>
+        <MetricCard label={t('dashboard.drift_label')} onClick={() => setActiveMetric(metrics.toneDrift)}>
           <div className="flex flex-col items-center">
             <span className="text-4xl font-mono-data font-bold text-foreground">
               +{toneDrift}%
