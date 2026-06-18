@@ -206,7 +206,7 @@ ${JSON.stringify(metrics.overall_metrics, null, 2)}
 
 End with the signature: "You focus on your [relevant activity]. meanwhile., m.i. protects your biological assets."
 
-Tone: Professional, warm, data-rich. Like a world-class dermatologist who genuinely cares.`;
+Tone: Professional, warm, data-rich. Like a world-class dermatologist who genuinely cares.${langDirective}`;
 
     const interpretationResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
