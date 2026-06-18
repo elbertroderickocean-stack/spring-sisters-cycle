@@ -1,0 +1,68 @@
+{
+  "common": {
+    "continue": "Continue",
+    "back": "Back",
+    "or_continue_with": "Or continue with",
+    "google": "Google",
+    "apple": "Apple",
+    "email": "Email",
+    "password": "Password"
+  },
+  "splash": {
+    "tagline": "Your Skin, Managed"
+  },
+  "welcome": {
+    "headline_1": "Stop treating your skin like a chore.",
+    "headline_2": "Treat it like an asset.",
+    "body_prefix": "Your skin is biological capital that reacts to glucose, hormones, and stress.",
+    "body_brand": "meanwhile",
+    "body_suffix": ", our system manages the complexity in the background while you focus on your life.",
+    "cta": "Initialize Management Strategy"
+  },
+  "solution": {
+    "eyebrow": "The Strategy Pivot",
+    "title": "Choose your Management Strategy",
+    "subtitle": "Your skin's needs depend on your biology. Select the path that fits you.",
+    "hormonal_title": "Hormonal Management",
+    "hormonal_desc": "For those in their regular cycle. Adapts to your 28-day rhythm + lifestyle data.",
+    "longevity_title": "Longevity Management",
+    "longevity_desc": "Optimized for menopause or skin-cycling. A 7-day cellular training pulse + lifestyle data.",
+    "pregnancy_title": "Pregnancy Mode",
+    "pregnancy_desc": "Expecting? Trimester-based protocols with ingredient safety filters + specialized care.",
+    "locked_title": "Investment Strategy Locked.",
+    "locked_body_brand": "meanwhile.",
+    "locked_body_suffix": ", we are preparing to analyze your biological baseline."
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to access your management strategy",
+    "sign_in": "Sign In",
+    "signing_in": "Signing in...",
+    "no_account": "Don't have an account?",
+    "start_here": "Start here",
+    "google_failed": "Google sign-in failed",
+    "apple_failed": "Apple sign-in failed"
+  },
+  "register": {
+    "title": "Let's save your progress.",
+    "subtitle": "Create an account to save your personal calendar and unlock your path to ideal skin.",
+    "name_label": "Your Name",
+    "name_placeholder": "Jane Smith",
+    "create": "Create Account",
+    "creating": "Creating Account...",
+    "have_account": "Already have an account?",
+    "sign_in": "Sign in",
+    "demo": "Explore in Discovery Mode",
+    "demo_title": "Welcome to Discovery Mode!",
+    "demo_body_1": "You are now viewing the app as our demo user, \"Kate.\" To unlock your ",
+    "demo_body_personal": "personal",
+    "demo_body_2": " rhythm and recommendations, please create an account at any time.",
+    "demo_confirm": "I Understand",
+    "account_created": "Account created! Please check your email to verify."
+  },
+  "language": {
+    "label": "Language",
+    "en": "EN",
+    "ru": "RU"
+  }
+}
