@@ -1,16 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 
 interface OnboardingProgressBarProps {
   currentStep: number;
 }
-
-const segments = [
-  { number: 1, label: 'Strategy' },
-  { number: 2, label: 'Biology' },
-  { number: 3, label: 'Lifestyle' },
-  { number: 4, label: 'Portfolio' },
-];
 
 const getActiveSegment = (step: number): number => {
   if (step <= 2) return 1;
@@ -20,7 +14,15 @@ const getActiveSegment = (step: number): number => {
 };
 
 const OnboardingProgressBar = ({ currentStep }: OnboardingProgressBarProps) => {
+  const { t } = useTranslation();
   const activeSegment = getActiveSegment(currentStep);
+
+  const segments = [
+    { number: 1, label: t('progress.strategy') },
+    { number: 2, label: t('progress.biology') },
+    { number: 3, label: t('progress.lifestyle') },
+    { number: 4, label: t('progress.portfolio') },
+  ];
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 pt-6 pb-4 px-6 bg-[hsl(0_0%_100%/0.5)] backdrop-blur-[40px] border-b border-[hsl(0_0%_0%/0.06)]">

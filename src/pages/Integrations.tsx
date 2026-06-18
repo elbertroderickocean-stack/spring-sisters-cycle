@@ -1,20 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Calendar, ArrowRight } from 'lucide-react';
 
 const Integrations = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  const handleConnect = () => {
-    // Placeholder for Google Calendar OAuth flow
-    console.log('Google Calendar connection initiated');
-    navigate('/today');
-  };
-
-  const handleSkip = () => {
-    navigate('/today');
-  };
+  const handleConnect = () => navigate('/today');
+  const handleSkip = () => navigate('/today');
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 py-12">
@@ -28,33 +23,24 @@ const Integrations = () => {
               </div>
             </div>
           </div>
-          
+
           <h1 className="text-4xl font-heading font-semibold text-foreground">
-            Let's connect with your life.
+            {t('integrations.title')}
           </h1>
-          
+
           <p className="text-foreground/70 text-lg leading-relaxed">
-            meanwhile. becomes truly intelligent when it understands your lifestyle. Grant us permission to view your Google Calendar, and we can provide proactive advice for events like flights, late nights, or stressful meetings.
+            {t('integrations.body')}
           </p>
         </div>
 
         <div className="space-y-4 pt-4">
-          <Button
-            size="lg"
-            onClick={handleConnect}
-            className="w-full h-12 text-base rounded-full"
-          >
-            Connect Google Calendar
+          <Button size="lg" onClick={handleConnect} className="w-full h-12 text-base rounded-full">
+            {t('integrations.connect')}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
-          
-          <Button
-            size="lg"
-            variant="ghost"
-            onClick={handleSkip}
-            className="w-full h-12 text-base rounded-full"
-          >
-            Maybe Later
+
+          <Button size="lg" variant="ghost" onClick={handleSkip} className="w-full h-12 text-base rounded-full">
+            {t('integrations.later')}
           </Button>
         </div>
       </div>
