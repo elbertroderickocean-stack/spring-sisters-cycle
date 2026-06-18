@@ -48,8 +48,10 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
   timeOfDay
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
   const [selectedStep, setSelectedStep] = React.useState<RitualStep | null>(null);
+
 
   return (
     <div className="glass-card overflow-hidden">
