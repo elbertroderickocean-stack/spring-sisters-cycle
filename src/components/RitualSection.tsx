@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { PhaseType } from '@/contexts/UserContext';
 import { HowToModal } from './HowToModal';
 import { Heart, Zap, ChevronRight, Sparkles } from 'lucide-react';
+
 
 interface RitualStep {
   number: number;
@@ -46,8 +48,10 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
   timeOfDay
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
   const [selectedStep, setSelectedStep] = React.useState<RitualStep | null>(null);
+
 
   return (
     <div className="glass-card overflow-hidden">
@@ -60,8 +64,9 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
           {icon}
           <h3 className="font-bold text-base tracking-tight">{title}</h3>
           <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-[hsl(var(--glass-border))] text-muted-foreground">
-            {steps.filter(s => s.owned).length}/{steps.length} active
+            {t('ritual.active_count', { n: steps.filter(s => s.owned).length, total: steps.length })}
           </Badge>
+
         </div>
         <svg
           className={`w-4 h-4 text-muted-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`}
@@ -132,24 +137,25 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                         )}
                         {isWellness && (
                           <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-sleep))]/30 text-[hsl(var(--intel-sleep))]">
-                            Wellness
+                            {t('ritual.wellness')}
                           </Badge>
                         )}
                         {step.owned && !isWellness && step.isMeanwhile !== false && (
                           <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-[hsl(var(--sage)/0.2)] text-[hsl(var(--sage))] gap-0.5">
-                            <Zap className="h-2 w-2" /> Live Data
+                            <Zap className="h-2 w-2" /> {t('ritual.live_data')}
                           </Badge>
                         )}
                         {step.owned && !isWellness && step.isMeanwhile === false && (
                           <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-primary/15 text-primary/70 gap-0.5">
-                            Integrated
+                            {t('ritual.integrated')}
                           </Badge>
                         )}
                         {step.isPhaseProduct && step.owned && (
                           <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-glucose))]/30 text-[hsl(var(--intel-glucose))] gap-1">
-                            <Zap className="h-2.5 w-2.5" /> m.i. Insight
+                            <Zap className="h-2.5 w-2.5" /> {t('ritual.mi_insight')}
                           </Badge>
                         )}
+
                         {hasHowTo && step.owned && (
                           <ChevronRight className="h-3 w-3 text-muted-foreground/40 ml-auto" />
                         )}
@@ -167,13 +173,13 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                               className="mt-2 flex items-center gap-1.5 text-[10px] text-primary/70 hover:text-primary transition-colors"
                             >
                               <Sparkles className="h-3 w-3" />
-                              <span>Upgrade to <span className="italic">meanwhile.</span> {step.meanwhileSuggestion.name} →</span>
+                              <span>{t('ritual.upgrade_to')} <span className="italic">meanwhile.</span> {step.meanwhileSuggestion.name} →</span>
                             </button>
                           )}
                         </>
                       ) : (
                         <div className="flex items-center justify-between mt-1">
-                          <p className="text-[10px] text-muted-foreground italic">Missing from framework</p>
+                          <p className="text-[10px] text-muted-foreground italic">{t('ritual.missing')}</p>
                           <Button
                             size="sm"
                             variant="outline"
@@ -183,17 +189,18 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                               step.productId ? navigate(`/product/${step.productId}`) : navigate('/catalog');
                             }}
                           >
-                            Deploy Asset
+                            {t('ritual.deploy_asset')}
                           </Button>
                         </div>
                       )}
                       {step.isPhaseProduct && step.owned && (
                         <div className="mt-2 pt-2 border-t border-[hsl(var(--glass-border))]">
                           <p className="text-[10px] text-[hsl(var(--intel-glucose))] font-medium">
-                            ↑ Phase-matched formula active — adapting to your cycle data
+                            {t('ritual.phase_active')}
                           </p>
                         </div>
                       )}
+
                     </div>
                   </div>
                 );

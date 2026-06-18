@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useUser } from '@/contexts/UserContext';
 
 const FRAMEWORK_PRODUCTS = ['cleanser', 'serum-trio', 'eye-cream', 'moisturizer', 'ceramide'];
 
 export const SynergyIndex: React.FC = () => {
+  const { t } = useTranslation();
   const { isProductOwned } = useUser();
 
   const ownedCount = FRAMEWORK_PRODUCTS.filter(id => isProductOwned(id)).length;
@@ -52,19 +54,19 @@ export const SynergyIndex: React.FC = () => {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <h3 className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              Protocol Intelligence
+              {t('synergy.protocol_intelligence')}
             </h3>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
             {percentage < 40
-              ? 'Your routine is active, but disconnected from live bio-data. Complete the framework to unlock autonomous skin management.'
+              ? t('synergy.desc_low')
               : percentage < 80
-              ? 'Your framework is building momentum. A few more assets will unlock full synergy across all protocols.'
-              : 'Your portfolio is operating at near-full intelligence. meanwhile., all systems are optimizing autonomously.'}
+              ? t('synergy.desc_mid')
+              : t('synergy.desc_high')}
           </p>
           {percentage < 100 && (
             <p className="text-[10px] text-muted-foreground/60 mt-1.5 font-mono-data">
-              {ownedCount}/{FRAMEWORK_PRODUCTS.length} assets deployed
+              {t('synergy.assets_deployed', { n: ownedCount, total: FRAMEWORK_PRODUCTS.length })}
             </p>
           )}
         </div>
