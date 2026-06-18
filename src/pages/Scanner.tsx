@@ -93,7 +93,7 @@ const Scanner = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('scan-product-identify', {
-        body: { frontImage: imageData, step: 'identify' }
+        body: { frontImage: imageData, step: 'identify', language: i18n.language }
       });
       if (error) throw error;
 
