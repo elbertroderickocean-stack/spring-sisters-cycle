@@ -89,7 +89,7 @@ const MiChat = () => {
     try {
       const telemetry = buildTelemetryContext();
       const { data, error } = await supabase.functions.invoke('aura-chat', {
-        body: { message: input, checkIn: userData.checkIn, currentPhase: getCurrentPhase(), currentDay: getCurrentDay(), telemetry },
+        body: { message: input, checkIn: userData.checkIn, currentPhase: getCurrentPhase(), currentDay: getCurrentDay(), telemetry, language: i18n.language },
       });
 
       if (error) {
