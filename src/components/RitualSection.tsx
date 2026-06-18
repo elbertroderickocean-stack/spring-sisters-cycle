@@ -137,24 +137,25 @@ export const RitualSection: React.FC<RitualSectionProps> = ({
                         )}
                         {isWellness && (
                           <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-sleep))]/30 text-[hsl(var(--intel-sleep))]">
-                            Wellness
+                            {t('ritual.wellness')}
                           </Badge>
                         )}
                         {step.owned && !isWellness && step.isMeanwhile !== false && (
                           <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-[hsl(var(--sage)/0.2)] text-[hsl(var(--sage))] gap-0.5">
-                            <Zap className="h-2 w-2" /> Live Data
+                            <Zap className="h-2 w-2" /> {t('ritual.live_data')}
                           </Badge>
                         )}
                         {step.owned && !isWellness && step.isMeanwhile === false && (
                           <Badge variant="outline" className="text-[7px] uppercase tracking-wider border-primary/15 text-primary/70 gap-0.5">
-                            Integrated
+                            {t('ritual.integrated')}
                           </Badge>
                         )}
                         {step.isPhaseProduct && step.owned && (
                           <Badge variant="outline" className="text-[8px] uppercase tracking-wider border-[hsl(var(--intel-glucose))]/30 text-[hsl(var(--intel-glucose))] gap-1">
-                            <Zap className="h-2.5 w-2.5" /> m.i. Insight
+                            <Zap className="h-2.5 w-2.5" /> {t('ritual.mi_insight')}
                           </Badge>
                         )}
+
                         {hasHowTo && step.owned && (
                           <ChevronRight className="h-3 w-3 text-muted-foreground/40 ml-auto" />
                         )}
