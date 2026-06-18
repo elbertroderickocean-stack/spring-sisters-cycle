@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -22,6 +23,7 @@ const Profile = () => {
     getProductQuantity 
   } = useUser();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
@@ -52,7 +54,6 @@ const Profile = () => {
   };
 
   const handleStartOver = () => {
-    // Reset all user data
     updateUserData({
       name: '',
       email: '',
@@ -63,7 +64,6 @@ const Profile = () => {
       ownedProducts: [],
       productInventory: [],
     });
-    // Navigate back to splash screen
     navigate('/');
   };
 
@@ -71,29 +71,28 @@ const Profile = () => {
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
         <h1 className="text-4xl font-heading font-semibold text-primary animate-fade-in">
-          Profile
+          {t('profile.title')}
         </h1>
 
         <Card className="animate-slide-up">
           <CardHeader>
             <div className="flex items-center gap-3">
               <UserIcon className="h-6 w-6 text-primary" />
-              <CardTitle className="font-heading text-2xl">Personal Information</CardTitle>
+              <CardTitle className="font-heading text-2xl">{t('profile.personal_info')}</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <p className="text-sm text-muted-foreground">Name</p>
-              <p className="text-base font-medium">{userData.name || 'Not set'}</p>
+              <p className="text-sm text-muted-foreground">{t('profile.name')}</p>
+              <p className="text-base font-medium">{userData.name || t('profile.not_set')}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Email</p>
-              <p className="text-base font-medium">{userData.email || 'Not set'}</p>
+              <p className="text-sm text-muted-foreground">{t('profile.email')}</p>
+              <p className="text-base font-medium">{userData.email || t('profile.not_set')}</p>
             </div>
           </CardContent>
         </Card>
 
-        {/* Life Stage Card */}
         <LifeStageCard />
 
         {userData.wiseBloomMode ? (
@@ -101,21 +100,21 @@ const Profile = () => {
             <CardHeader>
               <div className="flex items-center gap-3">
                 <Calendar className="h-6 w-6 text-primary" />
-                <CardTitle className="font-heading text-2xl">Rhythm Information</CardTitle>
+                <CardTitle className="font-heading text-2xl">{t('profile.rhythm_info')}</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <p className="text-sm text-muted-foreground">Rhythm Type</p>
-                <p className="text-base font-medium">Cellular Training</p>
+                <p className="text-sm text-muted-foreground">{t('profile.rhythm_type')}</p>
+                <p className="text-base font-medium">{t('profile.cellular_training')}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Age Range</p>
-                <p className="text-base font-medium">{userData.ageRange || 'Not set'}</p>
+                <p className="text-sm text-muted-foreground">{t('profile.age_range')}</p>
+                <p className="text-base font-medium">{userData.ageRange || t('profile.not_set')}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Skin Type</p>
-                <p className="text-base font-medium">{userData.skinType || 'Not set'}</p>
+                <p className="text-sm text-muted-foreground">{t('profile.skin_type')}</p>
+                <p className="text-base font-medium">{userData.skinType || t('profile.not_set')}</p>
               </div>
             </CardContent>
           </Card>
@@ -124,25 +123,25 @@ const Profile = () => {
             <CardHeader>
               <div className="flex items-center gap-3">
                 <Calendar className="h-6 w-6 text-primary" />
-                <CardTitle className="font-heading text-2xl">Cycle Information</CardTitle>
+                <CardTitle className="font-heading text-2xl">{t('profile.cycle_info')}</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <p className="text-sm text-muted-foreground">Current Cycle Day</p>
-                <p className="text-base font-medium">Day {getCurrentDay()}</p>
+                <p className="text-sm text-muted-foreground">{t('profile.current_cycle_day')}</p>
+                <p className="text-base font-medium">{t('profile.day')} {getCurrentDay()}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Cycle Length</p>
-                <p className="text-base font-medium">{userData.cycleLength} days</p>
+                <p className="text-sm text-muted-foreground">{t('profile.cycle_length')}</p>
+                <p className="text-base font-medium">{userData.cycleLength} {t('profile.days')}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Age Range</p>
-                <p className="text-base font-medium">{userData.ageRange || 'Not set'}</p>
+                <p className="text-sm text-muted-foreground">{t('profile.age_range')}</p>
+                <p className="text-base font-medium">{userData.ageRange || t('profile.not_set')}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Skin Type</p>
-                <p className="text-base font-medium">{userData.skinType || 'Not set'}</p>
+                <p className="text-sm text-muted-foreground">{t('profile.skin_type')}</p>
+                <p className="text-base font-medium">{userData.skinType || t('profile.not_set')}</p>
               </div>
             </CardContent>
           </Card>
@@ -154,9 +153,9 @@ const Profile = () => {
               <div className="flex items-center gap-3">
                 <Droplet className="h-6 w-6 text-primary" />
                 <div>
-                  <CardTitle className="font-heading text-2xl">My Products</CardTitle>
+                  <CardTitle className="font-heading text-2xl">{t('profile.my_products')}</CardTitle>
                   <CardDescription>
-                    {ownedProducts.length} product{ownedProducts.length !== 1 ? 's' : ''} in your collection
+                    {t('profile.products_in_collection', { count: ownedProducts.length })}
                   </CardDescription>
                 </div>
               </div>
@@ -165,7 +164,7 @@ const Profile = () => {
                 size="sm"
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Add
+                {t('profile.add')}
               </Button>
             </div>
           </CardHeader>
@@ -173,13 +172,13 @@ const Profile = () => {
             {ownedProducts.length === 0 ? (
               <div className="text-center py-8 space-y-3">
                 <div className="text-4xl opacity-20">🧴</div>
-                <p className="text-sm text-muted-foreground">No products in your collection yet</p>
+                <p className="text-sm text-muted-foreground">{t('profile.no_products')}</p>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setIsAddDialogOpen(true)}
                 >
-                  Add Your First Product
+                  {t('profile.add_first')}
                 </Button>
               </div>
             ) : (
@@ -243,10 +242,10 @@ const Profile = () => {
           <CardHeader>
             <div className="flex items-center gap-3">
               <RotateCcw className="h-6 w-6 text-destructive" />
-              <CardTitle className="font-heading text-2xl">Reset Application</CardTitle>
+              <CardTitle className="font-heading text-2xl">{t('profile.reset_app')}</CardTitle>
             </div>
             <CardDescription>
-              Start fresh and go through the onboarding process again
+              {t('profile.reset_desc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -255,7 +254,7 @@ const Profile = () => {
               variant="destructive"
               className="w-full"
             >
-              Start Over / Reset
+              {t('profile.reset_btn')}
             </Button>
           </CardContent>
         </Card>
@@ -264,12 +263,12 @@ const Profile = () => {
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-heading">Add Product to My Products</DialogTitle>
+            <DialogTitle className="text-2xl font-heading">{t('profile.add_dialog_title')}</DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
             <Input
-              placeholder="Search products..."
+              placeholder={t('profile.search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full"
@@ -294,7 +293,7 @@ const Profile = () => {
                         <h4 className="font-medium text-foreground">{product.name}</h4>
                         <p className="text-sm text-foreground/60">{product.price}</p>
                         {currentQty > 0 && (
-                          <p className="text-xs text-primary mt-1">Currently owned: {currentQty}</p>
+                          <p className="text-xs text-primary mt-1">{t('profile.currently_owned', { count: currentQty })}</p>
                         )}
                       </div>
                     </div>
@@ -321,7 +320,7 @@ const Profile = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-foreground">Quantity</label>
+                        <label className="text-sm font-medium text-foreground">{t('profile.quantity')}</label>
                         <div className="flex items-center space-x-4">
                           <Button
                             variant="outline"
@@ -356,13 +355,13 @@ const Profile = () => {
                             setQuantity(1);
                           }}
                         >
-                          Back
+                          {t('profile.back')}
                         </Button>
                         <Button
                           className="flex-1"
                           onClick={handleAddProduct}
                         >
-                          Add to My Products
+                          {t('profile.add_to_my_products')}
                         </Button>
                       </div>
                     </>
