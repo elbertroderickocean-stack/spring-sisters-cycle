@@ -13,6 +13,7 @@ export const useMedicationAnalysis = () => {
   const [analysis, setAnalysis] = useState<MedicationAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { i18n } = useTranslation();
 
   const analyzeMedication = async (
     medicationName: string,
