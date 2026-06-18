@@ -27,7 +27,7 @@ export const useMedicationAnalysis = () => {
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke('analyze-medication', {
-        body: { medicationName, strategy, skinConcerns },
+        body: { medicationName, strategy, skinConcerns, language: i18n.language },
       });
 
       if (fnError) throw fnError;
