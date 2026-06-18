@@ -36,7 +36,7 @@ interface AnalysisResult {
 const Scanner = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const returnTo = (location.state as any)?.returnTo || '/products';
   const [scanStep, setScanStep] = useState<ScanStep>('front');
   const [isScanning, setIsScanning] = useState(false);
