@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, Activity, FlaskConical } from 'lucide-react';
 import { BottomNav } from '@/components/BottomNav';
@@ -9,64 +10,60 @@ import { useUser } from '@/contexts/UserContext';
 const Guide = () => {
   const navigate = useNavigate();
   const { userData } = useUser();
-  
+  const { t } = useTranslation();
+
   const philosophySection = {
-    section: 'The Philosophy',
+    section: t('guide.philosophy'),
     icon: TrendingUp,
     items: [
-      { title: 'From Skincare to Skinvestment', description: 'Why we ignore trends and focus on assets.', articleId: 'mission' },
-      { title: 'Managing your Biological Capital', description: 'How The Constants & The Shifts work together.', articleId: 'lines' },
-      { title: 'The meanwhile. Logic', description: 'How m.i. manages your skin in the background.', articleId: 'aura-intro' },
+      { title: t('guide.items.mission_title'), description: t('guide.items.mission_desc'), articleId: 'mission' },
+      { title: t('guide.items.lines_title'), description: t('guide.items.lines_desc'), articleId: 'lines' },
+      { title: t('guide.items.aura_intro_title'), description: t('guide.items.aura_intro_desc'), articleId: 'aura-intro' },
     ]
   };
 
   const marketAnalysisSection = userData.wiseBloomMode ? {
-    section: 'Market Analysis',
+    section: t('guide.market_analysis'),
     icon: Activity,
     items: [
-      { title: 'The Glucose Factor: Anti-Glycation Strategy', description: 'Why your dinner determines your skin\'s tomorrow.', articleId: 'glucose-factor' },
-      { title: 'Circadian ROI: Sleep as a Repair Asset', description: 'Maximizing recovery while you sleep.', articleId: 'circadian-roi' },
-      { title: 'Longevity 101: Preventing collagen bankruptcy', description: 'The science of mature skin capital.', articleId: 'menopause-skin' },
+      { title: t('guide.items.glucose_factor_title'), description: t('guide.items.glucose_factor_desc'), articleId: 'glucose-factor' },
+      { title: t('guide.items.circadian_roi_title'), description: t('guide.items.circadian_roi_desc'), articleId: 'circadian-roi' },
+      { title: t('guide.items.menopause_skin_title'), description: t('guide.items.menopause_skin_desc'), articleId: 'menopause-skin' },
     ]
   } : {
-    section: 'Market Analysis',
+    section: t('guide.market_analysis'),
     icon: Activity,
     items: [
-      { title: 'The Glucose Factor: Anti-Glycation Strategy', description: 'Why your dinner determines your skin\'s tomorrow.', articleId: 'glucose-factor' },
-      { title: 'Circadian ROI: Sleep as a Repair Asset', description: 'Maximizing recovery while you sleep.', articleId: 'circadian-roi' },
-      { title: 'Phase 1: Calm & Renew', description: 'Low Estrogen & Progesterone — Days 1-7', articleId: 'phase-calm' },
-      { title: 'Phase 2: Glow & Energize', description: 'Estrogen Peak — Days 8-14', articleId: 'phase-glow' },
-      { title: 'Phase 3: Balance & Clarify', description: 'Progesterone Dominance — Days 15+', articleId: 'phase-balance' },
+      { title: t('guide.items.glucose_factor_title'), description: t('guide.items.glucose_factor_desc'), articleId: 'glucose-factor' },
+      { title: t('guide.items.circadian_roi_title'), description: t('guide.items.circadian_roi_desc'), articleId: 'circadian-roi' },
+      { title: t('guide.items.phase_calm_title'), description: t('guide.items.phase_calm_desc'), articleId: 'phase-calm' },
+      { title: t('guide.items.phase_glow_title'), description: t('guide.items.phase_glow_desc'), articleId: 'phase-glow' },
+      { title: t('guide.items.phase_balance_title'), description: t('guide.items.phase_balance_desc'), articleId: 'phase-balance' },
     ]
   };
 
   const compoundScienceSection = {
-    section: 'Compound Science',
+    section: t('guide.compound_science'),
     icon: FlaskConical,
     items: [
-      { title: 'PDRN: DNA-Level Yield', description: 'The high-yield asset for cellular reconstruction.', articleId: 'pdrn' },
-      { title: 'Ceramides: The Defensive Wall', description: 'Building blocks of your Index Fund\'s barrier resilience.', articleId: 'ceramides' },
-      { title: 'Bakuchiol: The Gentle Powerhouse', description: 'Plant-based retinol alternative for all strategies.', articleId: 'bakuchiol' },
+      { title: t('guide.items.pdrn_title'), description: t('guide.items.pdrn_desc'), articleId: 'pdrn' },
+      { title: t('guide.items.ceramides_title'), description: t('guide.items.ceramides_desc'), articleId: 'ceramides' },
+      { title: t('guide.items.bakuchiol_title'), description: t('guide.items.bakuchiol_desc'), articleId: 'bakuchiol' },
     ]
   };
   
-  const dynamicGuideContent = [
-    philosophySection,
-    marketAnalysisSection,
-    compoundScienceSection,
-  ];
+  const dynamicGuideContent = [philosophySection, marketAnalysisSection, compoundScienceSection];
 
   return (
     <div className="min-h-screen bg-background pb-24">
       <HeaderBar>
         <div>
           <p className="text-xs font-body font-medium text-sage tracking-wide">meanwhile.</p>
-          <h1 className="text-2xl font-heading font-bold text-foreground">Insights</h1>
+          <h1 className="text-2xl font-heading font-bold text-foreground">{t('guide.title')}</h1>
         </div>
       </HeaderBar>
 
       <div className="max-w-3xl mx-auto px-5 py-8 space-y-10">
-
         {dynamicGuideContent.map((section, sectionIndex) => {
           const Icon = section.icon;
           return (

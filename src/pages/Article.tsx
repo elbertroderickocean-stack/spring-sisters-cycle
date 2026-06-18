@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
 import { articles } from '@/data/articleContent';
 import { Button } from '@/components/ui/button';
@@ -9,10 +10,10 @@ const Article = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { userData } = useUser();
+  const { t } = useTranslation();
   
   const article = id ? articles[id] : null;
   
-  // Determine which body text to show based on user mode
   const bodyText = article && userData.wiseBloomMode && article.bodyTextCellular 
     ? article.bodyTextCellular 
     : article?.bodyText;
@@ -21,9 +22,9 @@ const Article = () => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-heading mb-4">Article not found</h1>
+          <h1 className="text-2xl font-heading mb-4">{t('article.not_found')}</h1>
           <Button onClick={() => navigate('/guide')}>
-            Return to Strategic Knowledge
+            {t('article.return')}
           </Button>
         </div>
       </div>
@@ -39,7 +40,7 @@ const Article = () => {
           className="gap-2"
         >
           <ChevronLeft className="h-5 w-5" />
-          Back
+          {t('article.back')}
         </Button>
       </div>
 
