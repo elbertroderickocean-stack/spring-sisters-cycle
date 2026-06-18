@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { PhaseType } from '@/contexts/UserContext';
 import { HowToModal } from './HowToModal';
 import { Heart, Zap, ChevronRight, Sparkles } from 'lucide-react';
+
 
 interface RitualStep {
   number: number;
