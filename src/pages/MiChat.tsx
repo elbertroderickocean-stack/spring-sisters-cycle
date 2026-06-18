@@ -21,7 +21,7 @@ const MiChat = () => {
   const navigate = useNavigate();
   const { userData, getCurrentPhase, getCurrentDay, updateCustomRituals } = useUser();
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { todayEntries, todayNutrients } = useMealLog();
 
   const getLatestScanData = () => {
