@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 import OnboardingBackButton from '@/components/OnboardingBackButton';
@@ -15,6 +16,7 @@ interface EnvData {
 const ConnectEnvironment = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const strategy = (location.state as any)?.strategy;
   const selectedRhythm = (location.state as any)?.selectedRhythm;
 
@@ -42,8 +44,8 @@ const ConnectEnvironment = () => {
         const uv = weather.daily?.uv_index_max?.[0] ?? 0;
         const aqi = air.current?.european_aqi ?? 0;
 
-        const uvLabel = uv <= 2 ? 'Low' : uv <= 5 ? 'Moderate' : uv <= 7 ? 'High' : 'Very High';
-        const aqiLabel = aqi <= 50 ? 'Good' : aqi <= 100 ? 'Moderate' : 'Poor';
+        const uvLabel = uv <= 2 ? t('connect_env.uv_low') : uv <= 5 ? t('connect_env.uv_moderate') : uv <= 7 ? t('connect_env.uv_high') : t('connect_env.uv_very_high');
+        const aqiLabel = aqi <= 50 ? t('connect_env.aqi_good') : aqi <= 100 ? t('connect_env.aqi_moderate') : t('connect_env.aqi_poor');
 
         setEnvData({
           temperature: `${temp}°C`,
@@ -55,8 +57,8 @@ const ConnectEnvironment = () => {
         setEnvData({
           temperature: '22°C',
           humidity: '58%',
-          uvIndex: 'Moderate (4)',
-          airQuality: 'Good (AQI 42)',
+          uvIndex: `${t('connect_env.uv_moderate')} (4)`,
+          airQuality: `${t('connect_env.aqi_good')} (AQI 42)`,
         });
       }
       setDetecting(false);
@@ -66,16 +68,13 @@ const ConnectEnvironment = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => fetchEnvironment(pos.coords.latitude, pos.coords.longitude),
-        () => {
-          // Permission denied — use fallback
-          fetchEnvironment(55.75, 37.62); // Moscow fallback
-        },
+        () => fetchEnvironment(55.75, 37.62),
         { timeout: 8000 }
       );
     } else {
       fetchEnvironment(55.75, 37.62);
     }
-  }, []);
+  }, [t]);
 
   const handleContinue = () => {
     navigate('/personalize', { state: { strategy, selectedRhythm } });
@@ -87,44 +86,35 @@ const ConnectEnvironment = () => {
       <div className="max-w-md w-full text-center space-y-8 animate-slide-up">
         <div className="space-y-3">
           <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body">
-            Environmental Intelligence
+            {t('connect_env.eyebrow')}
           </p>
           <h1 className="text-3xl md:text-4xl font-heading font-semibold text-foreground leading-tight">
-            Connecting your environment.
+            {t('connect_env.title')}
           </h1>
           <p className="text-muted-foreground text-base font-body">
-            m.i. factors in your local climate data to optimize your daily protocol.
+            {t('connect_env.subtitle')}
           </p>
         </div>
 
-        {/* Simulated environment detection */}
         <div className="relative rounded-2xl border border-border/50 bg-card/60 backdrop-blur-xl p-8 space-y-6 shadow-lg">
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: Thermometer, label: 'Temperature', value: envData.temperature, delay: 0 },
-              { icon: Droplets, label: 'Humidity', value: envData.humidity, delay: 0.3 },
-              { icon: Sun, label: 'UV Index', value: envData.uvIndex, delay: 0.6 },
-              { icon: Cloud, label: 'Air Quality', value: envData.airQuality, delay: 0.9 },
+              { icon: Thermometer, label: t('connect_env.temperature'), value: envData.temperature, delay: 0 },
+              { icon: Droplets, label: t('connect_env.humidity'), value: envData.humidity, delay: 0.3 },
+              { icon: Sun, label: t('connect_env.uv'), value: envData.uvIndex, delay: 0.6 },
+              { icon: Cloud, label: t('connect_env.air'), value: envData.airQuality, delay: 0.9 },
             ].map((item) => (
               <div
                 key={item.label}
-                className={cn(
-                  'p-4 rounded-xl border transition-all duration-700',
-                  detected
-                    ? 'border-primary/50 bg-primary/5'
-                    : 'border-border/30 bg-muted/20'
-                )}
+                className={cn('p-4 rounded-xl border transition-all duration-700',
+                  detected ? 'border-primary/50 bg-primary/5' : 'border-border/30 bg-muted/20')}
                 style={{ transitionDelay: `${item.delay}s` }}
               >
-                <item.icon className={cn(
-                  'h-5 w-5 mx-auto mb-2 transition-colors duration-700',
-                  detected ? 'text-primary' : 'text-muted-foreground/40'
-                )} style={{ transitionDelay: `${item.delay}s` }} />
+                <item.icon className={cn('h-5 w-5 mx-auto mb-2 transition-colors duration-700',
+                  detected ? 'text-primary' : 'text-muted-foreground/40')} style={{ transitionDelay: `${item.delay}s` }} />
                 <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">{item.label}</p>
-                <p className={cn(
-                  'text-sm font-medium transition-all duration-700',
-                  detected ? 'text-foreground' : 'text-muted-foreground/30'
-                )} style={{ transitionDelay: `${item.delay}s` }}>
+                <p className={cn('text-sm font-medium transition-all duration-700',
+                  detected ? 'text-foreground' : 'text-muted-foreground/30')} style={{ transitionDelay: `${item.delay}s` }}>
                   {detected ? item.value : '—'}
                 </p>
               </div>
@@ -132,17 +122,17 @@ const ConnectEnvironment = () => {
           </div>
 
           {detecting && (
-              <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <p className="text-xs text-muted-foreground">Detecting local conditions...</p>
+              <p className="text-xs text-muted-foreground">{t('connect_env.detecting')}</p>
             </div>
           )}
 
           {detected && (
             <div className="animate-fade-in space-y-1">
-              <p className="text-xs text-primary font-medium">✓ Environment linked</p>
+              <p className="text-xs text-primary font-medium">{t('connect_env.linked')}</p>
               <p className="text-[10px] text-muted-foreground">
-                Your protocol will adapt to weather and UV exposure. meanwhile., m.i. is calibrating.
+                {t('connect_env.linked_body')}
               </p>
             </div>
           )}
@@ -151,14 +141,10 @@ const ConnectEnvironment = () => {
         <button
           onClick={handleContinue}
           disabled={!detected}
-          className={cn(
-            'w-full py-4 rounded-lg text-lg font-medium transition-all duration-300',
-            detected
-              ? 'bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer'
-              : 'bg-muted text-muted-foreground cursor-not-allowed'
-          )}
+          className={cn('w-full py-4 rounded-lg text-lg font-medium transition-all duration-300',
+            detected ? 'bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer' : 'bg-muted text-muted-foreground cursor-not-allowed')}
         >
-          Continue
+          {t('common.continue')}
         </button>
         <OnboardingBackButton to="/encouragement" state={{ strategy, selectedRhythm }} />
       </div>

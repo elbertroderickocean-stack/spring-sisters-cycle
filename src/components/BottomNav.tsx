@@ -1,19 +1,21 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Home, Cpu, Lightbulb, Users, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { path: '/today', label: 'Today', icon: Home },
-  { path: '/intelligence', label: 'Intelligence', icon: Cpu },
-  { path: '/guide', label: 'Insights', icon: Lightbulb },
-  { path: '/sisterhood', label: 'Syndicate', icon: Users },
-  { path: '/catalog', label: 'Catalog', icon: ShoppingBag },
-];
 
 export const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const navItems = [
+    { path: '/today', label: t('nav.today'), icon: Home },
+    { path: '/intelligence', label: t('nav.intelligence'), icon: Cpu },
+    { path: '/guide', label: t('nav.insights'), icon: Lightbulb },
+    { path: '/sisterhood', label: t('nav.syndicate'), icon: Users },
+    { path: '/catalog', label: t('nav.catalog'), icon: ShoppingBag },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-[hsl(var(--nav-bg))] backdrop-blur-[40px] border-t border-[hsl(var(--nav-border))] z-50">
@@ -22,16 +24,14 @@ export const BottomNav = () => {
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
-            
+
             return (
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
                 className={cn(
                   'flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-colors',
-                  isActive 
-                    ? 'text-foreground' 
-                    : 'text-muted-foreground hover:text-foreground'
+                  isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 <Icon className={cn("h-5 w-5", isActive && "text-[hsl(var(--sage-foreground))]")} />

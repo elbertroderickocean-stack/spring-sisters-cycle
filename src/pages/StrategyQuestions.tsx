@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/UserContext';
@@ -10,31 +11,50 @@ const StrategyQuestions = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { updateUserData } = useUser();
+  const { t } = useTranslation();
   const strategy = (location.state as any)?.strategy as 'hormonal' | 'longevity';
   const selectedRhythm = (location.state as any)?.selectedRhythm;
 
   const isHormonal = strategy === 'hormonal';
 
-  // Hormonal-specific
   const [cycleDay, setCycleDay] = useState<string | null>(null);
   const [phaseConcern, setPhaseConcern] = useState<string | null>(null);
-
-  // Longevity-specific
   const [yearsSinceCycle, setYearsSinceCycle] = useState<string | null>(null);
   const [primaryDeficit, setPrimaryDeficit] = useState<string | null>(null);
 
-  const canProceed = isHormonal
-    ? cycleDay && phaseConcern
-    : yearsSinceCycle && primaryDeficit;
+  const canProceed = isHormonal ? cycleDay && phaseConcern : yearsSinceCycle && primaryDeficit;
 
   const handleContinue = () => {
     if (isHormonal) {
-      updateUserData({
-        skinConcerns: phaseConcern ? [phaseConcern] : [],
-      });
+      updateUserData({ skinConcerns: phaseConcern ? [phaseConcern] : [] });
     }
     navigate('/details', { state: { strategy, selectedRhythm } });
   };
+
+  const cycleOpts = [
+    { value: 'early', label: t('strategy_q.cycle_early'), desc: t('strategy_q.cycle_early_desc') },
+    { value: 'mid', label: t('strategy_q.cycle_mid'), desc: t('strategy_q.cycle_mid_desc') },
+    { value: 'late', label: t('strategy_q.cycle_late'), desc: t('strategy_q.cycle_late_desc') },
+    { value: 'unsure', label: t('strategy_q.cycle_unsure'), desc: t('strategy_q.cycle_unsure_desc') },
+  ];
+  const concernOpts = [
+    { value: 'breakouts', label: t('strategy_q.concern_breakouts'), desc: t('strategy_q.concern_breakouts_desc') },
+    { value: 'dullness', label: t('strategy_q.concern_dullness'), desc: t('strategy_q.concern_dullness_desc') },
+    { value: 'dryness', label: t('strategy_q.concern_dryness'), desc: t('strategy_q.concern_dryness_desc') },
+    { value: 'oiliness', label: t('strategy_q.concern_oiliness'), desc: t('strategy_q.concern_oiliness_desc') },
+  ];
+  const yearsOpts = [
+    { value: 'peri', label: t('strategy_q.years_peri'), desc: t('strategy_q.years_peri_desc') },
+    { value: '1-3', label: t('strategy_q.years_1_3'), desc: t('strategy_q.years_1_3_desc') },
+    { value: '3-10', label: t('strategy_q.years_3_10'), desc: t('strategy_q.years_3_10_desc') },
+    { value: '10+', label: t('strategy_q.years_10_plus'), desc: t('strategy_q.years_10_plus_desc') },
+  ];
+  const deficitOpts = [
+    { value: 'density', label: t('strategy_q.deficit_density'), desc: t('strategy_q.deficit_density_desc') },
+    { value: 'dryness', label: t('strategy_q.deficit_dryness'), desc: t('strategy_q.deficit_dryness_desc') },
+    { value: 'lines', label: t('strategy_q.deficit_lines'), desc: t('strategy_q.deficit_lines_desc') },
+    { value: 'sensitivity', label: t('strategy_q.deficit_sensitivity'), desc: t('strategy_q.deficit_sensitivity_desc') },
+  ];
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6 pt-24 pb-12">
@@ -42,44 +62,25 @@ const StrategyQuestions = () => {
       <div className="max-w-lg w-full text-center space-y-8 animate-slide-up">
         <div className="space-y-3">
           <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body">
-            {isHormonal ? 'Hormonal Intelligence' : 'Longevity Intelligence'}
+            {isHormonal ? t('strategy_q.eyebrow_hormonal') : t('strategy_q.eyebrow_longevity')}
           </p>
           <h1 className="text-3xl md:text-4xl font-heading font-semibold text-foreground leading-tight">
-            {isHormonal
-              ? 'Help us calibrate your cycle data.'
-              : 'Help us calibrate your cellular baseline.'}
+            {isHormonal ? t('strategy_q.title_hormonal') : t('strategy_q.title_longevity')}
           </h1>
           <p className="text-muted-foreground text-base font-body">
-            {isHormonal
-              ? 'These inputs allow m.i. to optimize your protocol from day one.'
-              : 'These inputs help m.i. design your longevity management strategy.'}
+            {isHormonal ? t('strategy_q.subtitle_hormonal') : t('strategy_q.subtitle_longevity')}
           </p>
         </div>
 
         {isHormonal ? (
           <div className="space-y-6 text-left">
-            {/* Question 1: Day of cycle */}
             <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground">
-                Where are you in your cycle right now?
-              </label>
+              <label className="text-sm font-medium text-foreground">{t('strategy_q.q_cycle_day')}</label>
               <div className="grid grid-cols-1 gap-3">
-                {[
-                  { value: 'early', label: 'Days 1–7 (Period / Early)', desc: 'Low energy, skin may feel sensitive' },
-                  { value: 'mid', label: 'Days 8–14 (Mid-Cycle)', desc: 'Peak glow window, rising estrogen' },
-                  { value: 'late', label: 'Days 15–28 (Luteal)', desc: 'Oil production increases, breakout zone' },
-                  { value: 'unsure', label: "I'm not sure", desc: "We'll estimate based on your data" },
-                ].map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => setCycleDay(opt.value)}
-                    className={cn(
-                      'p-4 rounded-xl border-2 text-left transition-all',
-                      cycleDay === opt.value
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border bg-card hover:border-primary/40'
-                    )}
-                  >
+                {cycleOpts.map((opt) => (
+                  <button key={opt.value} onClick={() => setCycleDay(opt.value)}
+                    className={cn('p-4 rounded-xl border-2 text-left transition-all',
+                      cycleDay === opt.value ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-primary/40')}>
                     <p className="font-medium text-sm text-foreground">{opt.label}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{opt.desc}</p>
                   </button>
@@ -87,28 +88,13 @@ const StrategyQuestions = () => {
               </div>
             </div>
 
-            {/* Question 2: Primary phase concern */}
             <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground">
-                What bothers you most during your cycle?
-              </label>
+              <label className="text-sm font-medium text-foreground">{t('strategy_q.q_phase_concern')}</label>
               <div className="grid grid-cols-2 gap-3">
-                {[
-                  { value: 'breakouts', label: 'Breakouts', desc: 'Hormonal acne & blemishes' },
-                  { value: 'dullness', label: 'Dullness', desc: 'Lack of radiance & glow' },
-                  { value: 'dryness', label: 'Dryness', desc: 'Tight, flaky skin' },
-                  { value: 'oiliness', label: 'Oiliness', desc: 'Excess shine & large pores' },
-                ].map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => setPhaseConcern(opt.value)}
-                    className={cn(
-                      'p-4 rounded-xl border-2 text-left transition-all',
-                      phaseConcern === opt.value
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border bg-card hover:border-primary/40'
-                    )}
-                  >
+                {concernOpts.map((opt) => (
+                  <button key={opt.value} onClick={() => setPhaseConcern(opt.value)}
+                    className={cn('p-4 rounded-xl border-2 text-left transition-all',
+                      phaseConcern === opt.value ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-primary/40')}>
                     <p className="font-medium text-sm text-foreground">{opt.label}</p>
                     <p className="text-[10px] text-muted-foreground mt-0.5">{opt.desc}</p>
                   </button>
@@ -118,28 +104,13 @@ const StrategyQuestions = () => {
           </div>
         ) : (
           <div className="space-y-6 text-left">
-            {/* Question 1: Years since last cycle */}
             <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground">
-                How long since your last menstrual cycle?
-              </label>
+              <label className="text-sm font-medium text-foreground">{t('strategy_q.q_years_since')}</label>
               <div className="grid grid-cols-1 gap-3">
-                {[
-                  { value: 'peri', label: 'Currently in perimenopause', desc: 'Cycles are irregular or changing' },
-                  { value: '1-3', label: '1–3 years', desc: 'Early post-menopause transition' },
-                  { value: '3-10', label: '3–10 years', desc: 'Established post-menopause' },
-                  { value: '10+', label: '10+ years', desc: 'Long-term post-menopause' },
-                ].map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => setYearsSinceCycle(opt.value)}
-                    className={cn(
-                      'p-4 rounded-xl border-2 text-left transition-all',
-                      yearsSinceCycle === opt.value
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border bg-card hover:border-primary/40'
-                    )}
-                  >
+                {yearsOpts.map((opt) => (
+                  <button key={opt.value} onClick={() => setYearsSinceCycle(opt.value)}
+                    className={cn('p-4 rounded-xl border-2 text-left transition-all',
+                      yearsSinceCycle === opt.value ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-primary/40')}>
                     <p className="font-medium text-sm text-foreground">{opt.label}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{opt.desc}</p>
                   </button>
@@ -147,28 +118,13 @@ const StrategyQuestions = () => {
               </div>
             </div>
 
-            {/* Question 2: Primary deficit */}
             <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground">
-                What's your primary skin deficit?
-              </label>
+              <label className="text-sm font-medium text-foreground">{t('strategy_q.q_deficit')}</label>
               <div className="grid grid-cols-2 gap-3">
-                {[
-                  { value: 'density', label: 'Loss of Density', desc: 'Sagging, thinning skin' },
-                  { value: 'dryness', label: 'Chronic Dryness', desc: 'Persistent dehydration' },
-                  { value: 'lines', label: 'Deep Lines', desc: 'Wrinkles & creases' },
-                  { value: 'sensitivity', label: 'Sensitivity', desc: 'Redness & reactivity' },
-                ].map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => setPrimaryDeficit(opt.value)}
-                    className={cn(
-                      'p-4 rounded-xl border-2 text-left transition-all',
-                      primaryDeficit === opt.value
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border bg-card hover:border-primary/40'
-                    )}
-                  >
+                {deficitOpts.map((opt) => (
+                  <button key={opt.value} onClick={() => setPrimaryDeficit(opt.value)}
+                    className={cn('p-4 rounded-xl border-2 text-left transition-all',
+                      primaryDeficit === opt.value ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-primary/40')}>
                     <p className="font-medium text-sm text-foreground">{opt.label}</p>
                     <p className="text-[10px] text-muted-foreground mt-0.5">{opt.desc}</p>
                   </button>
@@ -178,17 +134,10 @@ const StrategyQuestions = () => {
           </div>
         )}
 
-        <button
-          onClick={handleContinue}
-          disabled={!canProceed}
-          className={cn(
-            'w-full py-4 rounded-lg text-lg font-medium transition-all duration-300',
-            canProceed
-              ? 'bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer'
-              : 'bg-muted text-muted-foreground cursor-not-allowed'
-          )}
-        >
-          Continue
+        <button onClick={handleContinue} disabled={!canProceed}
+          className={cn('w-full py-4 rounded-lg text-lg font-medium transition-all duration-300',
+            canProceed ? 'bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer' : 'bg-muted text-muted-foreground cursor-not-allowed')}>
+          {t('common.continue')}
         </button>
         <OnboardingBackButton to="/solution" />
       </div>

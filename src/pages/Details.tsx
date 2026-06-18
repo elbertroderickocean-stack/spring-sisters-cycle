@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -11,10 +12,10 @@ const Details = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { updateUserData } = useUser();
+  const { t } = useTranslation();
   const [ageRange, setAgeRange] = useState('');
   const [skinType, setSkinType] = useState('');
-  
-  // Check if user selected cellular training rhythm
+
   const isCellularTraining = location.state?.selectedRhythm === 'cellular';
 
   const handleNext = () => {
@@ -30,31 +31,31 @@ const Details = () => {
       <div className="max-w-md w-full space-y-8 animate-slide-up">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-heading font-semibold text-primary">
-            A few final details for accuracy.
+            {t('details.title')}
           </h2>
         </div>
 
         <div className="space-y-6 pt-6">
           <div className="space-y-3">
-            <Label className="text-base">Your age range</Label>
+            <Label className="text-base">{t('details.age_label')}</Label>
             <Select value={ageRange} onValueChange={setAgeRange}>
               <SelectTrigger className="h-12 text-base">
-                <SelectValue placeholder="Select your age range" />
+                <SelectValue placeholder={t('details.age_placeholder')} />
               </SelectTrigger>
               <SelectContent className="bg-popover z-50">
                 {isCellularTraining ? (
                   <>
-                    <SelectItem value="40s">40s</SelectItem>
-                    <SelectItem value="50s">50s</SelectItem>
-                    <SelectItem value="60s">60s</SelectItem>
-                    <SelectItem value="70+">70+</SelectItem>
+                    <SelectItem value="40s">{t('details.age_40s')}</SelectItem>
+                    <SelectItem value="50s">{t('details.age_50s')}</SelectItem>
+                    <SelectItem value="60s">{t('details.age_60s')}</SelectItem>
+                    <SelectItem value="70+">{t('details.age_70_plus')}</SelectItem>
                   </>
                 ) : (
                   <>
-                    <SelectItem value="under-25">Under 25</SelectItem>
-                    <SelectItem value="25-34">25-34</SelectItem>
-                    <SelectItem value="35-44">35-44</SelectItem>
-                    <SelectItem value="45+">45+</SelectItem>
+                    <SelectItem value="under-25">{t('details.age_under_25')}</SelectItem>
+                    <SelectItem value="25-34">{t('details.age_25_34')}</SelectItem>
+                    <SelectItem value="35-44">{t('details.age_35_44')}</SelectItem>
+                    <SelectItem value="45+">{t('details.age_45_plus')}</SelectItem>
                   </>
                 )}
               </SelectContent>
@@ -62,26 +63,21 @@ const Details = () => {
           </div>
 
           <div className="space-y-3">
-            <Label className="text-base">Your baseline skin type (ignoring cycle changes)</Label>
+            <Label className="text-base">{t('details.skin_label')}</Label>
             <Select value={skinType} onValueChange={setSkinType}>
               <SelectTrigger className="h-12 text-base">
-                <SelectValue placeholder="Select your skin type" />
+                <SelectValue placeholder={t('details.skin_placeholder')} />
               </SelectTrigger>
               <SelectContent className="bg-popover z-50">
-                <SelectItem value="dry">Prone to dryness</SelectItem>
-                <SelectItem value="balanced">Balanced</SelectItem>
-                <SelectItem value="oily">Prone to oiliness</SelectItem>
+                <SelectItem value="dry">{t('details.skin_dry')}</SelectItem>
+                <SelectItem value="balanced">{t('details.skin_balanced')}</SelectItem>
+                <SelectItem value="oily">{t('details.skin_oily')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <Button
-            size="lg"
-            onClick={handleNext}
-            disabled={!ageRange || !skinType}
-            className="w-full mt-8 h-12 text-base rounded-lg"
-          >
-            Show My Plan!
+          <Button size="lg" onClick={handleNext} disabled={!ageRange || !skinType} className="w-full mt-8 h-12 text-base rounded-lg">
+            {t('details.show_plan')}
           </Button>
           <OnboardingBackButton to="/strategy-questions" state={{ strategy: location.state?.strategy, selectedRhythm: location.state?.selectedRhythm }} />
         </div>

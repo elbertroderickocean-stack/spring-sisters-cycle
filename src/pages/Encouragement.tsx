@@ -1,14 +1,13 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useUser } from '@/contexts/UserContext';
+import { useTranslation } from 'react-i18next';
 import OnboardingProgressBar from '@/components/OnboardingProgressBar';
 import OnboardingBackButton from '@/components/OnboardingBackButton';
 
 const Encouragement = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userData } = useUser();
-  const name = userData.name || 'Kate';
+  const { t } = useTranslation();
   const strategy = (location.state as any)?.strategy;
   const selectedRhythm = (location.state as any)?.selectedRhythm;
 
@@ -17,12 +16,9 @@ const Encouragement = () => {
       <OnboardingProgressBar currentStep={5} />
 
       <div className="relative max-w-md w-full text-center space-y-8 animate-slide-up">
-        {/* Subtle radial glow */}
         <div
           className="absolute -inset-20 pointer-events-none opacity-20"
-          style={{
-            background: 'radial-gradient(circle at center, #B2C2B2 0%, transparent 70%)',
-          }}
+          style={{ background: 'radial-gradient(circle at center, #B2C2B2 0%, transparent 70%)' }}
         />
 
         <div className="relative rounded-2xl border border-border/50 bg-card/60 backdrop-blur-xl p-10 space-y-6 shadow-lg">
@@ -33,18 +29,18 @@ const Encouragement = () => {
           </div>
 
           <h1 className="text-3xl md:text-4xl font-heading font-semibold text-foreground leading-tight">
-            Biological Audit Complete.
+            {t('encouragement.title')}
           </h1>
 
           <p className="text-muted-foreground text-base leading-relaxed font-body">
-            We have identified your primary skin assets. Just a few more data points on your daily environment to finalize the plan.
+            {t('encouragement.body')}
           </p>
 
           <button
             onClick={() => navigate('/connect-environment', { state: { strategy, selectedRhythm } })}
             className="w-full py-4 rounded-lg text-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
           >
-            Continue to Lifestyle
+            {t('encouragement.cta')}
           </button>
           <OnboardingBackButton to="/skin-concerns" state={{ strategy, selectedRhythm }} />
         </div>
