@@ -105,7 +105,7 @@ function Hero() {
               }
               animate={
                 i === 0
-                  ? { opacity: 1, y: 0, borderRadius: [full, sleeveTop, full] }
+                  ? { opacity: 1, y: 0, borderRadius: [full, sleeveTop, sleeveTop, full] }
                   : { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, borderRadius: [sleeveBottom, sleeveBottom, full] }
               }
               transition={
@@ -113,14 +113,14 @@ function Hero() {
                   ? {
                       opacity: { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] },
                       y: { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] },
-                      borderRadius: { delay: 0.85, duration: 2.0, ease: "easeInOut", times: [0, 0.12, 1] },
+                      borderRadius: { delay: 0.85, duration: 2.1, ease: "easeInOut", times: [0, 0.12, 0.85, 1] },
                     }
                   : {
                       delay: 1.15,
                       duration: 1.35,
                       ease: [0.16, 1, 0.3, 1],
                       opacity: { delay: 1.15, duration: 0.3, ease: "easeOut" },
-                      borderRadius: { delay: 1.15, duration: 1.7, ease: "easeInOut", times: [0, 0.8, 1] },
+                      borderRadius: { delay: 1.15, duration: 1.75, ease: "easeInOut", times: [0, 0.85, 1] },
                     }
               }
               className={`relative isolate aspect-[4/5] overflow-hidden [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4] ${
