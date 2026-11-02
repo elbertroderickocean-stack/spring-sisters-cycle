@@ -43,8 +43,6 @@ function useIsDesktop() {
 function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const desktop = useIsDesktop();
   const words = ["Beauty", "has", "no", "deadline"];
   return (
@@ -88,49 +86,57 @@ function Hero() {
           </Link>
         </motion.div>
       </div>
-      {desktop ? (
-        <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2">
-          {[[eyeCream, serumFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.15, duration: 1, ease: [0.22, 1, 0.36, 1] }} className="relative aspect-[4/4.4] overflow-hidden rounded-[28px]">
-              <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale }} className="h-full w-full object-cover" />
-              {i === 1 && <span className="absolute bottom-5 left-6 text-7xl font-semibold tracking-tight text-primary">meanwhile</span>}
-            </motion.div>
-          ))}
-        </div>
-      ) : (
-        <HeroStack />
-      )}
+      <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2">
+        {[[eyeCream, serumFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => (
+          <ApertureCard key={i} src={src} film={film} delay={desktop ? 0.4 + i * 0.25 : 0.3} label={i === 1} />
+        ))}
+      </div>
     </section>
   );
 }
 
-function HeroStack() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const topY = useTransform(scrollYProgress, [0.05, 0.75], ["0%", "-112%"]);
-  const topRot = useTransform(scrollYProgress, [0.05, 0.75], [0, -6]);
-  const backScale = useTransform(scrollYProgress, [0.05, 0.75], [0.9, 1]);
-  const backY = useTransform(scrollYProgress, [0.05, 0.75], ["4%", "0%"]);
-  const backDim = useTransform(scrollYProgress, [0.05, 0.6], [0.45, 0]);
+/** Brand-dot "aperture" reveal: a yellow dot lands, then opens like a lens iris into the video. */
+function ApertureCard({ src, film, delay, label }: { src: string; film: string; delay: number; label: boolean }) {
+  const ease = [0.65, 0, 0.35, 1] as const;
   return (
-    <div ref={ref} className="relative h-[190vh]">
-      <div className="sticky top-20 mx-auto aspect-[4/5] w-full">
-        <motion.div style={{ scale: backScale, y: backY }} className="absolute inset-0 overflow-hidden rounded-[28px] [transform:translateZ(0)]">
-          <video src={faceFilm.url} poster={heroFace} autoPlay muted loop playsInline className="h-full w-full object-cover" />
-          <span className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary">meanwhile</span>
-          <motion.div style={{ opacity: backDim }} className="pointer-events-none absolute inset-0 bg-foreground" />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          style={{ y: topY, rotate: topRot }}
-          className="absolute inset-0 z-10 overflow-hidden rounded-[28px] shadow-[0_30px_80px_-30px_hsl(var(--foreground)/0.5)] [transform:translateZ(0)]"
-        >
-          <video src={serumFilm.url} poster={eyeCream} autoPlay muted loop playsInline className="h-full w-full object-cover" />
-        </motion.div>
-      </div>
-    </div>
+    <motion.div
+      initial="hidden"
+      whileInView="shown"
+      viewport={{ once: true, amount: 0.35 }}
+      className="relative aspect-[4/4.6] overflow-hidden rounded-[28px] bg-secondary md:aspect-[4/4.4]"
+    >
+      <motion.span
+        variants={{ hidden: { scale: 0, opacity: 1 }, shown: { scale: [0, 1, 1.6], opacity: [1, 1, 0] } }}
+        transition={{ delay, duration: 1.1, times: [0, 0.4, 1], ease }}
+        className="absolute left-1/2 top-1/2 z-20 -ml-4 -mt-4 h-8 w-8 rounded-full bg-primary"
+      />
+      <motion.div
+        variants={{ hidden: { clipPath: "circle(0% at 50% 50%)" }, shown: { clipPath: "circle(75% at 50% 50%)" } }}
+        transition={{ delay: delay + 0.35, duration: 1.4, ease }}
+        className="absolute inset-0"
+      >
+        <motion.video
+          src={film}
+          poster={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          variants={{ hidden: { scale: 1.35, rotate: -4 }, shown: { scale: 1, rotate: 0 } }}
+          transition={{ delay: delay + 0.35, duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+          className="h-full w-full object-cover"
+        />
+        {label && (
+          <motion.span
+            variants={{ hidden: { opacity: 0, y: 20 }, shown: { opacity: 1, y: 0 } }}
+            transition={{ delay: delay + 1.2, duration: 0.8 }}
+            className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl"
+          >
+            meanwhile
+          </motion.span>
+        )}
+      </motion.div>
+    </motion.div>
   );
 }
 
