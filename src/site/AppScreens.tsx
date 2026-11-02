@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight, Moon, Droplet, Activity, ScanFace } from "lucide-react";
 import { Phone, TodayScreen, ChatScreen, ShelfScreen } from "./PhoneMockup";
+import scanFace from "@/assets/site/scan-face.jpg";
+
 
 const Head = ({ icon: I, t, tag }: { icon: typeof Moon; t: string; tag: string }) => (
   <div className="flex items-center justify-between">
