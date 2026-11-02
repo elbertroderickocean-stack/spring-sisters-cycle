@@ -79,7 +79,7 @@ function StressScreen() {
   );
 }
 
-const FACE = { cx: 50.2, cy: 51.8, rx: 29.5, ry: 47.4 };
+const FACE = { cx: 60, cy: 50, rx: 34, ry: 42 };
 
 const contour = Array.from({ length: 30 }, (_, i) => {
   const a = (i / 30) * Math.PI * 2 - Math.PI / 2;
@@ -89,25 +89,24 @@ const contour = Array.from({ length: 30 }, (_, i) => {
 const eyeRing = (cx: number, cy: number) =>
   Array.from({ length: 8 }, (_, i) => {
     const a = (i / 8) * Math.PI * 2;
-    return { x: cx + Math.cos(a) * 4.8, y: cy + Math.sin(a) * 2.6 };
+    return { x: cx + Math.cos(a) * 6.5, y: cy + Math.sin(a) * 3 };
   });
 
-const eyes = [...eyeRing(30.9, 21.5), ...eyeRing(57.7, 22.3)];
+const eyes = [...eyeRing(38.5, 22.2), ...eyeRing(74, 23.2)];
 
 const spots: [number, number][] = [
-  [30.1, 6.6],
-  [58.2, 4.8],
-  [34.8, 41.1],
-  [30.2, 42.6],
-  [39.6, 41.4],
-  [28.6, 67.6],
-  [35.8, 69.2],
-  [43.2, 69.8],
-  [22.8, 47.5],
-  [76.4, 47.2],
-  [44.5, 12.5],
-  [55.5, 12.5],
-  [36.7, 95.5],
+  [39.5, 11],
+  [75, 10],
+  [44, 43],
+  [39, 44.5],
+  [49.5, 43.5],
+  [40.5, 69.5],
+  [49.7, 71.2],
+  [59.5, 71.5],
+  [30, 50],
+  [80, 48],
+  [55, 13],
+  [68, 14],
 ];
 
 const brackets = [
