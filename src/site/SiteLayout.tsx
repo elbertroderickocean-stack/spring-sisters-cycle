@@ -45,7 +45,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div className="site-light min-h-screen bg-background text-foreground font-sans antialiased">
+    <div className="site-light min-h-screen overflow-x-clip bg-background text-foreground font-sans antialiased">
       <motion.div style={{ scaleX: progress }} className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-primary" />
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 max-md:pt-3 ${
