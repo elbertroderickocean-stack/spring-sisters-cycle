@@ -38,13 +38,13 @@
     --sage-light: 64 80% 90% / 0.5;
     --sage-foreground: 56 55% 35%;
 
-    --secondary: 50 17% 88%;
+    --secondary: 60 14% 88%;
     --secondary-foreground: 0 0% 16%;
 
-    --muted: 50 10% 90%;
+    --muted: 60 10% 91%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 50 17% 88%;
+    --accent: 60 14% 88%;
     --accent-foreground: 0 0% 16%;
 
     --destructive: 0 72% 51%;
@@ -54,7 +54,7 @@
     --input: 0 0% 0% / 0.05;
     --ring: 64 100% 72%;
 
-    --radius: 0.75rem;
+    --radius: 1.25rem;
 
     /* Phase colors */
     --phase-calm: 200 45% 50%;
@@ -368,4 +368,25 @@
   .metric-card {
     @apply glass-card p-5 min-w-[160px] flex flex-col items-start gap-2;
   }
+}
+
+/* Brand site — always light, regardless of app theme */
+.site-light {
+  --background: 0 0% 95%;
+  --foreground: 0 0% 16%;
+  --card: 0 0% 98%;
+  --card-foreground: 0 0% 16%;
+  --primary: 64 100% 82%;
+  --primary-foreground: 0 0% 16%;
+  --secondary: 60 14% 88%;
+  --secondary-foreground: 0 0% 16%;
+  --muted: 60 10% 91%;
+  --muted-foreground: 0 0% 42%;
+  --border: 0 0% 0% / 0.08;
+  color-scheme: light;
+}
+
+/* Brand typography — tight, confident headlines */
+@layer base {
+  h1, h2, h3 { letter-spacing: -0.035em; font-weight: 600; }
 }
