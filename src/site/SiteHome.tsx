@@ -191,7 +191,7 @@ function AppSection() {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <img src={appIcon} alt="meanwhile app icon" width={1024} height={1024} loading="lazy" className="h-20 w-20 rounded-[22px] shadow-xl" />
+            <img src={appIcon} alt="meanwhile app icon" width={1024} height={1024} loading="lazy" className="h-[57px] w-[57px] rounded-[16px] shadow-xl" />
             <div className="flex flex-col gap-2">
               <Link to="/welcome" className="inline-flex items-center gap-2 rounded-2xl bg-foreground px-5 py-3 text-background">
                 <Apple size={20} />
