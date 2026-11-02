@@ -43,8 +43,6 @@ function useIsDesktop() {
 function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const desktop = useIsDesktop();
   const words = ["Beauty", "has", "no", "deadline"];
   return (
