@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, MotionValue, useInView, animate } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue, useInView, animate, type Variants } from "framer-motion";
 import { Moon, Activity, Droplet, CalendarDays, Sun, ScanFace, Cpu, Sparkles, RefreshCw, Layers } from "lucide-react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -125,11 +125,7 @@ export function Problem() {
           ["Too much advice", "Contradicting feeds, twelve-step routines, a new miracle every week."],
           ["Zero feedback", "Nobody comes back in the morning to tell you whether it worked."],
         ].map(([h, t], i) => (
-          <motion.div key={h} {...fadeUp} transition={{ ...fadeUp.transition, delay: i * 0.1 }} className="rounded-[28px] bg-secondary p-7">
-            <p className="text-sm text-muted-foreground">0{i + 1}</p>
-            <p className="mt-10 text-2xl font-semibold tracking-tight">{h}</p>
-            <p className="mt-2 text-muted-foreground">{t}</p>
-          </motion.div>
+          <ProblemCard key={h} i={i} h={h} t={t} />
         ))}
       </div>
       <motion.div {...fadeUp} className="mt-3 grid items-end gap-6 rounded-[32px] bg-foreground p-8 text-background md:grid-cols-[auto_1fr] md:p-12">
