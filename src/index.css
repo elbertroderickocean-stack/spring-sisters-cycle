@@ -390,3 +390,5 @@
 @layer base {
   h1, h2, h3 { letter-spacing: -0.035em; font-weight: 600; }
 }
+
+html, body { overflow-x: clip; max-width: 100%; }

@@ -2,68 +2,89 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const ease = [0.76, 0, 0.24, 1] as const;
+const soft = [0.22, 1, 0.36, 1] as const;
 const KEY = "meanwhile.site.loaded";
 
-/** Logo-assembly intro: [ ] fly in, m rises, yellow dot drops, wordmark types, curtain lifts. Once per session. */
+/** Calm intro: logo pieces drift in and lock together, thin progress line, curtain lifts. Once per session. */
 export default function Preloader() {
   const [show, setShow] = useState(() => typeof window !== "undefined" && !sessionStorage.getItem(KEY));
 
   useEffect(() => {
-    if (!show) return;
+    if (!show) {
+      document.documentElement.style.overflow = "";
+      return;
+    }
     document.documentElement.style.overflow = "hidden";
     const t = setTimeout(() => {
       sessionStorage.setItem(KEY, "1");
       setShow(false);
-    }, 2900);
+    }, 2700);
     return () => {
       clearTimeout(t);
       document.documentElement.style.overflow = "";
     };
   }, [show]);
 
-  useEffect(() => {
-    if (!show) document.documentElement.style.overflow = "";
-  }, [show]);
-
-  const word = "meanwhile".split("");
+  const pieces: { c: string; x: number; y: number; d: number }[] = [
+    { c: "[", x: -60, y: -30, d: 0 },
+    { c: "m", x: 0, y: 40, d: 0.25 },
+    { c: "]", x: 60, y: -40, d: 0.5 },
+  ];
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
           key="pre"
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-primary text-primary-foreground"
-          exit={{ clipPath: "inset(0 0 100% 0)" }}
-          initial={{ clipPath: "inset(0 0 0% 0)" }}
-          transition={{ duration: 0.9, ease }}
+          className="fixed inset-0 z-[100] grid place-items-center bg-background text-foreground"
+          initial={{ y: 0 }}
+          exit={{ y: "-100%" }}
+          transition={{ duration: 1, ease }}
         >
-          <div className="relative flex items-center text-[28vw] font-semibold leading-none tracking-[-0.06em] md:text-[14vw]">
-            <motion.span initial={{ x: "-60vw", opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.9, ease }}>[</motion.span>
-            <span className="relative overflow-hidden px-[0.04em]">
-              <motion.span className="inline-block" initial={{ y: "110%" }} animate={{ y: 0 }} transition={{ delay: 0.55, duration: 0.8, ease }}>m</motion.span>
-            </span>
-            <motion.span initial={{ x: "60vw", opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.9, ease }}>]</motion.span>
-            <motion.span
-              className="absolute -right-[0.18em] bottom-[0.14em] h-[0.14em] w-[0.14em] rounded-full bg-primary-foreground"
-              initial={{ y: "-80vh", scale: 0.4 }}
-              animate={{ y: 0, scale: [0.4, 1.3, 1] }}
-              transition={{ delay: 1.1, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
-            />
-          </div>
-          <div className="mt-6 flex overflow-hidden text-2xl font-medium tracking-tight md:text-3xl">
-            {word.map((c, i) => (
-              <motion.span key={i} initial={{ y: "100%", opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.45 + i * 0.05, duration: 0.5, ease }}>
-                {c}
+          <motion.div
+            className="flex flex-col items-center gap-5"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: soft }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="relative flex items-center text-4xl font-semibold leading-none tracking-tight" aria-hidden>
+                {pieces.map((p) => (
+                  <motion.span
+                    key={p.c}
+                    className="inline-block"
+                    initial={{ x: p.x, y: p.y, opacity: 0, filter: "blur(6px)" }}
+                    animate={{ x: 0, y: 0, opacity: 1, filter: "blur(0px)" }}
+                    transition={{ delay: p.d, duration: 0.9, ease: soft }}
+                  >
+                    {p.c}
+                  </motion.span>
+                ))}
+                <motion.span
+                  className="absolute -right-2 bottom-1 h-1.5 w-1.5 rounded-full bg-primary"
+                  initial={{ x: 70, y: 30, opacity: 0 }}
+                  animate={{ x: 0, y: 0, opacity: 1 }}
+                  transition={{ delay: 0.75, duration: 0.9, ease: soft }}
+                />
+              </span>
+              <motion.span
+                className="ml-2 text-3xl font-light tracking-tight"
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2, duration: 0.7, ease: soft }}
+              >
+                meanwhile.
               </motion.span>
-            ))}
-            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>.</motion.span>
-          </div>
-          <motion.div className="absolute bottom-10 left-1/2 h-px w-40 -translate-x-1/2 bg-primary-foreground/20">
-            <motion.div className="h-full origin-left bg-primary-foreground" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 2.6, ease: "easeInOut" }} />
+            </div>
+            <div className="h-px w-40 overflow-hidden bg-border">
+              <motion.div
+                className="h-px w-full origin-left bg-foreground/70"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.1, duration: 2.3, ease: [0.65, 0, 0.35, 1] }}
+              />
+            </div>
           </motion.div>
-          <motion.p className="absolute bottom-14 text-[10px] uppercase tracking-[0.3em] opacity-60" initial={{ opacity: 0 }} animate={{ opacity: 0.6 }} transition={{ delay: 0.3 }}>
-            Skin OS · loading your portfolio
-          </motion.p>
         </motion.div>
       )}
     </AnimatePresence>
