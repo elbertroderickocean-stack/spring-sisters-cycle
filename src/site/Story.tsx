@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, MotionValue, useInView, animate } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue, useInView, animate, type Variants } from "framer-motion";
 import { Moon, Activity, Droplet, CalendarDays, Sun, ScanFace, Cpu, Sparkles, RefreshCw, Layers } from "lucide-react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -44,6 +44,115 @@ function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
   return <span ref={ref}>{v}{suffix}</span>;
 }
 
+/* ---------- Problem cards: yellow curtain reveal ---------- */
+const stagger = 0.16;
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 54, rotateX: -12 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { duration: 0.85, ease, delay: i * stagger },
+  }),
+};
+
+const cardCurtain: Variants = {
+  hidden: { x: "0%" },
+  show: (i: number) => ({
+    x: "102%",
+    transition: { duration: 0.8, ease, delay: 0.3 + i * stagger },
+  }),
+};
+
+const cardRule: Variants = {
+  hidden: { scaleX: 0 },
+  show: (i: number) => ({
+    scaleX: 1,
+    transition: { duration: 1.3, ease, delay: 0.5 + i * stagger },
+  }),
+};
+
+const cardNumber: Variants = {
+  hidden: { opacity: 0, x: -16 },
+  show: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease, delay: 0.55 + i * stagger },
+  }),
+};
+
+const cardMask: Variants = {
+  hidden: { opacity: 0, y: "115%" },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.95, ease, delay: 0.58 + i * stagger },
+  }),
+};
+
+const cardBody: Variants = {
+  hidden: { opacity: 0, y: "120%" },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.95, ease, delay: 0.74 + i * stagger },
+  }),
+};
+
+const cardDot: Variants = {
+  hidden: { opacity: 0, scale: 0, rotate: -120 },
+  show: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: { type: "spring", stiffness: 280, damping: 15, delay: 0.88 + i * stagger },
+  }),
+};
+
+function ProblemCard({ i, h, t }: { i: number; h: string; t: string }) {
+  return (
+    <motion.div
+      custom={i}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-60px" }}
+      style={{ transformPerspective: 1200 }}
+      whileHover={{ y: -8 }}
+      transition={{ type: "spring", stiffness: 300, damping: 26 }}
+      className="group relative overflow-hidden rounded-[28px] bg-secondary p-7"
+    >
+      <div className="flex items-start justify-between">
+        <motion.p custom={i} variants={cardNumber} className="text-sm text-muted-foreground">0{i + 1}</motion.p>
+        <motion.span custom={i} variants={cardDot} className="h-2.5 w-2.5 rounded-full bg-primary" />
+      </div>
+      <div className="mt-10 overflow-hidden">
+        <motion.p custom={i} variants={cardMask} className="text-2xl font-semibold tracking-tight">{h}</motion.p>
+      </div>
+      <div className="overflow-hidden">
+        <motion.p custom={i} variants={cardBody} className="mt-2 text-muted-foreground">{t}</motion.p>
+      </div>
+      <motion.span
+        aria-hidden
+        custom={i}
+        variants={cardRule}
+        className="absolute inset-x-0 top-0 h-[2px] origin-left rounded-full bg-primary"
+      />
+      <motion.span
+        aria-hidden
+        custom={i}
+        variants={cardCurtain}
+        className="pointer-events-none absolute inset-0 z-10 bg-primary"
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -bottom-20 -right-12 h-44 w-44 rounded-full bg-primary/0 blur-2xl transition-colors duration-700 group-hover:bg-primary/25"
+      />
+    </motion.div>
+  );
+}
+
 /* ---------- 1. Problem: Beauty Anxiety ---------- */
 export function Problem() {
   return (
@@ -59,11 +168,7 @@ export function Problem() {
           ["Too much advice", "Contradicting feeds, twelve-step routines, a new miracle every week."],
           ["Zero feedback", "Nobody comes back in the morning to tell you whether it worked."],
         ].map(([h, t], i) => (
-          <motion.div key={h} {...fadeUp} transition={{ ...fadeUp.transition, delay: i * 0.1 }} className="rounded-[28px] bg-secondary p-7">
-            <p className="text-sm text-muted-foreground">0{i + 1}</p>
-            <p className="mt-10 text-2xl font-semibold tracking-tight">{h}</p>
-            <p className="mt-2 text-muted-foreground">{t}</p>
-          </motion.div>
+          <ProblemCard key={h} i={i} h={h} t={t} />
         ))}
       </div>
       <motion.div {...fadeUp} className="mt-3 grid items-end gap-6 rounded-[32px] bg-foreground p-8 text-background md:grid-cols-[auto_1fr] md:p-12">
