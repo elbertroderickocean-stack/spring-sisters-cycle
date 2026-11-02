@@ -89,43 +89,57 @@ function Hero() {
         </motion.div>
       </div>
       <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2">
-        {[[eyeCream, serumFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => (
-          <motion.div
-            key={i}
-            initial={
-              i === 0
-                ? { opacity: 0, y: 60 }
-                : desktop
-                  ? { opacity: 0, x: "-105%", y: 0, rotate: -2, scale: 0.94 }
-                  : { opacity: 0, x: 0, y: "-105%", rotate: 2, scale: 0.94 }
-            }
-            animate={{ opacity: 1, x: 0, y: 0, rotate: 0, scale: 1 }}
-            transition={
-              i === 0
-                ? { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }
-                : {
-                    delay: 1.15,
-                    duration: 1.35,
-                    ease: [0.16, 1, 0.3, 1],
-                    opacity: { delay: 1.15, duration: 0.3, ease: "easeOut" },
-                  }
-            }
-            className={`relative isolate aspect-[4/5] overflow-hidden rounded-[28px] [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4] ${
-              i === 0
-                ? "z-20 shadow-[0_30px_80px_-30px_hsl(var(--foreground)/0.45)]"
-                : "z-10"
-            }`}
-          >
-            {film ? (
-              <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale }} className="h-full w-full object-cover" />
-            ) : (
-              <motion.img src={src} alt="meanwhile 360° Eye Cream" style={{ scale }} className="h-full w-full object-cover" width={1280} height={1600} />
-            )}
-            {i === 1 && (
-              <span className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl">meanwhile</span>
-            )}
-          </motion.div>
-        ))}
+        {[[eyeCream, serumFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => {
+          const full = "28px 28px 28px 28px";
+          const sleeveTop = desktop ? "28px 0px 0px 28px" : "28px 28px 0px 0px";
+          const sleeveBottom = desktop ? "0px 28px 28px 0px" : "0px 0px 28px 28px";
+          return (
+            <motion.div
+              key={i}
+              initial={
+                i === 0
+                  ? { opacity: 0, y: 60, borderRadius: full }
+                  : desktop
+                    ? { opacity: 0, x: "-105%", y: 0, rotate: -2, scale: 0.94, borderRadius: sleeveBottom }
+                    : { opacity: 0, x: 0, y: "-105%", rotate: 2, scale: 0.94, borderRadius: sleeveBottom }
+              }
+              animate={
+                i === 0
+                  ? { opacity: 1, y: 0, borderRadius: [full, sleeveTop, full] }
+                  : { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, borderRadius: [sleeveBottom, sleeveBottom, full] }
+              }
+              transition={
+                i === 0
+                  ? {
+                      opacity: { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] },
+                      y: { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] },
+                      borderRadius: { delay: 1.0, duration: 1.8, ease: "easeInOut", times: [0, 0.16, 1] },
+                    }
+                  : {
+                      delay: 1.15,
+                      duration: 1.35,
+                      ease: [0.16, 1, 0.3, 1],
+                      opacity: { delay: 1.15, duration: 0.3, ease: "easeOut" },
+                      borderRadius: { delay: 1.15, duration: 1.35, ease: "easeInOut", times: [0, 0.6, 1] },
+                    }
+              }
+              className={`relative isolate aspect-[4/5] overflow-hidden [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4] ${
+                i === 0
+                  ? "z-20 shadow-[0_30px_80px_-30px_hsl(var(--foreground)/0.45)]"
+                  : "z-10"
+              }`}
+            >
+              {film ? (
+                <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale }} className="h-full w-full object-cover" />
+              ) : (
+                <motion.img src={src} alt="meanwhile 360° Eye Cream" style={{ scale }} className="h-full w-full object-cover" width={1280} height={1600} />
+              )}
+              {i === 1 && (
+                <span className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl">meanwhile</span>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );
