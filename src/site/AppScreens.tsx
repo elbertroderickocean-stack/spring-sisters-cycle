@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight, Moon, Droplet, Activity, ScanFace } from "lucide-react";
 import { Phone, TodayScreen, ChatScreen, ShelfScreen } from "./PhoneMockup";
+import scanFace from "@/assets/site/scan-face.jpg";
+
 
 const Head = ({ icon: I, t, tag }: { icon: typeof Moon; t: string; tag: string }) => (
   <div className="flex items-center justify-between">
@@ -77,16 +79,115 @@ function StressScreen() {
   );
 }
 
+const FACE = { cx: 57, cy: 48, rx: 32, ry: 40 };
+
+const contour = Array.from({ length: 30 }, (_, i) => {
+  const a = (i / 30) * Math.PI * 2 - Math.PI / 2;
+  return { x: FACE.cx + Math.cos(a) * FACE.rx, y: FACE.cy + Math.sin(a) * FACE.ry };
+});
+
+const eyeRing = (cx: number, cy: number) =>
+  Array.from({ length: 8 }, (_, i) => {
+    const a = (i / 8) * Math.PI * 2;
+    return { x: cx + Math.cos(a) * 6.5, y: cy + Math.sin(a) * 3 };
+  });
+
+const eyes = [...eyeRing(38.5, 22.2), ...eyeRing(74, 23.2)];
+
+const spots: [number, number][] = [
+  [39.5, 11],
+  [75, 10],
+  [44, 43],
+  [39, 44.5],
+  [49.5, 43.5],
+  [40.5, 69.5],
+  [49.7, 71.2],
+  [59.5, 71.5],
+  [30, 50],
+  [80, 48],
+  [55, 13],
+  [68, 14],
+];
+
+const brackets = [
+  "left-2 top-2 border-l border-t rounded-tl-lg",
+  "right-2 top-2 border-r border-t rounded-tr-lg",
+  "left-2 bottom-2 border-l border-b rounded-bl-lg",
+  "right-2 bottom-2 border-r border-b rounded-br-lg",
+];
+
 function ScanScreen() {
   return (
     <div className="flex h-full flex-col gap-3 px-4 pt-12">
       <Head icon={ScanFace} t="Skin Scan" tag="Day 19" />
-      <div className="relative h-40 overflow-hidden rounded-2xl bg-foreground">
-        <div className="absolute inset-6 rounded-[50%] border border-dashed border-primary/70" />
-        {[...Array(18)].map((_, i) => (
-          <span key={i} className="absolute h-1 w-1 rounded-full bg-primary" style={{ left: `${30 + ((i * 37) % 40)}%`, top: `${20 + ((i * 53) % 60)}%` }} />
+      <div className="relative aspect-[1280/1033] overflow-hidden rounded-2xl bg-foreground">
+        <img src={scanFace} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/25 via-transparent to-foreground/75" />
+
+
+        {contour.map((p, i) => (
+          <motion.span
+            key={`c${i}`}
+            className="absolute h-[3px] w-[3px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary"
+            style={{ left: `${p.x}%`, top: `${p.y}%` }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 0.9, scale: 1 }}
+            transition={{ delay: 0.5 + i * 0.04, duration: 0.3 }}
+          />
         ))}
-        <motion.div className="absolute inset-x-0 h-[2px] bg-primary shadow-[0_0_20px_hsl(var(--primary))]" animate={{ top: ["5%", "95%", "5%"] }} transition={{ duration: 3, repeat: Infinity }} />
+
+        {eyes.map((p, i) => (
+          <motion.span
+            key={`e${i}`}
+            className="absolute h-[2px] w-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/90"
+            style={{ left: `${p.x}%`, top: `${p.y}%` }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.6 + i * 0.03, duration: 0.25 }}
+          />
+        ))}
+
+        {spots.map(([x, y], i) => (
+          <motion.span
+            key={`s${i}`}
+            className="absolute h-[2px] w-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/60"
+            style={{ left: `${x}%`, top: `${y}%` }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.1 + i * 0.05, duration: 0.3 }}
+          />
+        ))}
+
+        <motion.div
+          className="absolute left-[25%] top-[42%] h-[15%] w-[13%] rounded-md border border-primary/70"
+          initial={{ opacity: 0, scale: 1.25 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.9, duration: 0.6, ease: "easeOut" }}
+        >
+          <span className="absolute -bottom-4 left-0 whitespace-nowrap rounded-full bg-primary px-1.5 py-[1px] text-[6px] font-semibold text-primary-foreground">
+            CHEEK · BARRIER
+          </span>
+        </motion.div>
+
+        <motion.div
+          className="absolute inset-x-0 z-10"
+          animate={{ top: ["-12%", "112%", "-12%"] }}
+          transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="h-14 w-full -translate-y-full bg-gradient-to-b from-transparent to-primary/25" />
+          <div className="h-[2px] w-full bg-primary shadow-[0_0_16px_hsl(var(--primary))]" />
+        </motion.div>
+
+        {brackets.map((b) => (
+          <span key={b} className={`absolute h-5 w-5 border-primary/80 ${b}`} />
+        ))}
+
+        <div className="absolute inset-x-0 bottom-2 z-10 flex justify-center">
+          <span className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-foreground/75 px-2 py-[3px] text-[7px] font-medium text-background/90 backdrop-blur-sm">
+            <span className="h-1 w-1 animate-pulse rounded-full bg-primary" />
+            m.i. scanning · hydration, redness, texture
+          </span>
+        </div>
       </div>
       {[["Hydration", 78], ["Redness", 22], ["Texture", 64], ["Radiance", 71]].map(([k, v]) => (
         <div key={k as string}>
@@ -96,6 +197,9 @@ function ScanScreen() {
           </div>
         </div>
       ))}
+      <div className="mt-1 rounded-2xl bg-card p-3 text-[9px] leading-snug">
+        <b>m.i.</b> Barrier is down 6% since Day 12. Tonight: Serum-03 [Calm], no actives.
+      </div>
     </div>
   );
 }
