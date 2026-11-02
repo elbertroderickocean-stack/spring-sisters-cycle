@@ -95,47 +95,41 @@ function Hero() {
   );
 }
 
-/** Brand-dot "aperture" reveal: a yellow dot lands, then opens like a lens iris into the video. */
+/** Soft focus reveal: the card rises out of a blur while a gentle mask wipes upward. */
 function ApertureCard({ src, film, delay, label }: { src: string; film: string; delay: number; label: boolean }) {
-  const ease = [0.65, 0, 0.35, 1] as const;
+  const ease = [0.22, 1, 0.36, 1] as const;
   return (
     <motion.div
       initial="hidden"
       whileInView="shown"
-      viewport={{ once: true, amount: 0.35 }}
+      viewport={{ once: true, amount: 0.3 }}
+      variants={{
+        hidden: { opacity: 0, y: 40, filter: "blur(24px)", clipPath: "inset(18% 6% 0% 6% round 28px)" },
+        shown: { opacity: 1, y: 0, filter: "blur(0px)", clipPath: "inset(0% 0% 0% 0% round 28px)" },
+      }}
+      transition={{ delay, duration: 1.6, ease }}
       className="relative aspect-[4/4.6] overflow-hidden rounded-[28px] bg-secondary md:aspect-[4/4.4]"
     >
-      <motion.span
-        variants={{ hidden: { scale: 0, opacity: 1 }, shown: { scale: [0, 1, 1.6], opacity: [1, 1, 0] } }}
-        transition={{ delay, duration: 1.1, times: [0, 0.4, 1], ease }}
-        className="absolute left-1/2 top-1/2 z-20 -ml-4 -mt-4 h-8 w-8 rounded-full bg-primary"
+      <motion.video
+        src={film}
+        poster={src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        variants={{ hidden: { scale: 1.12 }, shown: { scale: 1 } }}
+        transition={{ delay, duration: 2.4, ease }}
+        className="h-full w-full object-cover"
       />
-      <motion.div
-        variants={{ hidden: { clipPath: "circle(0% at 50% 50%)" }, shown: { clipPath: "circle(75% at 50% 50%)" } }}
-        transition={{ delay: delay + 0.35, duration: 1.4, ease }}
-        className="absolute inset-0"
-      >
-        <motion.video
-          src={film}
-          poster={src}
-          autoPlay
-          muted
-          loop
-          playsInline
-          variants={{ hidden: { scale: 1.35, rotate: -4 }, shown: { scale: 1, rotate: 0 } }}
-          transition={{ delay: delay + 0.35, duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full w-full object-cover"
-        />
-        {label && (
-          <motion.span
-            variants={{ hidden: { opacity: 0, y: 20 }, shown: { opacity: 1, y: 0 } }}
-            transition={{ delay: delay + 1.2, duration: 0.8 }}
-            className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl"
-          >
-            meanwhile
-          </motion.span>
-        )}
-      </motion.div>
+      {label && (
+        <motion.span
+          variants={{ hidden: { opacity: 0, y: 16, filter: "blur(8px)" }, shown: { opacity: 1, y: 0, filter: "blur(0px)" } }}
+          transition={{ delay: delay + 0.9, duration: 1.1, ease }}
+          className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl"
+        >
+          meanwhile
+        </motion.span>
+      )}
     </motion.div>
   );
 }
