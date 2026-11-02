@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Apple } from "lucide-react";
@@ -28,6 +28,17 @@ const fade = {
 const Pill = ({ children }: { children: React.ReactNode }) => (
   <span className="inline-flex rounded-full border border-foreground/80 px-3 py-1 text-xs font-medium">{children}</span>
 );
+
+function useIsDesktop() {
+  const [d, setD] = useState(() => typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const on = () => setD(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  return d;
+}
 
 function Hero() {
   const ref = useRef(null);
@@ -80,10 +91,29 @@ function Hero() {
         {[[eyeCream, serumFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 + i * 0.15, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative isolate aspect-[4/5] overflow-hidden rounded-[28px] [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4]"
+            initial={
+              i === 0
+                ? { opacity: 0, y: 60 }
+                : desktop
+                  ? { opacity: 0, x: "-105%", y: 0, rotate: -2, scale: 0.94 }
+                  : { opacity: 0, x: 0, y: "-105%", rotate: 2, scale: 0.94 }
+            }
+            animate={{ opacity: 1, x: 0, y: 0, rotate: 0, scale: 1 }}
+            transition={
+              i === 0
+                ? { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }
+                : {
+                    delay: 1.15,
+                    duration: 1.35,
+                    ease: [0.16, 1, 0.3, 1],
+                    opacity: { delay: 1.15, duration: 0.3, ease: "easeOut" },
+                  }
+            }
+            className={`relative isolate aspect-[4/5] overflow-hidden rounded-[28px] [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4] ${
+              i === 0
+                ? "z-20 shadow-[0_30px_80px_-30px_hsl(var(--foreground)/0.45)]"
+                : "z-10"
+            }`}
           >
             {film ? (
               <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale }} className="h-full w-full object-cover" />
