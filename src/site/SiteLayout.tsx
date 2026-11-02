@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -17,6 +17,12 @@ const links = [
 export default function SiteLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { hash, pathname } = useLocation();
+
+  useEffect(() => {
+    if (hash) setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" }), 50);
+    else window.scrollTo(0, 0);
+  }, [hash, pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
