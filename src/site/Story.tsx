@@ -44,6 +44,72 @@ function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
   return <span ref={ref}>{v}{suffix}</span>;
 }
 
+/* ---------- Problem cards: layered curtain reveal ---------- */
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 56, rotateX: -12, clipPath: "inset(0 0 100% 0)" },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    clipPath: "inset(0 0 0% 0)",
+    transition: { duration: 1.05, ease, delay: i * 0.16 },
+  }),
+};
+
+const cardRule: Variants = {
+  hidden: { scaleX: 0 },
+  show: { scaleX: 1, transition: { duration: 1.3, ease, delay: 0.5 } },
+};
+
+const cardNumber: Variants = {
+  hidden: { opacity: 0, x: -16 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.8, ease, delay: 0.6 } },
+};
+
+const cardMask: Variants = {
+  hidden: { opacity: 0, y: "115%" },
+  show: { opacity: 1, y: 0, transition: { duration: 0.95, ease, delay: 0.62 } },
+};
+
+const cardBody: Variants = {
+  hidden: { opacity: 0, y: "120%" },
+  show: { opacity: 1, y: 0, transition: { duration: 0.95, ease, delay: 0.78 } },
+};
+
+const cardDot: Variants = {
+  hidden: { opacity: 0, scale: 0, rotate: -120 },
+  show: { opacity: 1, scale: 1, rotate: 0, transition: { type: "spring", stiffness: 280, damping: 15, delay: 0.9 } },
+};
+
+function ProblemCard({ i, h, t }: { i: number; h: string; t: string }) {
+  return (
+    <motion.div
+      custom={i}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-60px" }}
+      style={{ transformPerspective: 1200 }}
+      whileHover={{ y: -8 }}
+      transition={{ type: "spring", stiffness: 300, damping: 26 }}
+      className="group relative overflow-hidden rounded-[28px] bg-secondary p-7"
+    >
+      <motion.span aria-hidden variants={cardRule} className="absolute inset-x-0 top-0 h-[2px] origin-left rounded-full bg-primary" />
+      <span aria-hidden className="pointer-events-none absolute -bottom-20 -right-12 h-44 w-44 rounded-full bg-primary/0 blur-2xl transition-colors duration-700 group-hover:bg-primary/25" />
+      <div className="flex items-start justify-between">
+        <motion.p variants={cardNumber} className="text-sm text-muted-foreground">0{i + 1}</motion.p>
+        <motion.span variants={cardDot} className="h-2.5 w-2.5 rounded-full bg-primary" />
+      </div>
+      <div className="mt-10 overflow-hidden">
+        <motion.p variants={cardMask} className="text-2xl font-semibold tracking-tight">{h}</motion.p>
+      </div>
+      <div className="overflow-hidden">
+        <motion.p variants={cardBody} className="mt-2 text-muted-foreground">{t}</motion.p>
+      </div>
+    </motion.div>
+  );
+}
+
 /* ---------- 1. Problem: Beauty Anxiety ---------- */
 export function Problem() {
   return (
