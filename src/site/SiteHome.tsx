@@ -100,13 +100,13 @@ function Hero() {
                 i === 0
                   ? { opacity: 0, y: 60, borderRadius: full }
                   : desktop
-                    ? { opacity: 0, x: "-105%", y: 0, rotate: -2, scale: 0.94, borderRadius: sleeveBottom }
-                    : { opacity: 0, x: 0, y: "-105%", rotate: 2, scale: 0.94, borderRadius: sleeveBottom }
+                    ? { opacity: 0, x: "-105%", y: 0, borderRadius: sleeveBottom }
+                    : { opacity: 0, x: 0, y: "-105%", borderRadius: sleeveBottom }
               }
               animate={
                 i === 0
                   ? { opacity: 1, y: 0, borderRadius: [full, sleeveTop, sleeveTop, full] }
-                  : { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, borderRadius: [sleeveBottom, sleeveBottom, full] }
+                  : { opacity: 1, x: 0, y: 0, borderRadius: [sleeveBottom, sleeveBottom, full] }
               }
               transition={
                 i === 0
