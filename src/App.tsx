@@ -47,6 +47,9 @@ import Encouragement from "./pages/Encouragement";
 import StrategyQuestions from "./pages/StrategyQuestions";
 import ConnectEnvironment from "./pages/ConnectEnvironment";
 import NotFound from "./pages/NotFound";
+import SiteHome from "./site/SiteHome";
+import SiteShop from "./site/SiteShop";
+import SiteProductPage from "./site/SiteProductPage";
 
 const queryClient = new QueryClient();
 
@@ -100,6 +103,9 @@ const App = () => (
               <Route path="/meal-scanner" element={<MealScanner />} />
               <Route path="/skin-scanner" element={<SkinScanner />} />
               <Route path="/mi-chat" element={<MiChat />} />
+              <Route path="/site" element={<SiteHome />} />
+              <Route path="/site/shop" element={<SiteShop />} />
+              <Route path="/site/shop/:id" element={<SiteProductPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
