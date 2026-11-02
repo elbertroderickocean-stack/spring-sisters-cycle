@@ -45,6 +45,7 @@ function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const desktop = useIsDesktop();
   const words = ["Beauty", "has", "no", "deadline"];
   return (
     <section ref={ref} className="px-3 pt-20 md:px-6">
