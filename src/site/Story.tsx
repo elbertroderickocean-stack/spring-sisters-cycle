@@ -46,12 +46,11 @@ function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
 
 /* ---------- Problem cards: layered curtain reveal ---------- */
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 56, rotateX: -12, clipPath: "inset(0 0 100% 0)" },
+  hidden: { opacity: 0, y: 56, rotateX: -12 },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
     rotateX: 0,
-    clipPath: "inset(0 0 0% 0)",
     transition: { duration: 1.05, ease, delay: i * 0.16 },
   }),
 };
