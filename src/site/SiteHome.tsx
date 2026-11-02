@@ -113,7 +113,7 @@ function Hero() {
                   ? {
                       opacity: { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] },
                       y: { delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] },
-                      borderRadius: { delay: 1.0, duration: 1.8, ease: "easeInOut", times: [0, 0.16, 1] },
+                      borderRadius: { delay: 0.85, duration: 2.0, ease: "easeInOut", times: [0, 0.12, 1] },
                     }
                   : {
                       delay: 1.15,
