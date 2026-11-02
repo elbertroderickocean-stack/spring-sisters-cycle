@@ -78,7 +78,7 @@ function Hero() {
         </motion.div>
       </div>
       <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2">
-        {[[eyeCream, eyeFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => (
+        {[[eyeCream, ""], [heroFace, faceFilm.url]].map(([src, film], i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 60 }}
@@ -86,7 +86,11 @@ function Hero() {
             transition={{ delay: 0.4 + i * 0.15, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             className="relative aspect-[4/5] overflow-hidden rounded-[28px] md:aspect-[4/4.4]"
           >
-            <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale, y: i ? y : 0 }} className="h-full w-full object-cover" />
+            {film ? (
+              <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale, y: i ? y : 0 }} className="h-full w-full object-cover" />
+            ) : (
+              <motion.img src={src} alt="meanwhile 360° Eye Cream" style={{ scale }} className="h-full w-full object-cover" width={1280} height={1600} />
+            )}
             {i === 1 && (
               <span className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl">meanwhile</span>
             )}
