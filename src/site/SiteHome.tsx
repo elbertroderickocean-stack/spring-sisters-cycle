@@ -135,27 +135,6 @@ function Manifesto() {
   );
 }
 
-function Stats() {
-  const s = [
-    { v: "90%", l: "Routine consistency this cycle" },
-    { v: "4", l: "Phases. One adaptive framework" },
-    { v: "0", l: "Graveyard of half-used bottles" },
-  ];
-  return (
-    <section className="mx-auto grid max-w-7xl gap-3 px-3 md:grid-cols-3 md:px-6">
-      {s.map((x, i) => (
-        <motion.div key={x.l} {...fade} transition={{ ...fade.transition, delay: i * 0.1 }} className={`flex aspect-[4/3] flex-col justify-between rounded-[28px] p-8 ${i === 1 ? "bg-primary text-primary-foreground" : i === 2 ? "bg-foreground text-background" : "bg-secondary"}`}>
-          <Bracket className="text-sm" />
-          <div>
-            <p className="text-7xl font-semibold tracking-[-0.05em] md:text-8xl">{x.v}</p>
-            <p className="mt-2 max-w-[14rem] text-sm opacity-70">{x.l}</p>
-          </div>
-        </motion.div>
-      ))}
-    </section>
-  );
-}
-
 function AppSection() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
