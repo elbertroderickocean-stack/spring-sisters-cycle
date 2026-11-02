@@ -171,7 +171,7 @@ function ScanScreen() {
         ))}
 
         <motion.div
-          className="absolute left-[19%] top-[46%] h-[21%] w-[21%] rounded-lg border border-primary/70"
+          className="absolute left-[26%] top-[39%] h-[18%] w-[17%] rounded-lg border border-primary/70"
           initial={{ opacity: 0, scale: 1.25 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.9, duration: 0.6, ease: "easeOut" }}
@@ -194,11 +194,10 @@ function ScanScreen() {
           <span key={b} className={`absolute h-5 w-5 border-primary/80 ${b}`} />
         ))}
 
-        <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-3 pb-2">
-          <span className="text-[8px] text-background/80">m.i. scanning · hydration, redness, texture</span>
-          <span className="flex items-center gap-1 text-[8px] font-semibold text-primary">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-            LIVE
+        <div className="absolute inset-x-0 bottom-2 z-10 flex justify-center">
+          <span className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-foreground/75 px-2 py-[3px] text-[7px] font-medium text-background/90 backdrop-blur-sm">
+            <span className="h-1 w-1 animate-pulse rounded-full bg-primary" />
+            m.i. scanning · hydration, redness, texture
           </span>
         </div>
       </div>
