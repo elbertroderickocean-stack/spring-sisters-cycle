@@ -120,7 +120,7 @@ function Hero() {
                       duration: 1.35,
                       ease: [0.16, 1, 0.3, 1],
                       opacity: { delay: 1.15, duration: 0.3, ease: "easeOut" },
-                      borderRadius: { delay: 1.15, duration: 1.35, ease: "easeInOut", times: [0, 0.6, 1] },
+                      borderRadius: { delay: 1.15, duration: 1.7, ease: "easeInOut", times: [0, 0.8, 1] },
                     }
               }
               className={`relative isolate aspect-[4/5] overflow-hidden [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4] ${
