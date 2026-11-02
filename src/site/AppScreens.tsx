@@ -159,7 +159,7 @@ function ScanScreen() {
         ))}
 
         <motion.div
-          className="absolute left-[25%] top-[42%] h-[16%] w-[13%] rounded-lg border border-primary/70"
+          className="absolute left-[25%] top-[42%] h-[15%] w-[13%] rounded-md border border-primary/70"
           initial={{ opacity: 0, scale: 1.25 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.9, duration: 0.6, ease: "easeOut" }}
@@ -197,6 +197,9 @@ function ScanScreen() {
           </div>
         </div>
       ))}
+      <div className="mt-1 rounded-2xl bg-card p-3 text-[9px] leading-snug">
+        <b>m.i.</b> Barrier is down 6% since Day 12. Tonight: Serum-03 [Calm], no actives.
+      </div>
     </div>
   );
 }
