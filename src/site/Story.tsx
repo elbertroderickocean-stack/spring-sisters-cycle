@@ -207,8 +207,12 @@ export function Science() {
             <div key={s.k} className="sticky" style={{ top: `${88 + i * 18}px` }}>
               <motion.div
                 {...fadeUp}
-                className="grid gap-6 rounded-[28px] border border-background/10 bg-foreground p-7 shadow-[0_-20px_40px_-20px_hsl(var(--foreground))] md:grid-cols-[200px_1fr_auto] md:items-center md:p-10"
+                className="relative isolate grid gap-6 overflow-hidden rounded-[28px] border border-background/15 bg-background/[0.06] p-7 shadow-[0_-20px_40px_-20px_hsl(var(--foreground)),inset_0_1px_0_hsl(var(--background)/0.16)] backdrop-blur-2xl backdrop-saturate-150 md:grid-cols-[200px_1fr_auto] md:items-center md:p-10"
               >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_0%_0%,hsl(var(--primary)/0.09),transparent_55%)]"
+                />
                 <div className="flex items-center gap-3">
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground"><s.icon size={20} /></span>
                   <span className="text-sm uppercase tracking-[0.2em] text-background/50">{s.k}</span>
