@@ -86,7 +86,7 @@ function Hero() {
             className="relative isolate aspect-[4/5] overflow-hidden rounded-[28px] [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4]"
           >
             {film ? (
-              <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale, y: i ? y : 0 }} className="h-full w-full object-cover" />
+              <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale }} className="h-full w-full object-cover" />
             ) : (
               <motion.img src={src} alt="meanwhile 360° Eye Cream" style={{ scale }} className="h-full w-full object-cover" width={1280} height={1600} />
             )}
