@@ -15,7 +15,6 @@ import serumFilm from "@/assets/meanwhile-serum-01-film.mp4.asset.json";
 import Preloader from "./Preloader";
 import Lookbook from "./Lookbook";
 import AppScreens from "./AppScreens";
-import eyeFilm from "@/assets/site/eye-cream-sky-film.mp4.asset.json";
 import faceFilm from "@/assets/site/hero-face-film.mp4.asset.json";
 import { Problem, Science, Morning, HowItWorks, Horizon, Epilogue } from "./Story";
 
