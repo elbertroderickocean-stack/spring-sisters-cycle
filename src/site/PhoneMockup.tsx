@@ -6,7 +6,7 @@ export function Phone({ children, className = "" }: { children: ReactNode; class
     <div
       className={`relative aspect-[9/19] w-[260px] rounded-[44px] bg-foreground p-[10px] shadow-[0_40px_80px_-30px_hsl(var(--foreground)/0.45)] ${className}`}
     >
-      <div className="absolute left-1/2 top-[18px] z-10 h-[22px] w-[80px] -translate-x-1/2 rounded-full bg-foreground" />
+      <div className="absolute left-1/2 top-[17px] z-10 h-[19px] w-[51px] -translate-x-1/2 rounded-full bg-foreground" />
       <div className="relative h-full w-full overflow-hidden rounded-[34px] bg-background">{children}</div>
     </div>
   );
