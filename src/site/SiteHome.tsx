@@ -14,6 +14,9 @@ import serumTrio from "@/assets/site/serum-trio.jpg";
 import appIcon from "@/assets/site/app-icon.png";
 import serumFilm from "@/assets/meanwhile-serum-01-film.mp4.asset.json";
 import Preloader from "./Preloader";
+import Lookbook from "./Lookbook";
+import eyeFilm from "@/assets/site/eye-cream-sky-film.mp4.asset.json";
+import faceFilm from "@/assets/site/hero-face-film.mp4.asset.json";
 import { Problem, Science, Morning, HowItWorks, Engines, Trojan, Horizon, Epilogue } from "./Story";
 
 const fade = {
@@ -75,7 +78,7 @@ function Hero() {
         </motion.div>
       </div>
       <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2">
-        {[eyeCream, heroFace].map((src, i) => (
+        {[[eyeCream, eyeFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 60 }}
@@ -83,7 +86,7 @@ function Hero() {
             transition={{ delay: 0.4 + i * 0.15, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             className="relative aspect-[4/5] overflow-hidden rounded-[28px] md:aspect-[4/4.4]"
           >
-            <motion.img src={src} alt="" style={{ scale, y: i ? y : 0 }} className="h-full w-full object-cover" width={1280} height={1600} />
+            <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale, y: i ? y : 0 }} className="h-full w-full object-cover" />
             {i === 1 && (
               <span className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl">meanwhile</span>
             )}
@@ -341,6 +344,7 @@ export default function SiteHome() {
       <ProductFilm />
       <div className="mt-28"><ProductsStrip /></div>
       <Horizon />
+      <Lookbook />
       <Gallery />
       <Epilogue />
       <FinalCta />
