@@ -310,11 +310,11 @@ export function Horizon() {
   return (
     <section className="mx-auto max-w-7xl px-5 py-28 md:px-8 md:py-36">
       <motion.div {...fadeUp} className="text-center">
-        <Pill>Chapter 06 · What's next</Pill>
+        <Pill>Chapter 05 · What's next</Pill>
         <h2 className="mx-auto mt-6 max-w-4xl text-5xl font-semibold leading-[1] tracking-[-0.04em] md:text-7xl">
           Skin is the beginning, <span className="text-foreground/25">not the ceiling.</span>
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">One system. One data model. Four markets, in order.</p>
+        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">One app that grows with you — from skin to your whole well-being.</p>
       </motion.div>
       <div className="relative mt-16 grid gap-3 md:grid-cols-4">
         <motion.div aria-hidden className="absolute left-0 right-0 top-[38px] hidden h-px origin-left bg-foreground md:block" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.8, ease }} />
@@ -341,7 +341,7 @@ export function Epilogue() {
       <motion.p {...fadeUp} className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground">
         The mirror, a little anxiety: "what's wrong with my face?" In the world of meanwhile, your phone already told you why — and what to do about it. One short sentence instead of twelve steps.
       </motion.p>
-      <p className="mt-6 text-sm text-muted-foreground">That's what we sell. Not a cream. Not an app.</p>
+      <p className="mt-6 text-sm text-muted-foreground">Not just a cream. Not just an app.</p>
       <div className="mt-10 space-y-2">
         {lines.map((l, i) => (
           <div key={l} className="overflow-hidden">
