@@ -687,13 +687,50 @@ const Today = () => {
         )}
 
 
-        {/* Meanwhile Connector Header */}
-        <div className="glass-card p-6 animate-fade-in">
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {t('today.connector_prefix')}<span className="text-foreground font-semibold">{getDayOfWeek()}</span>{t('today.connector_suffix')}<span className="text-primary font-semibold">{t('today.connector_brand')}</span>{t('today.connector_after_brand')}
+        {/* Editorial greeting */}
+        <section className="animate-fade-in pt-2">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">
+            {getDayOfWeek()} · [m]
           </p>
-        </div>
+          <h1 className="text-[2.6rem] leading-[0.95] font-extrabold tracking-tight">
+            {t('today.hello')},<br />
+            <span className="text-muted-foreground">{userData.name || t('today.investor')}.</span>
+          </h1>
+          <p className="text-sm text-muted-foreground leading-relaxed mt-4 max-w-[320px]">
+            {t('today.connector_prefix')}<span className="text-foreground font-semibold">{getDayOfWeek()}</span>{t('today.connector_suffix')}<span className="text-foreground font-semibold">{t('today.connector_brand')}</span>{t('today.connector_after_brand')}
+          </p>
+        </section>
 
+        {/* Phase Card — brand yellow */}
+        <button
+          onClick={() => setShowWeeklyPlan(true)}
+          className="relative w-full p-6 rounded-[28px] text-left overflow-hidden bg-primary text-primary-foreground transition-transform active:scale-[0.98] animate-fade-in"
+        >
+          <div className="flex items-center justify-between mb-8">
+            <span className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] opacity-70">
+              <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+              {t('today.live_data')}
+            </span>
+            <ChevronRight className="h-5 w-5 opacity-60" />
+          </div>
+          <div className="text-6xl font-extrabold tracking-tighter leading-none">
+            {isPregnancy ? `${t('today.trimester')} ${userData.trimester || 1}` : userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `${t('today.day')} ${day}`}
+          </div>
+          <div className="mt-2 text-lg font-bold">
+            {isPregnancy ? t('today.pregnancy_mode') : userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[1] : phaseName}
+          </div>
+          <p className="text-sm leading-relaxed opacity-75 mt-3 max-w-[300px]">
+            {isPregnancy ? t('today.safety_filters') : dailyWhisper}
+          </p>
+          {!userData.wiseBloomMode && !isPregnancy && (
+            <div className="mt-6 h-1 rounded-full bg-primary-foreground/15 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-primary-foreground transition-all duration-500 ease-out"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+          )}
+        </button>
 
         {/* m.i. Daily Insight */}
         <MiInsightCard />
@@ -703,64 +740,6 @@ const Today = () => {
 
         {/* Synergy Index Gauge */}
         <SynergyIndex />
-
-        {/* Phase Card */}
-        <button
-          onClick={() => setShowWeeklyPlan(true)}
-          className="relative w-full p-6 rounded-2xl transition-all hover:scale-[1.01] overflow-hidden glass-card animate-fade-in"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div className="text-left flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: phaseIconColor }} />
-                <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{t('today.live_data')}</span>
-              </div>
-              <div className="text-3xl font-bold mb-1" style={{ color: phaseIconColor }}>
-                {isPregnancy ? `${t('today.trimester')} ${userData.trimester || 1}` : userData.wiseBloomMode ? getMicroCycleDayName(day).split(':')[0] : `${t('today.day')} ${day}`}
-
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-[280px]">
-                {dailyWhisper}
-              </p>
-            </div>
-            {isPregnancy && (
-              <div className="text-right">
-                <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
-                  {t('today.pregnancy_mode')}
-                </span>
-                <p className="text-[10px] text-muted-foreground mt-0.5">{t('today.safety_filters')}</p>
-              </div>
-
-            )}
-            {!isPregnancy && !userData.wiseBloomMode && (
-              <div className="text-right">
-                <span className="text-lg font-bold" style={{ color: phaseIconColor }}>
-                  {phaseName}
-                </span>
-                <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto mt-1" />
-              </div>
-            )}
-            {!isPregnancy && userData.wiseBloomMode && (
-              <div className="text-right">
-                <div className="text-base font-bold" style={{ color: phaseIconColor }}>
-                  {getMicroCycleDayName(day).split(':')[1]}
-                </div>
-              </div>
-            )}
-          </div>
-          
-          {!userData.wiseBloomMode && !isPregnancy && (
-            <div className="h-[3px] rounded-full bg-[hsl(var(--glass-border))] overflow-hidden">
-              <div 
-                className="h-full rounded-full transition-all duration-500 ease-out"
-                style={{
-                  width: `${progressPercentage}%`,
-                  background: `linear-gradient(to right, ${phaseIconColor}, ${nextPhaseColor})`,
-                }}
-              />
-            </div>
-          )}
-        </button>
 
         {/* Ritual Sections */}
         <div className="space-y-4 animate-slide-up">
