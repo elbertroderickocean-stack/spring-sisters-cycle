@@ -13,6 +13,8 @@ import mask from "@/assets/site/mask-face.jpg";
 import serumTrio from "@/assets/site/serum-trio.jpg";
 import appIcon from "@/assets/site/app-icon.png";
 import serumFilm from "@/assets/meanwhile-serum-01-film.mp4.asset.json";
+import Preloader from "./Preloader";
+import { Problem, Science, Morning, HowItWorks, Engines, Trojan, Horizon, Epilogue } from "./Story";
 
 const fade = {
   initial: { opacity: 0, y: 40 },
@@ -35,7 +37,7 @@ function Hero() {
     <section ref={ref} className="px-3 pt-20 md:px-6">
       <div className="mx-auto max-w-7xl pb-10 pt-10 text-center md:pt-16">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-          <Pill>SkinFinTech</Pill>
+          <Pill>Skin OS · powered by m.i.</Pill>
         </motion.div>
         <h1 className="mt-6 text-[15vw] font-semibold leading-[0.9] tracking-[-0.05em] md:text-[8.5vw]">
           {words.map((w, i) => (
@@ -56,7 +58,7 @@ function Hero() {
           transition={{ delay: 0.7 }}
           className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground"
         >
-          Your skin moves through phases. Your routine should too. meanwhile is the system that manages it — products, data and an intelligence that knows the timing.
+          While you live your life, meanwhile works in the background. An app that reads your sleep, stress, glucose, cycle and weather — and turns them into today's skin protocol.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -133,27 +135,6 @@ function Manifesto() {
   );
 }
 
-function Stats() {
-  const s = [
-    { v: "90%", l: "Routine consistency this cycle" },
-    { v: "4", l: "Phases. One adaptive framework" },
-    { v: "0", l: "Graveyard of half-used bottles" },
-  ];
-  return (
-    <section className="mx-auto grid max-w-7xl gap-3 px-3 md:grid-cols-3 md:px-6">
-      {s.map((x, i) => (
-        <motion.div key={x.l} {...fade} transition={{ ...fade.transition, delay: i * 0.1 }} className={`flex aspect-[4/3] flex-col justify-between rounded-[28px] p-8 ${i === 1 ? "bg-primary text-primary-foreground" : i === 2 ? "bg-foreground text-background" : "bg-secondary"}`}>
-          <Bracket className="text-sm" />
-          <div>
-            <p className="text-7xl font-semibold tracking-[-0.05em] md:text-8xl">{x.v}</p>
-            <p className="mt-2 max-w-[14rem] text-sm opacity-70">{x.l}</p>
-          </div>
-        </motion.div>
-      ))}
-    </section>
-  );
-}
-
 function AppSection() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -220,7 +201,7 @@ function OpenShelf() {
         <motion.div {...fade}>
           <Pill>Open Shelf</Pill>
           <h2 className="mt-6 text-5xl font-semibold leading-[1] tracking-[-0.04em] md:text-7xl">
-            Keep what works. <span className="text-foreground/25">Even if it isn't ours.</span>
+            m.i. doesn't replace your favorite brands. <span className="text-foreground/25">It gives them intelligence.</span>
           </h2>
           <div className="mt-8 space-y-5 text-lg text-muted-foreground">
             <p>Most brands want you to throw everything out and start again. We think that's bad portfolio management.</p>
@@ -345,15 +326,23 @@ function FinalCta() {
 export default function SiteHome() {
   return (
     <SiteLayout>
+      <Preloader />
       <Hero />
       <div className="mt-24"><Marquee /></div>
-      <Manifesto />
-      <Stats />
+      <Problem />
+      <Science />
+      <Morning />
       <AppSection />
+      <HowItWorks />
       <OpenShelf />
+      <Manifesto />
+      <Engines />
+      <Trojan />
       <ProductFilm />
-      <ProductsStrip />
+      <div className="mt-28"><ProductsStrip /></div>
+      <Horizon />
       <Gallery />
+      <Epilogue />
       <FinalCta />
     </SiteLayout>
   );

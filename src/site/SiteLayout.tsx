@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import Lenis from "lenis";
 import { Menu, X } from "lucide-react";
 
 export const Bracket = ({ className = "" }: { className?: string }) => (
@@ -9,6 +10,7 @@ export const Bracket = ({ className = "" }: { className?: string }) => (
 
 const links = [
   { to: "/site", label: "Brand" },
+  { to: "/site#science", label: "Science" },
   { to: "/site#app", label: "App" },
   { to: "/site#shelf", label: "Open Shelf" },
   { to: "/site/shop", label: "Shop" },
@@ -18,6 +20,17 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { hash, pathname } = useLocation();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    let id = 0;
+    const raf = (t: number) => { lenis.raf(t); id = requestAnimationFrame(raf); };
+    id = requestAnimationFrame(raf);
+    return () => { cancelAnimationFrame(id); lenis.destroy(); };
+  }, []);
 
   useEffect(() => {
     if (hash) setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" }), 50);
@@ -33,6 +46,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="site-light min-h-screen bg-background text-foreground font-sans antialiased">
+      <motion.div style={{ scaleX: progress }} className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-primary" />
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 max-md:pt-3 ${
           scrolled ? "md:border-b md:border-border md:bg-background/80 md:backdrop-blur-xl" : ""
