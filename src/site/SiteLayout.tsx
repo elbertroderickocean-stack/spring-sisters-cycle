@@ -53,9 +53,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
         }`}
       >
         <div
-          className={`mx-auto flex h-16 max-w-7xl items-center justify-between px-5 transition-colors duration-500 md:px-8 max-md:mx-3 max-md:h-14 max-md:rounded-full max-md:border max-md:bg-background/80 max-md:px-4 max-md:shadow-[0_18px_40px_-28px_hsl(var(--foreground)/0.55)] max-md:backdrop-blur-xl ${
-            scrolled ? "max-md:border-border" : "max-md:border-border/50"
-          }`}
+          className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 transition-colors duration-500 md:px-8 max-md:mx-3 max-md:h-14 max-md:rounded-full max-md:bg-gradient-to-r max-md:from-background/90 max-md:via-primary/25 max-md:to-background/90 max-md:px-4 max-md:shadow-[0_18px_40px_-28px_hsl(var(--foreground)/0.45)] max-md:backdrop-blur-xl"
         >
           <Link to="/site" className="flex items-center gap-2 text-lg font-semibold tracking-tight">
             <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-xs text-primary-foreground">
