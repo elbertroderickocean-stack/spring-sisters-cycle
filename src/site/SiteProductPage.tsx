@@ -18,7 +18,11 @@ export default function SiteProductPage() {
         <Link to="/site/shop" className="mb-4 inline-flex items-center gap-2 px-2 text-sm text-muted-foreground"><ArrowLeft size={14} /> Shop</Link>
         <div className="grid gap-3 md:grid-cols-2">
           <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} className="aspect-square overflow-hidden rounded-[32px] bg-secondary">
-            <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+            {p.video ? (
+              <video src={p.video} poster={p.image} autoPlay muted loop playsInline preload="metadata" className="h-full w-full object-cover" />
+            ) : (
+              <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+            )}
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="flex flex-col rounded-[32px] bg-card p-8">
             <div className="flex justify-between text-sm text-muted-foreground"><span>{p.collection}</span><span>[m]</span></div>

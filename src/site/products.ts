@@ -2,6 +2,7 @@ import serumTrio from "@/assets/site/serum-trio.jpg";
 import eyeCream from "@/assets/site/eye-cream-sky.jpg";
 import lineup from "@/assets/site/lineup.jpg";
 import maskFace from "@/assets/site/mask-face.jpg";
+import serumFilm from "@/assets/meanwhile-serum-01-film.mp4.asset.json";
 
 export type Collection = "The Constants" | "The Shifts" | "The Assets";
 
@@ -17,6 +18,7 @@ export interface SiteProduct {
   heroes: string[];
   phase: string;
   image: string;
+  video?: string;
 }
 
 export const collections: { name: Collection; subtitle: string }[] = [
@@ -67,6 +69,7 @@ export const products: SiteProduct[] = [
     heroes: ["Niacinamide 5%", "Zinc PCA", "Green tea"],
     phase: "Phase 3 · Luteal",
     image: serumTrio,
+    video: serumFilm.url,
   },
   {
     id: "serum-02-glow",
