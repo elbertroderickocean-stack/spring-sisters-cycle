@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Apple } from "lucide-react";
 import SiteLayout, { Bracket } from "./SiteLayout";
-import { Phone, TodayScreen, ChatScreen, ShelfScreen } from "./PhoneMockup";
 import { products, collections } from "./products";
 import heroFace from "@/assets/site/hero-face.jpg";
 import eyeCream from "@/assets/site/eye-cream-sky.jpg";
@@ -15,9 +14,10 @@ import appIcon from "@/assets/site/app-icon.png";
 import serumFilm from "@/assets/meanwhile-serum-01-film.mp4.asset.json";
 import Preloader from "./Preloader";
 import Lookbook from "./Lookbook";
+import AppScreens from "./AppScreens";
 import eyeFilm from "@/assets/site/eye-cream-sky-film.mp4.asset.json";
 import faceFilm from "@/assets/site/hero-face-film.mp4.asset.json";
-import { Problem, Science, Morning, HowItWorks, Engines, Trojan, Horizon, Epilogue } from "./Story";
+import { Problem, Science, Morning, HowItWorks, Horizon, Epilogue } from "./Story";
 
 const fade = {
   initial: { opacity: 0, y: 40 },
@@ -140,10 +140,6 @@ function Manifesto() {
 
 function AppSection() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y1 = useTransform(scrollYProgress, [0, 1], [80, -80]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [160, -40]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [40, -120]);
   return (
     <section id="app" ref={ref} className="mx-3 mt-28 overflow-hidden rounded-[36px] bg-secondary px-5 py-24 md:mx-6 md:px-12">
       <div className="mx-auto max-w-7xl">
@@ -172,11 +168,7 @@ function AppSection() {
           </div>
         </motion.div>
 
-        <div className="mt-20 flex justify-center gap-4 md:gap-10">
-          <motion.div style={{ y: y1 }} className="hidden md:block"><Phone><ChatScreen /></Phone></motion.div>
-          <motion.div style={{ y: y2 }}><Phone className="w-[280px]"><TodayScreen /></Phone></motion.div>
-          <motion.div style={{ y: y3 }} className="hidden md:block"><Phone><ShelfScreen /></Phone></motion.div>
-        </div>
+        <AppScreens />
 
         <div className="mt-24 grid gap-3 md:grid-cols-4">
           {[
@@ -339,8 +331,6 @@ export default function SiteHome() {
       <HowItWorks />
       <OpenShelf />
       <Manifesto />
-      <Engines />
-      <Trojan />
       <ProductFilm />
       <div className="mt-28"><ProductsStrip /></div>
       <Horizon />
