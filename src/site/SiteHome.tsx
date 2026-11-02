@@ -77,7 +77,7 @@ function Hero() {
         </motion.div>
       </div>
       <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2">
-        {[[eyeCream, ""], [heroFace, faceFilm.url]].map(([src, film], i) => (
+        {[[eyeCream, serumFilm.url], [heroFace, faceFilm.url]].map(([src, film], i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 60 }}
