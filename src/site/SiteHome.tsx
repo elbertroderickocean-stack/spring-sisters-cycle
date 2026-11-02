@@ -83,7 +83,7 @@ function Hero() {
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 + i * 0.15, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative aspect-[4/5] overflow-hidden rounded-[28px] md:aspect-[4/4.4]"
+            className="relative isolate aspect-[4/5] overflow-hidden rounded-[28px] [-webkit-mask-image:-webkit-radial-gradient(white,black)] [transform:translateZ(0)] md:aspect-[4/4.4]"
           >
             {film ? (
               <motion.video src={film} poster={src} autoPlay muted loop playsInline style={{ scale, y: i ? y : 0 }} className="h-full w-full object-cover" />
