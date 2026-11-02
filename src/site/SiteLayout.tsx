@@ -34,11 +34,15 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="site-light min-h-screen bg-background text-foreground font-sans antialiased">
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : ""
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 max-md:pt-3 ${
+          scrolled ? "md:border-b md:border-border md:bg-background/80 md:backdrop-blur-xl" : ""
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-8">
+        <div
+          className={`mx-auto flex h-16 max-w-7xl items-center justify-between px-5 transition-colors duration-500 md:px-8 max-md:mx-3 max-md:h-14 max-md:rounded-full max-md:border max-md:bg-background/80 max-md:px-4 max-md:shadow-[0_18px_40px_-28px_hsl(var(--foreground)/0.55)] max-md:backdrop-blur-xl ${
+            scrolled ? "max-md:border-border" : "max-md:border-border/50"
+          }`}
+        >
           <Link to="/site" className="flex items-center gap-2 text-lg font-semibold tracking-tight">
             <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-xs text-primary-foreground">
               [m]
@@ -78,7 +82,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="mx-4 mb-4 flex flex-col rounded-3xl bg-card p-3 shadow-xl md:hidden"
+              className="mx-3 mt-2 mb-4 flex flex-col rounded-3xl bg-card p-3 shadow-xl md:hidden"
             >
               {links.map((l) => (
                 <Link
@@ -103,7 +107,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
 
       <main>{children}</main>
 
-      <footer className="mt-24 bg-foreground text-background">
+      <footer className="mx-3 mt-24 rounded-t-[36px] bg-foreground text-background md:mx-0 md:rounded-t-none">
         <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <p className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
             Skincare is an investment.
