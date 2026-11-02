@@ -12,6 +12,7 @@ import shelf from "@/assets/site/open-shelf.jpg";
 import mask from "@/assets/site/mask-face.jpg";
 import serumTrio from "@/assets/site/serum-trio.jpg";
 import appIcon from "@/assets/site/app-icon.png";
+import serumFilm from "@/assets/meanwhile-serum-01-film.mp4.asset.json";
 
 const fade = {
   initial: { opacity: 0, y: 40 },
@@ -245,6 +246,38 @@ function OpenShelf() {
   );
 }
 
+function ProductFilm() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [1.18, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  return (
+    <section id="film" ref={ref} className="mx-3 mt-28 overflow-hidden rounded-[36px] bg-foreground px-5 py-16 text-background md:mx-6 md:px-12 md:py-28">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+        <motion.div {...fade} className="order-1 overflow-hidden rounded-[28px]" style={{ y }}>
+          <motion.video src={serumFilm.url} autoPlay muted loop playsInline preload="metadata" style={{ scale }} className="aspect-[4/5] w-full object-cover" />
+        </motion.div>
+        <motion.div {...fade} transition={{ ...fade.transition, delay: 0.15 }} className="order-2">
+          <span className="inline-flex rounded-full border border-background/40 px-3 py-1 text-xs font-medium">Product film</span>
+          <h2 className="mt-6 text-5xl font-semibold leading-[1] tracking-[-0.04em] md:text-7xl">
+            Serum-01 <span className="text-background/30">[Balance]</span>
+          </h2>
+          <p className="mt-6 max-w-md text-lg text-background/60">
+            Deployed when your data says sebum is climbing — not when a calendar says so. One asset, one phase, exact timing.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-2 text-xs">
+            <span className="rounded-full bg-primary px-3 py-1.5 font-medium text-primary-foreground">Phase 3 · Luteal</span>
+            <span className="rounded-full border border-background/25 px-3 py-1.5">15ml · $42</span>
+          </div>
+          <Link to="/site/shop/serum-01-balance" className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 font-medium text-foreground transition-transform hover:scale-[1.03]">
+            See the asset <ArrowRight size={16} />
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 function ProductsStrip() {
   return (
     <section className="px-3 md:px-6">
@@ -318,6 +351,7 @@ export default function SiteHome() {
       <Stats />
       <AppSection />
       <OpenShelf />
+      <ProductFilm />
       <ProductsStrip />
       <Gallery />
       <FinalCta />
