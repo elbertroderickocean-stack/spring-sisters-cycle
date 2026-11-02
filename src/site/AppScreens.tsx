@@ -79,7 +79,7 @@ function StressScreen() {
   );
 }
 
-const FACE = { cx: 60, cy: 50, rx: 34, ry: 42 };
+const FACE = { cx: 57, cy: 48, rx: 32, ry: 40 };
 
 const contour = Array.from({ length: 30 }, (_, i) => {
   const a = (i / 30) * Math.PI * 2 - Math.PI / 2;
@@ -124,18 +124,6 @@ function ScanScreen() {
         <img src={scanFace} alt="" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/25 via-transparent to-foreground/75" />
 
-        <motion.div
-          className="absolute rounded-[50%] border border-dashed border-primary/45"
-          style={{
-            left: `${FACE.cx - FACE.rx}%`,
-            top: `${FACE.cy - FACE.ry}%`,
-            width: `${FACE.rx * 2}%`,
-            height: `${FACE.ry * 2}%`,
-          }}
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
-        />
 
         {contour.map((p, i) => (
           <motion.span
@@ -171,7 +159,7 @@ function ScanScreen() {
         ))}
 
         <motion.div
-          className="absolute left-[26%] top-[39%] h-[18%] w-[17%] rounded-lg border border-primary/70"
+          className="absolute left-[25%] top-[42%] h-[16%] w-[13%] rounded-lg border border-primary/70"
           initial={{ opacity: 0, scale: 1.25 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.9, duration: 0.6, ease: "easeOut" }}
