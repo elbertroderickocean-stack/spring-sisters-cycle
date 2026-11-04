@@ -340,7 +340,7 @@ function OpenShelf() {
           </div>
           <ul className="mt-8 grid grid-cols-3 gap-3 text-sm">
             {["Scan any brand", "Synergy check", "Fill only the gaps"].map((t) => (
-              <li key={t} className="rounded-2xl bg-secondary p-4 font-medium">{t}</li>
+              <li key={t} className="glass-card rounded-2xl p-4 font-medium">{t}</li>
             ))}
           </ul>
         </motion.div>
@@ -348,7 +348,7 @@ function OpenShelf() {
           <div className="overflow-hidden rounded-[32px]">
             <motion.img initial={{ scale: 1.2 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }} src={shelf} alt="An open shelf mixing brands" width={1600} height={1200} loading="lazy" className="aspect-[4/5] w-full object-cover" />
           </div>
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="absolute -bottom-6 left-4 rounded-2xl bg-card p-4 shadow-xl md:-left-10">
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="glass-card absolute -bottom-6 left-4 rounded-2xl p-4 md:-left-10">
             <p className="text-xs text-muted-foreground">Unified Shelf</p>
             <p className="text-2xl font-semibold tracking-tight">7 assets · 1 gap</p>
           </motion.div>
@@ -378,7 +378,7 @@ function ProductFilm() {
             Used when your data says oil is climbing — not when a calendar says so. One product, one phase, exact timing.
           </p>
           <div className="mt-8 flex flex-wrap gap-2 text-xs">
-            <span className="rounded-full bg-primary px-3 py-1.5 font-medium text-primary-foreground">Phase 3 · Luteal</span>
+            <span className="glass-yellow rounded-full px-3 py-1.5 font-medium text-primary-foreground">Phase 3 · Luteal</span>
             <span className="rounded-full border border-background/25 px-3 py-1.5">15ml · $42</span>
           </div>
           <Link to="/shop/serum-01-balance" className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 font-medium text-foreground transition-transform hover:scale-[1.03]">
@@ -396,16 +396,16 @@ function ProductsStrip() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fade} className="mb-10 flex items-end justify-between px-2">
           <h2 className="text-5xl font-semibold tracking-[-0.04em] md:text-7xl">The system</h2>
-          <Link to="/shop" className="hidden items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-medium md:inline-flex">
+          <Link to="/shop" className="glass-badge hidden items-center gap-2 rounded-full px-5 py-3 text-sm font-medium md:inline-flex">
             Shop all <ArrowRight size={14} />
           </Link>
         </motion.div>
-        <motion.div {...fade} className="overflow-hidden rounded-[32px] bg-secondary">
+        <motion.div {...fade} className="glass-card overflow-hidden rounded-[32px]">
           <img src={lineup} alt="meanwhile lineup" width={1920} height={1088} loading="lazy" className="w-full" />
         </motion.div>
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           {collections.map((c, i) => (
-            <motion.div key={c.name} {...fade} transition={{ ...fade.transition, delay: i * 0.1 }} className="rounded-[28px] bg-card p-8">
+            <motion.div key={c.name} {...fade} transition={{ ...fade.transition, delay: i * 0.1 }} className="glass-card rounded-[28px] p-8">
               <p className="text-2xl font-semibold tracking-tight">{c.name}</p>
               <p className="mt-2 text-muted-foreground">{c.subtitle}</p>
               <ul className="mt-6 space-y-2">
