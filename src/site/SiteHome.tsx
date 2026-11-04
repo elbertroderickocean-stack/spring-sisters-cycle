@@ -296,7 +296,7 @@ function AppSection() {
 
         <AppScreens />
 
-        <div className="mt-24 grid gap-3 md:grid-cols-4">
+        <div className="mt-24 space-y-3 md:grid md:grid-cols-4 md:gap-3 md:space-y-0">
           {[
             ["Hormonal rhythm", "Four phases, four strategies. Your routine shifts with your cycle."],
             ["Skin scanner", "A 30-second face scan builds your baseline and tracks drift."],
