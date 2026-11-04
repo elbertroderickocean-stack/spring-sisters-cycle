@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { ArrowRight, Check, Plus } from "lucide-react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { fadeUp, Pill, ScrubText, cardVariants, cardCurtain, cardRule, cardNumber, cardMask, cardBody, cardDot } from "./Story";
+import { fadeUp, Pill, ScrubText } from "./Story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const emailSchema = z.string().trim().email().max(255);
@@ -75,18 +75,86 @@ export function Term({ children, tip }: { children: React.ReactNode; tip: string
 }
 
 /* ---------- One clarity card: same reveal language as the Problem cards ---------- */
+/* The same gestures as the Problem cards, softened: shorter travel, longer fades,
+   a gentler settling curve and a dot spring that never overshoots. */
+const softEase = [0.16, 1, 0.3, 1] as const;
+const softStagger = 0.12;
+
+const softCard: Variants = {
+  hidden: { opacity: 0, y: 26, rotateX: -5 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { duration: 1.15, ease: softEase, delay: i * softStagger },
+  }),
+};
+
+const softCurtain: Variants = {
+  hidden: { x: "0%" },
+  show: (i: number) => ({
+    x: "102%",
+    transition: { duration: 1.15, ease: softEase, delay: 0.35 + i * softStagger },
+  }),
+};
+
+const softRule: Variants = {
+  hidden: { scaleX: 0 },
+  show: (i: number) => ({
+    scaleX: 1,
+    transition: { duration: 1.6, ease: softEase, delay: 0.5 + i * softStagger },
+  }),
+};
+
+const softNumber: Variants = {
+  hidden: { opacity: 0, x: -8 },
+  show: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 1.05, ease: softEase, delay: 0.5 + i * softStagger },
+  }),
+};
+
+const softMask: Variants = {
+  hidden: { opacity: 0, y: "70%" },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1.15, ease: softEase, delay: 0.58 + i * softStagger },
+  }),
+};
+
+const softBody: Variants = {
+  hidden: { opacity: 0, y: "75%" },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1.15, ease: softEase, delay: 0.72 + i * softStagger },
+  }),
+};
+
+const softDot: Variants = {
+  hidden: { opacity: 0, scale: 0, rotate: -60 },
+  show: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: { type: "spring", stiffness: 150, damping: 24, delay: 0.85 + i * softStagger },
+  }),
+};
+
 function ClarityCard({ x, i, yellow }: { x: { k: string; h: string; t: string }; i: number; yellow: boolean }) {
   const accent = yellow ? "bg-foreground" : "bg-primary";
   return (
     <motion.div
       custom={i}
-      variants={cardVariants}
+      variants={softCard}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-60px" }}
       style={{ transformPerspective: 1200 }}
-      whileHover={{ y: -8 }}
-      transition={{ type: "spring", stiffness: 300, damping: 26 }}
+      whileHover={{ y: -6 }}
+      transition={{ type: "spring", stiffness: 180, damping: 30 }}
       className={`group relative overflow-hidden rounded-[28px] p-7 ${yellow ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
     >
       <div className="flex items-start justify-between">
