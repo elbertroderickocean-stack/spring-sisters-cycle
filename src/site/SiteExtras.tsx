@@ -247,7 +247,7 @@ export function EveryAge() {
             text="Pregnancy and postpartum get their own gentle mode with pregnancy-safe ingredients."
           />
         </div>
-        <div className="space-y-2.5 pb-[140px] md:space-y-2 md:pb-0">
+        <div className="space-y-2.5 md:space-y-2">
           {days.map((x, i) => (
             <div key={x.d} className="sticky md:static" style={{ top: `${96 + i * 40}px` }}>
               <motion.div
