@@ -18,7 +18,7 @@ import Lookbook from "./Lookbook";
 import AppScreens from "./AppScreens";
 import faceFilm from "@/assets/site/hero-face-film.mp4.asset.json";
 import { WaitlistForm, WhatItIs, EveryAge, Faq } from "./SiteExtras";
-import { Problem, Science, Morning, HowItWorks, Horizon, Epilogue } from "./Story";
+import { Problem, Science, Morning, HowItWorks, Horizon, Epilogue, Pill } from "./Story";
 
 const fade = {
   initial: { opacity: 0, y: 40 },
@@ -30,6 +30,8 @@ const fade = {
 const Pill = ({ children }: { children: React.ReactNode }) => (
   <span className="inline-flex rounded-full border border-foreground/80 px-3 py-1 text-xs font-medium">{children}</span>
 );
+
+function useIsDesktop() {
 
 function useIsDesktop() {
   const [d, setD] = useState(() => typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches);
