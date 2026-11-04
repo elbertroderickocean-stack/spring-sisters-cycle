@@ -27,16 +27,6 @@ const fade = {
   transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-flex rounded-full border border-foreground/80 px-3 py-1 text-xs font-medium">{children}</span>
-);
-
-const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-flex rounded-full border border-foreground/80 px-3 py-1 text-xs font-medium">{children}</span>
-);
-
-function useIsDesktop() {
-
 function useIsDesktop() {
   const [d, setD] = useState(() => typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches);
   useEffect(() => {
