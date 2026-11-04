@@ -74,6 +74,48 @@ export function Term({ children, tip }: { children: React.ReactNode; tip: string
   );
 }
 
+/* ---------- One clarity card: label light ignites, rule draws in, card lifts on hover ---------- */
+function ClarityCard({ x, i, yellow }: { x: { k: string; h: string; t: string }; i: number; yellow: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      {...fadeUp}
+      transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+      whileHover={{ y: -6, transition: { duration: 0.4, ease } }}
+      className={`rounded-[28px] p-7 ${yellow ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
+    >
+      <div className="flex items-center gap-2">
+        <motion.span
+          aria-hidden
+          className="relative flex h-1.5 w-1.5 items-center justify-center"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={inView ? { scale: 1, opacity: 1 } : undefined}
+          transition={{ delay: i * 0.08 + 0.5, type: "spring", stiffness: 340, damping: 18 }}
+        >
+          <motion.span
+            className="absolute inset-0 rounded-full bg-current"
+            animate={inView ? { scale: [1, 3.4], opacity: [0.45, 0] } : undefined}
+            transition={{ repeat: Infinity, duration: 2.4, ease: "easeOut", delay: i * 0.08 + 1 }}
+          />
+          <span className="relative h-1.5 w-1.5 rounded-full bg-current" />
+        </motion.span>
+        <p className="text-xs uppercase tracking-[0.2em] opacity-60">{x.k}</p>
+      </div>
+      <motion.span
+        aria-hidden
+        className="mt-4 block h-px w-full origin-left bg-current opacity-20"
+        initial={{ scaleX: 0 }}
+        animate={inView ? { scaleX: 1 } : undefined}
+        transition={{ delay: i * 0.08 + 0.35, duration: 0.9, ease }}
+      />
+      <p className="mt-8 text-2xl font-semibold tracking-tight">{x.h}</p>
+      <p className="mt-3 text-sm opacity-70">{x.t}</p>
+    </motion.div>
+  );
+}
+
 /* ---------- What is meanwhile (clarity block) ---------- */
 export function WhatItIs() {
   const items = [
@@ -92,42 +134,7 @@ export function WhatItIs() {
       </motion.div>
       <div className="mt-14 grid gap-3 md:grid-cols-4">
         {items.map((x, i) => (
-          <motion.div
-            key={x.k}
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-            whileHover={{ y: -6, transition: { duration: 0.4, ease } }}
-            className={`rounded-[28px] p-7 ${i === 1 ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
-          >
-            <div className="flex items-center gap-2">
-              <motion.span
-                aria-hidden
-                className="relative flex h-1.5 w-1.5 items-center justify-center"
-                initial={{ scale: 0, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ delay: i * 0.08 + 0.5, type: "spring", stiffness: 340, damping: 18 }}
-              >
-                <motion.span
-                  className="absolute inset-0 rounded-full bg-current"
-                  animate={{ scale: [1, 3.4], opacity: [0.45, 0] }}
-                  transition={{ repeat: Infinity, duration: 2.4, ease: "easeOut", delay: i * 0.08 + 1 }}
-                />
-                <span className="relative h-1.5 w-1.5 rounded-full bg-current" />
-              </motion.span>
-              <p className="text-xs uppercase tracking-[0.2em] opacity-60">{x.k}</p>
-            </div>
-            <motion.span
-              aria-hidden
-              className="mt-4 block h-px w-full origin-left bg-current opacity-20"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.08 + 0.35, duration: 0.9, ease }}
-            />
-            <p className="mt-8 text-2xl font-semibold tracking-tight">{x.h}</p>
-            <p className="mt-3 text-sm opacity-70">{x.t}</p>
-          </motion.div>
+          <ClarityCard key={x.k} x={x} i={i} yellow={i === 1} />
         ))}
       </div>
     </section>
