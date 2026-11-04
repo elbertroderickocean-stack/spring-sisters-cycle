@@ -364,7 +364,7 @@ function ProductFilm() {
   const scale = useTransform(scrollYProgress, [0, 1], [1.18, 1]);
   const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
   return (
-    <section id="film" ref={ref} className="mx-3 mt-28 overflow-hidden rounded-[36px] bg-foreground px-5 py-16 text-background md:mx-6 md:px-12 md:py-28">
+    <section id="film" ref={ref} className="on-dark mx-3 mt-28 overflow-hidden rounded-[36px] bg-foreground px-5 py-16 text-background md:mx-6 md:px-12 md:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
         <motion.div {...fade} className="order-1 overflow-hidden rounded-[28px]" style={{ y }}>
           <motion.video src={serumFilm.url} autoPlay muted loop playsInline preload="metadata" style={{ scale }} className="aspect-[4/5] w-full object-cover" />

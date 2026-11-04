@@ -252,7 +252,7 @@ const signals = [
 
 export function Science() {
   return (
-    <section id="science" className="mx-3 rounded-[36px] bg-foreground px-5 py-24 text-background md:mx-6 md:px-12 md:py-32">
+    <section id="science" className="on-dark mx-3 rounded-[36px] bg-foreground px-5 py-24 text-background md:mx-6 md:px-12 md:py-32">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fadeUp} className="max-w-3xl">
           <Pill dark>Chapter 02 · The science</Pill>
