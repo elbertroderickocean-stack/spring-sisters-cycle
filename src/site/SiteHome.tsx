@@ -211,13 +211,16 @@ function ApertureCard({ src, film, delay, label }: { src: string; film: string; 
         className="h-full w-full object-cover"
       />
       {label && (
-        <motion.span
-          variants={{ hidden: { opacity: 0, y: 16, filter: "blur(8px)" }, shown: { opacity: 1, y: 0, filter: "blur(0px)" } }}
-          transition={{ delay: delay + 0.9, duration: 1.1, ease }}
-          className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl"
-        >
-          meanwhile
-        </motion.span>
+        <>
+          <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-foreground/60 via-foreground/22 to-transparent" />
+          <motion.span
+            variants={{ hidden: { opacity: 0, y: 16, filter: "blur(8px)" }, shown: { opacity: 1, y: 0, filter: "blur(0px)" } }}
+            transition={{ delay: delay + 0.9, duration: 1.1, ease }}
+            className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-[hsl(var(--primary))] [text-shadow:0_1px_2px_hsl(var(--foreground)/0.5),0_0_26px_hsl(var(--foreground)/0.45),0_14px_44px_hsl(var(--foreground)/0.5)] md:text-7xl"
+          >
+            meanwhile
+          </motion.span>
+        </>
       )}
     </motion.div>
   );
