@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Plus } from "lucide-react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { fadeUp, Pill } from "./Story";
+import { fadeUp, Pill, cardVariants, cardCurtain, cardRule, cardNumber, cardMask, cardBody, cardDot } from "./Story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const emailSchema = z.string().trim().email().max(255);
@@ -74,44 +74,47 @@ export function Term({ children, tip }: { children: React.ReactNode; tip: string
   );
 }
 
-/* ---------- One clarity card: label light ignites, rule draws in, card lifts on hover ---------- */
+/* ---------- One clarity card: same reveal language as the Problem cards ---------- */
 function ClarityCard({ x, i, yellow }: { x: { k: string; h: string; t: string }; i: number; yellow: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const accent = yellow ? "bg-foreground" : "bg-primary";
   return (
     <motion.div
-      ref={ref}
-      {...fadeUp}
-      transition={{ ...fadeUp.transition, delay: i * 0.08 }}
-      whileHover={{ y: -6, transition: { duration: 0.4, ease } }}
-      className={`rounded-[28px] p-7 ${yellow ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
+      custom={i}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-60px" }}
+      style={{ transformPerspective: 1200 }}
+      whileHover={{ y: -8 }}
+      transition={{ type: "spring", stiffness: 300, damping: 26 }}
+      className={`group relative overflow-hidden rounded-[28px] p-7 ${yellow ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
     >
-      <div className="flex items-center gap-2">
-        <motion.span
-          aria-hidden
-          className="relative flex h-1.5 w-1.5 items-center justify-center"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={inView ? { scale: 1, opacity: 1 } : undefined}
-          transition={{ delay: i * 0.08 + 0.5, type: "spring", stiffness: 340, damping: 18 }}
-        >
-          <motion.span
-            className="absolute inset-0 rounded-full bg-current"
-            animate={inView ? { scale: [1, 3.4], opacity: [0.45, 0] } : undefined}
-            transition={{ repeat: Infinity, duration: 2.4, ease: "easeOut", delay: i * 0.08 + 1 }}
-          />
-          <span className="relative h-1.5 w-1.5 rounded-full bg-current" />
-        </motion.span>
-        <p className="text-xs uppercase tracking-[0.2em] opacity-60">{x.k}</p>
+      <div className="flex items-start justify-between">
+        <motion.p custom={i} variants={cardNumber} className="text-xs uppercase tracking-[0.2em] opacity-60">{x.k}</motion.p>
+        <motion.span custom={i} variants={cardDot} className={`h-2.5 w-2.5 rounded-full ${accent}`} />
+      </div>
+      <div className="mt-10 overflow-hidden">
+        <motion.p custom={i} variants={cardMask} className="text-2xl font-semibold tracking-tight">{x.h}</motion.p>
+      </div>
+      <div className="overflow-hidden">
+        <motion.p custom={i} variants={cardBody} className="mt-2 text-sm opacity-70">{x.t}</motion.p>
       </div>
       <motion.span
         aria-hidden
-        className="mt-4 block h-px w-full origin-left bg-current opacity-20"
-        initial={{ scaleX: 0 }}
-        animate={inView ? { scaleX: 1 } : undefined}
-        transition={{ delay: i * 0.08 + 0.35, duration: 0.9, ease }}
+        custom={i}
+        variants={cardRule}
+        className={`absolute inset-x-0 top-0 h-[2px] origin-left rounded-full ${accent}`}
       />
-      <p className="mt-8 text-2xl font-semibold tracking-tight">{x.h}</p>
-      <p className="mt-3 text-sm opacity-70">{x.t}</p>
+      <motion.span
+        aria-hidden
+        custom={i}
+        variants={cardCurtain}
+        className={`pointer-events-none absolute inset-0 z-10 ${accent}`}
+      />
+      <span
+        aria-hidden
+        className={`pointer-events-none absolute -bottom-20 -right-12 h-44 w-44 rounded-full blur-2xl transition-colors duration-700 ${yellow ? "bg-foreground/0 group-hover:bg-foreground/15" : "bg-primary/0 group-hover:bg-primary/25"}`}
+      />
     </motion.div>
   );
 }

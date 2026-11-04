@@ -90,7 +90,7 @@ function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
 /* ---------- Problem cards: yellow curtain reveal ---------- */
 const stagger = 0.16;
 
-const cardVariants: Variants = {
+export const cardVariants: Variants = {
   hidden: { opacity: 0, y: 54, rotateX: -12 },
   show: (i: number) => ({
     opacity: 1,
@@ -100,7 +100,7 @@ const cardVariants: Variants = {
   }),
 };
 
-const cardCurtain: Variants = {
+export const cardCurtain: Variants = {
   hidden: { x: "0%" },
   show: (i: number) => ({
     x: "102%",
@@ -108,7 +108,7 @@ const cardCurtain: Variants = {
   }),
 };
 
-const cardRule: Variants = {
+export const cardRule: Variants = {
   hidden: { scaleX: 0 },
   show: (i: number) => ({
     scaleX: 1,
@@ -116,7 +116,7 @@ const cardRule: Variants = {
   }),
 };
 
-const cardNumber: Variants = {
+export const cardNumber: Variants = {
   hidden: { opacity: 0, x: -16 },
   show: (i: number) => ({
     opacity: 1,
@@ -125,7 +125,7 @@ const cardNumber: Variants = {
   }),
 };
 
-const cardMask: Variants = {
+export const cardMask: Variants = {
   hidden: { opacity: 0, y: "115%" },
   show: (i: number) => ({
     opacity: 1,
@@ -134,7 +134,7 @@ const cardMask: Variants = {
   }),
 };
 
-const cardBody: Variants = {
+export const cardBody: Variants = {
   hidden: { opacity: 0, y: "120%" },
   show: (i: number) => ({
     opacity: 1,
@@ -143,7 +143,7 @@ const cardBody: Variants = {
   }),
 };
 
-const cardDot: Variants = {
+export const cardDot: Variants = {
   hidden: { opacity: 0, scale: 0, rotate: -120 },
   show: (i: number) => ({
     opacity: 1,
