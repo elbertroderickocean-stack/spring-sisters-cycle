@@ -267,7 +267,7 @@ function Manifesto() {
 function AppSection() {
   const ref = useRef(null);
   return (
-    <section id="app" ref={ref} className="mx-3 mt-28 overflow-hidden rounded-[36px] bg-secondary px-5 py-24 md:mx-6 md:px-12">
+    <section id="app" ref={ref} className="mx-3 mt-28 overflow-clip rounded-[36px] bg-secondary px-5 py-24 md:mx-6 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fade} className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
@@ -296,7 +296,7 @@ function AppSection() {
 
         <AppScreens />
 
-        <div className="mt-24 grid gap-3 md:grid-cols-4">
+        <div className="mt-24 space-y-3 md:grid md:grid-cols-4 md:gap-3 md:space-y-0">
           {[
             ["Hormonal rhythm", "Four phases, four strategies. Your routine shifts with your cycle."],
             ["Skin scanner", "A 30-second face scan builds your baseline and tracks drift."],
