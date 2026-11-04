@@ -27,7 +27,7 @@ function Row({ items, from, to, tags }: { items: { url: string }[]; from: string
             className="group relative h-[46vw] w-[38vw] shrink-0 overflow-hidden rounded-[24px] md:h-[22rem] md:w-[18rem]"
           >
             <img src={it.url} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110" />
-            <span className="absolute left-3 top-3 rounded-full bg-background/80 px-2.5 py-1 text-[10px] font-medium backdrop-blur">
+            <span className="glass-badge absolute left-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-medium">
               {tags[i % tags.length]}
             </span>
           </motion.div>
@@ -67,7 +67,7 @@ export default function Lookbook() {
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 right-6 flex flex-wrap items-end justify-between gap-4 text-background md:bottom-10 md:left-10 md:right-10">
             <p className="max-w-xl text-4xl font-semibold leading-[1] tracking-[-0.04em] md:text-6xl">Precise care for every phase.</p>
-            <span className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">meanwhile, it's working</span>
+            <span className="glass-yellow rounded-full px-4 py-2 text-sm font-medium text-primary-foreground">meanwhile, it's working</span>
           </div>
         </motion.div>
       </div>

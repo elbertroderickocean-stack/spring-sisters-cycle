@@ -84,7 +84,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
             <button
               aria-label="Menu"
               onClick={() => setOpen((v) => !v)}
-              className="grid h-10 w-10 place-items-center rounded-full bg-secondary md:hidden"
+              className="glass-badge grid h-10 w-10 place-items-center rounded-full md:hidden"
             >
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -96,7 +96,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="mx-3 mt-2 mb-4 flex flex-col rounded-3xl bg-card p-3 shadow-xl md:hidden"
+              className="glass-card mx-3 mt-2 mb-4 flex flex-col rounded-3xl p-3 md:hidden"
             >
               {links.map((l) => (
                 <Link

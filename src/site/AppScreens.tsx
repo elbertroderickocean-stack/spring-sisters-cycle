@@ -270,13 +270,13 @@ export default function AppScreens() {
           </motion.div>
         </AnimatePresence>
         <div className="mt-6 flex items-center gap-4">
-          <button aria-label="Previous" onClick={() => go(-1)} className="grid h-11 w-11 place-items-center rounded-full bg-card"><ChevronLeft size={18} /></button>
+          <button aria-label="Previous" onClick={() => go(-1)} className="glass-badge grid h-11 w-11 place-items-center rounded-full"><ChevronLeft size={18} /></button>
           <div className="flex gap-1.5">
             {screens.map((_, k) => (
               <button key={k} aria-label={`Screen ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all duration-500 ${k === i ? "w-8 bg-foreground" : "w-1.5 bg-foreground/20"}`} />
             ))}
           </div>
-          <button aria-label="Next" onClick={() => go(1)} className="grid h-11 w-11 place-items-center rounded-full bg-card"><ChevronRight size={18} /></button>
+          <button aria-label="Next" onClick={() => go(1)} className="glass-badge grid h-11 w-11 place-items-center rounded-full"><ChevronRight size={18} /></button>
         </div>
       </div>
     </div>

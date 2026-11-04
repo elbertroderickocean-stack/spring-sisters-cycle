@@ -33,7 +33,7 @@ export function WaitlistForm({ source, dark = false }: { source: string; dark?: 
 
   return (
     <form onSubmit={submit} className="w-full max-w-md">
-      <div className={`flex items-center gap-1 rounded-full p-1.5 ${dark ? "bg-background/10 ring-1 ring-background/25" : "bg-card ring-1 ring-border"}`}>
+      <div className={`flex items-center gap-1 rounded-full p-1.5 ${dark ? "bg-background/10 ring-1 ring-background/25" : "glass-card ring-1 ring-border"}`}>
         <input
           type="email"
           required
@@ -155,7 +155,7 @@ function ClarityCard({ x, i, yellow }: { x: { k: string; h: string; t: string };
       style={{ transformPerspective: 1200 }}
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 180, damping: 30 }}
-      className={`group relative overflow-hidden rounded-[28px] p-7 ${yellow ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
+      className={`group relative overflow-hidden rounded-[28px] p-7 ${yellow ? "glass-yellow text-primary-foreground" : "glass-card"}`}
     >
       <div className="flex items-start justify-between">
         <motion.p custom={i} variants={softNumber} className="text-xs uppercase tracking-[0.2em] opacity-60">{x.k}</motion.p>
@@ -255,7 +255,7 @@ export function EveryAge() {
               whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: i * 0.1, duration: 0.8, ease }}
-              className={`flex items-center gap-5 rounded-[22px] p-5 ${x.h === "Activation" ? "bg-foreground text-background" : x.h === "Exfoliation" ? "bg-primary text-primary-foreground" : "bg-card"}`}
+              className={`flex items-center gap-5 rounded-[22px] p-5 ${x.h === "Activation" ? "glass-ink text-background" : x.h === "Exfoliation" ? "glass-yellow text-primary-foreground" : "glass-card"}`}
             >
               <span className="w-16 shrink-0 text-xs uppercase tracking-[0.15em] opacity-60">Day {x.d}</span>
               <span className="text-xl font-semibold tracking-tight">{x.h}</span>
@@ -291,7 +291,7 @@ export function Faq() {
           <div key={f.q}>
             <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center justify-between gap-6 py-6 text-left">
               <span className="text-lg font-medium tracking-tight md:text-xl">{f.q}</span>
-              <motion.span animate={{ rotate: open === i ? 45 : 0 }} className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-secondary"><Plus size={16} /></motion.span>
+              <motion.span animate={{ rotate: open === i ? 45 : 0 }} className="glass-badge grid h-9 w-9 shrink-0 place-items-center rounded-full"><Plus size={16} /></motion.span>
             </button>
             <AnimatePresence initial={false}>
               {open === i && (
