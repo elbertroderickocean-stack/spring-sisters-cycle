@@ -11,45 +11,49 @@ export const fadeUp = {
   transition: { duration: 0.9, ease },
 };
 
-/** Badge that draws itself in from the left, lights its brand dot, then catches a soft sheen. */
+/**
+ * Badge that draws itself in from the left, lights its brand dot, then catches a soft sheen.
+ * The in-view observer lives on an unclipped wrapper: an element clipped to zero area never
+ * registers as "in view", so the reveal would never start.
+ */
 export const Pill = ({ children, dark, delay = 0 }: { children: React.ReactNode; dark?: boolean; delay?: number }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.span
-      ref={ref}
-      data-iv={String(inView)}
-      initial={{ opacity: 0, clipPath: "inset(0 100% 0 0 round 999px)" }}
-      animate={inView ? { opacity: 1, clipPath: "inset(0 0% 0 0 round 999px)" } : undefined}
-      transition={{ delay, duration: 0.65, ease }}
-      whileHover={{ y: -2, transition: { duration: 0.3, ease } }}
-      className={`relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-3 py-1 text-xs font-medium ${
-        dark ? "border-background/40" : "border-foreground/80"
-      }`}
-    >
+    <span ref={ref} className="inline-flex">
       <motion.span
-        aria-hidden
-        className="relative flex h-1.5 w-1.5 shrink-0 items-center justify-center"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={inView ? { scale: 1, opacity: 1 } : undefined}
-        transition={{ delay: delay + 0.5, type: "spring", stiffness: 340, damping: 18 }}
+        initial={{ opacity: 0, clipPath: "inset(0 100% 0 0 round 999px)" }}
+        animate={inView ? { opacity: 1, clipPath: "inset(0 0% 0 0 round 999px)" } : undefined}
+        transition={{ delay, duration: 0.65, ease }}
+        whileHover={{ y: -2, transition: { duration: 0.3, ease } }}
+        className={`relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-3 py-1 text-xs font-medium ${
+          dark ? "border-background/40" : "border-foreground/80"
+        }`}
       >
         <motion.span
-          className="absolute inset-0 rounded-full bg-primary"
-          animate={inView ? { scale: [1, 3.2], opacity: [0.5, 0] } : undefined}
-          transition={{ repeat: Infinity, duration: 2.2, ease: "easeOut", delay: delay + 1 }}
+          aria-hidden
+          className="relative flex h-1.5 w-1.5 shrink-0 items-center justify-center"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={inView ? { scale: 1, opacity: 1 } : undefined}
+          transition={{ delay: delay + 0.5, type: "spring", stiffness: 340, damping: 18 }}
+        >
+          <motion.span
+            className="absolute inset-0 rounded-full bg-primary"
+            animate={inView ? { scale: [1, 3.2], opacity: [0.5, 0] } : undefined}
+            transition={{ repeat: Infinity, duration: 2.2, ease: "easeOut", delay: delay + 1 }}
+          />
+          <span className="relative h-1.5 w-1.5 rounded-full bg-primary" />
+        </motion.span>
+        <span className="whitespace-nowrap">{children}</span>
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent"
+          initial={{ x: "-110%" }}
+          animate={inView ? { x: "110%" } : undefined}
+          transition={{ delay: delay + 0.7, duration: 1.15, ease: "easeInOut" }}
         />
-        <span className="relative h-1.5 w-1.5 rounded-full bg-primary" />
       </motion.span>
-      <span className="whitespace-nowrap">{children}</span>
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent"
-        initial={{ x: "-110%" }}
-        animate={inView ? { x: "110%" } : undefined}
-        transition={{ delay: delay + 0.7, duration: 1.15, ease: "easeInOut" }}
-      />
-    </motion.span>
+    </span>
   );
 };
 
