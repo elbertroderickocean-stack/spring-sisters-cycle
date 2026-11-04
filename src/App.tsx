@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { UserProvider } from "@/contexts/UserContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Splash from "./pages/Splash";
@@ -50,6 +50,9 @@ import NotFound from "./pages/NotFound";
 import SiteHome from "./site/SiteHome";
 import SiteShop from "./site/SiteShop";
 import SiteProductPage from "./site/SiteProductPage";
+import { Privacy, Terms } from "./site/SiteLegal";
+
+const LegacyShopRedirect = () => { const { id } = useParams(); return <Navigate to={`/shop/${id}`} replace />; };
 
 const queryClient = new QueryClient();
 
@@ -62,7 +65,8 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Splash />} />
+              <Route path="/" element={<SiteHome />} />
+              <Route path="/app" element={<Splash />} />
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/problem" element={<Problem />} />
               <Route path="/solution" element={<Solution />} />
@@ -103,9 +107,13 @@ const App = () => (
               <Route path="/meal-scanner" element={<MealScanner />} />
               <Route path="/skin-scanner" element={<SkinScanner />} />
               <Route path="/mi-chat" element={<MiChat />} />
-              <Route path="/site" element={<SiteHome />} />
-              <Route path="/site/shop" element={<SiteShop />} />
-              <Route path="/site/shop/:id" element={<SiteProductPage />} />
+              <Route path="/shop" element={<SiteShop />} />
+              <Route path="/shop/:id" element={<SiteProductPage />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/site" element={<Navigate to="/" replace />} />
+              <Route path="/site/shop" element={<Navigate to="/shop" replace />} />
+              <Route path="/site/shop/:id" element={<LegacyShopRedirect />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

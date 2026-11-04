@@ -10,12 +10,12 @@ export default function SiteProductPage() {
   const { id } = useParams();
   const p = getProduct(id);
   const { add } = useSiteCart();
-  if (!p) return <SiteLayout><p className="pt-40 text-center">Product not found. <Link to="/site/shop" className="underline">Back to shop</Link></p></SiteLayout>;
+  if (!p) return <SiteLayout><p className="pt-40 text-center">Product not found. <Link to="/shop" className="underline">Back to shop</Link></p></SiteLayout>;
   const related = products.filter((x) => x.collection === p.collection && x.id !== p.id).slice(0, 3);
   return (
     <SiteLayout>
       <section className="mx-auto max-w-7xl px-3 pt-24 md:px-6">
-        <Link to="/site/shop" className="mb-4 inline-flex items-center gap-2 px-2 text-sm text-muted-foreground"><ArrowLeft size={14} /> Shop</Link>
+        <Link to="/shop" className="mb-4 inline-flex items-center gap-2 px-2 text-sm text-muted-foreground"><ArrowLeft size={14} /> Shop</Link>
         <div className="grid gap-3 md:grid-cols-2">
           <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} className="aspect-square overflow-hidden rounded-[32px] bg-secondary">
             {p.video ? (
@@ -49,7 +49,7 @@ export default function SiteProductPage() {
             <h2 className="px-2 text-3xl font-semibold tracking-tight">Also in {p.collection}</h2>
             <div className="mt-6 grid gap-3 md:grid-cols-3">
               {related.map((r) => (
-                <Link key={r.id} to={`/site/shop/${r.id}`} className="rounded-[28px] bg-card p-4">
+                <Link key={r.id} to={`/shop/${r.id}`} className="rounded-[28px] bg-card p-4">
                   <img src={r.image} alt={r.name} loading="lazy" className="aspect-square w-full rounded-[20px] object-cover" />
                   <div className="flex justify-between px-2 pt-4"><span className="font-semibold">{r.name}</span><span>${r.price}</span></div>
                 </Link>

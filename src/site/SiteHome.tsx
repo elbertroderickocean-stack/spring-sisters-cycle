@@ -16,6 +16,7 @@ import Preloader from "./Preloader";
 import Lookbook from "./Lookbook";
 import AppScreens from "./AppScreens";
 import faceFilm from "@/assets/site/hero-face-film.mp4.asset.json";
+import { WaitlistForm, WhatItIs, EveryAge, Faq } from "./SiteExtras";
 import { Problem, Science, Morning, HowItWorks, Horizon, Epilogue } from "./Story";
 
 const fade = {
@@ -78,12 +79,10 @@ function Hero() {
           transition={{ delay: 0.85 }}
           className="mt-8 flex flex-wrap justify-center gap-3"
         >
-          <Link to="/welcome" className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3.5 font-medium text-background transition-transform hover:scale-[1.03]">
-            Start your portfolio <ArrowRight size={16} />
-          </Link>
-          <Link to="/site/shop" className="rounded-full bg-primary px-6 py-3.5 font-medium text-primary-foreground transition-transform hover:scale-[1.03]">
-            Shop the system
-          </Link>
+          <div className="flex w-full flex-col items-center gap-3">
+            <WaitlistForm source="hero" />
+            <p className="text-sm text-muted-foreground">Start with what you already own. <Link to="/shop" className="underline underline-offset-4">Our products</Link> are optional.</p>
+          </div>
         </motion.div>
       </div>
       <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-2">
@@ -187,20 +186,20 @@ function AppSection() {
               Your skin's passive income.
             </h2>
             <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-              m.i. — meanwhile.intelligence — reads your cycle, sleep, stress, glucose and weather, then deploys the right asset at the right moment. You just show up.
+              m.i. — meanwhile.intelligence — reads your cycle, sleep, stress, glucose and weather, then tells you what to use from your own shelf — and when. You just show up.
             </p>
           </div>
           <div className="flex items-center gap-4">
             <img src={appIcon} alt="meanwhile app icon" width={1024} height={1024} loading="lazy" className="h-[57px] w-[57px] shrink-0 self-start rounded-[16px] shadow-xl" />
             <div className="flex flex-col gap-2">
-              <Link to="/welcome" className="inline-flex items-center gap-2 rounded-2xl bg-foreground px-5 py-3 text-background">
+              <a href="#waitlist" className="inline-flex items-center gap-2 rounded-2xl bg-foreground px-5 py-3 text-background">
                 <Apple size={20} />
                 <span className="leading-tight">
                   <span className="block text-[10px] opacity-70">Coming soon on the</span>
                   <span className="text-sm font-semibold">App Store</span>
                 </span>
-              </Link>
-              <Link to="/welcome" className="text-center text-xs text-muted-foreground underline underline-offset-4">Try the web app now</Link>
+              </a>
+              <Link to="/app" className="text-center text-xs text-muted-foreground underline underline-offset-4">Try the web app now</Link>
             </div>
           </div>
         </motion.div>
@@ -237,7 +236,7 @@ function OpenShelf() {
           </h2>
           <div className="mt-8 space-y-5 text-lg text-muted-foreground">
             <p>Most brands want you to throw everything out and start again. We think that's bad portfolio management.</p>
-            <p>Scan any product from any brand. m.i. reads the ingredients, checks synergy and conflicts, and places it into your framework. Gaps appear as ghosted steps — so you only buy what's actually missing.</p>
+            <p>Scan any product from any brand. m.i. reads the ingredients, checks synergy and conflicts, and places it into your framework. If a step is missing, m.i. shows the gap — and you fill it with any brand you like, only if you want to.</p>
           </div>
           <ul className="mt-8 grid grid-cols-3 gap-3 text-sm">
             {["Scan any brand", "Synergy check", "Fill only the gaps"].map((t) => (
@@ -276,14 +275,14 @@ function ProductFilm() {
             Serum-01 <span className="text-background/30">[Balance]</span>
           </h2>
           <p className="mt-6 max-w-md text-lg text-background/60">
-            Deployed when your data says sebum is climbing — not when a calendar says so. One asset, one phase, exact timing.
+            Used when your data says oil is climbing — not when a calendar says so. One product, one phase, exact timing.
           </p>
           <div className="mt-8 flex flex-wrap gap-2 text-xs">
             <span className="rounded-full bg-primary px-3 py-1.5 font-medium text-primary-foreground">Phase 3 · Luteal</span>
             <span className="rounded-full border border-background/25 px-3 py-1.5">15ml · $42</span>
           </div>
-          <Link to="/site/shop/serum-01-balance" className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 font-medium text-foreground transition-transform hover:scale-[1.03]">
-            See the asset <ArrowRight size={16} />
+          <Link to="/shop/serum-01-balance" className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 font-medium text-foreground transition-transform hover:scale-[1.03]">
+            See the serum <ArrowRight size={16} />
           </Link>
         </motion.div>
       </div>
@@ -297,7 +296,7 @@ function ProductsStrip() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fade} className="mb-10 flex items-end justify-between px-2">
           <h2 className="text-5xl font-semibold tracking-[-0.04em] md:text-7xl">The system</h2>
-          <Link to="/site/shop" className="hidden items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-medium md:inline-flex">
+          <Link to="/shop" className="hidden items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-medium md:inline-flex">
             Shop all <ArrowRight size={14} />
           </Link>
         </motion.div>
@@ -312,7 +311,7 @@ function ProductsStrip() {
               <ul className="mt-6 space-y-2">
                 {products.filter((p) => p.collection === c.name).map((p) => (
                   <li key={p.id}>
-                    <Link to={`/site/shop/${p.id}`} className="flex justify-between border-t border-border pt-2 text-sm hover:text-muted-foreground">
+                    <Link to={`/shop/${p.id}`} className="flex justify-between border-t border-border pt-2 text-sm hover:text-muted-foreground">
                       <span>{p.name}</span><span>${p.price}</span>
                     </Link>
                   </li>
@@ -343,13 +342,12 @@ function Gallery() {
 
 function FinalCta() {
   return (
-    <section className="mx-3 mt-28 rounded-[36px] bg-primary px-6 py-24 text-center text-primary-foreground md:mx-6">
+    <section id="waitlist" className="mx-3 mt-28 scroll-mt-24 rounded-[36px] bg-primary px-6 py-24 text-center text-primary-foreground md:mx-6">
       <motion.div {...fade}>
         <Bracket className="text-6xl md:text-8xl" />
         <h2 className="mx-auto mt-8 max-w-3xl text-5xl font-semibold leading-[1] tracking-[-0.04em] md:text-7xl">Open your skin portfolio today.</h2>
-        <Link to="/welcome" className="mt-10 inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-4 font-medium text-background transition-transform hover:scale-[1.03]">
-          Start free <ArrowRight size={16} />
-        </Link>
+        <p className="mx-auto mt-6 max-w-md text-primary-foreground/70">Free to start. Built around the products you already own.</p>
+        <div className="mt-10 flex justify-center"><WaitlistForm source="final" /></div>
       </motion.div>
     </section>
   );
@@ -361,11 +359,13 @@ export default function SiteHome() {
       <Preloader />
       <Hero />
       <div className="mt-24"><Marquee /></div>
+      <WhatItIs />
       <Problem />
       <Science />
       <Morning />
       <AppSection />
       <HowItWorks />
+      <EveryAge />
       <OpenShelf />
       <Manifesto />
       <ProductFilm />
@@ -374,6 +374,7 @@ export default function SiteHome() {
       <Lookbook />
       <Gallery />
       <Epilogue />
+      <Faq />
       <FinalCta />
     </SiteLayout>
   );

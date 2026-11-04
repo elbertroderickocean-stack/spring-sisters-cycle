@@ -185,11 +185,11 @@ function ScanScreen() {
         <div className="absolute inset-x-0 bottom-2 z-10 flex justify-center">
           <span className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-foreground/75 px-2 py-[3px] text-[7px] font-medium text-background/90 backdrop-blur-sm">
             <span className="h-1 w-1 animate-pulse rounded-full bg-primary" />
-            m.i. scanning · hydration, redness, texture
+            m.i. scanning · visible signs
           </span>
         </div>
       </div>
-      {[["Hydration", 78], ["Redness", 22], ["Texture", 64], ["Radiance", 71]].map(([k, v]) => (
+      {[["Dryness", 22], ["Redness", 22], ["Texture", 64], ["Radiance", 71]].map(([k, v]) => (
         <div key={k as string}>
           <div className="flex justify-between text-[9px]"><span>{k}</span><span className="text-muted-foreground">{v}</span></div>
           <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-secondary">
@@ -208,8 +208,8 @@ const screens = [
   { s: TodayScreen, t: "Today", d: "Your daily protocol, rebuilt every morning from your data." },
   { s: GlucoseScreen, t: "Glucose", d: "See how meals echo on your skin — and what to do about it." },
   { s: SleepScreen, t: "Sleep", d: "Recovery hours decide which actives your skin can take tonight." },
-  { s: StressScreen, t: "Stress", d: "HRV and cortisol load, translated into a calmer routine." },
-  { s: ScanScreen, t: "Skin scan", d: "A 30-second face scan tracks hydration, redness and texture." },
+  { s: StressScreen, t: "Stress", d: "Heart-rate recovery and stress load, translated into a calmer routine." },
+  { s: ScanScreen, t: "Skin scan", d: "A 30-second face scan tracks visible dryness, redness and texture." },
   { s: ChatScreen, t: "m.i. chat", d: "Ask anything. Your personal skin specialist answers in context." },
   { s: ShelfScreen, t: "Open Shelf", d: "Scan any product from any brand and see how it fits." },
 ];

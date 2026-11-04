@@ -108,7 +108,7 @@ const Welcome = () => {
           >
             {t('welcome.cta')}
           </Button>
-          <OnboardingBackButton to="/" />
+          <OnboardingBackButton to="/app" />
         </div>
       </div>
     </div>

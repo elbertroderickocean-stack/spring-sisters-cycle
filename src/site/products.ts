@@ -65,7 +65,7 @@ export const products: SiteProduct[] = [
     price: 42,
     tagline: "For the phase when skin runs oily and reactive.",
     description:
-      "Niacinamide and zinc calibrate sebum during the luteal phase. m.i. tells you when to deploy it — and when to pause.",
+      "Niacinamide and zinc calibrate sebum during the luteal phase. m.i. tells you when to use it — and when to pause.",
     heroes: ["Niacinamide 5%", "Zinc PCA", "Green tea"],
     phase: "Phase 3 · Luteal",
     image: serumTrio,
@@ -122,7 +122,7 @@ export const products: SiteProduct[] = [
     price: 89,
     tagline: "The flagship high-yield asset.",
     description:
-      "PDRN and peptides support the skin's own repair cycle. Deployed in 7-day micro-cycles so the result compounds instead of plateauing.",
+      "PDRN and peptides support the skin's own repair cycle. Used in 7-day cycles so the result compounds instead of plateauing.",
     heroes: ["PDRN", "Peptides", "Ceramides"],
     phase: "7-day micro-cycle · PM",
     image: lineup,
@@ -136,7 +136,7 @@ export const products: SiteProduct[] = [
     price: 28,
     tagline: "A dividend you can feel in 20 minutes.",
     description:
-      "Hydrogel masks in Glow, Detox and Calm. Deploy before an event or after a flight — m.i. reminds you when the data says you need it.",
+      "Hydrogel masks in Glow, Detox and Calm. Use before an event or after a flight — m.i. reminds you when the data says you need it.",
     heroes: ["Hyaluronic acid", "Niacinamide", "Charcoal (Detox)"],
     phase: "Event-driven",
     image: maskFace,

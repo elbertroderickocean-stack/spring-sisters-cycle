@@ -2,7 +2,7 @@
   "name": "meanwhile — Your Skin, Managed",
   "short_name": "meanwhile.",
   "description": "meanwhile manages your skin in the background while you live your life.",
-  "start_url": "/",
+  "start_url": "/app",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#EBF48B",
