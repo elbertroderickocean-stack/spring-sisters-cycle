@@ -81,7 +81,7 @@ function Hero() {
           <Link to="/welcome" className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3.5 font-medium text-background transition-transform hover:scale-[1.03]">
             Start your portfolio <ArrowRight size={16} />
           </Link>
-          <Link to="/site/shop" className="rounded-full bg-primary px-6 py-3.5 font-medium text-primary-foreground transition-transform hover:scale-[1.03]">
+          <Link to="/shop" className="rounded-full bg-primary px-6 py-3.5 font-medium text-primary-foreground transition-transform hover:scale-[1.03]">
             Shop the system
           </Link>
         </motion.div>
@@ -282,7 +282,7 @@ function ProductFilm() {
             <span className="rounded-full bg-primary px-3 py-1.5 font-medium text-primary-foreground">Phase 3 · Luteal</span>
             <span className="rounded-full border border-background/25 px-3 py-1.5">15ml · $42</span>
           </div>
-          <Link to="/site/shop/serum-01-balance" className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 font-medium text-foreground transition-transform hover:scale-[1.03]">
+          <Link to="/shop/serum-01-balance" className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 font-medium text-foreground transition-transform hover:scale-[1.03]">
             See the asset <ArrowRight size={16} />
           </Link>
         </motion.div>
@@ -297,7 +297,7 @@ function ProductsStrip() {
       <div className="mx-auto max-w-7xl">
         <motion.div {...fade} className="mb-10 flex items-end justify-between px-2">
           <h2 className="text-5xl font-semibold tracking-[-0.04em] md:text-7xl">The system</h2>
-          <Link to="/site/shop" className="hidden items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-medium md:inline-flex">
+          <Link to="/shop" className="hidden items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-medium md:inline-flex">
             Shop all <ArrowRight size={14} />
           </Link>
         </motion.div>
@@ -312,7 +312,7 @@ function ProductsStrip() {
               <ul className="mt-6 space-y-2">
                 {products.filter((p) => p.collection === c.name).map((p) => (
                   <li key={p.id}>
-                    <Link to={`/site/shop/${p.id}`} className="flex justify-between border-t border-border pt-2 text-sm hover:text-muted-foreground">
+                    <Link to={`/shop/${p.id}`} className="flex justify-between border-t border-border pt-2 text-sm hover:text-muted-foreground">
                       <span>{p.name}</span><span>${p.price}</span>
                     </Link>
                   </li>

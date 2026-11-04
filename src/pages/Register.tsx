@@ -39,7 +39,7 @@ const Register = () => {
 
   const handleGoogleSignup = async () => {
     const result = await lovable.auth.signInWithOAuth('google', {
-      redirect_uri: window.location.origin,
+      redirect_uri: `${window.location.origin}/app`,
     });
     if (result.error) {
       toast.error(t('login.google_failed'));
@@ -51,7 +51,7 @@ const Register = () => {
 
   const handleAppleSignup = async () => {
     const result = await lovable.auth.signInWithOAuth('apple', {
-      redirect_uri: window.location.origin,
+      redirect_uri: `${window.location.origin}/app`,
     });
     if (result.error) {
       toast.error(t('login.apple_failed'));

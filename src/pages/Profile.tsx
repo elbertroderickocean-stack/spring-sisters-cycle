@@ -64,7 +64,7 @@ const Profile = () => {
       ownedProducts: [],
       productInventory: [],
     });
-    navigate('/');
+    navigate('/app');
   };
 
   return (

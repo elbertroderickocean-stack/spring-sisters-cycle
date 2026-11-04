@@ -27,7 +27,7 @@ export default function SiteShop() {
           <AnimatePresence mode="popLayout">
             {list.map((p, i) => (
               <motion.div key={p.id} layout initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ delay: i * 0.04 }} className="group flex flex-col rounded-[28px] bg-card p-4">
-                <Link to={`/site/shop/${p.id}`} className="relative block aspect-square overflow-hidden rounded-[20px] bg-secondary">
+                <Link to={`/shop/${p.id}`} className="relative block aspect-square overflow-hidden rounded-[20px] bg-secondary">
                   {p.video ? (
                     <video src={p.video} poster={p.image} autoPlay muted loop playsInline preload="metadata" className="h-full w-full object-cover" />
                   ) : (
