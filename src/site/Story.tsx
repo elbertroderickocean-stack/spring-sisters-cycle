@@ -26,7 +26,7 @@ export const Pill = ({ children, dark, delay = 0 }: { children: React.ReactNode;
         animate={inView ? { opacity: 1, clipPath: "inset(0 0% 0 0 round 999px)" } : undefined}
         transition={{ delay, duration: 0.65, ease }}
         whileHover={{ y: -2, transition: { duration: 0.3, ease } }}
-        className={`relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-3 py-1 text-xs font-medium ${
+        className={`glass-badge relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-3 py-1 text-xs font-medium ${
           dark ? "border-background/40" : "border-foreground/80"
         }`}
       >
@@ -180,7 +180,7 @@ function ProblemCard({ i, h, t }: { i: number; h: string; t: string }) {
       style={{ transformPerspective: 1200 }}
       whileHover={{ y: -8 }}
       transition={{ type: "spring", stiffness: 300, damping: 26 }}
-      className="group relative overflow-hidden rounded-[28px] bg-secondary p-7"
+      className="glass-card group relative overflow-hidden rounded-[28px] p-7"
     >
       <div className="flex items-start justify-between">
         <motion.p custom={i} variants={cardNumber} className="text-sm text-muted-foreground">0{i + 1}</motion.p>
@@ -335,7 +335,7 @@ export function Morning() {
         </motion.div>
         <div className="relative mx-auto w-full max-w-md">
           <motion.div aria-hidden className="absolute -inset-10 rounded-full bg-primary/60 blur-3xl" animate={{ scale: [1, 1.12, 1], opacity: [0.6, 0.9, 0.6] }} transition={{ duration: 6, repeat: Infinity }} />
-          <motion.div {...fadeUp} className="relative rounded-[28px] border border-border bg-background/80 p-5 shadow-2xl backdrop-blur-xl">
+          <motion.div {...fadeUp} className="glass-card relative rounded-[28px] border border-border p-5">
             <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
               <span className="flex items-center gap-2 font-semibold text-foreground"><span className="grid h-6 w-6 place-items-center rounded-md bg-primary text-[8px] text-primary-foreground">[m]</span>m.i.</span>
               <span>now</span>
@@ -396,7 +396,7 @@ export function HowItWorks() {
         </div>
         <motion.div ref={track} style={{ x }} className="flex w-max gap-4 pl-5 pr-5 md:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]">
           {steps.map((s, i) => (
-            <div key={s.h} className={`flex h-[52vh] min-h-[360px] w-[80vw] shrink-0 flex-col justify-between rounded-[32px] p-8 md:w-[34vw] ${i === 4 ? "bg-primary text-primary-foreground" : i % 2 ? "bg-foreground text-background" : "bg-secondary"}`}>
+            <div key={s.h} className={`flex h-[52vh] min-h-[360px] w-[80vw] shrink-0 flex-col justify-between rounded-[32px] p-8 md:w-[34vw] ${i === 4 ? "glass-yellow text-primary-foreground" : i % 2 ? "glass-ink text-background" : "glass-card"}`}>
               <div className="flex items-center justify-between">
                 <s.icon size={28} />
                 <span className="text-sm opacity-50">0{i + 1} / 05</span>
@@ -434,8 +434,8 @@ export function Horizon() {
         <motion.div aria-hidden className="absolute left-0 right-0 top-[38px] hidden h-px origin-left bg-foreground md:block" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.8, ease }} />
         {h.map((x, i) => (
           <motion.div key={x.h} {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.2 + i * 0.15 }} className="relative">
-            <span className={`relative z-10 inline-flex rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] ${i === 0 ? "bg-primary text-primary-foreground" : "bg-foreground text-background"}`}>{x.k}</span>
-            <div className="mt-6 rounded-[28px] bg-secondary p-7">
+            <span className={`relative z-10 inline-flex rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] ${i === 0 ? "glass-yellow text-primary-foreground" : "glass-ink text-background"}`}>{x.k}</span>
+            <div className="glass-card mt-6 rounded-[28px] p-7">
               <p className="text-2xl font-semibold tracking-tight">{x.h}</p>
               <p className="mt-3 text-muted-foreground">{x.t}</p>
             </div>
@@ -467,7 +467,7 @@ export function Epilogue() {
       </div>
       <motion.div {...fadeUp} className="mx-auto mt-14 flex max-w-2xl flex-wrap justify-center gap-2 text-sm">
         {["Skin — the interface", "Routine — the protocol", "Product — the entry"].map((t) => (
-          <span key={t} className="rounded-full bg-secondary px-4 py-2">{t}</span>
+          <span key={t} className="glass-badge rounded-full px-4 py-2">{t}</span>
         ))}
       </motion.div>
     </section>
