@@ -314,6 +314,38 @@
       inset 0 0 0 1px hsl(var(--foreground) / 0.08);
   }
 
+  /* On an inverted panel (`bg-foreground text-background`) the same recipes
+     invert too: the veil is tinted with the panel's own content color, so the
+     glass reads correctly in either theme without hardcoding a tone. */
+  .on-dark .glass-card {
+    background-color: hsl(var(--background) / 0.07);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--background) / 0.22),
+      inset 0 0 0 1px hsl(var(--background) / 0.14),
+      0 22px 46px -32px hsl(0 0% 0% / 0.45);
+  }
+  .on-dark .glass-panel {
+    background-color: hsl(var(--background) / 0.09);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--background) / 0.24),
+      inset 0 0 0 1px hsl(var(--background) / 0.16);
+  }
+  .on-dark .glass-badge {
+    background-color: hsl(var(--background) / 0.1);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--background) / 0.26),
+      inset 0 0 0 1px hsl(var(--background) / 0.18);
+  }
+  .on-dark .glass-yellow {
+    background-color: hsl(var(--primary) / 0.92);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--background) / 0.35),
+      inset 0 0 0 1px hsl(var(--foreground) / 0.1);
+  }
+  .on-dark .glass-ink {
+    background-color: hsl(var(--foreground) / 0.9);
+  }
+
   /* Override text-primary to use readable ink color instead of bright yellow */
   .text-primary {
     color: hsl(var(--primary-ink)) !important;
