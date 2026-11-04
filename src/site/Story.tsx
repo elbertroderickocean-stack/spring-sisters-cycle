@@ -62,6 +62,9 @@ function Word({ children, progress, range, min = 0.12 }: { children: string; pro
   const opacity = useTransform(progress, range, [min, 1]);
   return <motion.span style={{ opacity }} className="mr-[0.25em] inline-block">{children}</motion.span>;
 }
+/** Scroll-offset type taken straight from useScroll, so literal offsets stay type-checked. */
+type ScrubOffset = NonNullable<Parameters<typeof useScroll>[0]>["offset"];
+
 export function ScrubText({
   text,
   className = "",
@@ -73,7 +76,7 @@ export function ScrubText({
   className?: string;
   as?: "p" | "h2" | "h3" | "span";
   min?: number;
-  offset?: [string, string];
+  offset?: ScrubOffset;
 }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset });
