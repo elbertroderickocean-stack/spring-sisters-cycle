@@ -158,25 +158,25 @@ function ClarityCard({ x, i, yellow }: { x: { k: string; h: string; t: string };
       className={`group relative overflow-hidden rounded-[28px] p-7 ${yellow ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
     >
       <div className="flex items-start justify-between">
-        <motion.p custom={i} variants={cardNumber} className="text-xs uppercase tracking-[0.2em] opacity-60">{x.k}</motion.p>
-        <motion.span custom={i} variants={cardDot} className={`h-2.5 w-2.5 rounded-full ${accent}`} />
+        <motion.p custom={i} variants={softNumber} className="text-xs uppercase tracking-[0.2em] opacity-60">{x.k}</motion.p>
+        <motion.span custom={i} variants={softDot} className={`h-2.5 w-2.5 rounded-full ${accent}`} />
       </div>
       <div className="mt-10 overflow-hidden">
-        <motion.p custom={i} variants={cardMask} className="text-2xl font-semibold tracking-tight">{x.h}</motion.p>
+        <motion.p custom={i} variants={softMask} className="text-2xl font-semibold tracking-tight">{x.h}</motion.p>
       </div>
       <div className="overflow-hidden">
-        <motion.p custom={i} variants={cardBody} className="mt-2 text-sm opacity-70">{x.t}</motion.p>
+        <motion.p custom={i} variants={softBody} className="mt-2 text-sm opacity-70">{x.t}</motion.p>
       </div>
       <motion.span
         aria-hidden
         custom={i}
-        variants={cardRule}
+        variants={softRule}
         className={`absolute inset-x-0 top-0 h-[2px] origin-left rounded-full ${accent}`}
       />
       <motion.span
         aria-hidden
         custom={i}
-        variants={cardCurtain}
+        variants={softCurtain}
         className={`pointer-events-none absolute inset-0 z-10 ${accent}`}
       />
       <span
