@@ -342,11 +342,11 @@ export function Morning() {
             </div>
             <Typing text={miMessage} />
           </motion.div>
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.8, duration: 0.8, ease }} className="relative mt-3 ml-10 rounded-[24px] bg-secondary p-5">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.8, duration: 0.8, ease }} className="glass-card relative mt-3 ml-10 rounded-[24px] p-5">
             <p className="text-xs text-muted-foreground">Next day · after a late dessert</p>
             <p className="mt-1 text-[15px] leading-snug">Slight puffiness, slower recovery overnight. No lecture — tomorrow gets less sugar in the plan and more antioxidant support.</p>
           </motion.div>
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 1.3, duration: 0.8, ease }} className="relative mt-3 rounded-[24px] bg-foreground p-5 text-background">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 1.3, duration: 0.8, ease }} className="glass-ink relative mt-3 rounded-[24px] p-5 text-background">
             <p className="text-xs text-background/50">Day 30</p>
             <p className="mt-1 text-[15px] leading-snug">Not a shelf upgrade. A <span className="text-primary">protocol</span> — living, daily, personal, learning from your own skin.</p>
           </motion.div>
