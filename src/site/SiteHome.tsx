@@ -31,6 +31,10 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
   <span className="inline-flex rounded-full border border-foreground/80 px-3 py-1 text-xs font-medium">{children}</span>
 );
 
+const Pill = ({ children }: { children: React.ReactNode }) => (
+  <span className="inline-flex rounded-full border border-foreground/80 px-3 py-1 text-xs font-medium">{children}</span>
+);
+
 function useIsDesktop() {
 
 function useIsDesktop() {
