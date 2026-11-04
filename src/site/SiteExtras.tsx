@@ -247,20 +247,21 @@ export function EveryAge() {
             text="Pregnancy and postpartum get their own gentle mode with pregnancy-safe ingredients."
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2.5 md:space-y-2">
           {days.map((x, i) => (
-            <motion.div
-              key={x.d}
-              initial={{ opacity: 0, x: 40, filter: "blur(8px)" }}
-              whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.1, duration: 0.8, ease }}
-              className={`flex items-center gap-5 rounded-[22px] p-5 ${x.h === "Activation" ? "glass-ink text-background" : x.h === "Exfoliation" ? "glass-yellow text-primary-foreground" : "glass-card"}`}
-            >
-              <span className="w-16 shrink-0 text-xs uppercase tracking-[0.15em] opacity-60">Day {x.d}</span>
-              <span className="text-xl font-semibold tracking-tight">{x.h}</span>
-              <span className="ml-auto text-sm opacity-60">{x.t}</span>
-            </motion.div>
+            <div key={x.d} className="sticky md:static" style={{ top: `${96 + i * 15}px` }}>
+              <motion.div
+                initial={{ opacity: 0, x: 40, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: i * 0.1, duration: 0.8, ease }}
+                className={`glass-thin flex min-h-[126px] items-center gap-5 rounded-[22px] p-5 md:min-h-0 ${x.h === "Activation" ? "glass-ink text-background" : x.h === "Exfoliation" ? "glass-yellow text-primary-foreground" : "glass-card"}`}
+              >
+                <span className="w-16 shrink-0 text-xs uppercase tracking-[0.15em] opacity-60">Day {x.d}</span>
+                <span className="text-xl font-semibold tracking-tight">{x.h}</span>
+                <span className="ml-auto text-sm opacity-60">{x.t}</span>
+              </motion.div>
+            </div>
           ))}
         </div>
       </div>
