@@ -352,10 +352,22 @@ const steps = [
 export function HowItWorks() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-72%"]);
+  const track = useRef<HTMLDivElement>(null);
+  const [dist, setDist] = useState(0);
+  useEffect(() => {
+    const measure = () => {
+      const el = track.current;
+      if (!el) return;
+      setDist(Math.max(0, el.scrollWidth - window.innerWidth + 20));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+  const x = useTransform(scrollYProgress, [0.05, 0.95], [0, -dist]);
   const bar = useTransform(scrollYProgress, [0, 1], [0, 1]);
   return (
-    <section ref={ref} className="relative h-[320vh]">
+    <section ref={ref} className="relative h-[420vh] md:h-[320vh]">
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         <div className="mx-auto mb-10 w-full max-w-7xl px-5 md:px-8">
           <Pill>Chapter 04 · Skin OS, under the hood</Pill>
@@ -366,7 +378,7 @@ export function HowItWorks() {
             <motion.div style={{ scaleX: bar }} className="h-full origin-left bg-foreground" />
           </div>
         </div>
-        <motion.div style={{ x }} className="flex gap-4 pl-5 md:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+        <motion.div ref={track} style={{ x }} className="flex w-max gap-4 pl-5 pr-5 md:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]">
           {steps.map((s, i) => (
             <div key={s.h} className={`flex h-[52vh] min-h-[360px] w-[80vw] shrink-0 flex-col justify-between rounded-[32px] p-8 md:w-[34vw] ${i === 4 ? "bg-primary text-primary-foreground" : i % 2 ? "bg-foreground text-background" : "bg-secondary"}`}>
               <div className="flex items-center justify-between">
