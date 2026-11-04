@@ -267,7 +267,7 @@ function Manifesto() {
 function AppSection() {
   const ref = useRef(null);
   return (
-    <section id="app" ref={ref} className="mx-3 mt-28 overflow-hidden rounded-[36px] bg-secondary px-5 py-24 md:mx-6 md:px-12">
+    <section id="app" ref={ref} className="mx-3 mt-28 overflow-clip rounded-[36px] bg-secondary px-5 py-24 md:mx-6 md:px-12">
       <div className="mx-auto max-w-7xl">
         <motion.div {...fade} className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
