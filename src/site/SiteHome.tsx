@@ -42,42 +42,135 @@ function useIsDesktop() {
   return d;
 }
 
+const HERO_BODY =
+  "While you live your life, meanwhile works in the background. An app that reads your sleep, stress, glucose, cycle and weather — and turns them into today's skin protocol.";
+
+/** Boot-up badge: the pill wipes in, the brand dot ignites, the label types itself, then a soft sheen passes. */
+function BootPill({ text, start, delay = 0.2 }: { text: string; start: boolean; delay?: number }) {
+  const reduced = useReducedMotion();
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (!start || reduced) {
+      setN(text.length);
+      return;
+    }
+    let interval = 0;
+    const timer = window.setTimeout(() => {
+      let i = 0;
+      interval = window.setInterval(() => {
+        i += 1;
+        setN(i);
+        if (i >= text.length) window.clearInterval(interval);
+      }, 42);
+    }, 450);
+    return () => {
+      window.clearTimeout(timer);
+      window.clearInterval(interval);
+    };
+  }, [start, text, reduced]);
+
+  const finished = n >= text.length;
+
+  return (
+    <motion.span
+      initial={{ opacity: 0, clipPath: "inset(0 100% 0 0 round 999px)" }}
+      animate={start ? { opacity: 1, clipPath: "inset(0 0% 0 0 round 999px)" } : { opacity: 0 }}
+      transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-foreground/80 px-3 py-1 text-xs font-medium"
+    >
+      <span className="sr-only">{text}</span>
+      <motion.span
+        aria-hidden
+        className="relative flex h-1.5 w-1.5 shrink-0 items-center justify-center"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={start ? { scale: 1, opacity: 1 } : {}}
+        transition={{ delay: delay + 0.55, type: "spring", stiffness: 320, damping: 18 }}
+      >
+        <motion.span
+          className="absolute inset-0 rounded-full bg-primary"
+          animate={{ scale: [1, 3.4], opacity: [0.5, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
+        />
+        <span className="relative h-1.5 w-1.5 rounded-full bg-primary" />
+      </motion.span>
+
+      <span aria-hidden className="relative inline-block">
+        <span className="invisible">{text}</span>
+        <span className="absolute inset-0 flex items-center whitespace-nowrap">
+          {text.slice(0, n)}
+          <motion.span
+            className="ml-[2px] inline-block h-[11px] w-[2px] shrink-0 rounded-full bg-primary"
+            animate={finished ? { opacity: 0 } : { opacity: [1, 1, 0, 0] }}
+            transition={
+              finished
+                ? { duration: 0.5, delay: 0.7 }
+                : { repeat: Infinity, duration: 0.85, times: [0, 0.45, 0.55, 1] }
+            }
+          />
+        </span>
+      </span>
+
+      {finished && (
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent"
+          initial={{ x: "-110%" }}
+          animate={{ x: "110%" }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+      )}
+    </motion.span>
+  );
+}
+
 function Hero() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const desktop = useIsDesktop();
+  const ready = useIntroReady();
   const words = ["Beauty", "has", "no", "deadline"];
+  const body = HERO_BODY.split(" ");
+  const rise = { opacity: 1, y: 0, filter: "blur(0px)" };
   return (
     <section ref={ref} className="px-3 pt-20 md:px-6">
       <div className="mx-auto max-w-7xl pb-10 pt-10 text-center md:pt-16">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-          <Pill>Skin OS · powered by m.i.</Pill>
-        </motion.div>
+        <BootPill text="Skin OS · powered by m.i." start={ready} />
         <h1 className="mt-6 text-[15vw] font-semibold leading-[0.9] tracking-[-0.05em] md:text-[8.5vw]">
           {words.map((w, i) => (
-            <motion.span
+            <span
               key={w}
-              className="inline-block pr-[0.2em]"
-              initial={{ opacity: 0, y: "60%" }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 + i * 0.1, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="relative -mb-[0.14em] inline-block overflow-hidden pb-[0.14em] pr-[0.2em] align-top"
             >
-              {w}
-            </motion.span>
+              <motion.span
+                className="inline-block"
+                initial={{ opacity: 0, y: "115%", filter: "blur(12px)" }}
+                animate={ready ? rise : undefined}
+                transition={{ delay: 0.55 + i * 0.13, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {w}
+              </motion.span>
+            </span>
           ))}
         </h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground"
-        >
-          While you live your life, meanwhile works in the background. An app that reads your sleep, stress, glucose, cycle and weather — and turns them into today's skin protocol.
+        <motion.p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
+          {body.map((w, i) => (
+            <Fragment key={i}>
+              <motion.span
+                className="inline-block"
+                initial={{ opacity: 0, y: 6, filter: "blur(6px)" }}
+                animate={ready ? rise : undefined}
+                transition={{ delay: 1.5 + i * 0.038, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {w}
+              </motion.span>
+              {i < body.length - 1 ? " " : null}
+            </Fragment>
+          ))}
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85 }}
+          animate={ready ? { opacity: 1, y: 0 } : undefined}
+          transition={{ delay: 2.3 }}
           className="mt-8 flex flex-wrap justify-center gap-3"
         >
           <div className="flex w-full flex-col items-center gap-3">
