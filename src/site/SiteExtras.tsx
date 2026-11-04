@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight, Check, Plus } from "lucide-react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
