@@ -269,17 +269,8 @@
      saturated backdrop, a hairline edge, a light catch along the top and a
      soft lift underneath. Colors come from the theme tokens, so dark mode
      inverts them automatically. */
-  .glass-card {
-    background-color: hsl(var(--card) / 0.55);
-    -webkit-backdrop-filter: blur(18px) saturate(1.4);
-    backdrop-filter: blur(18px) saturate(1.4);
-    box-shadow:
-      inset 0 1px 0 hsl(var(--background) / 0.7),
-      inset 0 0 0 1px hsl(var(--foreground) / 0.07),
-      0 22px 46px -32px hsl(var(--foreground) / 0.32);
-  }
   .glass-panel {
-    background-color: hsl(var(--background) / 0.4);
+    background-color: hsl(var(--background) / var(--glass-fill, 0.4));
     -webkit-backdrop-filter: blur(18px) saturate(1.4);
     backdrop-filter: blur(18px) saturate(1.4);
     box-shadow:
@@ -288,7 +279,7 @@
       0 22px 46px -32px hsl(var(--foreground) / 0.28);
   }
   .glass-yellow {
-    background-color: hsl(var(--primary) / 0.62);
+    background-color: hsl(var(--primary) / var(--glass-fill, 0.62));
     -webkit-backdrop-filter: blur(16px) saturate(1.3);
     backdrop-filter: blur(16px) saturate(1.3);
     box-shadow:
@@ -297,7 +288,7 @@
       0 20px 42px -30px hsl(var(--foreground) / 0.3);
   }
   .glass-ink {
-    background-color: hsl(var(--foreground) / 0.82);
+    background-color: hsl(var(--foreground) / var(--glass-fill, 0.82));
     -webkit-backdrop-filter: blur(16px) saturate(1.3);
     backdrop-filter: blur(16px) saturate(1.3);
     box-shadow:
@@ -306,44 +297,67 @@
       0 20px 42px -30px hsl(var(--foreground) / 0.45);
   }
   .glass-badge {
-    background-color: hsl(var(--card) / 0.45);
+    background-color: hsl(var(--card) / var(--glass-fill, 0.45));
     -webkit-backdrop-filter: blur(12px) saturate(1.3);
     backdrop-filter: blur(12px) saturate(1.3);
     box-shadow:
       inset 0 1px 0 hsl(var(--background) / 0.55),
       inset 0 0 0 1px hsl(var(--foreground) / 0.08);
   }
+  /* Composes with any glass surface above: thinner fill, so a stacked card
+     lets the one underneath read through it. */
+  .glass-thin {
+    --glass-fill: 0.3;
+  }
+  /* The theme-aware .glass-card below carries its own alpha in --glass-bg, so
+     thinning it is a proportional fade rather than a re-mixed color. A crisp
+     edge and a cast shadow are what make a thin plate read as glass sitting on
+     top of another plate. */
+  .glass-card.glass-thin {
+    background: color-mix(in srgb, hsl(var(--glass-bg)) 40%, transparent);
+    border-color: hsl(var(--foreground) / 0.14);
+    box-shadow:
+      inset 0 1px 0 hsl(var(--background) / 0.85),
+      0 20px 34px -26px hsl(var(--foreground) / 0.5);
+  }
+  .glass-yellow.glass-thin,
+  .glass-ink.glass-thin {
+    box-shadow:
+      inset 0 1px 0 hsl(var(--background) / 0.45),
+      inset 0 0 0 1px hsl(var(--foreground) / 0.16),
+      0 20px 34px -26px hsl(var(--foreground) / 0.5);
+  }
 
   /* On an inverted panel (`bg-foreground text-background`) the same recipes
      invert too: the veil is tinted with the panel's own content color, so the
      glass reads correctly in either theme without hardcoding a tone. */
   .on-dark .glass-card {
-    background-color: hsl(var(--background) / 0.07);
+    background-color: hsl(var(--background) / var(--glass-fill, 0.07));
     box-shadow:
       inset 0 1px 0 hsl(var(--background) / 0.22),
       inset 0 0 0 1px hsl(var(--background) / 0.14),
       0 22px 46px -32px hsl(0 0% 0% / 0.45);
   }
   .on-dark .glass-panel {
-    background-color: hsl(var(--background) / 0.09);
+    background-color: hsl(var(--background) / var(--glass-fill, 0.09));
     box-shadow:
       inset 0 1px 0 hsl(var(--background) / 0.24),
       inset 0 0 0 1px hsl(var(--background) / 0.16);
   }
   .on-dark .glass-badge {
-    background-color: hsl(var(--background) / 0.1);
+    background-color: hsl(var(--background) / var(--glass-fill, 0.1));
     box-shadow:
       inset 0 1px 0 hsl(var(--background) / 0.26),
       inset 0 0 0 1px hsl(var(--background) / 0.18);
   }
   .on-dark .glass-yellow {
-    background-color: hsl(var(--primary) / 0.78);
+    background-color: hsl(var(--primary) / var(--glass-fill, 0.78));
     box-shadow:
       inset 0 1px 0 hsl(var(--background) / 0.35),
       inset 0 0 0 1px hsl(var(--foreground) / 0.1);
   }
   .on-dark .glass-ink {
-    background-color: hsl(var(--foreground) / 0.85);
+    background-color: hsl(var(--foreground) / var(--glass-fill, 0.85));
   }
 
   /* Override text-primary to use readable ink color instead of bright yellow */

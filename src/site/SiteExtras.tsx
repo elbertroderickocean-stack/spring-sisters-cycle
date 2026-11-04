@@ -247,21 +247,28 @@ export function EveryAge() {
             text="Pregnancy and postpartum get their own gentle mode with pregnancy-safe ingredients."
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2.5 md:space-y-2">
           {days.map((x, i) => (
-            <motion.div
-              key={x.d}
-              initial={{ opacity: 0, x: 40, filter: "blur(8px)" }}
-              whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.1, duration: 0.8, ease }}
-              className={`flex items-center gap-5 rounded-[22px] p-5 ${x.h === "Activation" ? "glass-ink text-background" : x.h === "Exfoliation" ? "glass-yellow text-primary-foreground" : "glass-card"}`}
-            >
-              <span className="w-16 shrink-0 text-xs uppercase tracking-[0.15em] opacity-60">Day {x.d}</span>
-              <span className="text-xl font-semibold tracking-tight">{x.h}</span>
-              <span className="ml-auto text-sm opacity-60">{x.t}</span>
-            </motion.div>
+            <div key={x.d} className="sticky md:static" style={{ top: `${96 + i * 40}px` }}>
+              <motion.div
+                initial={{ opacity: 0, x: 40, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: i * 0.1, duration: 0.8, ease }}
+                style={{ ["--glass-fill" as string]: x.h === "Activation" ? 0.62 : 0.45 }}
+                className={`glass-thin flex min-h-[132px] flex-col gap-4 rounded-[22px] px-5 pt-4 pb-4 md:min-h-0 md:flex-row md:items-center md:gap-5 md:px-5 md:py-5 ${x.h === "Activation" ? "glass-ink text-background" : x.h === "Exfoliation" ? "glass-yellow text-primary-foreground" : "glass-card"}`}
+              >
+                <div className="flex items-center gap-5 md:contents">
+                  <span className="w-16 shrink-0 text-xs uppercase tracking-[0.15em] opacity-60 md:order-1">Day {x.d}</span>
+                  <span className="ml-auto text-sm opacity-60 md:order-3">{x.t}</span>
+                </div>
+                <span className="text-xl font-semibold tracking-tight md:order-2">{x.h}</span>
+              </motion.div>
+            </div>
           ))}
+          {/* Spacer inside the column: the last card's sticky range is bounded by
+              the column's content, so this is what lets all five finish pinning. */}
+          <div aria-hidden className="h-[160px] md:hidden" />
         </div>
       </div>
     </section>
