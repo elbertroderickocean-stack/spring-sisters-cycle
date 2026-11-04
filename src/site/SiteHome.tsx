@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Apple } from "lucide-react";
 import SiteLayout, { Bracket } from "./SiteLayout";
+import { useIntroReady } from "./intro";
 import { products, collections } from "./products";
 import heroFace from "@/assets/site/hero-face.jpg";
 import eyeCream from "@/assets/site/eye-cream-sky.jpg";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { markIntroDone } from "./intro";
+import { INTRO_KEY, markIntroDone } from "./intro";
 
 const ease = [0.76, 0, 0.24, 1] as const;
 const soft = [0.22, 1, 0.36, 1] as const;
