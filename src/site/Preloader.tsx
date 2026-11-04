@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { markIntroDone } from "./intro";
 
 const ease = [0.76, 0, 0.24, 1] as const;
 const soft = [0.22, 1, 0.36, 1] as const;
-const KEY = "meanwhile.site.loaded";
 
 /** Calm intro: logo pieces drift in and lock together, thin progress line, curtain lifts. Once per session. */
 export default function Preloader() {
-  const [show, setShow] = useState(() => typeof window !== "undefined" && !sessionStorage.getItem(KEY));
+  const [show, setShow] = useState(() => typeof window !== "undefined" && !sessionStorage.getItem(INTRO_KEY));
 
   useEffect(() => {
     if (!show) {
@@ -16,7 +16,7 @@ export default function Preloader() {
     }
     document.documentElement.style.overflow = "hidden";
     const t = setTimeout(() => {
-      sessionStorage.setItem(KEY, "1");
+      markIntroDone();
       setShow(false);
     }, 2700);
     return () => {
