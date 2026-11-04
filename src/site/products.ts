@@ -103,7 +103,7 @@ export const products: SiteProduct[] = [
     id: "eye-cream-360",
     name: "360° Eye Cream",
     code: "Eye-01",
-    collection: "The Assets",
+    collection: "The Constants",
     size: "30ml",
     price: 56,
     tagline: "360 care. Enhanced formula. Clinically minded.",
