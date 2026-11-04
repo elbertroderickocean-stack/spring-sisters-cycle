@@ -256,11 +256,13 @@ export function EveryAge() {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ delay: i * 0.1, duration: 0.8, ease }}
                 style={{ ["--glass-fill" as string]: x.h === "Activation" ? 0.62 : 0.45 }}
-                className={`glass-thin flex min-h-[126px] items-start gap-5 rounded-[22px] p-5 pb-4 md:min-h-0 md:items-center md:pb-5 ${x.h === "Activation" ? "glass-ink text-background" : x.h === "Exfoliation" ? "glass-yellow text-primary-foreground" : "glass-card"}`}
+                className={`glass-thin flex min-h-[126px] flex-col gap-3 rounded-[22px] p-5 pb-4 md:min-h-0 md:flex-row md:items-center md:gap-5 md:pb-5 ${x.h === "Activation" ? "glass-ink text-background" : x.h === "Exfoliation" ? "glass-yellow text-primary-foreground" : "glass-card"}`}
               >
-                <span className="w-16 shrink-0 text-xs uppercase tracking-[0.15em] opacity-60">Day {x.d}</span>
-                <span className="text-xl font-semibold tracking-tight">{x.h}</span>
-                <span className="ml-auto text-sm opacity-60">{x.t}</span>
+                <div className="flex items-center gap-5 md:contents">
+                  <span className="w-16 shrink-0 text-xs uppercase tracking-[0.15em] opacity-60 md:order-1">Day {x.d}</span>
+                  <span className="ml-auto text-sm opacity-60 md:order-3">{x.t}</span>
+                </div>
+                <span className="text-xl font-semibold tracking-tight md:order-2">{x.h}</span>
               </motion.div>
             </div>
           ))}
