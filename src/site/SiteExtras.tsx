@@ -81,6 +81,7 @@ function ClarityCard({ x, i, yellow }: { x: { k: string; h: string; t: string };
   return (
     <motion.div
       ref={ref}
+      data-iv={String(inView)}
       {...fadeUp}
       transition={{ ...fadeUp.transition, delay: i * 0.08 }}
       whileHover={{ y: -6, transition: { duration: 0.4, ease } }}

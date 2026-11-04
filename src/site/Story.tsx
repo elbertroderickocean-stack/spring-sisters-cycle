@@ -18,6 +18,7 @@ export const Pill = ({ children, dark, delay = 0 }: { children: React.ReactNode;
   return (
     <motion.span
       ref={ref}
+      data-iv={String(inView)}
       initial={{ opacity: 0, clipPath: "inset(0 100% 0 0 round 999px)" }}
       animate={inView ? { opacity: 1, clipPath: "inset(0 0% 0 0 round 999px)" } : undefined}
       transition={{ delay, duration: 0.65, ease }}
