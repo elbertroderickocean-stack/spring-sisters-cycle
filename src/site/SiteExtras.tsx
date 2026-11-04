@@ -266,6 +266,9 @@ export function EveryAge() {
               </motion.div>
             </div>
           ))}
+          {/* Spacer inside the column: the last card's sticky range is bounded by
+              the column's content, so this is what lets all five finish pinning. */}
+          <div aria-hidden className="h-[160px] md:hidden" />
         </div>
       </div>
     </section>
