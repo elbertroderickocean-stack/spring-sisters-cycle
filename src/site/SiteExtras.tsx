@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Plus } from "lucide-react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { fadeUp, Pill, cardVariants, cardCurtain, cardRule, cardNumber, cardMask, cardBody, cardDot } from "./Story";
+import { fadeUp, Pill, ScrubText, cardVariants, cardCurtain, cardRule, cardNumber, cardMask, cardBody, cardDot } from "./Story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const emailSchema = z.string().trim().email().max(255);
