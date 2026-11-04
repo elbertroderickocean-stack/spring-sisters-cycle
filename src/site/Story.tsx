@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, MotionValue, useInView, animate, type Variants } from "framer-motion";
+import { Term } from "./SiteExtras";
 import { Moon, Activity, Droplet, CalendarDays, Sun, ScanFace, Cpu, Sparkles, RefreshCw, Layers } from "lucide-react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -186,7 +187,7 @@ export function Problem() {
 const signals = [
   { icon: Activity, k: "Stress", h: "The brain–skin axis", t: "Chronic cortisol cuts ceramide synthesis, speeds collagen breakdown via MMPs and drives sebum and inflammation. Students in exam season show a thinner stratum corneum and slower barrier repair.", m: "Cortisol ↑" },
   { icon: Moon, k: "Sleep", h: "The night shift", t: "Deep sleep releases growth hormone — the master repair signal. Two nights of 5 hours and measured water loss rises while perceived radiance drops. Skin feels it before your mood does.", m: "6h 12m" },
-  { icon: Droplet, k: "Glucose", h: "The silent glycation storm", t: "Every spike lets sugar cross-link collagen and elastin into AGEs — stiff, inelastic fibers. It starts long before wrinkles. CGMs made it visible. We make it manageable.", m: "AGEs" },
+  { icon: Droplet, k: "Glucose", h: "The silent glycation storm", t: "Every spike lets sugar cross-link collagen and elastin into AGEs (advanced glycation end-products) — stiff, inelastic fibers. It starts long before wrinkles. Glucose sensors made it visible. We make it manageable.", m: "AGEs" },
   { icon: CalendarDays, k: "Cycle", h: "A 28-day market", t: "Follicular: a stronger barrier that tolerates actives. Luteal: sensitivity, water retention, breakouts. The same retinol in different weeks is two different products.", m: "Day 19" },
   { icon: Sun, k: "Environment", h: "The dermatological constants", t: "UV drives up to 80% of visible photoaging. Humidity under 30% accelerates water loss. Hard water, smog, temperature swings — every one leaves a measurable trace.", m: "UV 7" },
 ];
@@ -198,7 +199,7 @@ export function Science() {
         <motion.div {...fadeUp} className="max-w-3xl">
           <Pill dark>Chapter 02 · The science</Pill>
           <h2 className="mt-6 text-5xl font-semibold leading-[1] tracking-[-0.04em] md:text-7xl">
-            Skin is a terminal, <span className="text-background/30">not decoration.</span>
+            Skin is a readout, <span className="text-background/30">not decoration.</span>
           </h2>
           <p className="mt-6 text-lg text-background/60">It isn't a surface to "improve." It's the most readable indicator of what's happening inside your body.</p>
         </motion.div>
@@ -231,7 +232,7 @@ export function Science() {
             All of it is <span className="text-primary">already measured.</span>
           </p>
           <p className="text-lg text-background/60">
-            Your Apple Watch knows more about you than your aesthetician: HRV, heart rate, sleep, steps. A CGM adds glucose. Your cycle app knows the day. A weather API knows the UV outside. One link is missing — the system that brings these signals together and translates them into care. That link is meanwhile.
+            Your watch already tracks <Term tip="Heart rate variability — how well your body recovers from stress. Lower usually means more strain.">HRV</Term>, heart rate, sleep and steps. A <Term tip="Continuous glucose monitor — a small sensor that shows your blood sugar through the day.">CGM</Term> adds glucose. Your cycle app knows the day. A weather API knows the UV outside. One link is missing — the system that brings these signals together and translates them into care. That link is meanwhile — working alongside your dermatologist and esthetician, not instead of them.
           </p>
         </motion.div>
       </div>
@@ -285,7 +286,7 @@ export function Morning() {
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.8, duration: 0.8, ease }} className="relative mt-3 ml-10 rounded-[24px] bg-secondary p-5">
             <p className="text-xs text-muted-foreground">Next day · after a late dessert</p>
-            <p className="mt-1 text-[15px] leading-snug">Slight puffiness, lower HRV. No lecture — tomorrow gets less sugar in the plan and more antioxidant support.</p>
+            <p className="mt-1 text-[15px] leading-snug">Slight puffiness, slower recovery overnight. No lecture — tomorrow gets less sugar in the plan and more antioxidant support.</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 1.3, duration: 0.8, ease }} className="relative mt-3 rounded-[24px] bg-foreground p-5 text-background">
             <p className="text-xs text-background/50">Day 30</p>
@@ -300,10 +301,10 @@ export function Morning() {
 /* ---------- 4. How it works: horizontal scroll ---------- */
 const steps = [
   { icon: Layers, h: "Collect", t: "m.i. connects to Apple Health (sleep, HRV, activity, heart rate), your cycle, weather (UV, humidity) and — optionally — a glucose sensor." },
-  { icon: ScanFace, h: "Scan", t: "One face scan with your phone camera. A vision model reads hydration, redness, texture and fatigue — the third data source: body + skin + surroundings." },
+  { icon: ScanFace, h: "Scan", t: "One face scan with your phone camera. m.i. looks at visible signs — dryness, redness, texture and tired-looking skin — the third data source: body + skin + surroundings." },
   { icon: Cpu, h: "Model", t: "The AI layer connects the dots: low sleep + cortisol pattern + luteal phase + dry air → today's skin mode." },
-  { icon: Sparkles, h: "Act", t: "Your routine rebuilds itself: what stays, what goes, what's added. From your own products — and meanwhile assets dosed to the moment." },
-  { icon: RefreshCw, h: "Learn", t: "Every reaction feeds back into the model. Week by week, more precise. In six months: a digital twin of your skin." },
+  { icon: Sparkles, h: "Act", t: "Your routine rebuilds itself: what stays, what goes, what's added. Built from the products you already own first — and a new one only if something is truly missing." },
+  { icon: RefreshCw, h: "Learn", t: "Every reaction feeds back into the model. Week by week, more precise. In six months, it knows your skin's patterns better than any calendar." },
 ];
 
 export function HowItWorks() {
@@ -347,7 +348,7 @@ export function Horizon() {
   const h = [
     { k: "Now", h: "Skin", t: "Cycle, sleep, stress, glucose and weather — translated into a daily protocol." },
     { k: "Next", h: "Supplements", t: "Adaptogens, omega, collagen, antioxidants — matched to your state, not to everyone. A supplement without data is faith. Inside Skin OS, it's a measurable intervention." },
-    { k: "Then", h: "Women's health", t: "Pregnancy, postpartum, perimenopause — the transitions where skin and wellbeing shift dramatically and personal support barely exists." },
+    { k: "Then", h: "Women's health", t: "Fertility, pregnancy and postpartum — deeper support for the transitions where skin and wellbeing shift the most." },
     { k: "Horizon", h: "Sleep & Longevity", t: "Glucose, sleep, stress, hormones, inflammation — the classic longevity biomarkers, worn on the skin as the earliest indicator." },
   ];
   return (

@@ -47,10 +47,10 @@ export function TodayScreen() {
           <p className="text-[8px]">Return streak, days</p>
         </div>
       </div>
-      <p className="mt-1 text-[9px] uppercase tracking-widest text-muted-foreground">Morning deployment</p>
+      <p className="mt-1 text-[9px] uppercase tracking-widest text-muted-foreground">Morning routine</p>
       <Row label="Baseline Cleanser" sub="Constant · 60s" done />
       <Row label="Serum-02 [Glow]" sub="Shift · peak estrogen" />
-      <Row label="SPF — missing" sub="Ghosted asset" ghost />
+      <Row label="SPF — missing" sub="Add one you like — any brand" ghost />
     </div>
   );
 }
@@ -58,7 +58,7 @@ export function TodayScreen() {
 export function ChatScreen() {
   const msgs = [
     { me: true, t: "Slept 5h, big meeting today." },
-    { me: false, t: "Cortisol is likely elevated. Skip the acid tonight — deploy Serum-03 [Calm]." },
+    { me: false, t: "Cortisol is likely elevated. Skip the acid tonight — use Serum-03 [Calm]." },
     { me: true, t: "And my eye area?" },
     { me: false, t: "360° Eye Cream, AM. Cold tip first. meanwhile., your recovery index is on track." },
   ];
