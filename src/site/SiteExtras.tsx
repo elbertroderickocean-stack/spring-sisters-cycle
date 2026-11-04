@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Plus } from "lucide-react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { fadeUp, Pill, cardVariants, cardCurtain, cardRule, cardNumber, cardMask, cardBody, cardDot } from "./Story";
+import { fadeUp, Pill, ScrubText, cardVariants, cardCurtain, cardRule, cardNumber, cardMask, cardBody, cardDot } from "./Story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const emailSchema = z.string().trim().email().max(255);
@@ -156,21 +156,29 @@ export function EveryAge() {
   return (
     <section id="every-age" className="mx-3 mt-28 rounded-[36px] bg-secondary px-5 py-24 md:mx-6 md:px-12">
       <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[1fr_1.1fr] md:items-center">
-        <motion.div {...fadeUp}>
+        <div>
           <Pill>For every stage of life</Pill>
           <h2 className="mt-6 text-5xl font-semibold leading-[1] tracking-[-0.04em] md:text-6xl">
-            No cycle? <span className="text-foreground/25">Still a rhythm.</span>
+            <ScrubText as="span" min={0.16} offset={["start 0.95", "end 0.6"]} text="No cycle?" />{" "}
+            <ScrubText as="span" className="text-primary-ink" min={0.16} offset={["start 0.9", "end 0.5"]} text="Still a rhythm." />
           </h2>
-          <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-            In perimenopause and menopause, estrogen drops and skin loses density, moisture and bounce. A routine built for a monthly cycle stops making sense — so m.i. switches to <b className="font-semibold text-foreground">Longevity mode</b>.
+          <p className="mt-6 max-w-lg text-lg text-foreground">
+            <ScrubText as="span" min={0.16} offset={["start 0.9", "end 0.5"]} text="In perimenopause and menopause, estrogen drops and skin loses density, moisture and bounce. A routine built for a monthly cycle stops making sense — so m.i. switches to" />{" "}
+            <b className="font-semibold text-primary-ink">Longevity mode</b>.
           </p>
-          <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-            Instead of a 28-day calendar, your evenings follow a 7-day training cycle for your skin: rest days and active days alternate, like a good workout plan. Skin gets stimulated, then has time to recover — so results build instead of plateauing.
-          </p>
-          <p className="mt-4 max-w-lg text-sm text-muted-foreground">
-            Pregnancy and postpartum get their own gentle mode with pregnancy-safe ingredients.
-          </p>
-        </motion.div>
+          <ScrubText
+            min={0.16}
+            offset={["start 0.85", "end 0.45"]}
+            className="mt-4 max-w-lg text-lg text-foreground"
+            text="Instead of a 28-day calendar, your evenings follow a 7-day training cycle for your skin: rest days and active days alternate, like a good workout plan. Skin gets stimulated, then has time to recover — so results build instead of plateauing."
+          />
+          <ScrubText
+            min={0.2}
+            offset={["start 0.8", "end 0.4"]}
+            className="mt-4 max-w-lg text-sm text-muted-foreground"
+            text="Pregnancy and postpartum get their own gentle mode with pregnancy-safe ingredients."
+          />
+        </div>
         <div className="space-y-2">
           {days.map((x, i) => (
             <motion.div
