@@ -214,7 +214,7 @@ function ApertureCard({ src, film, delay, label }: { src: string; film: string; 
         <motion.span
           variants={{ hidden: { opacity: 0, y: 16, filter: "blur(8px)" }, shown: { opacity: 1, y: 0, filter: "blur(0px)" } }}
           transition={{ delay: delay + 0.9, duration: 1.1, ease }}
-          className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-primary md:text-7xl"
+          className="absolute bottom-5 left-6 text-5xl font-semibold tracking-tight text-[hsl(var(--primary))] [text-shadow:0_1px_0_hsl(var(--foreground)/0.35),0_10px_34px_hsl(var(--foreground)/0.45)] md:text-7xl"
         >
           meanwhile
         </motion.span>
