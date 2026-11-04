@@ -307,9 +307,9 @@ function AppSection() {
               <motion.div
                 {...fade}
                 transition={{ ...fade.transition, delay: i * 0.08 }}
-                className="relative isolate h-full overflow-hidden rounded-3xl border border-foreground/10 bg-card/50 p-6 shadow-[0_-20px_40px_-24px_hsl(var(--foreground)/0.35),inset_0_1px_0_hsl(var(--background)/0.5)] backdrop-blur-2xl backdrop-saturate-150"
+                className="relative isolate h-full overflow-hidden rounded-3xl border border-foreground/10 bg-card/28 p-6 shadow-[0_-18px_36px_-26px_hsl(var(--foreground)/0.2),inset_0_1px_0_hsl(var(--background)/0.4)] backdrop-blur-2xl backdrop-saturate-150"
               >
-                <span aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_0%_0%,hsl(var(--primary)/0.22),transparent_55%)]" />
+                <span aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_0%_0%,hsl(var(--primary)/0.14),transparent_55%)]" />
                 <p className="text-sm text-muted-foreground">0{i + 1}</p>
                 <p className="mt-10 text-xl font-semibold tracking-tight">{h}</p>
                 <p className="mt-2 text-sm text-muted-foreground">{t}</p>
