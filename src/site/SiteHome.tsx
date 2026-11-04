@@ -303,11 +303,18 @@ function AppSection() {
             ["Live telemetry", "Sleep, stress, glucose and UV feed every recommendation."],
             ["Longevity mode", "7-day cellular training micro-cycles for compounding results."],
           ].map(([h, t], i) => (
-            <motion.div key={h} {...fade} transition={{ ...fade.transition, delay: i * 0.08 }} className="rounded-3xl bg-card p-6">
-              <p className="text-sm text-muted-foreground">0{i + 1}</p>
-              <p className="mt-10 text-xl font-semibold tracking-tight">{h}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{t}</p>
-            </motion.div>
+            <div key={h} className="sticky md:static" style={{ top: `${96 + i * 18}px` }}>
+              <motion.div
+                {...fade}
+                transition={{ ...fade.transition, delay: i * 0.08 }}
+                className="relative isolate h-full overflow-hidden rounded-3xl border border-foreground/10 bg-card/50 p-6 shadow-[0_-20px_40px_-24px_hsl(var(--foreground)/0.35),inset_0_1px_0_hsl(var(--background)/0.5)] backdrop-blur-2xl backdrop-saturate-150"
+              >
+                <span aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_0%_0%,hsl(var(--primary)/0.22),transparent_55%)]" />
+                <p className="text-sm text-muted-foreground">0{i + 1}</p>
+                <p className="mt-10 text-xl font-semibold tracking-tight">{h}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{t}</p>
+              </motion.div>
+            </div>
           ))}
         </div>
       </div>
